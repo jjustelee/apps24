@@ -8,8 +8,8 @@
   --line: #d7dce5;
   --accent: #0f62fe;
   --accent-soft: rgba(15, 98, 254, 0.12);
-  --shadow: 0 20px 45px rgba(17, 24, 39, 0.08);
-  --radius: 20px;
+  --shadow: 0 14px 30px rgba(17, 24, 39, 0.06);
+  --radius: 18px;
   --max-width: 1120px;
 }
 
@@ -25,7 +25,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(15, 98, 254, 0.08), transparent 34%),
+    radial-gradient(circle at top, rgba(15, 98, 254, 0.06), transparent 28%),
     var(--bg);
   color: var(--text);
   font-family:
@@ -53,28 +53,27 @@ code {
 .site-shell {
   width: min(calc(100% - 2rem), var(--max-width));
   margin: 0 auto;
-  padding: 1.25rem 0 3rem;
+  padding: 1rem 0 2.25rem;
 }
 
 .site-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 0 1.25rem;
+  padding: 0.75rem 0 1rem;
+}
+
+.site-brand-group {
+  display: grid;
+  gap: 0.2rem;
 }
 
 .site-brand {
   display: inline-flex;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.04em;
-}
-
-.site-kicker {
-  margin: 0.35rem 0 0;
-  color: var(--muted);
-  font-size: 0.92rem;
 }
 
 .locale-nav,
@@ -104,7 +103,7 @@ code {
 
 .site-main {
   display: grid;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .hero,
@@ -120,11 +119,10 @@ code {
 }
 
 .hero {
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-radius: var(--radius);
 }
 
-.eyebrow,
 .tool-meta {
   margin: 0;
   color: var(--accent);
@@ -137,7 +135,7 @@ code {
 .hero h1,
 .tool-page-header h2 {
   margin: 0.5rem 0 0;
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
   line-height: 1.05;
   letter-spacing: -0.05em;
 }
@@ -146,27 +144,27 @@ code {
   max-width: 60ch;
   margin: 0.85rem 0 0;
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   line-height: 1.7;
 }
 
 .panel {
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-radius: var(--radius);
 }
 
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.875rem;
 }
 
 .tool-card {
   display: grid;
   gap: 0.55rem;
-  padding: 1rem;
-  border-radius: 18px;
-  min-height: 150px;
+  padding: 0.9rem;
+  border-radius: 16px;
+  min-height: 138px;
 }
 
 .tool-card-icon {
@@ -452,10 +450,10 @@ code {
 
 .site-footer {
   margin-top: 1rem;
-  padding: 1rem 1.25rem;
-  border-radius: 999px;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 900px) {

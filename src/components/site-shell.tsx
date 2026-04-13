@@ -14,11 +14,10 @@ export function SiteShell({ locale, title, description, children }: SiteShellPro
   return (
     <div className="site-shell">
       <header className="site-header">
-        <div>
+        <div className="site-brand-group">
           <Link className="site-brand" href={`/${locale}`}>
             apps24
           </Link>
-          <p className="site-kicker">Multilingual utility platform</p>
         </div>
 
         <nav className="locale-nav" aria-label="Locale switcher">
@@ -36,7 +35,6 @@ export function SiteShell({ locale, title, description, children }: SiteShellPro
 
       <main className="site-main">
         <section className="hero">
-          <p className="eyebrow">apps24</p>
           <h1>{title}</h1>
           <p className="lede">{description}</p>
         </section>
@@ -45,7 +43,7 @@ export function SiteShell({ locale, title, description, children }: SiteShellPro
       </main>
 
       <footer className="site-footer">
-        <span>Built for Vercel + Cloudflare DNS</span>
+        <span>© apps24</span>
       </footer>
     </div>
   );

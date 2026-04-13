@@ -21,8 +21,8 @@ export async function generateMetadata({
 
   return {
     alternates: buildLocaleAlternates(locale),
-    title: `Home`,
-    description: "Utility tools organized for fast browsing and expansion.",
+    title: "Fast tools",
+    description: "Simple multilingual utilities for quick tasks.",
   };
 }
 
@@ -46,8 +46,8 @@ export default async function LocaleLayout({
   return (
     <SiteShell
       locale={validLocale}
-      title="Utility tools for global search"
-      description="A clean base for small tools, multilingual pages, and future ad-supported growth."
+      title="Fast multilingual tools"
+      description="Simple utilities for quick tasks, organized by language."
     >
       {children}
     </SiteShell>
