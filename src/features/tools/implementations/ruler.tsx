@@ -5,8 +5,13 @@ import type { ToolRendererProps } from "@/features/tools/implementations";
 
 const CREDIT_CARD_WIDTH_CM = 8.56;
 const CREDIT_CARD_WIDTH_IN = 3.3700787;
+const DEFAULT_CARD_WIDTH_PX = 324;
+const MIN_CARD_WIDTH_PX = 180;
+const MAX_CARD_WIDTH_PX = 560;
 const MIN_MEASURE_WIDTH = 80;
 const MAX_MEASURE_WIDTH = 1200;
+const CALIBRATION_STORAGE_KEY = "apps24:ruler:cardWidthPx";
+const UNIT_STORAGE_KEY = "apps24:ruler:unit";
 
 type Size = {
   width: number;
@@ -37,10 +42,11 @@ export function RulerTool({ tool }: ToolRendererProps) {
   const [stageSize, setStageSize] = useState<Size>({ width: 720, height: 420 });
   const [origin, setOrigin] = useState<Point>({ x: 120, y: 210 });
   const [measureWidth, setMeasureWidth] = useState(360);
-  const [cardWidthPx, setCardWidthPx] = useState(324);
+  const [cardWidthPx, setCardWidthPx] = useState(DEFAULT_CARD_WIDTH_PX);
   const [draggingMeasure, setDraggingMeasure] = useState(false);
   const [draggingCard, setDraggingCard] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   const pixelsPerCm = cardWidthPx / CREDIT_CARD_WIDTH_CM;
   const pixelsPerIn = cardWidthPx / CREDIT_CARD_WIDTH_IN;
@@ -49,6 +55,35 @@ export function RulerTool({ tool }: ToolRendererProps) {
   const measureEnd = clamp(origin.x + measureWidth, 0, stageSize.width);
   const handleLeft = clamp(measureEnd - 9, 8, stageSize.width - 26);
   const handleTop = clamp(origin.y - 9, 8, stageSize.height - 26);
+
+  useEffect(() => {
+    try {
+      const storedUnit = window.localStorage.getItem(UNIT_STORAGE_KEY);
+      if (storedUnit === "cm" || storedUnit === "in") {
+        setUnit(storedUnit);
+      }
+
+      const storedCardWidth = Number(window.localStorage.getItem(CALIBRATION_STORAGE_KEY));
+      if (Number.isFinite(storedCardWidth)) {
+        setCardWidthPx(clamp(storedCardWidth, MIN_CARD_WIDTH_PX, MAX_CARD_WIDTH_PX));
+      }
+    } finally {
+      setSettingsLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!settingsLoaded) {
+      return;
+    }
+
+    try {
+      window.localStorage.setItem(CALIBRATION_STORAGE_KEY, String(cardWidthPx));
+      window.localStorage.setItem(UNIT_STORAGE_KEY, unit);
+    } catch {
+      // Ignore storage failures and keep the ruler usable.
+    }
+  }, [cardWidthPx, settingsLoaded, unit]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -191,7 +226,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
           return;
         }
         const nextWidth = event.clientX - rect.left - 24;
-        setCardWidthPx(clamp(nextWidth, 180, Math.min(560, stageSize.width - 48)));
+        setCardWidthPx(clamp(nextWidth, MIN_CARD_WIDTH_PX, Math.min(MAX_CARD_WIDTH_PX, stageSize.width - 48)));
       }
     };
 
@@ -241,6 +276,10 @@ export function RulerTool({ tool }: ToolRendererProps) {
     await stageRef.current.requestFullscreen();
   };
 
+  const resetCalibration = () => {
+    setCardWidthPx(DEFAULT_CARD_WIDTH_PX);
+  };
+
   return (
     <div className="tool-stack">
       <div className="tool-actions">
@@ -260,6 +299,9 @@ export function RulerTool({ tool }: ToolRendererProps) {
         </button>
         <button className="tool-button secondary" type="button" onClick={toggleFullscreen}>
           {isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+        </button>
+        <button className="tool-button secondary" type="button" onClick={resetCalibration}>
+          Reset calibration
         </button>
       </div>
 
@@ -304,7 +346,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
         <p className="tool-note">
           Calibrate the ruler by matching the card below to a real credit card, then use the
           canvas. Click anywhere on the canvas to set the zero point and start measuring from
-          there.
+          there. The calibration is saved on this device.
         </p>
         <div
           style={{
