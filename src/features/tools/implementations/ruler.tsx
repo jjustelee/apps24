@@ -51,7 +51,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
   const pixelsPerCm = cardWidthPx / CREDIT_CARD_WIDTH_CM;
   const pixelsPerIn = cardWidthPx / CREDIT_CARD_WIDTH_IN;
   const measuredValue = unit === "cm" ? measureWidth / pixelsPerCm : measureWidth / pixelsPerIn;
-  const measureStart = clamp(origin.x, 0, stageSize.width);
+  const measureStart = clamp(origin.x - measureWidth, 0, stageSize.width);
   const measureEnd = clamp(origin.x + measureWidth, 0, stageSize.width);
   const handleLeft = clamp(measureEnd - 9, 8, stageSize.width - 26);
   const handleTop = clamp(origin.y - 9, 8, stageSize.height - 26);
@@ -156,6 +156,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
 
     context.fillStyle = "#0f62fe";
     context.beginPath();
+    context.arc(origin.x, origin.y, 7, 0, Math.PI * 2);
     context.arc(measureStart, origin.y, 6, 0, Math.PI * 2);
     context.arc(measureEnd, origin.y, 6, 0, Math.PI * 2);
     context.fill();
@@ -164,12 +165,15 @@ export function RulerTool({ tool }: ToolRendererProps) {
     context.lineWidth = 1;
     const tickUnitPx = unit === "cm" ? pixelsPerCm : pixelsPerIn;
     const minorStep = tickUnitPx / 10;
-    let tickIndex = 0;
+    const firstTickIndex = Math.ceil((measureStart - origin.x) / minorStep);
+    const lastTickIndex = Math.floor((measureEnd - origin.x) / minorStep);
 
-    for (let x = measureStart; x <= measureEnd + 0.5; x += minorStep) {
+    for (let tickIndex = firstTickIndex; tickIndex <= lastTickIndex; tickIndex += 1) {
+      const x = origin.x + tickIndex * minorStep;
       const isMajor = tickIndex % 10 === 0;
       const isHalf = tickIndex % 5 === 0;
-      const tickHeight = isMajor ? 32 : isHalf ? 22 : 14;
+      const isZero = tickIndex === 0;
+      const tickHeight = isZero ? 40 : isMajor ? 32 : isHalf ? 22 : 14;
       context.beginPath();
       context.moveTo(x, origin.y - tickHeight);
       context.lineTo(x, origin.y + tickHeight);
@@ -178,10 +182,19 @@ export function RulerTool({ tool }: ToolRendererProps) {
       if (isMajor) {
         context.fillStyle = "#111827";
         context.font = "12px sans-serif";
-        context.fillText(String(tickIndex / 10), x + 4, origin.y - tickHeight - 8);
+        if (tickIndex === 0) {
+          context.textAlign = "center";
+          context.fillText("0", x, origin.y - tickHeight - 8);
+        } else if (tickIndex < 0) {
+          context.textAlign = "right";
+          context.fillText(String(tickIndex / 10), x - 4, origin.y - tickHeight - 8);
+        } else {
+          context.textAlign = "left";
+          context.fillText(String(tickIndex / 10), x + 4, origin.y - tickHeight - 8);
+        }
       }
-      tickIndex += 1;
     }
+    context.textAlign = "left";
 
     context.fillStyle = "#111827";
     context.font = "700 18px sans-serif";
@@ -345,8 +358,8 @@ export function RulerTool({ tool }: ToolRendererProps) {
       <div className="tool-output-card">
         <p className="tool-note">
           Calibrate the ruler by matching the card below to a real credit card, then use the
-          canvas. Click anywhere on the canvas to set the zero point and start measuring from
-          there. The calibration is saved on this device.
+          canvas. Click anywhere on the canvas to place the zero mark at that point and see
+          ticks on both sides. The calibration is saved on this device.
         </p>
         <div
           style={{
