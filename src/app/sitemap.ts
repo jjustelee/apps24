@@ -1,0 +1,23 @@
+import type { MetadataRoute } from "next";
+import { getLocalizedUrl, LOCALES } from "@/lib/site";
+import { getStaticToolParams } from "@/features/tools/registry";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const homeEntries = LOCALES.map((locale) => ({
+    url: getLocalizedUrl(locale),
+    lastModified: new Date(),
+  }));
+
+  const toolEntries = getStaticToolParams().map(({ locale, slug }) => ({
+    url: getLocalizedUrl(locale, `/${slug}`),
+    lastModified: new Date(),
+  }));
+
+  const contactEntries = LOCALES.map((locale) => ({
+    url: getLocalizedUrl(locale, "/contact"),
+    lastModified: new Date(),
+  }));
+
+  return [...homeEntries, ...contactEntries, ...toolEntries];
+}
+
