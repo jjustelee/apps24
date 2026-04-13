@@ -432,6 +432,63 @@ code {
   overflow: auto;
 }
 
+.ruler-guide {
+  display: grid;
+  gap: 1rem;
+}
+
+.ruler-guide-title {
+  margin: 0.3rem 0 0;
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+}
+
+.ruler-guide-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.ruler-guide-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.ruler-reference-card {
+  position: relative;
+  min-height: 180px;
+  border-radius: 18px;
+  border: 1px dashed var(--line);
+  background: var(--panel-soft);
+  overflow: hidden;
+}
+
+.ruler-reference-card-visual {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: min(324px, calc(100% - 40px));
+  aspect-ratio: 1.586;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(15, 98, 254, 0.92), rgba(17, 24, 39, 0.88));
+  box-shadow: 0 16px 32px rgba(17, 24, 39, 0.16);
+  color: white;
+  padding: 18px;
+}
+
+.ruler-guide-form {
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+  align-content: start;
+}
+
 .tool-badge {
   display: inline-flex;
   align-items: center;
@@ -487,6 +544,10 @@ code {
   }
 
   .tool-split {
+    grid-template-columns: 1fr;
+  }
+
+  .ruler-guide-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -11,7 +11,7 @@ const TOOL_TEXTS: Partial<Record<Locale, Record<string, ToolText>>> = {
     ruler: {
       title: "Online Ruler",
       description:
-        "Measure screen distances with credit-card calibration and cm/inch toggles.",
+        "Measure screen distances with zero-point placement, credit-card calibration, and cm/inch toggles.",
     },
     wordcounter: {
       title: "Word Counter",
@@ -49,7 +49,7 @@ const TOOL_TEXTS: Partial<Record<Locale, Record<string, ToolText>>> = {
   ko: {
     ruler: {
       title: "온라인 자",
-      description: "신용카드 보정과 cm/inch 전환으로 화면 길이를 측정합니다.",
+      description: "영점 설정, 신용카드 보정, cm/inch 전환으로 화면 길이를 측정합니다.",
     },
     wordcounter: {
       title: "글자 수 세기",

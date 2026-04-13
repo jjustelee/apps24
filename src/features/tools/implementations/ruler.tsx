@@ -3,14 +3,11 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
 
-const CREDIT_CARD_WIDTH_CM = 8.56;
-const CREDIT_CARD_WIDTH_IN = 3.3700787;
-const DEFAULT_CARD_WIDTH_PX = 324;
-const MIN_CARD_WIDTH_PX = 180;
-const MAX_CARD_WIDTH_PX = 560;
+const DEFAULT_CARD_WIDTH_CM = 8.56;
+const REFERENCE_CARD_WIDTH_PX = 324;
 const MIN_MEASURE_WIDTH = 80;
 const MAX_MEASURE_WIDTH = 1200;
-const CALIBRATION_STORAGE_KEY = "apps24:ruler:cardWidthPx";
+const CALIBRATION_STORAGE_KEY = "apps24:ruler:cardWidthCm";
 const UNIT_STORAGE_KEY = "apps24:ruler:unit";
 
 type Size = {
@@ -42,14 +39,14 @@ export function RulerTool({ tool }: ToolRendererProps) {
   const [stageSize, setStageSize] = useState<Size>({ width: 720, height: 420 });
   const [origin, setOrigin] = useState<Point>({ x: 120, y: 210 });
   const [measureWidth, setMeasureWidth] = useState(360);
-  const [cardWidthPx, setCardWidthPx] = useState(DEFAULT_CARD_WIDTH_PX);
+  const [calibrationInput, setCalibrationInput] = useState(String(DEFAULT_CARD_WIDTH_CM));
+  const [cardWidthCm, setCardWidthCm] = useState(DEFAULT_CARD_WIDTH_CM);
   const [draggingMeasure, setDraggingMeasure] = useState(false);
-  const [draggingCard, setDraggingCard] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
-  const pixelsPerCm = cardWidthPx / CREDIT_CARD_WIDTH_CM;
-  const pixelsPerIn = cardWidthPx / CREDIT_CARD_WIDTH_IN;
+  const pixelsPerCm = REFERENCE_CARD_WIDTH_PX / cardWidthCm;
+  const pixelsPerIn = pixelsPerCm * 2.54;
   const measuredValue = unit === "cm" ? measureWidth / pixelsPerCm : measureWidth / pixelsPerIn;
   const measureStart = clamp(origin.x - measureWidth, 0, stageSize.width);
   const measureEnd = clamp(origin.x + measureWidth, 0, stageSize.width);
@@ -64,8 +61,9 @@ export function RulerTool({ tool }: ToolRendererProps) {
       }
 
       const storedCardWidth = Number(window.localStorage.getItem(CALIBRATION_STORAGE_KEY));
-      if (Number.isFinite(storedCardWidth)) {
-        setCardWidthPx(clamp(storedCardWidth, MIN_CARD_WIDTH_PX, MAX_CARD_WIDTH_PX));
+      if (Number.isFinite(storedCardWidth) && storedCardWidth > 0) {
+        setCardWidthCm(storedCardWidth);
+        setCalibrationInput(formatValue(storedCardWidth));
       }
     } finally {
       setSettingsLoaded(true);
@@ -78,12 +76,12 @@ export function RulerTool({ tool }: ToolRendererProps) {
     }
 
     try {
-      window.localStorage.setItem(CALIBRATION_STORAGE_KEY, String(cardWidthPx));
+      window.localStorage.setItem(CALIBRATION_STORAGE_KEY, String(cardWidthCm));
       window.localStorage.setItem(UNIT_STORAGE_KEY, unit);
     } catch {
       // Ignore storage failures and keep the ruler usable.
     }
-  }, [cardWidthPx, settingsLoaded, unit]);
+  }, [cardWidthCm, settingsLoaded, unit]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -232,20 +230,10 @@ export function RulerTool({ tool }: ToolRendererProps) {
           ),
         );
       }
-
-      if (draggingCard) {
-        const rect = stageRef.current?.getBoundingClientRect();
-        if (!rect) {
-          return;
-        }
-        const nextWidth = event.clientX - rect.left - 24;
-        setCardWidthPx(clamp(nextWidth, MIN_CARD_WIDTH_PX, Math.min(MAX_CARD_WIDTH_PX, stageSize.width - 48)));
-      }
     };
 
     const onUp = () => {
       setDraggingMeasure(false);
-      setDraggingCard(false);
     };
 
     window.addEventListener("pointermove", onMove);
@@ -255,7 +243,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
     };
-  }, [draggingCard, draggingMeasure, origin.x, stageSize.width]);
+  }, [draggingMeasure, origin.x, stageSize.width]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -267,7 +255,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
   }, []);
 
   const setZeroPoint = (event: ReactPointerEvent<HTMLCanvasElement>) => {
-    if (draggingMeasure || draggingCard) {
+    if (draggingMeasure) {
       return;
     }
     setOrigin({
@@ -289,8 +277,20 @@ export function RulerTool({ tool }: ToolRendererProps) {
     await stageRef.current.requestFullscreen();
   };
 
+  const calibrate = () => {
+    const nextWidth = Number(calibrationInput);
+    if (!Number.isFinite(nextWidth) || nextWidth <= 0) {
+      return;
+    }
+
+    const normalizedWidth = Number(nextWidth.toFixed(2));
+    setCardWidthCm(normalizedWidth);
+    setCalibrationInput(formatValue(normalizedWidth));
+  };
+
   const resetCalibration = () => {
-    setCardWidthPx(DEFAULT_CARD_WIDTH_PX);
+    setCardWidthCm(DEFAULT_CARD_WIDTH_CM);
+    setCalibrationInput(formatValue(DEFAULT_CARD_WIDTH_CM));
   };
 
   return (
@@ -313,9 +313,6 @@ export function RulerTool({ tool }: ToolRendererProps) {
         <button className="tool-button secondary" type="button" onClick={toggleFullscreen}>
           {isFullscreen ? "Exit fullscreen" : "Fullscreen"}
         </button>
-        <button className="tool-button secondary" type="button" onClick={resetCalibration}>
-          Reset calibration
-        </button>
       </div>
 
       <div className="tool-stat-grid" aria-live="polite">
@@ -330,8 +327,8 @@ export function RulerTool({ tool }: ToolRendererProps) {
           <span>Canvas pixels</span>
         </div>
         <div className="tool-stat">
-          <strong>{Math.round(cardWidthPx)} px</strong>
-          <span>Credit card width</span>
+          <strong>{formatValue(cardWidthCm)} cm</strong>
+          <span>Calibration width</span>
         </div>
       </div>
 
@@ -356,58 +353,70 @@ export function RulerTool({ tool }: ToolRendererProps) {
       </div>
 
       <div className="tool-output-card">
-        <p className="tool-note">
-          Calibrate the ruler by matching the card below to a real credit card, then use the
-          canvas. Click anywhere on the canvas to place the zero mark at that point and see
-          ticks on both sides. The calibration is saved on this device.
-        </p>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            minHeight: 132,
-            marginTop: 12,
-            borderRadius: 18,
-            border: "1px dashed var(--line)",
-            background: "var(--panel-soft)",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              left: 24,
-              top: 24,
-              width: cardWidthPx,
-              height: cardWidthPx / 1.586,
-              borderRadius: 16,
-              background:
-                "linear-gradient(135deg, rgba(15, 98, 254, 0.92), rgba(17, 24, 39, 0.88))",
-              boxShadow: "0 16px 32px rgba(17, 24, 39, 0.16)",
-              color: "white",
-              padding: 18,
-            }}
-          >
-            <span className="tool-badge" style={{ background: "rgba(255,255,255,0.18)", color: "white" }}>
-              85.6 mm
-            </span>
-            <p style={{ margin: "20px 0 0", fontWeight: 700 }}>Credit card calibration</p>
+        <div className="ruler-guide">
+          <div>
+            <p className="tool-meta">How to Use the Online Ruler</p>
+            <h3 className="ruler-guide-title">Measure Objects with the Online Ruler</h3>
+            <p className="tool-note">Please calibrate the ruler before use.</p>
           </div>
-          <button
-            aria-label="Resize credit card calibration"
-            className="tool-resize-handle"
-            type="button"
-            style={{
-              left: cardWidthPx + 13,
-              top: cardWidthPx / 1.586 + 13,
-              right: "auto",
-              bottom: "auto",
-            }}
-            onPointerDown={(event) => {
-              event.preventDefault();
-              setDraggingCard(true);
-            }}
-          />
+
+          <ol className="ruler-guide-list">
+            <li>Place a credit card horizontally at the zero mark.</li>
+            <li>Enter the measured width of the card and click Calibrate.</li>
+            <li>Now you can measure the desired object.</li>
+          </ol>
+
+          <div className="ruler-guide-grid">
+            <div className="ruler-reference-card">
+              <div className="ruler-reference-card-visual">
+                <span
+                  className="tool-badge"
+                  style={{ background: "rgba(255,255,255,0.18)", color: "white" }}
+                >
+                  Card reference
+                </span>
+                <p style={{ margin: "20px 0 0", fontWeight: 700 }}>
+                  Enter the measured width in centimeters
+                </p>
+              </div>
+            </div>
+
+            <form
+              className="tool-form ruler-guide-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                calibrate();
+              }}
+            >
+              <div className="tool-field">
+                <label className="tool-label" htmlFor="ruler-card-width">
+                  Enter credit card width (cm)
+                </label>
+                <input
+                  id="ruler-card-width"
+                  className="tool-input"
+                  inputMode="decimal"
+                  placeholder="10.4"
+                  value={calibrationInput}
+                  onChange={(event) => setCalibrationInput(event.target.value)}
+                />
+              </div>
+
+              <p className="tool-note">Example: If the width is 10.4 cm, enter 10.4.</p>
+
+              <button className="tool-button" type="submit">
+                Calibrate
+              </button>
+
+              <button className="tool-button secondary" type="button" onClick={resetCalibration}>
+                Reset calibration
+              </button>
+            </form>
+          </div>
+
+          <p className="tool-note">
+            Tip: Use the blue handle at the bottom-right corner of the canvas to resize it.
+          </p>
         </div>
       </div>
     </div>
