@@ -35,7 +35,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const [unit, setUnit] = useState<"cm" | "in">("cm");
   const [stageSize, setStageSize] = useState<Size>({ width: 720, height: 420 });
-  const [center, setCenter] = useState<Point>({ x: 360, y: 210 });
+  const [origin, setOrigin] = useState<Point>({ x: 120, y: 210 });
   const [measureWidth, setMeasureWidth] = useState(360);
   const [cardWidthPx, setCardWidthPx] = useState(324);
   const [draggingMeasure, setDraggingMeasure] = useState(false);
@@ -45,10 +45,10 @@ export function RulerTool({ tool }: ToolRendererProps) {
   const pixelsPerCm = cardWidthPx / CREDIT_CARD_WIDTH_CM;
   const pixelsPerIn = cardWidthPx / CREDIT_CARD_WIDTH_IN;
   const measuredValue = unit === "cm" ? measureWidth / pixelsPerCm : measureWidth / pixelsPerIn;
-  const measureLeft = clamp(center.x - measureWidth / 2, 0, stageSize.width);
-  const measureRight = clamp(center.x + measureWidth / 2, 0, stageSize.width);
-  const handleLeft = clamp(measureRight - 9, 8, stageSize.width - 26);
-  const handleTop = clamp(center.y - 9, 8, stageSize.height - 26);
+  const measureStart = clamp(origin.x, 0, stageSize.width);
+  const measureEnd = clamp(origin.x + measureWidth, 0, stageSize.width);
+  const handleLeft = clamp(measureEnd - 9, 8, stageSize.width - 26);
+  const handleTop = clamp(origin.y - 9, 8, stageSize.height - 26);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -62,9 +62,9 @@ export function RulerTool({ tool }: ToolRendererProps) {
         width: Math.max(320, Math.round(rect.width)),
         height: Math.max(360, Math.round(rect.height)),
       });
-      setCenter((current) => ({
-        x: clamp(current.x, 40, Math.max(80, rect.width - 40)),
-        y: clamp(current.y, 40, Math.max(80, rect.height - 40)),
+      setOrigin((current) => ({
+        x: clamp(current.x, 0, rect.width),
+        y: clamp(current.y, 0, rect.height),
       }));
     };
 
@@ -115,37 +115,35 @@ export function RulerTool({ tool }: ToolRendererProps) {
     context.strokeStyle = "#0f62fe";
     context.lineWidth = 4;
     context.beginPath();
-    context.moveTo(measureLeft, center.y);
-    context.lineTo(measureRight, center.y);
+    context.moveTo(measureStart, origin.y);
+    context.lineTo(measureEnd, origin.y);
     context.stroke();
 
     context.fillStyle = "#0f62fe";
     context.beginPath();
-    context.arc(measureLeft, center.y, 6, 0, Math.PI * 2);
-    context.arc(measureRight, center.y, 6, 0, Math.PI * 2);
+    context.arc(measureStart, origin.y, 6, 0, Math.PI * 2);
+    context.arc(measureEnd, origin.y, 6, 0, Math.PI * 2);
     context.fill();
 
     context.strokeStyle = "#111827";
     context.lineWidth = 1;
     const tickUnitPx = unit === "cm" ? pixelsPerCm : pixelsPerIn;
     const minorStep = tickUnitPx / 10;
-    const start = Math.min(measureLeft, measureRight);
-    const end = Math.max(measureLeft, measureRight);
     let tickIndex = 0;
 
-    for (let x = start; x <= end + 0.5; x += minorStep) {
+    for (let x = measureStart; x <= measureEnd + 0.5; x += minorStep) {
       const isMajor = tickIndex % 10 === 0;
       const isHalf = tickIndex % 5 === 0;
       const tickHeight = isMajor ? 32 : isHalf ? 22 : 14;
       context.beginPath();
-      context.moveTo(x, center.y - tickHeight);
-      context.lineTo(x, center.y + tickHeight);
+      context.moveTo(x, origin.y - tickHeight);
+      context.lineTo(x, origin.y + tickHeight);
       context.stroke();
 
       if (isMajor) {
         context.fillStyle = "#111827";
         context.font = "12px sans-serif";
-        context.fillText(String(tickIndex / 10), x + 4, center.y - tickHeight - 8);
+        context.fillText(String(tickIndex / 10), x + 4, origin.y - tickHeight - 8);
       }
       tickIndex += 1;
     }
@@ -154,17 +152,17 @@ export function RulerTool({ tool }: ToolRendererProps) {
     context.font = "700 18px sans-serif";
     context.fillText(
       `${formatValue(measuredValue)} ${getUnitLabel(unit)}`,
-      clamp(center.x - 58, 12, stageSize.width - 130),
-      clamp(center.y + 58, 32, stageSize.height - 16),
+      clamp(origin.x + 14, 12, stageSize.width - 130),
+      clamp(origin.y + 58, 32, stageSize.height - 16),
     );
   }, [
-    center.x,
-    center.y,
-    measureLeft,
-    measureRight,
+    measureEnd,
+    measureStart,
     measuredValue,
     pixelsPerCm,
     pixelsPerIn,
+    origin.x,
+    origin.y,
     stageSize.height,
     stageSize.width,
     unit,
@@ -177,8 +175,14 @@ export function RulerTool({ tool }: ToolRendererProps) {
         if (!rect) {
           return;
         }
-        const nextWidth = Math.abs(event.clientX - rect.left - center.x) * 2;
-        setMeasureWidth(clamp(nextWidth, MIN_MEASURE_WIDTH, Math.min(MAX_MEASURE_WIDTH, stageSize.width)));
+        const nextWidth = event.clientX - rect.left - origin.x;
+        setMeasureWidth(
+          clamp(
+            nextWidth,
+            MIN_MEASURE_WIDTH,
+            Math.max(MIN_MEASURE_WIDTH, Math.min(MAX_MEASURE_WIDTH, stageSize.width - origin.x)),
+          ),
+        );
       }
 
       if (draggingCard) {
@@ -203,7 +207,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
     };
-  }, [center.x, draggingCard, draggingMeasure, stageSize.width]);
+  }, [draggingCard, draggingMeasure, origin.x, stageSize.width]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -214,14 +218,13 @@ export function RulerTool({ tool }: ToolRendererProps) {
     return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
   }, []);
 
-  const recenter = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+  const setZeroPoint = (event: ReactPointerEvent<HTMLCanvasElement>) => {
     if (draggingMeasure || draggingCard) {
       return;
     }
-    const rect = event.currentTarget.getBoundingClientRect();
-    setCenter({
-      x: clamp(event.clientX - rect.left, 40, stageSize.width - 40),
-      y: clamp(event.clientY - rect.top, 40, stageSize.height - 40),
+    setOrigin({
+      x: event.clientX - event.currentTarget.getBoundingClientRect().left,
+      y: event.clientY - event.currentTarget.getBoundingClientRect().top,
     });
   };
 
@@ -282,7 +285,7 @@ export function RulerTool({ tool }: ToolRendererProps) {
           ref={canvasRef}
           className="tool-canvas"
           aria-label={`Interactive ${tool.slug} canvas`}
-          onPointerDown={recenter}
+          onPointerDown={setZeroPoint}
         />
         <button
           aria-label="Resize ruler measurement"
@@ -300,7 +303,8 @@ export function RulerTool({ tool }: ToolRendererProps) {
       <div className="tool-output-card">
         <p className="tool-note">
           Calibrate the ruler by matching the card below to a real credit card, then use the
-          canvas. Click anywhere on the canvas to recenter the ruler.
+          canvas. Click anywhere on the canvas to set the zero point and start measuring from
+          there.
         </p>
         <div
           style={{
