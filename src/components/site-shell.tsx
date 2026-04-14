@@ -30,9 +30,9 @@ export function SiteShell({ locale, title, description, children }: SiteShellPro
 
       <main className="site-main">{children}</main>
 
-      <footer className="site-footer" style={{ padding: "2.5rem 1.5rem", borderTop: "1px solid var(--line)", background: "var(--surface)" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
-          <div style={{ display: "flex", gap: "1.25rem", fontSize: "0.85rem", fontWeight: 500 }}>
+      <footer className="site-footer">
+        <div className="footer-container">
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1.25rem", fontSize: "0.85rem", fontWeight: 500 }}>
             <Link href={`/${locale}/about`} style={{ color: "var(--text-muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: "5px" }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
               {common.about}

@@ -64,8 +64,10 @@ a {
 
 /* Base Layout */
 .site-shell {
-  width: min(calc(100% - 32px), var(--max-width));
+  width: 100%;
+  max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -78,6 +80,26 @@ a {
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
   margin-bottom: 24px;
+}
+
+@media (max-width: 640px) {
+  .site-shell {
+    padding: 0 16px;
+  }
+  .site-header {
+    height: auto;
+    padding: 16px 0;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .locale-nav {
+    width: 100%;
+  }
+  .locale-trigger {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .site-brand {
@@ -138,6 +160,14 @@ a {
   width: 220px;
   z-index: 100;
   animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@media (max-width: 640px) {
+  .locale-dropdown {
+    right: auto;
+    left: 0;
+    width: 100%;
+  }
 }
 
 @keyframes dropdownFadeIn {
@@ -202,13 +232,13 @@ a {
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   margin-bottom: 16px;
   line-height: 1.1;
 }
 
 .hero p {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--muted);
   line-height: 1.6;
 }
@@ -262,6 +292,13 @@ a {
   align-items: start;
 }
 
+@media (max-width: 1024px) {
+  .tool-shell {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
 .tool-sidebar {
   position: sticky;
   top: 24px;
@@ -273,6 +310,34 @@ a {
   backdrop-filter: blur(10px);
   border-radius: var(--radius);
   border: 1px solid var(--panel-border);
+}
+
+@media (max-width: 1024px) {
+  .tool-sidebar {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tool-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  .sidebar-title {
+    display: none;
+  }
+  .tool-sidebar-nav {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .sidebar-link {
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
 }
 
 .sidebar-title {
@@ -312,6 +377,12 @@ a {
   box-shadow: var(--shadow);
 }
 
+@media (max-width: 640px) {
+  .tool-main-content {
+    padding: 20px 16px;
+  }
+}
+
 /* Specific Tool UI Elements */
 .tool-form {
   display: grid;
@@ -339,6 +410,7 @@ a {
   font-family: inherit;
   font-size: 1rem;
   transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
 }
 
 .tool-input:focus, .tool-select:focus, .tool-textarea:focus {
@@ -374,6 +446,7 @@ a {
   border-radius: 16px;
   border: 1px dashed var(--accent);
   min-height: 100px;
+  overflow-x: auto;
 }
 
 .tool-output-card {
@@ -382,16 +455,31 @@ a {
   border-radius: 12px;
   border: 1px solid var(--line);
   margin-bottom: 12px;
+  overflow-wrap: break-word;
 }
 
 /* Footer */
 .site-footer {
   margin-top: auto;
   padding: 40px 0;
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.9rem;
   border-top: 1px solid var(--line);
+}
+
+.footer-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 /* Animations */
@@ -434,7 +522,7 @@ a {
 }
 
 .tool-note {
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   color: var(--muted);
   line-height: 1.6;
 }
@@ -454,26 +542,3 @@ a {
   gap: 1.5rem;
 }
 
-@media (max-width: 1024px) {
-  .tool-shell {
-    grid-template-columns: 1fr;
-  }
-  .tool-sidebar {
-    position: static;
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 12px;
-  }
-  .sidebar-link {
-    white-space: nowrap;
-  }
-}
-
-@media (max-width: 640px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-  .tool-grid {
-    grid-template-columns: 1fr;
-  }
-}
