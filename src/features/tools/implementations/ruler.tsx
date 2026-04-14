@@ -88,23 +88,30 @@ export function RulerTool({ locale, tool }: ToolRendererProps) {
     };
   }, [isFullscreen]);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     const handleResize = () => {
-      const newWidth = isFullscreen ? window.innerWidth : Math.min(MAX_STAGE_WIDTH, window.innerWidth - (window.innerWidth < 640 ? 32 : 64));
-      const newHeight = isFullscreen ? window.innerHeight : 400; // Fixed height or could be dynamic
+      if (isFullscreen) {
+        setStageSize({ width: window.innerWidth, height: window.innerHeight });
+      } else if (containerRef.current) {
+        const measuredWidth = containerRef.current.offsetWidth || window.innerWidth;
+        // Use measured width of parent container for true responsiveness
+        const newWidth = Math.min(MAX_STAGE_WIDTH, measuredWidth - 4); 
+        const newHeight = 400; // Fixed height or could be dynamic
 
-      setStageSize({ width: newWidth, height: newHeight });
-      
-      // Keep origin within visible bounds
-      setOrigin(prev => ({
-        x: Math.min(prev.x, newWidth - 20),
-        y: Math.min(prev.y, newHeight - 20)
-      }));
+        setStageSize({ width: newWidth, height: newHeight });
+        
+        // Keep origin within visible bounds (a bit more padding for safety)
+        setOrigin(prev => ({
+          x: Math.min(prev.x, Math.max(0, newWidth - 20)),
+          y: Math.min(prev.y, Math.max(0, newHeight - 20))
+        }));
+      }
     };
 
-    // Initial sizing
+    // Initial sizing and add listeners
     handleResize();
-
     window.addEventListener("resize", handleResize);
     document.addEventListener("fullscreenchange", handleResize);
 
@@ -254,7 +261,7 @@ export function RulerTool({ locale, tool }: ToolRendererProps) {
   const currentUnitLabel = unit === "cm" ? "CM" : "INCH";
 
   return (
-    <div className="tool-stack">
+    <div ref={containerRef} className="tool-stack">
       {!isFullscreen && (
         <>
           <div className="tool-output-card" style={{ border: "none", background: "transparent", padding: 0 }}>
@@ -303,9 +310,9 @@ export function RulerTool({ locale, tool }: ToolRendererProps) {
           position: isFullscreen ? "fixed" : "relative", 
           top: 0,
           left: 0,
-          width: isFullscreen ? "100vw" : `${stageSize.width}px`,
+          width: isFullscreen ? "100vw" : "100%",
           height: isFullscreen ? "100vh" : `${stageSize.height}px`,
-          maxWidth: isFullscreen ? "none" : "100%",
+          maxWidth: isFullscreen ? "none" : `${stageSize.width}px`,
           margin: isFullscreen ? 0 : "2rem auto",
           background: "white",
           boxShadow: isFullscreen ? "none" : "var(--shadow)",
