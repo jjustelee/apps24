@@ -5,6 +5,10 @@ type ToolText = {
   title: string;
   description: string;
   seo?: string;
+  longDescription?: string;
+  usageContext?: string;
+  howToUse?: string;
+  faq?: { q: string; a: string }[];
 };
 
 type CommonText = {
@@ -89,20 +93,117 @@ type CommonText = {
 const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: CommonText }> = {
   en: {
     tools: {
-      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
-      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
-      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      imagecompressor: {
+        title: "Image Compressor",
+        description: "Compress images online",
+        seo: "Compress and convert to webp.",
+        longDescription: "Image Compressor is a browser-based tool that allows you to reduce file sizes of images without significantly sacrificing visual quality. It supports common formats like JPEG, PNG, and WebP.",
+        usageContext: "Use this tool when you need to optimize images for web use, email attachments, or to save storage space on your devices.",
+        howToUse: "1. Upload your image file.\n2. Adjust the compression quality settings.\n3. Preview the estimated file size.\n4. Download the compressed image.",
+        faq: [{"q":"Is my data safe?","a":"Yes, all processing happens locally in your browser. Your images are never uploaded to our servers."},{"q":"What formats are supported?","a":"We support JPEG, PNG, and WebP formats."}]
+      },
+      caseconverter: {
+        title: "Case Converter",
+        description: "Change text case",
+        seo: "Convert text to uppercase or lowercase.",
+        longDescription: "Case Converter is a simple yet powerful text utility that helps you transform the casing of your text instantly. Whether you need Uppercase, Lowercase, or Title Case, this tool handles it all.",
+        usageContext: "Ideal for developers, writers, and students who need to format text for code, titles, or general documentation quickly.",
+        howToUse: "1. Paste your text into the input area.\n2. Click on the desired case button (Upper, Lower, etc.).\n3. Copy the transformed text to your clipboard.",
+        faq: [{"q":"Does it support special characters?","a":"Yes, it preserves all special characters and numbers while changing letter cases."}]
+      },
+      jsonformatter: {
+        title: "JSON Formatter",
+        description: "Format and validate JSON",
+        seo: "Format invalid JSON.",
+        longDescription: "JSON Formatter is a specialized tool for developers to beautify, minify, and validate JSON data. It makes complex data structures readable and helps identify syntax errors.",
+        usageContext: "Perfect for debugging API responses, formatting config files, or sharing clean data structures with teammates.",
+        howToUse: "1. Enter your raw JSON text.\n2. Click 'Format' to beautify or 'Minify' to compress.\n3. Check the validation indicator for syntax errors.",
+        faq: [{"q":"Can it handle large JSON files?","a":"It can handle files up to several megabytes depending on your browser's performance."}]
+      },
       passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
-      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
-      base64encoder: { title: "Base64 Encoder & Decoder", description: "Encode and Decode Base64 Online", seo: "Fast and reliable Base64 encoder and decoder. Convert text to Base64 format and decode Base64 strings instantly in your browser." },
-      colorconverter: { title: "Color Code Converter", description: "Convert HEX, RGB, and HSL Colors", seo: "Quickly convert color code formats. Input HEX, RGB, or use the color picker to instantly get HSL and RGB values with our browser-based tool." },
-      ruler: { title: "Online Ruler", description: "Measure screen distances with zero-point placement, credit-card calibration, and cm/inch toggles." },
-      wordcounter: { title: "Word Counter", description: "Count characters, spaces, and character positions as you type." },
-      countdown: { title: "Countdown Timer", description: "Set a timer, pause it, resume it, and keep track in fullscreen or night mode." },
-      digitalclock: { title: "Digital Clock", description: "Check the current time in real time with a fullscreen view." },
-      screenlamp: { title: "Screen Lights", description: "Turn the screen into a solid color light with fullscreen and custom color choices." },
-      qrgenerator: { title: "QR Generator", description: "Create QR codes instantly from any text or URL." },
-      barcodegenerator: { title: "Barcode Generator", description: "Create many barcode formats for labels, inventory, and packaging." },
+      textdiffchecker: {
+        title: "Text Diff Checker",
+        description: "Compare texts",
+        seo: "Find differences between texts.",
+        longDescription: "Text Diff Checker identifies the exact differences between two pieces of text. It highlights additions, deletions, and modifications, making it easy to track changes across versions.",
+        usageContext: "Highly useful for developers comparing code, editors reviewing drafts, or anyone needing to verify text consistency.",
+        howToUse: "1. Paste the original text in the left panel.\n2. Paste the modified text in the right panel.\n3. Review the highlighted differences instantly.",
+        faq: [{"q":"Does it support line-by-line comparison?","a":"Yes, the tool performs a detailed diff analysis to show exactly what changed in each line."}]
+      },
+      base64encoder: {
+        title: "Base64 Encoder & Decoder",
+        description: "Encode and Decode Base64 Online",
+        seo: "Fast and reliable Base64 encoder and decoder. Convert text to Base64 format and decode Base64 strings instantly in your browser.",
+        longDescription: "Base64 Encoder & Decoder is a reliable utility for converting text to Base64 format and vice versa. It uses standard encoding algorithms suitable for data transmission and various development tasks.",
+        usageContext: "Commonly used for embedding images in HTML/CSS, transferring binary data over text-based protocols, or simple data obfuscation.",
+        howToUse: "1. Enter the text you wish to encode or decode.\n2. Click the 'Encode' or 'Decode' button.\n3. Copy the resulting string from the output area.",
+        faq: [{"q":"Is Base64 a form of encryption?","a":"No, Base64 is an encoding scheme meant for data representation, not for security or privacy."}]
+      },
+      colorconverter: {
+        title: "Color Code Converter",
+        description: "Convert HEX, RGB, and HSL Colors",
+        seo: "Quickly convert color code formats. Input HEX, RGB, or use the color picker to instantly get HSL and RGB values with our browser-based tool.",
+        longDescription: "Color Code Converter is a must-have tool for web designers and developers. It allows for seamless translation between HEX, RGB, and HSL color formats with a real-time preview.",
+        usageContext: "Use it while designing websites or apps to quickly find the equivalent codes for your color palettes.",
+        howToUse: "1. Enter a color code in any format (HEX, RGB, HSL) or use the color picker.\n2. View the converted values instantly.\n3. Click Copy next to any value to use it in your project.",
+        faq: [{"q":"Does it support transparency (Alpha)?","a":"The current version focuses on standard colors. RGBA support is planned for future updates."}]
+      },
+      ruler: {
+        title: "Online Ruler",
+        description: "Measure screen distances with zero-point placement, credit-card calibration, and cm/inch toggles.",
+        longDescription: "The Online Ruler is a high-precision measurement tool that allows you to measure objects directly on your screen. It features zero-point adjustment and calibration against standard objects like credit cards to ensure accuracy regardless of your screen resolution or size.",
+        usageContext: "Perfect for designers, hobbyists, or anyone needing quick measurements of small physical objects or screen elements when a physical ruler isn't handy.",
+        howToUse: "1. Select your preferred unit (cm or inch).\n2. Calibrate by entering the width of a standard object (like a credit card).\n3. Double-click on the ruler to set a zero point.\n4. Place your object against the screen to measure.",
+        faq: [{"q":"How accurate is the screen ruler?","a":"Accuracy depends on calibration. Since screen sizes and resolutions vary, calibrating with a physical object (like a credit card) is essential for precision."}]
+      },
+      wordcounter: {
+        title: "Word Counter",
+        description: "Count characters, spaces, and character positions as you type.",
+        longDescription: "Word Counter is a real-time text analysis tool that calculates the number of words, characters, and spaces in your text. It also provides detailed breakdowns such as character count without spaces and specific character positioning.",
+        usageContext: "Essential for writers, students, and SEO professionals who need to meet specific length requirements for essays, articles, social media posts, or meta descriptions.",
+        howToUse: "1. Type or paste your text into the input field.\n2. View the automatically updated counts below.\n3. Use the character position finder to locate specific indices in your text.",
+        faq: [{"q":"Is there a limit to the text size?","a":"Our word counter can handle large volumes of text (up to hundreds of thousands of characters) efficiently within your browser."}]
+      },
+      countdown: {
+        title: "Countdown Timer",
+        description: "Set a timer, pause it, resume it, and keep track in fullscreen or night mode.",
+        longDescription: "Our Countdown Timer is a versatile time management tool designed for productivity and focus. It features a clean, distraction-free interface with full-screen and night mode options.",
+        usageContext: "Ideal for Pomodoro sessions, meditation, cooking, or managing presentation times.",
+        howToUse: "1. Set the desired time using the input fields.\n2. Click Start to begin the countdown.\n3. Use Pause or Reset as needed.\n4. Toggle Night Mode or Fullscreen for better focus.",
+        faq: [{"q":"Does the timer keep running if I switch tabs?","a":"Yes, the timer continues to run in the background as long as the tab remains open."}]
+      },
+      digitalclock: {
+        title: "Digital Clock",
+        description: "Check the current time in real time with a fullscreen view.",
+        longDescription: "Digital Clock provides a sleek, high-visibility time display for any environment. It supports both 12-hour and 24-hour formats and includes a full-screen mode for use as a desk clock.",
+        usageContext: "Great for use in offices, classrooms, or as a bedside clock using a tablet or laptop screen.",
+        howToUse: "1. View the current time in the central display.\n2. Switch between 12H and 24H formats.\n3. Enable Fullscreen mode for a large, clear display.",
+        faq: [{"q":"Is the time synced accurately?","a":"Yes, the clock uses your device's system time, which is typically synchronized with network time servers."}]
+      },
+      screenlamp: {
+        title: "Screen Lights",
+        description: "Turn the screen into a solid color light with fullscreen and custom color choices.",
+        longDescription: "Screen Lights turns your entire display into a source of soft, uniform light. You can choose from preset colors or select a custom hue to create the perfect ambiance or use it for emergency lighting.",
+        usageContext: "Useful as a soft reading light, a photography backlight, or for testing screen pixels (dead pixel check).",
+        howToUse: "1. Choose a preset color or use the color picker for a custom hue.\n2. Adjust the lighting as needed.\n3. Use Fullscreen mode for maximum effect.",
+        faq: [{"q":"Can this act as a blue light filter?","a":"By choosing a warm orange or red hue, you can reduce blue light emission from your screen manually."}]
+      },
+      qrgenerator: {
+        title: "QR Generator",
+        description: "Create QR codes instantly from any text or URL.",
+        longDescription: "Our QR Generator allows you to create high-quality QR codes for URLs, text, and other data types. Use it to bridge the gap between physical and digital content.",
+        usageContext: "Great for marketing materials, business cards, menus, and event check-ins.",
+        howToUse: "1. Input the URL or text you want to encode.\n2. Customize the size or error correction if available.\n3. Download the generated QR code image.",
+        faq: [{"q":"Are these QR codes permanent?","a":"Yes, they contain static information and will work as long as the linked content is available."}]
+      },
+      barcodegenerator: {
+        title: "Barcode Generator",
+        description: "Create many barcode formats for labels, inventory, and packaging.",
+        longDescription: "Barcode Generator supports multiple professional barcode formats including Code 128, EAN, and UPC. It provides industrial-grade barcode rendering for various business needs.",
+        usageContext: "Used for inventory management, product labeling, and retail operations.",
+        howToUse: "1. Select the barcode symbology (e.g., Code 128).\n2. Enter the data to be encoded.\n3. Generate and download the high-resolution barcode image.",
+        faq: [{"q":"Which formats are available?","a":"We support Code 128, EAN-13, UPC-A, and several others."}]
+      },
       dummytext: { title: "Lorem Ipsum", description: "Generate placeholder paragraphs with a chosen length." },
     },
     common: {
@@ -186,20 +287,117 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   ko: {
     tools: {
-      imagecompressor: { title: "이미지 압축기", description: "이미지 용량을 실시간으로 압축하세요.", seo: "이미지 압축 및 WebP 변환." },
-      caseconverter: { title: "대소문자 변환기", description: "텍스트 대소문자를 즉시 변환하세요.", seo: "대소문자 변환 및 텍스트 가공." },
-      jsonformatter: { title: "JSON 포맷터", description: "JSON 코드를 예쁘게 정렬하고 검증하세요.", seo: "JSON 포맷팅 및 유효성 검사." },
+      imagecompressor: {
+        title: "이미지 압축기",
+        description: "이미지 용량을 실시간으로 압축하세요.",
+        seo: "이미지 압축 및 WebP 변환.",
+        longDescription: "이미지 압축기는 시각적 품질을 크게 희생하지 않으면서 이미지 파일 크기를 줄일 수 있는 브라우저 기반 도구입니다. JPEG, PNG, WebP와 같은 일반적인 형식을 지원합니다.",
+        usageContext: "웹 사용, 이메일 첨부 또는 기기의 저장 공간을 절약하기 위해 이미지를 최적화해야 할 때 이 도구를 사용하세요.",
+        howToUse: "1. 이미지 파일을 업로드합니다.\n2. 압축 품질 설정을 조정합니다.\n3. 예상 파일 크기를 미리 확인합니다.\n4. 압축된 이미지를 다운로드합니다.",
+        faq: [{"q":"제 데이터는 안전한가요?","a":"네, 모든 처리는 브라우저에서 로컬로 진행됩니다. 귀하의 이미지는 절대 저희 서버로 업로드되지 않습니다."},{"q":"어떤 형식을 지원하나요?","a":"JPEG, PNG, WebP 형식을 지원합니다."}]
+      },
+      caseconverter: {
+        title: "대소문자 변환기",
+        description: "텍스트 대소문자를 즉시 변환하세요.",
+        seo: "대소문자 변환 및 텍스트 가공.",
+        longDescription: "대소문자 변환기는 텍스트의 대소문자를 즉시 변환할 수 있도록 도와주는 간단하지만 강력한 텍스트 유틸리티입니다. 대문자, 소문자, 제목 대소문자 등 모든 것을 처리합니다.",
+        usageContext: "코드, 제목 또는 일반 문서를 위해 텍스트 형식을 빠르게 지정해야 하는 개발자, 작가 및 학생에게 이상적입니다.",
+        howToUse: "1. 입력 영역에 텍스트를 붙여넣습니다.\n2. 원하는 케이스 버튼(대문자, 소문자 등)을 클릭합니다.\n3. 변환된 텍스트를 클립보드에 복사합니다.",
+        faq: [{"q":"특수 문자를 지원하나요?","a":"네, 대소문자를 변경하는 동안 모든 특수 문자와 숫자는 보존됩니다."}]
+      },
+      jsonformatter: {
+        title: "JSON 포맷터",
+        description: "JSON 코드를 예쁘게 정렬하고 검증하세요.",
+        seo: "JSON 포맷팅 및 유효성 검사.",
+        longDescription: "JSON 포맷터는 개발자가 JSON 데이터를 예쁘게 정렬하거나 압축하고 유효성을 검사할 수 있는 전문 도구입니다. 복잡한 데이터 구조를 읽기 쉽게 만들고 구문 오류를 찾는 데 도움을 줍니다.",
+        usageContext: "API 응답 디버깅, 설정 파일 서식 지정 또는 팀원과 깔끔한 데이터 구조를 공유할 때 완벽합니다.",
+        howToUse: "1. 원시 JSON 텍스트를 입력합니다.\n2. 'Format'을 클릭하여 정렬하거나 'Minify'를 클릭하여 압축합니다.\n3. 구문 오류에 대한 유효성 검사 표시를 확인합니다.",
+        faq: [{"q":"대용량 JSON 파일을 처리할 수 있나요?","a":"브라우저의 성능에 따라 수 메가바이트 크기까지 처리할 수 있습니다."}]
+      },
       passwordgenerator: { title: "비밀번호 생성기", description: "강력하고 안전한 비밀번호를 생성하세요.", seo: "무작위 비밀번호 생성기." },
-      textdiffchecker: { title: "텍스트 비교기", description: "두 텍스트의 차이점을 한눈에 확인하세요.", seo: "텍스트 디프 체크 및 비교." },
-      base64encoder: { title: "Base64 인코더 / 디코더", description: "온라인 Base64 텍스트 인코딩 및 디코딩", seo: "빠르고 안정적인 Base64 인코더 및 디코더입니다. 브라우저에서 텍스트를 즉시 Base64로 변환하거나 해독해보세요." },
-      colorconverter: { title: "색상 코드 변환기", description: "HEX, RGB, HSL 색상 코드 실시간 변환", seo: "HEX, RGB 코드를 입력하거나 컬러 피커로 색을 선택해 HSL 등의 값을 즉시 확인하고 복사하세요." },
-      ruler: { title: "온라인 자", description: "영점 설정, 신용카드 보정, cm/inch 전환으로 화면 길이를 측정합니다." },
-      wordcounter: { title: "글자 수 세기", description: "입력한 텍스트의 글자 수와 공백 포함/제외 수를 즉시 계산합니다." },
-      countdown: { title: "카운트다운 타이머", description: "시간을 설정하고 일시정지, 재개, 전체화면, 나이트 모드를 사용할 수 있습니다." },
-      digitalclock: { title: "디지털 시계", description: "현재 시간을 실시간으로 확인하고 전체화면으로 볼 수 있습니다." },
-      screenlamp: { title: "스크린 라이트", description: "전체화면과 사용자 색상으로 화면 전체를 단색 조명으로 바꿉니다." },
-      qrgenerator: { title: "QR 생성기", description: "텍스트나 URL로 QR 코드를 바로 생성합니다." },
-      barcodegenerator: { title: "바코드 생성기", description: "라벨, 재고, 포장용 여러 바코드 형식을 생성합니다." },
+      textdiffchecker: {
+        title: "텍스트 비교기",
+        description: "두 텍스트의 차이점을 한눈에 확인하세요.",
+        seo: "텍스트 디프 체크 및 비교.",
+        longDescription: "텍스트 비교기는 두 텍스트 사이의 정확한 차이점을 식별합니다. 추가, 삭제 및 수정된 내용을 강조 표시하여 버전 간 변경 내용을 쉽게 추적할 수 있습니다.",
+        usageContext: "코드를 비교하는 개발자, 초안을 검토하는 편집자 또는 텍스트 일관성을 확인해야 하는 모든 분께 매우 유용합니다.",
+        howToUse: "1. 왼쪽 패널에 원본 텍스트를 붙여넣습니다.\n2. 오른쪽 패널에 수정된 텍스트를 붙여넣습니다.\n3. 강조 표시된 차이점을 즉시 확인합니다.",
+        faq: [{"q":"한 줄씩 비교 기능을 지원하나요?","a":"네, 각 줄에서 변경된 내용을 정확히 보여주기 위해 상세한 비교 분석을 수행합니다."}]
+      },
+      base64encoder: {
+        title: "Base64 인코더 / 디코더",
+        description: "온라인 Base64 텍스트 인코딩 및 디코딩",
+        seo: "빠르고 안정적인 Base64 인코더 및 디코더입니다. 브라우저에서 텍스트를 즉시 Base64로 변환하거나 해독해보세요.",
+        longDescription: "Base64 인코더 및 디코더는 텍스트를 Base64 형식으로 변환하거나 그 반대로 변환하는 신뢰할 수 있는 유틸리티입니다. 데이터 전송 및 다양한 개발 작업에 적합한 표준 인코딩 알고리즘을 사용합니다.",
+        usageContext: "HTML/CSS에 이미지를 포함하거나, 텍스트 기반 프로토콜을 통한 바이너리 데이터 전송, 또는 간단한 데이터 난독화에 흔히 사용됩니다.",
+        howToUse: "1. 인코딩하거나 디코딩하려는 텍스트를 입력합니다.\n2. 'Encode' 또는 'Decode' 버튼을 클릭합니다.\n3. 결과창에서 변환된 문자열을 복사합니다.",
+        faq: [{"q":"Base64는 암호화의 일종인가요?","a":"아니요, Base64는 보안이나 프라이버시를 위한 것이 아니라 데이터 표현을 위한 인코딩 방식입니다."}]
+      },
+      colorconverter: {
+        title: "색상 코드 변환기",
+        description: "HEX, RGB, HSL 색상 코드 실시간 변환",
+        seo: "HEX, RGB 코드를 입력하거나 컬러 피커로 색을 선택해 HSL 등의 값을 즉시 확인하고 복사하세요.",
+        longDescription: "색상 코드 변환기는 웹 디자이너와 개발자에게 꼭 필요한 도구입니다. 실시간 미리보기와 함께 HEX, RGB, HSL 색상 형식 사이의 완벽한 변환을 지원합니다.",
+        usageContext: "웹사이트나 앱을 디자인하는 동안 컬러 팔레트의 동등한 코드를 빠르게 찾는 데 사용하세요.",
+        howToUse: "1. 어떤 형식이든 색상 코드를 입력하거나 컬러 피커를 사용합니다.\n2. 즉시 변환된 값들을 확인합니다.\n3. 프로젝트에 사용하려는 값 옆의 'Copy'를 클릭합니다.",
+        faq: [{"q":"투명도(Alpha)를 지원하나요?","a":"현재 버전은 표준 색상에 집중하고 있습니다. RGBA 지원은 향후 업데이트 예정입니다."}]
+      },
+      ruler: {
+        title: "온라인 자",
+        description: "영점 설정, 신용카드 보정, cm/inch 전환으로 화면 길이를 측정합니다.",
+        longDescription: "온라인 자는 화면에서 직접 물체를 측정할 수 있게 해주는 고정밀 측정 도구입니다. 0점 조절 기능과 신용카드와 같은 표준 물체를 이용한 보정 기능을 갖추고 있어 화면 해상도나 크기에 상관없이 정확한 측정이 가능합니다.",
+        usageContext: "디자이너, 취미 생활자 또는 실제 자가 없을 때 작은 물리적 물체나 화면 요소를 빠르게 측정해야 하는 모든 분께 완벽한 도구입니다.",
+        howToUse: "1. 선호하는 단위(cm 또는 인치)를 선택합니다.\n2. 신용카드와 같은 표준 물체의 너비를 입력하여 보정합니다.\n3. 자 위의 아무 곳이나 더블 클릭하여 0점을 설정합니다.\n4. 측정할 물체를 화면에 대고 측정합니다.",
+        faq: [{"q":"화면 자의 정확도는 어느 정도인가요?","a":"정확도는 보정에 달렸습니다. 화면 크기와 해상도가 다양하므로 실제 물체(신용카드 등)를 이용한 보정이 정밀한 측정에 필수적입니다."}]
+      },
+      wordcounter: {
+        title: "글자 수 세기",
+        description: "입력한 텍스트의 글자 수와 공백 포함/제외 수를 즉시 계산합니다.",
+        longDescription: "글자 수 세기는 텍스트의 단어, 글자, 공백 수를 계산하는 실시간 텍스트 분석 도구입니다. 공백을 제외한 글자 수 및 특정 글자 위치 찾기 등 상세한 분석 결과도 제공합니다.",
+        usageContext: "에세이, 기사, 소셜 미디어 게시물 또는 메타 설명의 특정 길이 요구 사항을 맞춰야 하는 작가, 학생 및 SEO 전문가에게 필수적입니다.",
+        howToUse: "1. 입력 필드에 텍스트를 입력하거나 붙여넣습니다.\n2. 하단에서 자동 업데이트되는 카운트를 확인합니다.\n3. 글자 위치 찾기 기능을 사용하여 텍스트 내의 특정 인덱스를 찾습니다.",
+        faq: [{"q":"텍스트 크기에 제한이 있나요?","a":"저희 글자 수 세기는 수십만 자에 달하는 대용량 텍스트도 브라우저 내에서 효율적으로 처리할 수 있습니다."}]
+      },
+      countdown: {
+        title: "카운트다운 타이머",
+        description: "시간을 설정하고 일시정지, 재개, 전체화면, 나이트 모드를 사용할 수 있습니다.",
+        longDescription: "카운트다운 타이머는 생산성과 집중력을 위해 설계된 다목적 시간 관리 도구입니다. 전체 화면 및 나이트 모드 옵션과 함께 깔끔하고 방해가 없는 인터페이스를 제공합니다.",
+        usageContext: "뽀모도로 세션, 명상, 요리 또는 발표 시간 관리에 이상적입니다.",
+        howToUse: "1. 입력 필드를 사용하여 원하는 시간을 설정합니다.\n2. 'Start'를 클릭하여 카운트다운을 시작합니다.\n3. 필요한 경우 일시정지 또는 초기화를 사용합니다.\n4. 더 나은 집중을 위해 나이트 모드나 전체 화면으로 전환합니다.",
+        faq: [{"q":"탭을 전환해도 타이머가 계속 작동하나요?","a":"네, 탭이 열려 있는 한 타이머는 백그라운드에서 계속 작동합니다."}]
+      },
+      digitalclock: {
+        title: "디지털 시계",
+        description: "현재 시간을 실시간으로 확인하고 전체화면으로 볼 수 있습니다.",
+        longDescription: "디지털 시계는 어떤 환경에서도 잘 보이는 세련된 시간 디스플레이를 제공합니다. 12시간제와 24시간제를 모두 지원하며, 탁상시계로 활용 가능한 전체 화면 모드를 포함합니다.",
+        usageContext: "사무실, 교실 또는 태블릿/노트북 화면을 이용한 침대 옆 시계로 사용하기 좋습니다.",
+        howToUse: "1. 중앙 디스플레이에서 현재 시간을 확인합니다.\n2. 12H와 24H 형식 사이를 전환합니다.\n3. 크고 선명한 화면을 위해 전체 화면 모드를 활성화합니다.",
+        faq: [{"q":"시간이 정확하게 동기화되나요?","a":"네, 시계는 기기의 시스템 시간을 사용하며, 이는 일반적으로 네트워크 시간 서버와 동기화됩니다."}]
+      },
+      screenlamp: {
+        title: "스크린 라이트",
+        description: "전체화면과 사용자 색상으로 화면 전체를 단색 조명으로 바꿉니다.",
+        longDescription: "스크린 라이트는 전체 디스플레이를 부드럽고 균일한 광원으로 바꿔줍니다. 프리셋 색상을 선택하거나 커스텀 색상을 골라 완벽한 분위기를 조성하거나 비상 조명으로 사용할 수 있습니다.",
+        usageContext: "부드러운 독서등, 촬영용 백라이트 또는 화면 픽셀 테스트(불량 화소 체크) 시 유용합니다.",
+        howToUse: "1. 프리셋 색상을 선택하거나 컬러 피커를 사용하여 원하는 색상을 고릅니다.\n2. 필요에 따라 조명을 조정합니다.\n3. 최대 효과를 위해 전체 화면 모드를 사용합니다.",
+        faq: [{"q":"블루라이트 차단 기능이 있나요?","a":"따뜻한 오렌지색이나 빨간색 계열을 선택하여 화면에서의 블루라이트 방출을 수동으로 줄일 수 있습니다."}]
+      },
+      qrgenerator: {
+        title: "QR 생성기",
+        description: "텍스트나 URL로 QR 코드를 바로 생성합니다.",
+        longDescription: "저희 QR 생성기를 사용하면 URL, 텍스트 및 기타 데이터 유형에 대한 고품질 QR 코드를 만들 수 있습니다. 물리적 콘텐츠와 디지털 콘텐츠 사이의 격차를 해소하는 데 사용하세요.",
+        usageContext: "마케팅 자료, 명함, 메뉴 및 이벤트 체크인에 적합합니다.",
+        howToUse: "1. 인코딩하려는 URL이나 텍스트를 입력합니다.\n2. 크기나 오류 수정을 조정합니다.\n3. 생성된 QR 코드 이미지를 다운로드합니다.",
+        faq: [{"q":"이 QR 코드는 영구적인가요?","a":"네, 정적 정보를 포함하고 있으며 연결된 콘텐츠가 유효한 한 영구적으로 작동합니다."}]
+      },
+      barcodegenerator: {
+        title: "바코드 생성기",
+        description: "라벨, 재고, 포장용 여러 바코드 형식을 생성합니다.",
+        longDescription: "바코드 생성기는 Code 128, EAN, UPC를 포함한 여러 전문 바코드 형식을 지원합니다. 다양한 비즈니스 요구에 적합한 산업 등급의 바코드 렌더링을 제공합니다.",
+        usageContext: "재고 관리, 제품 라벨링 및 소매 업무에 사용됩니다.",
+        howToUse: "1. 바코드 종류(예: Code 128)를 선택합니다.\n2. 인코딩할 데이터를 입력합니다.\n3. 생성된 고해상도 바코드 이미지를 다운로드합니다.",
+        faq: [{"q":"어떤 형식을 사용할 수 있나요?","a":"Code 128, EAN-13, UPC-A 및 여러 형식을 지원합니다."}]
+      },
       dummytext: { title: "로렘 입숨", description: "문단 수를 정해 자리표시자 텍스트를 생성합니다." },
     },
     common: {
@@ -283,20 +481,72 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   fr: {
     tools: {
-      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
-      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
-      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      imagecompressor: {
+        title: "Image Compressor",
+        description: "Compress images online",
+        seo: "Compress and convert to webp.",
+        longDescription: "Image Compressor is a browser-based tool that allows you to reduce file sizes of images without significantly sacrificing visual quality. It supports common formats like JPEG, PNG, and WebP.",
+        usageContext: "Use this tool when you need to optimize images for web use, email attachments, or to save storage space on your devices.",
+        howToUse: "1. Upload your image file.\n2. Adjust the compression quality settings.\n3. Preview the estimated file size.\n4. Download the compressed image.",
+        faq: [{"q":"Is my data safe?","a":"Yes, all processing happens locally in your browser. Your images are never uploaded to our servers."},{"q":"What formats are supported?","a":"We support JPEG, PNG, and WebP formats."}]
+      },
+      caseconverter: {
+        title: "Case Converter",
+        description: "Change text case",
+        seo: "Convert text to uppercase or lowercase.",
+        longDescription: "Case Converter is a simple yet powerful text utility that helps you transform the casing of your text instantly. Whether you need Uppercase, Lowercase, or Title Case, this tool handles it all.",
+        usageContext: "Ideal for developers, writers, and students who need to format text for code, titles, or general documentation quickly.",
+        howToUse: "1. Paste your text into the input area.\n2. Click on the desired case button (Upper, Lower, etc.).\n3. Copy the transformed text to your clipboard.",
+        faq: [{"q":"Does it support special characters?","a":"Yes, it preserves all special characters and numbers while changing letter cases."}]
+      },
+      jsonformatter: {
+        title: "JSON Formatter",
+        description: "Format and validate JSON",
+        seo: "Format invalid JSON.",
+        longDescription: "JSON Formatter is a specialized tool for developers to beautify, minify, and validate JSON data. It makes complex data structures readable and helps identify syntax errors.",
+        usageContext: "Perfect for debugging API responses, formatting config files, or sharing clean data structures with teammates.",
+        howToUse: "1. Enter your raw JSON text.\n2. Click 'Format' to beautify or 'Minify' to compress.\n3. Check the validation indicator for syntax errors.",
+        faq: [{"q":"Can it handle large JSON files?","a":"It can handle files up to several megabytes depending on your browser's performance."}]
+      },
       passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
       textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Encodeur / Décodeur Base64", description: "Encoder et Décoder Base64 en ligne", seo: "Encodeur et décodeur Base64 rapide et fiable. Convertissez instantanément du texte en Base64 dans votre navigateur." },
       colorconverter: { title: "Convertisseur de Code Couleur", description: "Convertir HEX, RGB et HSL", seo: "Convertissez rapidement les formats de codes couleurs. Entrez HEX, RGB ou utilisez le sélecteur de couleurs pour obtenir instantanément des valeurs HSL." },
-      ruler: { title: "Règle en ligne", description: "Mesurez les distances à l'écran avec étalonnage par carte de crédit." },
-      wordcounter: { title: "Compteur de mots", description: "Comptez les caractères et les mots en temps réel." },
+      ruler: {
+        title: "Règle en ligne",
+        description: "Mesurez les distances à l'écran avec étalonnage par carte de crédit.",
+        longDescription: "The Online Ruler is a high-precision measurement tool that allows you to measure objects directly on your screen. It features zero-point adjustment and calibration against standard objects like credit cards to ensure accuracy regardless of your screen resolution or size.",
+        usageContext: "Perfect for designers, hobbyists, or anyone needing quick measurements of small physical objects or screen elements when a physical ruler isn't handy.",
+        howToUse: "1. Select your preferred unit (cm or inch).\n2. Calibrate by entering the width of a standard object (like a credit card).\n3. Double-click on the ruler to set a zero point.\n4. Place your object against the screen to measure.",
+        faq: [{"q":"How accurate is the screen ruler?","a":"Accuracy depends on calibration. Since screen sizes and resolutions vary, calibrating with a physical object (like a credit card) is essential for precision."}]
+      },
+      wordcounter: {
+        title: "Compteur de mots",
+        description: "Comptez les caractères et les mots en temps réel.",
+        longDescription: "Word Counter is a real-time text analysis tool that calculates the number of words, characters, and spaces in your text. It also provides detailed breakdowns such as character count without spaces and specific character positioning.",
+        usageContext: "Essential for writers, students, and SEO professionals who need to meet specific length requirements for essays, articles, social media posts, or meta descriptions.",
+        howToUse: "1. Type or paste your text into the input field.\n2. View the automatically updated counts below.\n3. Use the character position finder to locate specific indices in your text.",
+        faq: [{"q":"Is there a limit to the text size?","a":"Our word counter can handle large volumes of text (up to hundreds of thousands of characters) efficiently within your browser."}]
+      },
       countdown: { title: "Compte à rebours", description: "Réglez une minuterie avec mode plein écran et nuit." },
       digitalclock: { title: "Horloge numérique", description: "Consultez l'heure actuelle en temps réel." },
       screenlamp: { title: "Lampe d'écran", description: "Transformez votre écran en une source lumineuse colorée." },
-      qrgenerator: { title: "Générateur de QR", description: "Créeez instantanément des codes QR." },
-      barcodegenerator: { title: "Générateur de codes-barres", description: "Créez divers formats de codes-barres." },
+      qrgenerator: {
+        title: "Générateur de QR",
+        description: "Créeez instantanément des codes QR.",
+        longDescription: "Our QR Generator allows you to create high-quality QR codes for URLs, text, and other data types. Use it to bridge the gap between physical and digital content.",
+        usageContext: "Great for marketing materials, business cards, menus, and event check-ins.",
+        howToUse: "1. Input the URL or text you want to encode.\n2. Customize the size or error correction if available.\n3. Download the generated QR code image.",
+        faq: [{"q":"Are these QR codes permanent?","a":"Yes, they contain static information and will work as long as the linked content is available."}]
+      },
+      barcodegenerator: {
+        title: "Générateur de codes-barres",
+        description: "Créez divers formats de codes-barres.",
+        longDescription: "Barcode Generator supports multiple professional barcode formats including Code 128, EAN, and UPC. It provides industrial-grade barcode rendering for various business needs.",
+        usageContext: "Used for inventory management, product labeling, and retail operations.",
+        howToUse: "1. Select the barcode symbology (e.g., Code 128).\n2. Enter the data to be encoded.\n3. Generate and download the high-resolution barcode image.",
+        faq: [{"q":"Which formats are available?","a":"We support Code 128, EAN-13, UPC-A, and several others."}]
+      },
       dummytext: { title: "Lorem Ipsum", description: "Générez des paragraphes de texte de remplacement." },
     },
     common: {
@@ -380,20 +630,72 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   ja: {
     tools: {
-      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
-      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
-      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      imagecompressor: {
+        title: "Image Compressor",
+        description: "Compress images online",
+        seo: "Compress and convert to webp.",
+        longDescription: "이미지 압축기는 시각적 품질을 크게 희생하지 않으면서 이미지 파일 크기를 줄일 수 있는 브라우저 기반 도구입니다. JPEG, PNG, WebP와 같은 일반적인 형식을 지원합니다.",
+        usageContext: "웹 사용, 이메일 첨부 또는 기기의 저장 공간을 절약하기 위해 이미지를 최적화해야 할 때 이 도구를 사용하세요.",
+        howToUse: "1. 이미지 파일을 업로드합니다.\n2. 압축 품질 설정을 조정합니다.\n3. 예상 파일 크기를 미리 확인합니다.\n4. 압축된 이미지를 다운로드합니다.",
+        faq: [{"q":"제 데이터는 안전한가요?","a":"네, 모든 처리는 브라우저에서 로컬로 진행됩니다. 귀하의 이미지는 절대 저희 서버로 업로드되지 않습니다."},{"q":"어떤 형식을 지원하나요?","a":"JPEG, PNG, WebP 형식을 지원합니다."}]
+      },
+      caseconverter: {
+        title: "Case Converter",
+        description: "Change text case",
+        seo: "Convert text to uppercase or lowercase.",
+        longDescription: "대소문자 변환기는 텍스트의 대소문자를 즉시 변환할 수 있도록 도와주는 간단하지만 강력한 텍스트 유틸리티입니다. 대문자, 소문자, 제목 대소문자 등 모든 것을 처리합니다.",
+        usageContext: "코드, 제목 또는 일반 문서를 위해 텍스트 형식을 빠르게 지정해야 하는 개발자, 작가 및 학생에게 이상적입니다.",
+        howToUse: "1. 입력 영역에 텍스트를 붙여넣습니다.\n2. 원하는 케이스 버튼(대문자, 소문자 등)을 클릭합니다.\n3. 변환된 텍스트를 클립보드에 복사합니다.",
+        faq: [{"q":"특수 문자를 지원하나요?","a":"네, 대소문자를 변경하는 동안 모든 특수 문자와 숫자는 보존됩니다."}]
+      },
+      jsonformatter: {
+        title: "JSON Formatter",
+        description: "Format and validate JSON",
+        seo: "Format invalid JSON.",
+        longDescription: "JSON 포맷터는 개발자가 JSON 데이터를 예쁘게 정렬하거나 압축하고 유효성을 검사할 수 있는 전문 도구입니다. 복잡한 데이터 구조를 읽기 쉽게 만들고 구문 오류를 찾는 데 도움을 줍니다.",
+        usageContext: "API 응답 디버깅, 설정 파일 서식 지정 또는 팀원과 깔끔한 데이터 구조를 공유할 때 완벽합니다.",
+        howToUse: "1. 원시 JSON 텍스트를 입력합니다.\n2. 'Format'을 클릭하여 정렬하거나 'Minify'를 클릭하여 압축합니다.\n3. 구문 오류에 대한 유효성 검사 표시를 확인합니다.",
+        faq: [{"q":"대용량 JSON 파일을 처리할 수 있나요?","a":"브라우저의 성능에 따라 수 메가바이트 크기까지 처리할 수 있습니다."}]
+      },
       passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
       textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Base64 エンコーダ / デコーダ", description: "オンラインでBase64をエンコード・デコード", seo: "高速で信頼性の高いBase64エンコーダおよびデコーダ。ブラウザで即座にテキストをBase64形式に変換または解読できます。" },
       colorconverter: { title: "カラーコード変換", description: "HEX、RGB、HSLカラーを変換", seo: "カラーコード形式をすばやく変換します。HEX、RGBを入力するか、カラーピッカーを使用して、即座にHSLおよびRGB値を取得します。" },
-      ruler: { title: "定規オンライン", description: "カード調整機能付きで画面上の長さを測定します。" },
-      wordcounter: { title: "文字数カウント", description: "リアルタイムで文字数や単語数をカウントします。" },
+      ruler: {
+        title: "定規オンライン",
+        description: "カード調整機能付きで画面上の長さを測定します。",
+        longDescription: "온라인 자는 화면에서 직접 물체를 측정할 수 있게 해주는 고정밀 측정 도구입니다. 0점 조절 기능과 신용카드와 같은 표준 물체를 이용한 보정 기능을 갖추고 있어 화면 해상도나 크기에 상관없이 정확한 측정이 가능합니다.",
+        usageContext: "디자이너, 취미 생활자 또는 실제 자가 없을 때 작은 물리적 물체나 화면 요소를 빠르게 측정해야 하는 모든 분께 완벽한 도구입니다.",
+        howToUse: "1. 선호하는 단위(cm 또는 인치)를 선택합니다.\n2. 신용카드와 같은 표준 물체의 너비를 입력하여 보정합니다.\n3. 자 위의 아무 곳이나 더블 클릭하여 0점을 설정합니다.\n4. 측정할 물체를 화면에 대고 측정합니다.",
+        faq: [{"q":"화면 자의 정확도는 어느 정도인가요?","a":"정확도는 보정에 달렸습니다. 화면 크기와 해상도가 다양하므로 실제 물체(신용카드 등)를 이용한 보정이 정밀한 측정에 필수적입니다."}]
+      },
+      wordcounter: {
+        title: "文字数カウント",
+        description: "リアルタイムで文字数や単語数をカウントします。",
+        longDescription: "글자 수 세기는 텍스트의 단어, 글자, 공백 수를 계산하는 실시간 텍스트 분석 도구입니다. 공백을 제외한 글자 수 및 특정 글자 위치 찾기 등 상세한 분석 결과도 제공합니다.",
+        usageContext: "에세이, 기사, 소셜 미디어 게시물 또는 메타 설명의 특정 길이 요구 사항을 맞춰야 하는 작가, 학생 및 SEO 전문가에게 필수적입니다.",
+        howToUse: "1. 입력 필드에 텍스트를 입력하거나 붙여넣습니다.\n2. 하단에서 자동 업데이트되는 카운트를 확인합니다.\n3. 글자 위치 찾기 기능을 사용하여 텍스트 내의 특정 인덱스를 찾습니다.",
+        faq: [{"q":"텍스트 크기에 제한이 있나요?","a":"저희 글자 수 세기는 수십만 자에 달하는 대용량 텍스트도 브라우저 내에서 효율적으로 처리할 수 있습니다."}]
+      },
       countdown: { title: "カウントダウン", description: "タイマーの設定、一時停止、再開が可能です。" },
       digitalclock: { title: "デジタル時計", description: "現在時間をリアルタイムで確認でき、全画面で表示可能です。" },
       screenlamp: { title: "スクリーンライト", description: "画面を単色の照明として使用できます。" },
-      qrgenerator: { title: "QR作成", description: "テキストやURLからQRコードを即座に作成します。" },
-      barcodegenerator: { title: "バーコード作成", description: "各種フォーマットのバーコードを作成します。" },
+      qrgenerator: {
+        title: "QR作成",
+        description: "テキストやURLからQRコードを即座に作成します。",
+        longDescription: "저희 QR 생성기를 사용하면 URL, 텍스트 및 기타 데이터 유형에 대한 고품질 QR 코드를 만들 수 있습니다. 물리적 콘텐츠와 디지털 콘텐츠 사이의 격차를 해소하는 데 사용하세요.",
+        usageContext: "마케팅 자료, 명함, 메뉴 및 이벤트 체크인에 적합합니다.",
+        howToUse: "1. 인코딩하려는 URL이나 텍스트를 입력합니다.\n2. 크기나 오류 수정을 조정합니다.\n3. 생성된 QR 코드 이미지를 다운로드합니다.",
+        faq: [{"q":"이 QR 코드는 영구적인가요?","a":"네, 정적 정보를 포함하고 있으며 연결된 콘텐츠가 유효한 한 영구적으로 작동합니다."}]
+      },
+      barcodegenerator: {
+        title: "バーコード作成",
+        description: "各種フォーマットのバーコードを作成します。",
+        longDescription: "바코드 생성기는 Code 128, EAN, UPC를 포함한 여러 전문 바코드 형식을 지원합니다. 다양한 비즈니스 요구에 적합한 산업 등급의 바코드 렌더링을 제공합니다.",
+        usageContext: "재고 관리, 제품 라벨링 및 소매 업무에 사용됩니다.",
+        howToUse: "1. 바코드 종류(예: Code 128)를 선택합니다.\n2. 인코딩할 데이터를 입력합니다.\n3. 생성된 고해상도 바코드 이미지를 다운로드합니다.",
+        faq: [{"q":"어떤 형식을 사용할 수 있나요?","a":"Code 128, EAN-13, UPC-A 및 여러 형식을 지원합니다."}]
+      },
       dummytext: { title: "ダミーテキスト", description: "プレースホルダー用の文章を生成します。" },
     },
     common: {

@@ -1,29 +1,41 @@
 import { LEGAL_TEXTS } from "@/features/tools/legal";
+import { getCommonText } from "@/features/tools/copy";
 import type { Locale } from "@/lib/site";
 import Link from "next/link";
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const legal = LEGAL_TEXTS[locale as Locale] || LEGAL_TEXTS.en;
+  const validLocale = locale as Locale;
+  const legal = LEGAL_TEXTS[validLocale] || LEGAL_TEXTS.en;
+  const common = getCommonText(validLocale);
 
   return (
-    <div className="tool-stack" style={{ maxWidth: "800px", margin: "0 auto", padding: "3rem 1.5rem" }}>
-      <header style={{ marginBottom: "3rem", textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: 800, color: "var(--accent)", marginBottom: "1rem" }}>{legal.about.title}</h1>
-        <div style={{ width: "60px", height: "4px", background: "var(--accent)", margin: "0 auto", borderRadius: "2px" }}></div>
-      </header>
+    <div className="content-page-wrapper" style={{ maxWidth: "900px", margin: "0 auto", width: "100%" }}>
+      <main className="tool-main-content">
+        <header className="tool-header" style={{ marginBottom: "2.5rem" }}>
+          <nav style={{ marginBottom: "0.5rem" }}>
+            <Link className="back-link" href={`/${locale}`}>
+              ← {common.backToTools}
+            </Link>
+          </nav>
+          <div className="tool-badge">ABOUT</div>
+          <h1 style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>{legal.about.title}</h1>
+        </header>
 
-      <div className="tool-output-card" style={{ padding: "2.5rem", lineHeight: "1.8", color: "var(--text)" }}>
-        {legal.about.content.map((paragraph, i) => (
-          <p key={i} style={{ marginBottom: "1.5rem", fontSize: "1.1rem" }}>{paragraph}</p>
-        ))}
-      </div>
+        <section className="legal-content" style={{ lineHeight: "1.8" }}>
+          {legal.about.content.map((paragraph, i) => (
+            <p key={i} style={{ marginBottom: "1.5rem", fontSize: "1.1rem", color: "var(--text)" }}>
+              {paragraph}
+            </p>
+          ))}
+        </section>
 
-      <footer style={{ marginTop: "3rem", textAlign: "center" }}>
-        <Link href={`/${locale}`} className="tool-button secondary">
-          Back to Home
-        </Link>
-      </footer>
+        <footer style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid var(--line)", textAlign: "center" }}>
+          <Link href={`/${locale}`} className="tool-button">
+            {common.backToTools}
+          </Link>
+        </footer>
+      </main>
     </div>
   );
 }
