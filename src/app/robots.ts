@@ -6,7 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "/sitemap.xml",
+    sitemap: "https://www.apps24.io/sitemap.xml",
   };
 }
-
