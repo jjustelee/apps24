@@ -90,26 +90,28 @@ export function RulerTool({ locale, tool }: ToolRendererProps) {
 
   useEffect(() => {
     const handleResize = () => {
-      if (isFullscreen) {
-        setStageSize({ width: window.innerWidth, height: window.innerHeight });
-      }
+      const newWidth = isFullscreen ? window.innerWidth : Math.min(MAX_STAGE_WIDTH, window.innerWidth - (window.innerWidth < 640 ? 32 : 64));
+      const newHeight = isFullscreen ? window.innerHeight : 400; // Fixed height or could be dynamic
+
+      setStageSize({ width: newWidth, height: newHeight });
+      
+      // Keep origin within visible bounds
+      setOrigin(prev => ({
+        x: Math.min(prev.x, newWidth - 20),
+        y: Math.min(prev.y, newHeight - 20)
+      }));
     };
 
-    if (isFullscreen) {
-      // Save current size BEFORE switching to fullscreen dimensions
-      preFsSizeRef.current = { width: stageSize.width, height: stageSize.height };
-      
-      handleResize();
-      window.addEventListener("resize", handleResize);
-    } else {
-      // Restore the exact size from before fullscreen
-      setStageSize({
-        width: Math.min(MAX_STAGE_WIDTH, preFsSizeRef.current.width),
-        height: preFsSizeRef.current.height
-      });
-    }
+    // Initial sizing
+    handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("fullscreenchange", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("fullscreenchange", handleResize);
+    };
   }, [isFullscreen]);
 
   useEffect(() => {
