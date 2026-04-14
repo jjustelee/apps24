@@ -8,17 +8,26 @@ import { Copy, RefreshCw, AlertCircle } from "lucide-react";
 // Helper functions
 function hexToRgb(hex: string) {
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  if (!result && hex.length === 4) {
-    result = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(hex);
-    if (result) {
-      result = [result[0], result[1]+result[1], result[2]+result[2], result[3]+result[3]];
-    }
+  if (result) {
+    return {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    };
   }
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+  
+  // Try 3-digit hex
+  const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  const match = shorthandRegex.exec(hex);
+  if (match) {
+    return {
+      r: parseInt(match[1] + match[1], 16),
+      g: parseInt(match[2] + match[2], 16),
+      b: parseInt(match[3] + match[3], 16)
+    };
+  }
+  
+  return null;
 }
 
 function rgbToHsl(r: number, g: number, b: number) {

@@ -6,7 +6,9 @@ export type ToolCategory =
   | "time"
   | "generator"
   | "display"
-  | "utility";
+  | "utility"
+  | "image"
+  | "security";
 
 export type ToolStatus = "stable" | "beta" | "hidden";
 
