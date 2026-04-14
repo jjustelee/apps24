@@ -316,7 +316,7 @@ export function RulerTool({ locale, tool }: ToolRendererProps) {
         <canvas
           ref={canvasRef}
           style={{ cursor: "crosshair", display: "block", width: "100%", height: "100%" }}
-          onPointerDown={(e) => {
+          onDoubleClick={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             setOrigin({ x: e.clientX - rect.left, y: e.clientY - rect.top });
           }}
