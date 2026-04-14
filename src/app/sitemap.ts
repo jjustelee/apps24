@@ -13,11 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  const contactEntries = LOCALES.map((locale) => ({
-    url: getLocalizedUrl(locale, "/contact"),
-    lastModified: new Date(),
-  }));
+  const legalEntries = LOCALES.flatMap((locale) => [
+    { url: getLocalizedUrl(locale, "/about"), lastModified: new Date() },
+    { url: getLocalizedUrl(locale, "/privacy"), lastModified: new Date() },
+    { url: getLocalizedUrl(locale, "/terms"), lastModified: new Date() },
+  ]);
 
-  return [...homeEntries, ...contactEntries, ...toolEntries];
+  return [...homeEntries, ...contactEntries, ...legalEntries, ...toolEntries];
 }
 

@@ -22,11 +22,13 @@ export function isLocale(value: string): value is Locale {
 }
 
 export function getSiteUrl() {
-  const envUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "");
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (envUrl) return envUrl;
 
-  return envUrl || "http://localhost:3000";
+  // Fallback to production domain to avoid Vercel preview/deployment URLs in Sitemap
+  return process.env.NODE_ENV === "production" 
+    ? "https://www.apps24.io" 
+    : "http://localhost:3000";
 }
 
 export function getLocalizedPath(locale: Locale, path = "") {
