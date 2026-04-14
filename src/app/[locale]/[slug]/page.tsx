@@ -38,6 +38,7 @@ export async function generateMetadata({
     alternates: buildLocaleAlternates(locale as Locale, `/${slug}`),
     title: text.title,
     description: text.description,
+    keywords: tool.keywords,
   };
 }
 
@@ -69,31 +70,51 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
         }
       : undefined;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": text.title,
+    "description": text.description,
+    "applicationCategory": tool.category,
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
-    <ToolShell
-      locale={validLocale}
-      tool={tool}
-      title={text.title}
-      description={text.description}
-      seo={text.seo}
-    >
-      {Renderer ? (
-        <Renderer
-          locale={validLocale}
-          tool={tool}
-          searchParams={resolvedSearchParams}
-          toolData={toolData}
-        />
-      ) : (
-        <div className="empty-state">
-          <strong>Implementation not added yet.</strong>
-          <span>
-            Add <code>{tool.implementationKey}</code> to{" "}
-            <code>src/features/tools/implementations</code> and register it in the
-            renderer map.
-          </span>
-        </div>
-      )}
-    </ToolShell>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ToolShell
+        locale={validLocale}
+        tool={tool}
+        title={text.title}
+        description={text.description}
+        seo={text.seo}
+      >
+        {Renderer ? (
+          <Renderer
+            locale={validLocale}
+            tool={tool}
+            searchParams={resolvedSearchParams}
+            toolData={toolData}
+          />
+        ) : (
+          <div className="empty-state">
+            <strong>Implementation not added yet.</strong>
+            <span>
+              Add <code>{tool.implementationKey}</code> to{" "}
+              <code>src/features/tools/implementations</code> and register it in the
+              renderer map.
+            </span>
+          </div>
+        )}
+      </ToolShell>
+    </>
   );
 }
