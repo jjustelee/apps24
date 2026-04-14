@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
   description:
     "A multilingual utility platform for simple tools, search traffic, and future monetization.",
+  other: {
+    "google-adsense-account": "ca-pub-XXXXXXXXXXXXXXX",
+  },
 };
 
 type RootLayoutProps = {

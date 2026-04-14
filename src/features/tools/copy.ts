@@ -89,6 +89,11 @@ type CommonText = {
 const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: CommonText }> = {
   en: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Base64 Encoder & Decoder", description: "Encode and Decode Base64 Online", seo: "Fast and reliable Base64 encoder and decoder. Convert text to Base64 format and decode Base64 strings instantly in your browser." },
       colorconverter: { title: "Color Code Converter", description: "Convert HEX, RGB, and HSL Colors", seo: "Quickly convert color code formats. Input HEX, RGB, or use the color picker to instantly get HSL and RGB values with our browser-based tool." },
       ruler: { title: "Online Ruler", description: "Measure screen distances with zero-point placement, credit-card calibration, and cm/inch toggles." },
@@ -181,6 +186,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   ko: {
     tools: {
+      imagecompressor: { title: "이미지 압축기", description: "이미지 용량을 실시간으로 압축하세요.", seo: "이미지 압축 및 WebP 변환." },
+      caseconverter: { title: "대소문자 변환기", description: "텍스트 대소문자를 즉시 변환하세요.", seo: "대소문자 변환 및 텍스트 가공." },
+      jsonformatter: { title: "JSON 포맷터", description: "JSON 코드를 예쁘게 정렬하고 검증하세요.", seo: "JSON 포맷팅 및 유효성 검사." },
+      passwordgenerator: { title: "비밀번호 생성기", description: "강력하고 안전한 비밀번호를 생성하세요.", seo: "무작위 비밀번호 생성기." },
+      textdiffchecker: { title: "텍스트 비교기", description: "두 텍스트의 차이점을 한눈에 확인하세요.", seo: "텍스트 디프 체크 및 비교." },
       base64encoder: { title: "Base64 인코더 / 디코더", description: "온라인 Base64 텍스트 인코딩 및 디코딩", seo: "빠르고 안정적인 Base64 인코더 및 디코더입니다. 브라우저에서 텍스트를 즉시 Base64로 변환하거나 해독해보세요." },
       colorconverter: { title: "색상 코드 변환기", description: "HEX, RGB, HSL 색상 코드 실시간 변환", seo: "HEX, RGB 코드를 입력하거나 컬러 피커로 색을 선택해 HSL 등의 값을 즉시 확인하고 복사하세요." },
       ruler: { title: "온라인 자", description: "영점 설정, 신용카드 보정, cm/inch 전환으로 화면 길이를 측정합니다." },
@@ -273,6 +283,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   fr: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Encodeur / Décodeur Base64", description: "Encoder et Décoder Base64 en ligne", seo: "Encodeur et décodeur Base64 rapide et fiable. Convertissez instantanément du texte en Base64 dans votre navigateur." },
       colorconverter: { title: "Convertisseur de Code Couleur", description: "Convertir HEX, RGB et HSL", seo: "Convertissez rapidement les formats de codes couleurs. Entrez HEX, RGB ou utilisez le sélecteur de couleurs pour obtenir instantanément des valeurs HSL." },
       ruler: { title: "Règle en ligne", description: "Mesurez les distances à l'écran avec étalonnage par carte de crédit." },
@@ -365,6 +380,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   ja: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Base64 エンコーダ / デコーダ", description: "オンラインでBase64をエンコード・デコード", seo: "高速で信頼性の高いBase64エンコーダおよびデコーダ。ブラウザで即座にテキストをBase64形式に変換または解読できます。" },
       colorconverter: { title: "カラーコード変換", description: "HEX、RGB、HSLカラーを変換", seo: "カラーコード形式をすばやく変換します。HEX、RGBを入力するか、カラーピッカーを使用して、即座にHSLおよびRGB値を取得します。" },
       ruler: { title: "定規オンライン", description: "カード調整機能付きで画面上の長さを測定します。" },
@@ -457,6 +477,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   zh: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Base64 编码 / 解码器", description: "在线进行Base64编码与解码", seo: "快速可靠的Base64编码和解码器。在浏览器中即时将文本转换为Base64格式并解码。" },
       colorconverter: { title: "颜色代码转换器", description: "转换 HEX、RGB 和 HSL 颜色", seo: "快速转换颜色代码格式。输入HEX、RGB或使用颜色选择器即时获取HSL和RGB值。" },
       ruler: { title: "在线标尺", description: "使用信用卡校准测量屏幕距离。" },
@@ -549,6 +574,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   "zh-TW": {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Base64 編碼 / 解碼器", description: "線上進行Base64編碼與解碼", seo: "快速可靠的Base64編碼和解碼器。在瀏覽器中即時將文本轉換為Base64格式並解碼。" },
       colorconverter: { title: "顏色代碼轉換器", description: "轉換 HEX、RGB 和 HSL 顏色", seo: "快速轉換顏色代碼格式。輸入HEX、RGB或使用顏色選擇器即時獲取HSL和RGB值。" },
       ruler: { title: "線上尺子", description: "使用信用卡校準測量螢幕距離。" },
@@ -641,6 +671,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   pt: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Codificador / Decodificador Base64", description: "Codificar e Decodificar Base64 Online", seo: "Codificador e decodificador Base64 rápido e confiável. Converta texto para Base64 e decodifique no seu navegador." },
       colorconverter: { title: "Conversor de Código de Cor", description: "Converter cores HEX, RGB e HSL", seo: "Converta rapidamente formatos de código de cores. Insira HEX ou RGB para obter instantaneamente valores HSL no navegador." },
       ruler: { title: "Régua Online", description: "Meça distâncias na tela com calibração." },
@@ -733,6 +768,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   es: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Codificador / Decodificador Base64", description: "Codificar y Decodificar Base64 en Línea", seo: "Codificador y decodificador Base64 rápido y confiable. Convierta texto al instante." },
       colorconverter: { title: "Conversor de Código de Color", description: "Convertir colores HEX, RGB y HSL", seo: "Convierta rápidamente formatos de código de colores. Introduzca HEX, RGB o elija un color para sus valores HSL." },
       ruler: { title: "Regla en Línea", description: "Mida distancias en pantalla con calibración." },
@@ -825,6 +865,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   de: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "Base64 Encoder / Decoder", description: "Base64 online verschlüsseln und entschlüsseln", seo: "Schneller und zuverlässiger Base64-Encoder und -Decoder. Konvertieren Sie Text im Browser sofort." },
       colorconverter: { title: "Farbcode-Konverter", description: "HEX, RGB und HSL konvertieren", seo: "Farbcodeformate schnell konvertieren. Geben Sie HEX oder RGB ein, um sofort HSL-Werte zu erhalten." },
       ruler: { title: "Online-Lineal", description: "Messen Sie Bildschirmabstände mit Kalibrierung." },
@@ -917,6 +962,11 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
   },
   ar: {
     tools: {
+      imagecompressor: { title: "Image Compressor", description: "Compress images online", seo: "Compress and convert to webp." },
+      caseconverter: { title: "Case Converter", description: "Change text case", seo: "Convert text to uppercase or lowercase." },
+      jsonformatter: { title: "JSON Formatter", description: "Format and validate JSON", seo: "Format invalid JSON." },
+      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
       base64encoder: { title: "تشفير / فك تشفير Base64", description: "تشفير وفك تشفير Base64 عبر الإنترنت", seo: "مشفر ومفكك Base64 سريع وموثوق. قم بتحويل النص إلى Base64 وفك التشفير على الفور." },
       colorconverter: { title: "محول كود الألوان", description: "تحويل ألوان HEX و RGB و HSL", seo: "تحويل تنسيقات رموز الألوان بسرعة. أدخل HEX أو RGB للحصول على قيم HSL على الفور." },
       ruler: { title: "مسطرة عبر الإنترنت", description: "قياس المسافات على الشاشة مع المعايرة." },
