@@ -4,6 +4,8 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { getCommonText } from "@/features/tools/copy";
+import type { Locale } from "@/lib/site";
 
 type BarcodeFormatOption = {
   label: string;
@@ -33,10 +35,14 @@ function getFormatDescription(format: string, label: string) {
   return FORMAT_DESCRIPTIONS[format] ?? `Create a ${label} barcode format.`;
 }
 
+const STORAGE_KEY_FORMAT = "apps24.barcode.format";
+
 export function BarcodeGeneratorTool({
+  locale,
   tool,
   toolData,
 }: ToolRendererProps) {
+  const commonText = getCommonText(locale as Locale);
   const data = toolData as BarcodeToolData | undefined;
   const isQrTool = tool.slug === "qrgenerator";
   const availableFormats = useMemo(() => {
@@ -49,15 +55,33 @@ export function BarcodeGeneratorTool({
   }, [data?.formats, isQrTool]);
 
   const [format, setFormat] = useState(
-    availableFormats[0]?.value ?? (isQrTool ? "qrcode" : "code128"),
+    isQrTool ? "qrcode" : "code128"
   );
   const [text, setText] = useState("");
   const [image, setImage] = useState("");
   const [requestError, setRequestError] = useState("");
   const [dirty, setDirty] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (isQrTool) {
+      setSettingsLoaded(true);
+      return;
+    }
+    const saved = localStorage.getItem(STORAGE_KEY_FORMAT);
+    if (saved) setFormat(saved);
+    setSettingsLoaded(true);
+  }, [isQrTool]);
+
+  useEffect(() => {
+    if (settingsLoaded && !isQrTool) {
+      localStorage.setItem(STORAGE_KEY_FORMAT, format);
+    }
+  }, [format, settingsLoaded, isQrTool]);
+  
   const selectedFormat =
     availableFormats.find((item) => item.value === format)?.value ??
-    availableFormats[0]?.value ??
     (isQrTool ? "qrcode" : "code128");
 
   useEffect(() => {
@@ -103,6 +127,21 @@ export function BarcodeGeneratorTool({
   const previewImage = text.trim() ? image : "";
   const statusMessage = text.trim() ? requestError : emptyMessage;
 
+  const copyToClipboard = async () => {
+    if (!previewImage) return;
+    try {
+      const response = await fetch(previewImage);
+      const blob = await response.blob();
+      await navigator.clipboard.write([
+        new ClipboardItem({ [blob.type]: blob })
+      ]);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error("Failed to copy image", e);
+    }
+  };
+
   return (
     <div className="tool-stack">
       <div className="tool-form">
@@ -147,11 +186,39 @@ export function BarcodeGeneratorTool({
       <div className="tool-output">
         <div className="tool-output-card" aria-live="polite">
           {previewImage ? (
-            <img
-              src={previewImage}
-              alt={`${description} preview`}
-              style={{ display: "block", maxWidth: "100%", height: "auto" }}
-            />
+            <div 
+              style={{ position: "relative", display: "inline-block", cursor: "pointer", maxWidth: "100%" }}
+              onClick={copyToClipboard}
+              title="Click to copy image"
+            >
+              <img
+                src={previewImage}
+                alt={`${description} preview`}
+                style={{ 
+                  display: "block", 
+                  maxWidth: "100%", 
+                  width: isQrTool ? "250px" : "auto",
+                  aspectRatio: isQrTool ? "1 / 1" : "auto",
+                  objectFit: "contain"
+                }}
+              />
+              <div 
+                style={{
+                  position: "absolute",
+                  bottom: "8px",
+                  right: "8px",
+                  background: "rgba(0,0,0,0.6)",
+                  color: "#fff",
+                  padding: "4px 10px",
+                  borderRadius: "12px",
+                  fontSize: "0.8rem",
+                  opacity: copied ? 1 : 0.6,
+                  transition: "opacity 0.2s"
+                }}
+              >
+                {copied ? commonText.copied : "Click to Copy"}
+              </div>
+            </div>
           ) : (
             <p className="tool-muted">
               {isQrTool

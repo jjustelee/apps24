@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { getCommonText } from "@/features/tools/copy";
+import type { Locale } from "@/lib/site";
 
 const DEFAULT_CARD_WIDTH_CM = 8.56;
 const REFERENCE_CARD_WIDTH_PX = 324;
-const MIN_MEASURE_WIDTH = 80;
-const MAX_MEASURE_WIDTH = 1200;
+const MIN_STAGE_HEIGHT = 400;
+const MAX_STAGE_WIDTH = 1200;
 const CALIBRATION_STORAGE_KEY = "apps24:ruler:cardWidthCm";
 const UNIT_STORAGE_KEY = "apps24:ruler:unit";
 
@@ -20,45 +22,36 @@ type Point = {
   y: number;
 };
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
 function formatValue(value: number) {
   return Number.isFinite(value) ? value.toFixed(2) : "0.00";
 }
 
-function getUnitLabel(unit: "cm" | "in") {
-  return unit === "cm" ? "cm" : "in";
-}
-
-export function RulerTool({ tool }: ToolRendererProps) {
+export function RulerTool({ locale, tool }: ToolRendererProps) {
+  const common = getCommonText(locale as Locale);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
+  
   const [unit, setUnit] = useState<"cm" | "in">("cm");
-  const [stageSize, setStageSize] = useState<Size>({ width: 720, height: 420 });
-  const [origin, setOrigin] = useState<Point>({ x: 120, y: 210 });
-  const [measureWidth, setMeasureWidth] = useState(360);
+  const [stageSize, setStageSize] = useState<Size>({ width: 800, height: 500 });
+  const [origin, setOrigin] = useState<Point>({ x: 400, y: 250 });
   const [calibrationInput, setCalibrationInput] = useState(String(DEFAULT_CARD_WIDTH_CM));
   const [cardWidthCm, setCardWidthCm] = useState(DEFAULT_CARD_WIDTH_CM);
-  const [draggingMeasure, setDraggingMeasure] = useState(false);
+  const [draggingResize, setDraggingResize] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Store pre-fullscreen size to restore it correctly
+  const preFsSizeRef = useRef<Size>({ width: 800, height: 500 });
 
   const pixelsPerCm = REFERENCE_CARD_WIDTH_PX / cardWidthCm;
   const pixelsPerIn = pixelsPerCm * 2.54;
-  const measuredValue = unit === "cm" ? measureWidth / pixelsPerCm : measureWidth / pixelsPerIn;
-  const measureStart = clamp(origin.x - measureWidth, 0, stageSize.width);
-  const measureEnd = clamp(origin.x + measureWidth, 0, stageSize.width);
-  const handleLeft = clamp(measureEnd - 9, 8, stageSize.width - 26);
-  const handleTop = clamp(origin.y - 9, 8, stageSize.height - 26);
 
   useEffect(() => {
     try {
       const storedUnit = window.localStorage.getItem(UNIT_STORAGE_KEY);
-      if (storedUnit === "cm" || storedUnit === "in") {
-        setUnit(storedUnit);
-      }
+      if (storedUnit === "cm" || storedUnit === "in") setUnit(storedUnit);
 
       const storedCardWidth = Number(window.localStorage.getItem(CALIBRATION_STORAGE_KEY));
       if (Number.isFinite(storedCardWidth) && storedCardWidth > 0) {
@@ -71,354 +64,295 @@ export function RulerTool({ tool }: ToolRendererProps) {
   }, []);
 
   useEffect(() => {
-    if (!settingsLoaded) {
-      return;
-    }
-
-    try {
-      window.localStorage.setItem(CALIBRATION_STORAGE_KEY, String(cardWidthCm));
-      window.localStorage.setItem(UNIT_STORAGE_KEY, unit);
-    } catch {
-      // Ignore storage failures and keep the ruler usable.
-    }
+    if (!settingsLoaded) return;
+    window.localStorage.setItem(CALIBRATION_STORAGE_KEY, String(cardWidthCm));
+    window.localStorage.setItem(UNIT_STORAGE_KEY, unit);
   }, [cardWidthCm, settingsLoaded, unit]);
 
   useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) {
+    if (!isFullscreen) {
+      setShowControls(true);
       return;
     }
 
-    const resize = () => {
-      const rect = stage.getBoundingClientRect();
-      setStageSize({
-        width: Math.max(320, Math.round(rect.width)),
-        height: Math.max(360, Math.round(rect.height)),
-      });
-      setOrigin((current) => ({
-        x: clamp(current.x, 0, rect.width),
-        y: clamp(current.y, 0, rect.height),
-      }));
+    const handleMouseMove = () => {
+      setShowControls(true);
+      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+      controlsTimeoutRef.current = setTimeout(() => setShowControls(false), 2500);
     };
 
-    resize();
-    const observer = new ResizeObserver(resize);
-    observer.observe(stage);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+    };
+  }, [isFullscreen]);
 
-    return () => observer.disconnect();
-  }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      if (isFullscreen) {
+        setStageSize({ width: window.innerWidth, height: window.innerHeight });
+      }
+    };
+
+    if (isFullscreen) {
+      // Save current size BEFORE switching to fullscreen dimensions
+      preFsSizeRef.current = { width: stageSize.width, height: stageSize.height };
+      
+      handleResize();
+      window.addEventListener("resize", handleResize);
+    } else {
+      // Restore the exact size from before fullscreen
+      setStageSize({
+        width: Math.min(MAX_STAGE_WIDTH, preFsSizeRef.current.width),
+        height: preFsSizeRef.current.height
+      });
+    }
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isFullscreen]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      return;
-    }
+    if (!canvas) return;
 
     const context = canvas.getContext("2d");
-    if (!context) {
-      return;
-    }
+    if (!context) return;
 
     const ratio = window.devicePixelRatio || 1;
     canvas.width = Math.round(stageSize.width * ratio);
     canvas.height = Math.round(stageSize.height * ratio);
-    canvas.style.width = `${stageSize.width}px`;
-    canvas.style.height = `${stageSize.height}px`;
+    
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     context.clearRect(0, 0, stageSize.width, stageSize.height);
 
+    const currentPixelsPerUnit = unit === "cm" ? pixelsPerCm : pixelsPerIn;
+    const minorStep = currentPixelsPerUnit / 10;
+
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, stageSize.width, stageSize.height);
+    
+    context.strokeStyle = "#e5e7eb";
+    context.lineWidth = 0.5;
 
-    context.strokeStyle = "#eef1f6";
-    context.lineWidth = 1;
-    for (let x = 0; x <= stageSize.width; x += 20) {
-      context.beginPath();
-      context.moveTo(x, 0);
-      context.lineTo(x, stageSize.height);
-      context.stroke();
+    const gridOffsetX = origin.x % currentPixelsPerUnit;
+    for (let x = gridOffsetX; x <= stageSize.width; x += currentPixelsPerUnit) {
+      context.beginPath(); context.moveTo(x, 0); context.lineTo(x, stageSize.height); context.stroke();
     }
-    for (let y = 0; y <= stageSize.height; y += 20) {
-      context.beginPath();
-      context.moveTo(0, y);
-      context.lineTo(stageSize.width, y);
-      context.stroke();
+    const gridOffsetY = origin.y % currentPixelsPerUnit;
+    for (let y = gridOffsetY; y <= stageSize.height; y += currentPixelsPerUnit) {
+      context.beginPath(); context.moveTo(0, y); context.lineTo(stageSize.width, y); context.stroke();
     }
 
-    context.strokeStyle = "#0f62fe";
-    context.lineWidth = 4;
-    context.beginPath();
-    context.moveTo(measureStart, origin.y);
-    context.lineTo(measureEnd, origin.y);
-    context.stroke();
+    const drawAxis = (isVertical: boolean) => {
+      const length = isVertical ? stageSize.height : stageSize.width;
+      const start = isVertical ? -origin.y : -origin.x;
+      const end = isVertical ? stageSize.height - origin.y : stageSize.width - origin.x;
 
-    context.fillStyle = "#0f62fe";
+      context.strokeStyle = "#374151";
+      context.lineWidth = 1;
+      context.beginPath();
+      if (isVertical) {
+        context.moveTo(origin.x, 0); context.lineTo(origin.x, stageSize.height);
+      } else {
+        context.moveTo(0, origin.y); context.lineTo(stageSize.width, origin.y);
+      }
+      context.stroke();
+
+      for (let px = start; px <= end; px += minorStep) {
+        const tickIndex = Math.round(px / minorStep);
+        if (tickIndex === 0) continue;
+
+        const isMajor = tickIndex % 10 === 0;
+        const isHalf = tickIndex % 5 === 0;
+        const tickLen = isMajor ? 30 : isHalf ? 20 : 10;
+        
+        const pos = (isVertical ? origin.y : origin.x) + px;
+        if (pos < 0 || pos > (isVertical ? stageSize.height : stageSize.width)) continue;
+        
+        context.beginPath();
+        if (isVertical) {
+          context.moveTo(origin.x - tickLen / 2, pos);
+          context.lineTo(origin.x + tickLen / 2, pos);
+        } else {
+          context.moveTo(pos, origin.y - tickLen / 2);
+          context.lineTo(pos, origin.y + tickLen / 2);
+        }
+        context.stroke();
+
+        if (isMajor) {
+          context.fillStyle = "#111827";
+          context.font = "500 11px Inter, sans-serif";
+          const val = Math.abs(tickIndex / 10);
+          if (isVertical) {
+            context.textAlign = "right";
+            context.fillText(String(val), origin.x - 20, pos + 4);
+          } else {
+            context.textAlign = "center";
+            context.fillText(String(val), pos, origin.y - 20);
+          }
+        }
+      }
+    };
+
+    drawAxis(false);
+    drawAxis(true);
+
+    context.fillStyle = "#dc2626";
+    context.font = "bold 14px Inter, sans-serif";
+    context.textAlign = "left";
+    context.fillText("0", origin.x + 10, origin.y - 10);
+    
     context.beginPath();
-    context.arc(origin.x, origin.y, 7, 0, Math.PI * 2);
-    context.arc(measureStart, origin.y, 6, 0, Math.PI * 2);
-    context.arc(measureEnd, origin.y, 6, 0, Math.PI * 2);
+    context.arc(origin.x, origin.y, 4, 0, Math.PI * 2);
     context.fill();
 
-    context.strokeStyle = "#111827";
-    context.lineWidth = 1;
-    const tickUnitPx = unit === "cm" ? pixelsPerCm : pixelsPerIn;
-    const minorStep = tickUnitPx / 10;
-    const firstTickIndex = Math.ceil((measureStart - origin.x) / minorStep);
-    const lastTickIndex = Math.floor((measureEnd - origin.x) / minorStep);
-
-    for (let tickIndex = firstTickIndex; tickIndex <= lastTickIndex; tickIndex += 1) {
-      const x = origin.x + tickIndex * minorStep;
-      const isMajor = tickIndex % 10 === 0;
-      const isHalf = tickIndex % 5 === 0;
-      const isZero = tickIndex === 0;
-      const tickHeight = isZero ? 40 : isMajor ? 32 : isHalf ? 22 : 14;
-      context.beginPath();
-      context.moveTo(x, origin.y - tickHeight);
-      context.lineTo(x, origin.y + tickHeight);
-      context.stroke();
-
-      if (isMajor) {
-        context.fillStyle = "#111827";
-        context.font = "12px sans-serif";
-        if (tickIndex === 0) {
-          context.textAlign = "center";
-          context.fillText("0", x, origin.y - tickHeight - 8);
-        } else if (tickIndex < 0) {
-          context.textAlign = "right";
-          context.fillText(String(tickIndex / 10), x - 4, origin.y - tickHeight - 8);
-        } else {
-          context.textAlign = "left";
-          context.fillText(String(tickIndex / 10), x + 4, origin.y - tickHeight - 8);
-        }
-      }
-    }
-    context.textAlign = "left";
-
-    context.fillStyle = "#111827";
-    context.font = "700 18px sans-serif";
-    context.fillText(
-      `${formatValue(measuredValue)} ${getUnitLabel(unit)}`,
-      clamp(origin.x + 14, 12, stageSize.width - 130),
-      clamp(origin.y + 58, 32, stageSize.height - 16),
-    );
-  }, [
-    measureEnd,
-    measureStart,
-    measuredValue,
-    pixelsPerCm,
-    pixelsPerIn,
-    origin.x,
-    origin.y,
-    stageSize.height,
-    stageSize.width,
-    unit,
-  ]);
+  }, [origin, stageSize, unit, pixelsPerCm, pixelsPerIn]);
 
   useEffect(() => {
-    const onMove = (event: PointerEvent) => {
-      if (draggingMeasure) {
-        const rect = stageRef.current?.getBoundingClientRect();
-        if (!rect) {
-          return;
-        }
-        const nextWidth = event.clientX - rect.left - origin.x;
-        setMeasureWidth(
-          clamp(
-            nextWidth,
-            MIN_MEASURE_WIDTH,
-            Math.max(MIN_MEASURE_WIDTH, Math.min(MAX_MEASURE_WIDTH, stageSize.width - origin.x)),
-          ),
-        );
+    const onMove = (e: PointerEvent) => {
+      if (draggingResize && stageRef.current && !isFullscreen) {
+        const rect = stageRef.current.getBoundingClientRect();
+        const newWidth = Math.min(MAX_STAGE_WIDTH, Math.max(320, e.clientX - rect.left));
+        const newHeight = Math.max(MIN_STAGE_HEIGHT, e.clientY - rect.top);
+        setStageSize({ width: newWidth, height: newHeight });
       }
     };
-
-    const onUp = () => {
-      setDraggingMeasure(false);
-    };
-
+    const onUp = () => setDraggingResize(false);
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerup", onUp);
-
     return () => {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
     };
-  }, [draggingMeasure, origin.x, stageSize.width]);
+  }, [draggingResize, isFullscreen]);
 
   useEffect(() => {
-    const onFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement === stageRef.current);
-    };
-
-    document.addEventListener("fullscreenchange", onFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+    const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", onFsChange);
+    return () => document.removeEventListener("fullscreenchange", onFsChange);
   }, []);
 
-  const setZeroPoint = (event: ReactPointerEvent<HTMLCanvasElement>) => {
-    if (draggingMeasure) {
-      return;
-    }
-    setOrigin({
-      x: event.clientX - event.currentTarget.getBoundingClientRect().left,
-      y: event.clientY - event.currentTarget.getBoundingClientRect().top,
-    });
-  };
-
-  const toggleFullscreen = async () => {
-    if (!stageRef.current) {
-      return;
-    }
-
+  const toggleFs = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
-      return;
+    } else {
+      await stageRef.current?.requestFullscreen();
     }
-
-    await stageRef.current.requestFullscreen();
   };
 
   const calibrate = () => {
-    const nextWidth = Number(calibrationInput);
-    if (!Number.isFinite(nextWidth) || nextWidth <= 0) {
-      return;
+    const val = Number(calibrationInput);
+    if (val > 0) {
+      setCardWidthCm(val);
+      setCalibrationInput(formatValue(val));
     }
-
-    const normalizedWidth = Number(nextWidth.toFixed(2));
-    setCardWidthCm(normalizedWidth);
-    setCalibrationInput(formatValue(normalizedWidth));
   };
 
-  const resetCalibration = () => {
-    setCardWidthCm(DEFAULT_CARD_WIDTH_CM);
-    setCalibrationInput(formatValue(DEFAULT_CARD_WIDTH_CM));
-  };
+  const currentUnitLabel = unit === "cm" ? "CM" : "INCH";
 
   return (
     <div className="tool-stack">
-      <div className="tool-actions">
-        <button
-          className={`tool-button${unit === "cm" ? "" : " secondary"}`}
-          type="button"
-          onClick={() => setUnit("cm")}
-        >
-          Centimeters
-        </button>
-        <button
-          className={`tool-button${unit === "in" ? "" : " secondary"}`}
-          type="button"
-          onClick={() => setUnit("in")}
-        >
-          Inches
-        </button>
-        <button className="tool-button secondary" type="button" onClick={toggleFullscreen}>
-          {isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-        </button>
-      </div>
+      {!isFullscreen && (
+        <>
+          <div className="tool-output-card" style={{ border: "none", background: "transparent", padding: 0 }}>
+            <p className="tool-meta">{common.rulerHowTo}</p>
+            <h2 style={{ fontSize: "1.5rem", color: "var(--accent)", marginBottom: "1rem" }}>{tool.titleKey}</h2>
+            <ol className="ruler-guide-list" style={{ marginLeft: "1.5rem", lineHeight: "1.8", color: "var(--text)" }}>
+              <li>{common.rulerStep1}</li>
+              <li>{common.rulerStep2}</li>
+              <li>{common.rulerStep3}</li>
+            </ol>
+          </div>
 
-      <div className="tool-stat-grid" aria-live="polite">
-        <div className="tool-stat">
-          <strong>
-            {formatValue(measuredValue)} {getUnitLabel(unit)}
-          </strong>
-          <span>Measured length</span>
-        </div>
-        <div className="tool-stat">
-          <strong>{Math.round(measureWidth)} px</strong>
-          <span>Canvas pixels</span>
-        </div>
-        <div className="tool-stat">
-          <strong>{formatValue(cardWidthCm)} cm</strong>
-          <span>Calibration width</span>
-        </div>
-      </div>
+          <hr style={{ border: "none", borderTop: "1px dashed var(--line)", margin: "1rem 0" }} />
 
-      <div ref={stageRef} className="tool-canvas-wrap">
+          <div className="tool-form" style={{ textAlign: "center", maxWidth: "400px", margin: "0 auto" }}>
+            <div className="tool-field" style={{ marginBottom: "1.5rem" }}>
+              <div className="tool-badge" style={{ display: "inline-block", marginBottom: "1rem", background: "var(--accent)", color: "white", borderRadius: "20px", padding: "4px 12px", fontSize: "0.75rem", fontWeight: 700 }}>
+                Current Unit: {currentUnitLabel}
+              </div>
+              <label className="tool-label" htmlFor="ruler-card-width" style={{ display: "block" }}>{common.rulerEnterCardWidth} ({unit}):</label>
+              <p className="tool-note">{common.rulerExample}</p>
+              <input
+                id="ruler-card-width"
+                className="tool-input"
+                inputMode="decimal"
+                value={calibrationInput}
+                onChange={(e) => setCalibrationInput(e.target.value)}
+                style={{ textAlign: "center", fontSize: "1.5rem", fontWeight: 700 }}
+              />
+            </div>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button className="tool-button" onClick={calibrate}>{common.calibrate}</button>
+              <button className="tool-button secondary" onClick={() => setUnit(unit === "cm" ? "in" : "cm")}>
+                {common.changeTo} {unit === "cm" ? "inch" : "cm"}
+              </button>
+              <button className="tool-button secondary" onClick={toggleFs}>{common.fullscreen}</button>
+            </div>
+          </div>
+        </>
+      )}
+
+      <div 
+        ref={stageRef} 
+        className="tool-canvas-wrap" 
+        style={{ 
+          position: isFullscreen ? "fixed" : "relative", 
+          top: 0,
+          left: 0,
+          width: isFullscreen ? "100vw" : `${stageSize.width}px`,
+          height: isFullscreen ? "100vh" : `${stageSize.height}px`,
+          maxWidth: isFullscreen ? "none" : "100%",
+          margin: isFullscreen ? 0 : "2rem auto",
+          background: "white",
+          boxShadow: isFullscreen ? "none" : "var(--shadow)",
+          border: isFullscreen ? "none" : "1px solid var(--panel-border)",
+          borderRadius: isFullscreen ? 0 : "8px",
+          overflow: "hidden",
+          zIndex: isFullscreen ? 9999 : 1
+        }}
+      >
         <canvas
           ref={canvasRef}
-          className="tool-canvas"
-          aria-label={`Interactive ${tool.slug} canvas`}
-          onPointerDown={setZeroPoint}
-        />
-        <button
-          aria-label="Resize ruler measurement"
-          className="tool-resize-handle"
-          type="button"
-          style={{ left: handleLeft, top: handleTop, right: "auto", bottom: "auto" }}
-          onPointerDown={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            setDraggingMeasure(true);
+          style={{ cursor: "crosshair", display: "block", width: "100%", height: "100%" }}
+          onPointerDown={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            setOrigin({ x: e.clientX - rect.left, y: e.clientY - rect.top });
           }}
         />
-      </div>
 
-      <div className="tool-output-card">
-        <div className="ruler-guide">
-          <div>
-            <p className="tool-meta">How to Use the Online Ruler</p>
-            <h3 className="ruler-guide-title">Measure Objects with the Online Ruler</h3>
-            <p className="tool-note">Please calibrate the ruler before use.</p>
-          </div>
-
-          <ol className="ruler-guide-list">
-            <li>Place a credit card horizontally at the zero mark.</li>
-            <li>Enter the measured width of the card and click Calibrate.</li>
-            <li>Now you can measure the desired object.</li>
-          </ol>
-
-          <div className="ruler-guide-grid">
-            <div className="ruler-reference-card">
-              <div className="ruler-reference-card-visual">
-                <span
-                  className="tool-badge"
-                  style={{ background: "rgba(255,255,255,0.18)", color: "white" }}
-                >
-                  Card reference
-                </span>
-                <p style={{ margin: "20px 0 0", fontWeight: 700 }}>
-                  Enter the measured width in centimeters
-                </p>
-              </div>
+        {isFullscreen && (
+          <>
+            <div style={{ position: "absolute", top: "20px", left: "20px", background: "rgba(0,0,0,0.7)", color: "white", padding: "8px 16px", borderRadius: "20px", fontSize: "0.85rem", fontWeight: 600, opacity: showControls ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: "none" }}>
+              Unit: {currentUnitLabel}
             </div>
-
-            <form
-              className="tool-form ruler-guide-form"
-              onSubmit={(event) => {
-                event.preventDefault();
-                calibrate();
-              }}
-            >
-              <div className="tool-field">
-                <label className="tool-label" htmlFor="ruler-card-width">
-                  Enter credit card width (cm)
-                </label>
-                <input
-                  id="ruler-card-width"
-                  className="tool-input"
-                  inputMode="decimal"
-                  placeholder="10.4"
-                  value={calibrationInput}
-                  onChange={(event) => setCalibrationInput(event.target.value)}
-                />
-              </div>
-
-              <p className="tool-note">Example: If the width is 10.4 cm, enter 10.4.</p>
-
-              <button className="tool-button" type="submit">
-                Calibrate
+            <div style={{ position: "absolute", top: "20px", right: "20px", display: "flex", gap: "10px", opacity: showControls ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: showControls ? "auto" : "none" }}>
+              <button className="tool-button secondary" style={{ background: "rgba(255,255,255,0.9)", border: "none" }} onClick={() => setUnit(unit === "cm" ? "in" : "cm")}>
+                {unit.toUpperCase()}
               </button>
-
-              <button className="tool-button secondary" type="button" onClick={resetCalibration}>
-                Reset calibration
+              <button className="tool-button" onClick={toggleFs}>
+                {common.exitFullscreen}
               </button>
-            </form>
+            </div>
+          </>
+        )}
+
+        {!isFullscreen && (
+          <div
+            onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setDraggingResize(true); }}
+            style={{ position: "absolute", bottom: 0, right: 0, width: "20px", height: "20px", background: "#3b82f6", cursor: "nwse-resize", zIndex: 10, borderRadius: "4px 0 0 0", display: "flex", alignItems: "center", justifyContent: "center" }}
+          >
+            <div style={{ width: "4px", height: "4px", background: "white", borderRadius: "50%" }}></div>
           </div>
-
-          <p className="tool-note">
-            Tip: Use the blue handle at the bottom-right corner of the canvas to resize it.
-          </p>
-        </div>
+        )}
       </div>
+      
+      {!isFullscreen && (
+        <p className="tool-note" style={{ textAlign: "center", marginTop: "1rem" }}>
+          {common.rulerTip}
+        </p>
+      )}
     </div>
   );
 }

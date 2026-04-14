@@ -19,10 +19,23 @@ export async function generateMetadata({
     return {};
   }
 
+  const commonText = await import("@/features/tools/copy").then((m) =>
+    m.getCommonText(locale as Locale)
+  );
+
   return {
     alternates: buildLocaleAlternates(locale),
-    title: "Fast tools",
-    description: "Simple multilingual utilities for quick tasks.",
+    title: {
+      template: "%s | apps24",
+      default: commonText.homeTitle || "apps24 - Fast Multilingual Tools",
+    },
+    description: commonText.homeSubtitle || "Simple multilingual utilities for quick tasks.",
+    keywords: ["online tools", "utilities", "free tools", "web apps"],
+    openGraph: {
+      title: "apps24",
+      description: commonText.homeSubtitle,
+      siteName: "apps24",
+    },
   };
 }
 

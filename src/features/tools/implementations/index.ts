@@ -1,12 +1,6 @@
+import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import type { ToolDefinition } from "@/features/tools/types";
-import { BarcodeGeneratorTool } from "@/features/tools/implementations/barcode-generator";
-import { CountdownTool } from "@/features/tools/implementations/countdown";
-import { DigitalClockTool } from "@/features/tools/implementations/digitalclock";
-import { DummyTextTool } from "@/features/tools/implementations/dummytext";
-import { RulerTool } from "@/features/tools/implementations/ruler";
-import { ScreenLampTool } from "@/features/tools/implementations/screenlamp";
-import { WordCounterTool } from "@/features/tools/implementations/wordcounter";
 
 export type ToolRendererProps = {
   locale: string;
@@ -18,11 +12,11 @@ export type ToolRendererProps = {
 export type ToolRenderer = ComponentType<ToolRendererProps>;
 
 export const toolRenderers: Record<string, ToolRenderer> = {
-  ruler: RulerTool,
-  wordCounter: WordCounterTool,
-  countdown: CountdownTool,
-  digitalClock: DigitalClockTool,
-  screenLamp: ScreenLampTool,
-  barcodeGenerator: BarcodeGeneratorTool,
-  dummyText: DummyTextTool,
+  ruler: dynamic(() => import("@/features/tools/implementations/ruler").then(m => m.RulerTool)),
+  wordCounter: dynamic(() => import("@/features/tools/implementations/wordcounter").then(m => m.WordCounterTool)),
+  countdown: dynamic(() => import("@/features/tools/implementations/countdown").then(m => m.CountdownTool)),
+  digitalClock: dynamic(() => import("@/features/tools/implementations/digitalclock").then(m => m.DigitalClockTool)),
+  screenLamp: dynamic(() => import("@/features/tools/implementations/screenlamp").then(m => m.ScreenLampTool)),
+  barcodeGenerator: dynamic(() => import("@/features/tools/implementations/barcode-generator").then(m => m.BarcodeGeneratorTool)),
+  dummyText: dynamic(() => import("@/features/tools/implementations/dummytext").then(m => m.DummyTextTool)),
 };

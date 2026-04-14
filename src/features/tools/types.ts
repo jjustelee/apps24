@@ -16,6 +16,8 @@ export interface ToolDefinition {
   category: ToolCategory;
   titleKey: string;
   descriptionKey: string;
+  keywords: string[];
+  accentColor: string;
   icon: string;
   order: number;
   featured: boolean;
