@@ -75,6 +75,7 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
       tool={tool}
       title={text.title}
       description={text.description}
+      seo={text.seo}
     >
       {Renderer ? (
         <Renderer

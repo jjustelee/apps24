@@ -19,4 +19,11 @@ export const toolRenderers: Record<string, ToolRenderer> = {
   screenLamp: dynamic(() => import("@/features/tools/implementations/screenlamp").then(m => m.ScreenLampTool)),
   barcodeGenerator: dynamic(() => import("@/features/tools/implementations/barcode-generator").then(m => m.BarcodeGeneratorTool)),
   dummyText: dynamic(() => import("@/features/tools/implementations/dummytext").then(m => m.DummyTextTool)),
+  imageCompressor: dynamic(() => import("@/features/tools/implementations/image-compressor").then(m => m.ImageCompressorTool)),
+  caseConverter: dynamic(() => import("@/features/tools/implementations/case-converter").then(m => m.CaseConverterTool)),
+  jsonFormatter: dynamic(() => import("@/features/tools/implementations/json-formatter").then(m => m.JsonFormatterTool)),
+  passwordGenerator: dynamic(() => import("@/features/tools/implementations/password-generator").then(m => m.PasswordGeneratorTool)),
+  textDiffChecker: dynamic(() => import("@/features/tools/implementations/text-diff-checker").then(m => m.TextDiffCheckerTool)),
+  base64Encoder: dynamic(() => import("@/features/tools/implementations/base64-converter").then(m => m.Base64ConverterTool)),
+  colorConverter: dynamic(() => import("@/features/tools/implementations/color-converter").then(m => m.ColorConverterTool)),
 };

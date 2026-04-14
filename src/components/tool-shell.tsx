@@ -10,6 +10,7 @@ type ToolShellProps = {
   tool: ToolDefinition;
   title: string;
   description: string;
+  seo?: string;
   children: ReactNode;
 };
 
@@ -18,6 +19,7 @@ export function ToolShell({
   tool,
   title,
   description,
+  seo,
   children,
 }: ToolShellProps) {
   const common = getCommonText(locale);
@@ -45,9 +47,17 @@ export function ToolShell({
         <div className="tool-implementation-area">{children}</div>
 
         <section className="tool-footer-note" style={{ marginTop: "3rem", paddingTop: "1.5rem", borderTop: "1px solid var(--line)" }}>
-          <h2 style={{ fontSize: "1rem", margin: "0 0 0.5rem 0", color: "var(--text)" }}>About {title}</h2>
+          {seo && (
+            <div className="tool-seo-rich-content" style={{ marginBottom: "2rem" }}>
+              <h2 style={{ fontSize: "1.25rem", color: "var(--accent)", marginBottom: "0.75rem" }}>{common.seoTitle}</h2>
+              <p style={{ lineHeight: "1.8", color: "var(--text-muted)", fontSize: "1rem", whiteSpace: "pre-wrap" }}>
+                {seo}
+              </p>
+            </div>
+          )}
+
           <p className="tool-muted" style={{ fontSize: "0.9rem", lineHeight: "1.6", margin: "0 0 1rem 0" }}>
-            {description} This free online utility is optimized for your language and designed to be fast, reliable, and completely browser-based.
+            {description} {common.aboutPrefix}
           </p>
           <p className="tool-muted" style={{ fontSize: "0.85rem", margin: 0 }}>
             <span dangerouslySetInnerHTML={{ __html: common.footerNote1.replace("this tool", `<strong>${title}</strong>`) }} />
