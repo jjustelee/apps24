@@ -1,3 +1,4 @@
+/** Sitemap configuration for apps24.io */
 import type { MetadataRoute } from "next";
 import { getLocalizedUrl, LOCALES } from "@/lib/site";
 import { getStaticToolParams } from "@/features/tools/registry";
