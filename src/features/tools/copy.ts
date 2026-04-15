@@ -135,7 +135,20 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "Is this tool only for developers?", a: "No. It is also useful for students, analysts, and anyone working with JSON data." }
         ]
       },
-      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      passwordgenerator: {
+        title: "Password Generator",
+        description: "Create strong random passwords instantly in your browser.",
+        seo: "Generate strong random passwords instantly in your browser. This free password generator helps users create secure passwords with customizable length and character options for safer online accounts.",
+        longDescription: "Password Generator is a simple online tool that helps users create strong and random passwords for personal, work, and business accounts. It is designed for people who want a faster and safer way to generate passwords instead of reusing weak or predictable combinations. This tool is useful for creating passwords for email accounts, websites, apps, online stores, social media platforms, and other services that require secure login credentials.",
+        usageContext: "Use this tool when creating a new account, replacing an old password, or improving the security of accounts that currently use short or repeated passwords. It is also helpful for users who manage multiple accounts and want stronger password options for each service.",
+        howToUse: "1. Choose the password length.\n2. Select the character types you want to include, such as uppercase letters, lowercase letters, numbers, and symbols.\n3. Click the Generate Password button to create a new password.\n4. Copy the generated password and save it in a secure place, such as a trusted password manager.",
+        faq: [
+          { q: "Why should I use a password generator?", a: "A password generator helps create stronger and less predictable passwords than passwords made manually. This reduces the risk of weak or repeated credentials." },
+          { q: "What makes a password stronger?", a: "In general, longer passwords with a mix of letters, numbers, and symbols are harder to guess than short or simple passwords." },
+          { q: "Can I use the same password for multiple websites?", a: "It is safer to use a different password for each account. Reusing the same password across services can increase security risks if one account is compromised." },
+          { q: "Where should I store generated passwords?", a: "The safest option is usually a trusted password manager. You may also store them in another secure and private system that you control." }
+        ]
+      },
       textdiffchecker: {
         title: "Text Diff Checker",
         description: "Compare texts",
@@ -147,21 +160,31 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       },
       base64encoder: {
         title: "Base64 Encoder & Decoder",
-        description: "Encode and Decode Base64 Online",
-        seo: "Fast and reliable Base64 encoder and decoder. Convert text to Base64 format and decode Base64 strings instantly in your browser.",
-        longDescription: "Base64 Encoder & Decoder is a reliable utility for converting text to Base64 format and vice versa. It uses standard encoding algorithms suitable for data transmission and various development tasks.",
-        usageContext: "Commonly used for embedding images in HTML/CSS, transferring binary data over text-based protocols, or simple data obfuscation.",
-        howToUse: "1. Enter the text you wish to encode or decode.\n2. Click the 'Encode' or 'Decode' button.\n3. Copy the resulting string from the output area.",
-        faq: [{"q":"Is Base64 a form of encryption?","a":"No, Base64 is an encoding scheme meant for data representation, not for security or privacy."}]
+        description: "Convert plain text to Base64 or decode Base64 strings instantly.",
+        seo: "Fast and reliable Base64 encoder and decoder. Convert plain text to Base64 format or decode Base64 strings instantly with a lightweight browser-based tool.",
+        longDescription: "Base64 Encoder & Decoder is a browser-based utility that converts plain text into Base64 format and decodes Base64 strings back into readable text. It is useful for development, testing, data handling, and simple encoding tasks that require a text-based representation of content. This tool is especially helpful when working with APIs, encoded strings, embedded content, or technical workflows where Base64 values appear frequently.",
+        usageContext: "Use this tool when you need to encode text for transfer through text-based systems, inspect Base64 values, decode encoded content, or quickly check how plain text changes when converted into Base64 format.",
+        howToUse: "1. Enter or paste your text into the input area.\n2. Click Encode to convert plain text to Base64, or click Decode to convert Base64 text back to readable content.\n3. Review the result in the output area.\n4. Click Copy if you want to use the result elsewhere.",
+        faq: [
+          { q: "Is Base64 a form of encryption?", a: "No. Base64 is an encoding method used for data representation, not a security or encryption system." },
+          { q: "When is Base64 commonly used?", a: "It is often used in APIs, email content, HTML or CSS embedding, data transport, and technical documentation where binary or structured content needs to be expressed as text." },
+          { q: "Can this tool decode any Base64 string?", a: "It can decode valid Base64 text. If the input is incomplete or invalid, the result may fail or return unreadable output." },
+          { q: "Is this tool only for developers?", a: "No. It can also be useful for students, analysts, marketers, and other users who need to inspect or transform encoded text." }
+        ]
       },
       colorconverter: {
         title: "Color Code Converter",
-        description: "Convert HEX, RGB, and HSL Colors",
-        seo: "Quickly convert color code formats. Input HEX, RGB, or use the color picker to instantly get HSL and RGB values with our browser-based tool.",
-        longDescription: "Color Code Converter is a must-have tool for web designers and developers. It allows for seamless translation between HEX, RGB, and HSL color formats with a real-time preview.",
-        usageContext: "Use it while designing websites or apps to quickly find the equivalent codes for your color palettes.",
-        howToUse: "1. Enter a color code in any format (HEX, RGB, HSL) or use the color picker.\n2. View the converted values instantly.\n3. Click Copy next to any value to use it in your project.",
-        faq: [{"q":"Does it support transparency (Alpha)?","a":"The current version focuses on standard colors. RGBA support is planned for future updates."}]
+        description: "Convert HEX, RGB, and HSL color values instantly.",
+        seo: "Convert HEX, RGB, and HSL color values instantly with a simple browser-based color code converter. This tool is useful for web design, UI systems, front-end development, and digital branding workflows.",
+        longDescription: "Color Code Converter is an online tool that helps users convert color values between HEX, RGB, and HSL formats. It is useful for web design, UI work, front-end development, branding, and any project where color values need to stay consistent across tools and platforms. By entering one color format or selecting a color visually, users can instantly see the matching values in other common formats.",
+        usageContext: "Use this tool when you need to convert a color from one format to another, check matching values for design systems, copy color codes into CSS or design tools, or compare colors across different digital workflows.",
+        howToUse: "1. Enter a HEX value or use the color picker to choose a color.\n2. View the converted values for HEX, RGB, and HSL instantly.\n3. Click Copy next to any value you want to use in your project.\n4. Click Reset if you want to start with a new color.",
+        faq: [
+          { q: "What is the difference between HEX, RGB, and HSL?", a: "HEX is commonly used in web design, RGB is based on red, green, and blue light values, and HSL represents hue, saturation, and lightness for more intuitive color adjustment." },
+          { q: "Who is this tool useful for?", a: "It is useful for designers, developers, marketers, students, and anyone working with digital colors in websites, apps, presentations, or brand materials." },
+          { q: "Can I use these values in CSS?", a: "Yes. HEX, RGB, and HSL are all commonly used in CSS and other web design workflows." },
+          { q: "Does this tool support quick color checking?", a: "Yes. You can select a color visually and immediately review the converted values without leaving the page." }
+        ]
       },
       ruler: {
         title: "Online Ruler",
@@ -354,7 +377,20 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "이 도구는 개발자 전용인가요?", a: "아니요. 학생, 분석가 및 JSON 데이터로 작업하는 모든 사람에게 유용합니다." }
         ]
       },
-      passwordgenerator: { title: "비밀번호 생성기", description: "강력하고 안전한 비밀번호를 생성하세요.", seo: "무작위 비밀번호 생성기." },
+      passwordgenerator: {
+        title: "비밀번호 생성기",
+        description: "강력하고 무작위한 비밀번호를 즉시 생성하세요.",
+        seo: "브라우저에서 즉시 강력한 무작위 비밀번호를 생성하세요. 맞춤 길이와 문자 옵션으로 더 안전한 계정을 위한 비밀번호를 만드는 무료 비밀번호 생성기입니다.",
+        longDescription: "비밀번호 생성기는 개인, 업무, 비즈니스 계정을 위한 강력하고 무작위한 비밀번호를 생성하는 간단한 온라인 도구입니다. 약하거나 예측 가능한 비밀번호를 재사용하는 대신 더 빠르고 안전하게 비밀번호를 만들고 싶은 분들을 위해 설계되었습니다. 이메일 계정, 웹사이트, 앱, 온라인 쇼핑몰, SNS 등 보안 로그인이 필요한 다양한 서비스에 유용합니다.",
+        usageContext: "새 계정을 만들거나, 기존 비밀번호를 교체하거나, 짧거나 반복되는 비밀번호를 사용 중인 계정의 보안을 강화할 때 사용하세요. 여러 계정을 관리하며 각 서비스마다 더 강력한 비밀번호가 필요한 사용자에게도 유용합니다.",
+        howToUse: "1. 비밀번호 길이를 선택합니다.\n2. 대문자, 소문자, 숫자, 기호 등 포함할 문자 유형을 선택합니다.\n3. 비밀번호 생성 버튼을 클릭하여 새 비밀번호를 만듭니다.\n4. 생성된 비밀번호를 복사하여 신뢰할 수 있는 비밀번호 관리자 등 안전한 곳에 저장합니다.",
+        faq: [
+          { q: "비밀번호 생성기를 왜 사용해야 하나요?", a: "비밀번호 생성기는 수동으로 만든 것보다 더 강하고 예측하기 어려운 비밀번호를 만드는 데 도움이 됩니다. 이는 약하거나 중복된 자격 증명의 위험을 줄입니다." },
+          { q: "무엇이 비밀번호를 더 강하게 만드나요?", a: "일반적으로 문자, 숫자, 기호가 혼합된 긴 비밀번호는 짧거나 단순한 비밀번호보다 추측하기 어렵습니다." },
+          { q: "여러 웹사이트에 같은 비밀번호를 사용해도 되나요?", a: "각 계정마다 다른 비밀번호를 사용하는 것이 더 안전합니다. 여러 서비스에 같은 비밀번호를 재사용하면 한 계정이 손상될 경우 보안 위험이 높아질 수 있습니다." },
+          { q: "생성된 비밀번호는 어디에 저장해야 하나요?", a: "가장 안전한 옵션은 일반적으로 신뢰할 수 있는 비밀번호 관리자입니다. 직접 관리하는 다른 안전하고 비공개적인 시스템에 저장할 수도 있습니다." }
+        ]
+      },
       textdiffchecker: {
         title: "텍스트 비교기",
         description: "두 텍스트의 차이점을 한눈에 확인하세요.",
@@ -366,21 +402,31 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       },
       base64encoder: {
         title: "Base64 인코더 / 디코더",
-        description: "온라인 Base64 텍스트 인코딩 및 디코딩",
-        seo: "빠르고 안정적인 Base64 인코더 및 디코더입니다. 브라우저에서 텍스트를 즉시 Base64로 변환하거나 해독해보세요.",
-        longDescription: "Base64 인코더 및 디코더는 텍스트를 Base64 형식으로 변환하거나 그 반대로 변환하는 신뢰할 수 있는 유틸리티입니다. 데이터 전송 및 다양한 개발 작업에 적합한 표준 인코딩 알고리즘을 사용합니다.",
-        usageContext: "HTML/CSS에 이미지를 포함하거나, 텍스트 기반 프로토콜을 통한 바이너리 데이터 전송, 또는 간단한 데이터 난독화에 흔히 사용됩니다.",
-        howToUse: "1. 인코딩하거나 디코딩하려는 텍스트를 입력합니다.\n2. 'Encode' 또는 'Decode' 버튼을 클릭합니다.\n3. 결과창에서 변환된 문자열을 복사합니다.",
-        faq: [{"q":"Base64는 암호화의 일종인가요?","a":"아니요, Base64는 보안이나 프라이버시를 위한 것이 아니라 데이터 표현을 위한 인코딩 방식입니다."}]
+        description: "일반 텍스트를 Base64로 변환하거나 즉시 디코딩하세요.",
+        seo: "빠르고 안정적인 Base64 인코더 및 디코더. 브라우저 기반 경량 도구로 일반 텍스트를 Base64 형식으로 변환하거나 즉시 디코딩하세요.",
+        longDescription: "Base64 인코더 & 디코더는 일반 텍스트를 Base64 형식으로 변환하고, Base64 문자열을 읽을 수 있는 텍스트로 다시 디코딩하는 브라우저 기반 유틸리티입니다. 개발, 테스트, 데이터 처리, 텍스트 기반 콘텐츠 표현이 필요한 간단한 인코딩 작업에 유용합니다. API, 인코딩된 문자열, 임베디드 콘텐츠, Base64 값이 자주 등장하는 기술적인 워크플로에서 특히 도움이 됩니다.",
+        usageContext: "텍스트 기반 시스템을 통한 전송을 위해 텍스트를 인코딩하거나, Base64 값을 검사하거나, 인코딩된 콘텐츠를 디코딩하거나, 일반 텍스트가 Base64 형식으로 변환될 때 어떻게 변하는지 빠르게 확인할 때 사용하세요.",
+        howToUse: "1. 텍스트를 입력하거나 붙여넣기합니다.\n2. 일반 텍스트를 Base64로 변환하려면 인코딩을, Base64를 읽을 수 있는 텍스트로 변환하려면 디코딩을 클릭합니다.\n3. 출력 영역에서 결과를 확인합니다.\n4. 결과를 다른 곳에서 사용하려면 복사를 클릭합니다.",
+        faq: [
+          { q: "Base64는 암호화의 일종인가요?", a: "아니요. Base64는 보안이나 암호화 시스템이 아닌 데이터 표현을 위한 인코딩 방식입니다." },
+          { q: "Base64는 언제 주로 사용되나요?", a: "API, 이메일 콘텐츠, HTML 또는 CSS 임베딩, 데이터 전송, 이진 또는 구조화된 콘텐츠를 텍스트로 표현해야 하는 기술 문서에서 자주 사용됩니다." },
+          { q: "이 도구로 모든 Base64 문자열을 디코딩할 수 있나요?", a: "유효한 Base64 텍스트는 디코딩할 수 있습니다. 입력이 불완전하거나 유효하지 않으면 결과가 실패하거나 읽을 수 없는 출력이 반환될 수 있습니다." },
+          { q: "이 도구는 개발자만 사용할 수 있나요?", a: "아니요. 인코딩된 텍스트를 검사하거나 변환해야 하는 학생, 분석가, 마케터, 기타 사용자에게도 유용합니다." }
+        ]
       },
       colorconverter: {
         title: "색상 코드 변환기",
-        description: "HEX, RGB, HSL 색상 코드 실시간 변환",
-        seo: "HEX, RGB 코드를 입력하거나 컬러 피커로 색을 선택해 HSL 등의 값을 즉시 확인하고 복사하세요.",
-        longDescription: "색상 코드 변환기는 웹 디자이너와 개발자에게 꼭 필요한 도구입니다. 실시간 미리보기와 함께 HEX, RGB, HSL 색상 형식 사이의 완벽한 변환을 지원합니다.",
-        usageContext: "웹사이트나 앱을 디자인하는 동안 컬러 팔레트의 동등한 코드를 빠르게 찾는 데 사용하세요.",
-        howToUse: "1. 어떤 형식이든 색상 코드를 입력하거나 컬러 피커를 사용합니다.\n2. 즉시 변환된 값들을 확인합니다.\n3. 프로젝트에 사용하려는 값 옆의 'Copy'를 클릭합니다.",
-        faq: [{"q":"투명도(Alpha)를 지원하나요?","a":"현재 버전은 표준 색상에 집중하고 있습니다. RGBA 지원은 향후 업데이트 예정입니다."}]
+        description: "HEX, RGB, HSL 색상값을 즉시 변환하세요.",
+        seo: "간단한 브라우저 기반 색상 코드 변환기로 HEX, RGB, HSL 색상값을 즉시 변환하세요. 웹 디자인, UI 시스템, 프론트엔드 개발, 디지털 브랜딩 워크플로에 유용합니다.",
+        longDescription: "색상 코드 변환기는 HEX, RGB, HSL 형식 간에 색상값을 변환하는 온라인 도구입니다. 웹 디자인, UI 작업, 프론트엔드 개발, 브랜딩, 그리고 도구와 플랫폼 전반에서 색상값의 일관성을 유지해야 하는 모든 프로젝트에 유용합니다. 하나의 색상 형식을 입력하거나 시각적으로 색상을 선택하면 다른 일반적인 형식의 일치하는 값을 즉시 확인할 수 있습니다.",
+        usageContext: "한 형식에서 다른 형식으로 색상을 변환하거나, 디자인 시스템의 일치하는 값을 확인하거나, CSS나 디자인 도구에 색상 코드를 복사하거나, 다양한 디지털 워크플로 전반에서 색상을 비교할 때 사용하세요.",
+        howToUse: "1. HEX 값을 입력하거나 컬러 피커로 색상을 선택합니다.\n2. HEX, RGB, HSL의 변환된 값을 즉시 확인합니다.\n3. 프로젝트에 사용하려는 값 옆의 복사를 클릭합니다.\n4. 새 색상으로 시작하려면 초기화를 클릭합니다.",
+        faq: [
+          { q: "HEX, RGB, HSL의 차이점은 무엇인가요?", a: "HEX는 웹 디자인에서 주로 사용되고, RGB는 빨강, 초록, 파란 빛 값을 기반으로 하며, HSL은 보다 직관적인 색상 조정을 위해 색조, 채도, 밝기를 나타냅니다." },
+          { q: "이 도구는 누구에게 유용한가요?", a: "웹사이트, 앱, 프레젠테이션, 브랜드 자료에서 디지털 색상을 다루는 디자이너, 개발자, 마케터, 학생 등 모든 분께 유용합니다." },
+          { q: "이 값들을 CSS에서 사용할 수 있나요?", a: "네. HEX, RGB, HSL은 모두 CSS 및 기타 웹 디자인 워크플로에서 일반적으로 사용됩니다." },
+          { q: "이 도구가 빠른 색상 확인을 지원하나요?", a: "네. 시각적으로 색상을 선택하면 페이지를 벗어나지 않고 즉시 변환된 값을 확인할 수 있습니다." }
+        ]
       },
       ruler: {
         title: "온라인 자",
@@ -573,10 +619,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "Cet outil est-il réservé aux développeurs ?", a: "Non. Il est également utile pour les étudiants, les analystes et toute personne travaillant avec des données JSON." }
         ]
       },
-      passwordgenerator: { title: "Générateur de mot de passe", description: "Créez des mots de passe sécurisés", seo: "Générer des mots de passe aléatoires." },
+      passwordgenerator: {
+        title: "Générateur de mot de passe",
+        description: "Générez instantanément des mots de passe forts et aléatoires.",
+        seo: "Générez instantanément des mots de passe forts dans votre navigateur. Cet outil gratuit vous aide à créer des mots de passe sécurisés avec des options personnalisables.",
+        longDescription: "Le Générateur de mot de passe est un outil en ligne simple qui aide les utilisateurs à créer des mots de passe forts et aléatoires pour des comptes personnels, professionnels et commerciaux. Conçu pour les personnes souhaitant une méthode plus rapide et sécurisée que la réutilisation de combinaisons faibles.",
+        usageContext: "Utilisez cet outil lors de la création d'un nouveau compte, du remplacement d'un ancien mot de passe ou de l'amélioration de la sécurité d'un compte existant.",
+        howToUse: "1. Choisissez la longueur du mot de passe.\n2. Sélectionnez les types de caractères (majuscules, minuscules, chiffres, symboles).\n3. Cliquez sur Générer.\n4. Copiez et enregistrez dans un endroit sécurisé.",
+        faq: [
+          { q: "Pourquoi utiliser un générateur?", a: "Il crée des mots de passe plus forts et moins prévisibles que ceux faits manuellement." },
+          { q: "Qu'est-ce qui rend un mot de passe plus fort?", a: "Un mot de passe long avec lettres, chiffres et symboles est plus difficile à deviner." },
+          { q: "Puis-je utiliser le même mot de passe partout?", a: "Non, il est plus sûr d'utiliser un mot de passe différent pour chaque compte." },
+          { q: "Où stocker les mots de passe générés?", a: "Un gestionnaire de mots de passe fiable est la meilleure option." }
+        ]
+      },
       textdiffchecker: { title: "Comparateur de texte", description: "Comparer des textes", seo: "Trouver des différences entre deux textes." },
-      base64encoder: { title: "Encodeur / Décodeur Base64", description: "Encoder et Décoder Base64 en ligne", seo: "Encodeur et décodeur Base64 rapide et fiable. Convertissez instantanément du texte en Base64 dans votre navigateur." },
-      colorconverter: { title: "Convertisseur de Code Couleur", description: "Convertir HEX, RGB et HSL", seo: "Convertissez rapidement les formats de codes couleurs. Entrez HEX, RGB ou utilisez le sélecteur de couleurs pour obtenir instantanément des valeurs HSL." },
+      base64encoder: {
+        title: "Encodeur / Décodeur Base64",
+        description: "Convertissez du texte en Base64 ou décodez instantanément.",
+        seo: "Encodeur et décodeur Base64 rapide et fiable. Convertissez du texte brut ou décodez des chaînes Base64 instantanément.",
+        longDescription: "L'Encodeur/Décodeur Base64 est un utilitaire basé sur le navigateur qui convertit du texte brut au format Base64 et décode les chaînes Base64 en texte lisible. Utile pour le développement, les tests, les API et les tâches d'encodage simples.",
+        usageContext: "Encodez du texte pour le transfert via des systèmes textuels, inspectez des valeurs Base64 ou décodez du contenu encodé.",
+        howToUse: "1. Saisissez ou collez votre texte.\n2. Cliquez sur Encoder ou Décoder.\n3. Vérifiez le résultat dans la zone de sortie.\n4. Cliquez sur Copier pour utiliser le résultat.",
+        faq: [
+          { q: "Base64 est-il une forme de chiffrement?", a: "Non. C'est une méthode d'encodage pour la représentation des données, pas un système de sécurité." },
+          { q: "Quand Base64 est-il utilisé?", a: "Dans les API, les e-mails, l'intégration HTML/CSS, le transport de données et la documentation technique." },
+          { q: "Peut-il décoder n'importe quelle chaîne Base64?", a: "Il peut décoder le Base64 valide. Les entrées invalides peuvent échouer." },
+          { q: "Uniquement pour les développeurs?", a: "Non, aussi pour les étudiants, analystes, marketeurs et autres utilisateurs." }
+        ]
+      },
+      colorconverter: {
+        title: "Convertisseur de Code Couleur",
+        description: "Convertissez instantanément les valeurs de couleur HEX, RGB et HSL.",
+        seo: "Convertissez instantanément les valeurs de couleur HEX, RGB et HSL. Utile pour le design web, les systèmes UI et le développement front-end.",
+        longDescription: "Le Convertisseur de Code Couleur aide les utilisateurs à convertir des valeurs de couleur entre les formats HEX, RGB et HSL. Utile pour le web design, le développement front-end, le branding et tout projet nécessitant de la cohérence des couleurs.",
+        usageContext: "Convertissez une couleur, vérifiez les valeurs correspondantes pour des systèmes de design ou copiez des codes couleurs dans CSS.",
+        howToUse: "1. Entrez une valeur HEX ou utilisez le sélecteur de couleurs.\n2. Affichez instantanément les valeurs HEX, RGB et HSL converties.\n3. Cliquez sur Copier à côté de la valeur souhaitée.\n4. Cliquez sur Réinitialiser pour commencer avec une nouvelle couleur.",
+        faq: [
+          { q: "Différence entre HEX, RGB et HSL?", a: "HEX est courant en web design, RGB est basé sur les valeurs de lumière, HSL représente teinte, saturation et luminosité." },
+          { q: "Pour qui est-il utile?", a: "Designers, développeurs, marketeurs, étudiants et toute personne travaillant avec des couleurs numériques." },
+          { q: "Utilisable en CSS?", a: "Oui. HEX, RGB et HSL sont tous communément utilisés en CSS." },
+          { q: "Vérification rapide de couleurs?", a: "Oui. Sélectionnez visuellement et obtenez les valeurs converties immédiatement." }
+        ]
+      },
       ruler: {
         title: "Règle en ligne",
         description: "Mesurez les distances à l'écran avec étalonnage par carte de crédit.",
@@ -747,10 +832,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "このツールは開発者専用ですか？", a: "いいえ。学生、アナリスト、JSONデータを使用するすべての人に役立ちます。" }
         ]
       },
-      passwordgenerator: { title: "Password Generator", description: "Create secure passwords", seo: "Generate random passwords." },
+      passwordgenerator: {
+        title: "パスワードジェネレーター",
+        description: "ブラウザで即座に強力なランダムパスワードを生成。",
+        seo: "ブラウザで即座に強力なランダムパスワードを生成。カスタマイズ可能な長さと文字オプションで安全なパスワードを作成できる無料パスワードジェネレーター。",
+        longDescription: "パスワードジェネレーターは、個人・業務・ビジネス用アカウント向けの強力なランダムパスワードを作成するシンプルなオンラインツールです。弱いパスワードを再利用する代わりに、より速く安全にパスワードを作成したい方に最適です。",
+        usageContext: "新しいアカウント作成時やパスワード変更時、もしくは横断使用しているパスワードのセキュリティ強化時に使用してください。",
+        howToUse: "1. パスワードの長さを選択します。\n2. 大文字、小文字、数字、記号など含める文字種を選択します。\n3. パスワード生成ボタンをクリックします。\n4. コピーして信頼できるパスワードマネージャーなど安全な場所に保存します。",
+        faq: [
+          { q: "なぜパスワードジェネレーターを使うべきか？", a: "手動で作成するより強く予測しにくいパスワードを作るのに役立ちます。" },
+          { q: "パスワードを強くするには？", a: "文字、数字、記号が混在した長いパスワードは推測しにくいです。" },
+          { q: "複数のサイトで同じパスワードを使っていい？", a: "各アカウントで別々のパスワードを使用する方が安全です。" },
+          { q: "生成したパスワードはどこに保存する？", a: "信頼できるパスワードマネージャーが最安全です。" }
+        ]
+      },
       textdiffchecker: { title: "Text Diff Checker", description: "Compare texts", seo: "Find differences between texts." },
-      base64encoder: { title: "Base64 エンコーダ / デコーダ", description: "オンラインでBase64をエンコード・デコード", seo: "高速で信頼性の高いBase64エンコーダおよびデコーダ。ブラウザで即座にテキストをBase64形式に変換または解読できます。" },
-      colorconverter: { title: "カラーコード変換", description: "HEX、RGB、HSLカラーを変換", seo: "カラーコード形式をすばやく変換します。HEX、RGBを入力するか、カラーピッカーを使用して、即座にHSLおよびRGB値を取得します。" },
+      base64encoder: {
+        title: "Base64 エンコーダ / デコーダ",
+        description: "プレーンテキストをBase64に変換または即座にデコード。",
+        seo: "高速かつ信頼性の高いBase64エンコーダーおよびデコーダー。軽量BrowserツールでプレーンテキストをBase64形式に変換またはデコード。",
+        longDescription: "Base64エンコーダ＆デコーダは、プレーンテキストをBase64形式に変換し、Base64文字列を読めるテキストに戻すブラウザベースのユーティリティです。API、エンコードされた文字列、エンベッドコンテンツとの作業に特に役立ちます。",
+        usageContext: "テキストベースのシステムを通じた転送のためにテキストをエンコードするか、Base64値を検査するか、エンコードされたコンテンツをデコードする必要がある場合にご利用ください。",
+        howToUse: "1. テキストを入力または貼り付けます。\n2. Base64に変換するにはエンコード、読めるテキストに戻すにはデコードをクリックします。\n3. 出力エリアで結果を確認します。\n4. 別の場所で使用する場合はコピーをクリックします。",
+        faq: [
+          { q: "Base64は暗号化の一種ですか？", a: "いいえ。Base64はセキュリティや暗号化システムではなく、データ表現のためのエンコード方式です。" },
+          { q: "Base64はどんな時に使いますか？", a: "API、メールコンテンツ、HTML/CSS埋め込み、データ輸送などでよく使用されます。" },
+          { q: "このツールですべてのBase64文字列をデコードできますか？", a: "有効なBase64テキストはデコードできます。入力が不完全または無効の場合、結果が失敗する場合があります。" },
+          { q: "このツールは開発者専用ですか？", a: "いいえ。学生、アナリスト、マーケターなどにも役立ちます。" }
+        ]
+      },
+      colorconverter: {
+        title: "カラーコード変換",
+        description: "HEX、RGB、HSLのカラー値を即座に変換。",
+        seo: "シンプルなブラウザベースのカラーコード変換機でHEX、RGB、HSLカラー値を即座に変換。ウェブデザイン、UIシステム、フロントエンド開発に便利。",
+        longDescription: "カラーコード変換は、HEX、RGB、HSL形式間でカラー値を変換するオンラインツールです。ウェブデザイン、UI作業、ブランディング、フロントエンド開発に役立ちます。",
+        usageContext: "一つの形式から別の形式へ色を変換する時や、CSSに色コードをコピーする時、またはデザインシステムの対応値を確認する時にご利用ください。",
+        howToUse: "1. HEX値を入力するかカラーピッカーで色を選択します。\n2. HEX、RGB、HSLの変換値を即座に確認します。\n3. プロジェクトに使用する値のコピーをクリックします。\n4. 新しい色で始める場合はリセットをクリックします。",
+        faq: [
+          { q: "HEX、RGB、HSLの違いは？", a: "HEXはウェブデザインで主に使用され、RGBは赤・緑・青の光値を基にし、HSLは色相・彩度・明度で直感的な色調整ができます。" },
+          { q: "このツールは誰に役立ちますか？", a: "ウェブサイト、アプリ、プレゼン、ブランド資料でデジタル色を扱うデザイナー、開発者、マーケター、学生などに役立ちます。" },
+          { q: "CSSでこれらの値を使用できますか？", a: "はい。HEX、RGB、HSLはすべてCSSで一般的に使用されます。" },
+          { q: "このツールはクイックカラーチェックをサポートしていますか？", a: "はい。視覚的に色を選択すると即座に変換値を確認できます。" }
+        ]
+      },
       ruler: {
         title: "定規オンライン",
         description: "カード調整機能付きで画面上の長さを測定します。",
@@ -921,10 +1045,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "此工具只适合开发者吗？", a: "不是。它同样适用于学生、分析师和任何处理 JSON 数据的人。" }
         ]
       },
-      passwordgenerator: { title: "密码生成器", description: "生成安全的随机密码。", seo: "随机密码生成器。" },
+      passwordgenerator: {
+        title: "密码生成器",
+        description: "即刻在浏览器中生成强大的随机密码。",
+        seo: "即刻在浏览器中生成强大的随机密码。免费密码生成器，具有可自定义的长度和字符选项。",
+        longDescription: "密码生成器是一个简单的在线工具，帮助用户为个人、工作和商业账户创建强大的随机密码。专为希望以更快、更安全的方式生成密码而非重复使用弱密码的用户设计。",
+        usageContext: "在创建新账户、更换旧密码或改善当前使用短密码或重复使用密码的账户安全性时使用此工具。",
+        howToUse: "1. 选择密码长度。\n2. 选择要包含的字符类型（大小写字母、数字、符号）。\n3. 点击生成密码按钮。\n4. 复制并将其保存到安全的地方。",
+        faq: [
+          { q: "为什么要使用密码生成器？", a: "它能创建比手动制作的密码更强、更难以预测的密码，从而降低弱密码的风险。" },
+          { q: "什么让密码更强？", a: "一般来说，包含字母、数字和符号的长密码比短密码更难被猜测。" },
+          { q: "我可以在多个网站使用相同的密码吗？", a: "为每个账户使用不同密码更安全。" },
+          { q: "生成的密码应该存在哪里？", a: "最安全的选择通常是可信赖的密码管理器。" }
+        ]
+      },
       textdiffchecker: { title: "文本对比工具", description: "快速对比两段文本的差异。", seo: "查找两段文本的差异。" },
-      base64encoder: { title: "Base64 编码 / 解码器", description: "在线进行Base64编码与解码", seo: "快速可靠的Base64编码和解码器。在浏览器中即时将文本转换为Base64格式并解码。" },
-      colorconverter: { title: "颜色代码转换器", description: "转换 HEX、RGB 和 HSL 颜色", seo: "快速转换颜色代码格式。输入HEX、RGB或使用颜色选择器即时获取HSL和RGB值。" },
+      base64encoder: {
+        title: "Base64 编码 / 解码器",
+        description: "将文本转换为Base64或即时解码Base64字符串。",
+        seo: "快速可靠的Base64编码器和解码器。用轻量级浏览器工具即时将文本转换为Base64格式或解码。",
+        longDescription: "Base64编码＆解码器是一个基于浏览器的工具，可将纯文本转换为Base64格式，并将Base64字符串解码回可读文本。适用于开发、测试、数据处理和简单编码任务。",
+        usageContext: "当您需要将文本编码成Base64格式以便传输，或检查Base64值，或解码编码内容时使用此工具。",
+        howToUse: "1. 输入或粘贴您的文本。\n2. 点击编码将文本转换为Base64，或点击解码将Base64转换为可读内容。\n3. 在输出区域查看结果。\n4. 如需在其他地方使用结果，请点击复制。",
+        faq: [
+          { q: "Base64是一种加密形式吗？", a: "不是。Base64是用于数据表示的编码方法，不是安全或加密系统。" },
+          { q: "Base64通常在什么情况下使用？", a: "常用于API、电子邮件内容、HTML/CSS嵌入、数据传输和技术文档。" },
+          { q: "此工具可以解码任何Base64字符串吗？", a: "它可以解码有效的Base64文本。如果输入不完整或无效，结果可能失败。" },
+          { q: "此工具只适合开发人员吗？", a: "不是。学生、分析师、营销人员和其他用户同样可以使用。" }
+        ]
+      },
+      colorconverter: {
+        title: "颜色代码转换器",
+        description: "即时转换HEX、RGB和HSL颜色值。",
+        seo: "用简单的浏览器颜色代码转换器即时转换HEX、RGB和HSL颜色值。适用于网页设计、UI系统和前端开发。",
+        longDescription: "颜色代码转换器是一个在线工具，帮助用户在HEX、RGB和HSL格式之间转换颜色值。适用于网页设计、UI工作、品牌设计和任何需要保持颜色值一致性的项目。",
+        usageContext: "当您需要将颜色从一种格式转换为另一种格式，或将颜色代码复制到CSS中时使用此工具。",
+        howToUse: "1. 输入HEX值或使用拾色器选择颜色。\n2. 即时查看HEX、RGB和HSL的转换值。\n3. 点击您想要使用的值旁边的复制。\n4. 要使用新颜色则点击重置。",
+        faq: [
+          { q: "HEX、RGB和HSL有什么区别？", a: "HEX常用于网页设计，RGB基于红、绿、蓝光值，HSL表示色调、饱和度和亮度，更直观。" },
+          { q: "这个工具适合哪些用户？", a: "适合设计师、开发人员、营销人员、学生以及任何处理数字颜色的人。" },
+          { q: "这些属性元素可以在CSS中使用吗？", a: "可以。HEX、RGB和HSL都常用于CSS和其他网页设计工作流程。" },
+          { q: "此工具支持快速颜色检查吗？", a: "支持。您可以直观地选择颜色，立即预览转换值。" }
+        ]
+      },
       ruler: { title: "在线标尺", description: "使用信用卡校准测量屏幕距离。" },
       wordcounter: { title: "字数统计", description: "实时统计字符和单词数量。" },
       countdown: { title: "倒计时", description: "设置计时器，支持全屏和夜间模式。" },
@@ -1081,10 +1244,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "此工具只適合開發者嗎？", a: "不是。它同樣適用於學生、分析師和任何處理 JSON 資料的人。" }
         ]
       },
-      passwordgenerator: { title: "密碼產生器", description: "產生安全的隨機密碼。", seo: "隨機密碼產生器。" },
+      passwordgenerator: {
+        title: "密碼產生器",
+        description: "即刻在瀏覽器中產生強大的隨機密碼。",
+        seo: "即刻在瀏覽器中產生強大的隨機密碼。免費密碼產生器，具有可自訂的長度和字元選項。",
+        longDescription: "密碼產生器是一個簡單的線上工具，幫助用戶為個人、工作和商業帳戶建立強大的隨機密碼。專為希望以更快、更安全的方式產生密碼而非重複使用弱密碼的用戶設計。",
+        usageContext: "在建立新帳戶、更換舊密碼或改善目前使用短密碼或重複密碼的帳戶安全性時使用此工具。",
+        howToUse: "1. 選擇密碼長度。\n2. 選擇要包含的字元類型（大小寫字母、數字、符號）。\n3. 按下產生密碼按鈕。\n4. 複製並將其儲存到安全的地方。",
+        faq: [
+          { q: "為什麼要使用密碼產生器？", a: "它能建立比手動製作的密碼更強、更難以預測的密碼，降低弱密碼的風險。" },
+          { q: "什麼讓密碼更強？", a: "一般而言，包含字母、數字和符號的長密碼比短密碼更難被猜測。" },
+          { q: "我可以在多個網站使用相同的密碼嗎？", a: "為每個帳戶使用不同密碼更安全。" },
+          { q: "產生的密碼應該存在哪裡？", a: "最安全的選擇通常是可信賴的密碼管理器。" }
+        ]
+      },
       textdiffchecker: { title: "文字比較工具", description: "快速比較兩段文字的差異。", seo: "查找兩段文字的差異。" },
-      base64encoder: { title: "Base64 編碼 / 解碼器", description: "線上進行Base64編碼與解碼", seo: "快速可靠的Base64編碼和解碼器。在瀏覽器中即時將文本轉換為Base64格式並解碼。" },
-      colorconverter: { title: "顏色代碼轉換器", description: "轉換 HEX、RGB 和 HSL 顏色", seo: "快速轉換顏色代碼格式。輸入HEX、RGB或使用顏色選擇器即時獲取HSL和RGB值。" },
+      base64encoder: {
+        title: "Base64 編碼 / 解碼器",
+        description: "將文字轉換為Base64或即時解碼Base64字串。",
+        seo: "快速可靠的Base64編碼器和解碼器。用輕量級瀏覽器工具即時將文字轉換為Base64格式或解碼。",
+        longDescription: "Base64編碼＆解碼器是一個基於瀏覽器的工具，可將純文字轉換為Base64格式，並將Base64字串解碼回可讀文字。適用於開發、測試、資料處理和簡單編碼任務。",
+        usageContext: "當您需要將文字編碼成Base64格式以便傳輸，或檢查Base64值，或解碼編碼內容時使用此工具。",
+        howToUse: "1. 輸入或貼上您的文字。\n2. 點擊編碼將文字轉換為Base64，或點擊解碼將Base64轉換為可讀內容。\n3. 在輸出區域查看結果。\n4. 如需在其他地方使用結果，請點擊複製。",
+        faq: [
+          { q: "Base64是一種加密形式嗎？", a: "不是。Base64是用於資料表示的編碼方法，不是安全或加密系統。" },
+          { q: "Base64通常在什麼情況下使用？", a: "常用於API、電子郵件內容、HTML/CSS嵌入、資料傳輸和技術文件。" },
+          { q: "此工具可以解碼任何Base64字串嗎？", a: "它可以解碼有效的Base64文字。如果輸入不完整或無效，結果可能失敗。" },
+          { q: "此工具只適合開發人員嗎？", a: "不是。學生、分析師、行銷人員和其他用戶同樣可以使用。" }
+        ]
+      },
+      colorconverter: {
+        title: "顏色代碼轉換器",
+        description: "即時轉換HEX、RGB和HSL顏色值。",
+        seo: "用簡單的瀏覽器顏色代碼轉換器即時轉換HEX、RGB和HSL顏色值。適用於網頁設計、UI系統和前端開發。",
+        longDescription: "顏色代碼轉換器是一個線上工具，幫助用戶在HEX、RGB和HSL格式之間轉換顏色值。適用於網頁設計、UI工作、品牌設計和任何需要保持顏色值一致性的專案。",
+        usageContext: "當您需要將顏色從一種格式轉換為另一種格式，或將顏色代碼複製到CSS中時使用此工具。",
+        howToUse: "1. 輸入HEX值或使用拾色器選擇顏色。\n2. 即時查看HEX、RGB和HSL的轉換值。\n3. 點擊您想要使用的值旁邊的複製。\n4. 要使用新顏色則點擊重設。",
+        faq: [
+          { q: "HEX、RGB和HSL有什麼區別？", a: "HEX常用於網頁設計，RGB基於紅、綠、藍光值，HSL表示色調、飽和度和亮度，更直觀。" },
+          { q: "這個工具適合哪些用戶？", a: "適合設計師、開發人員、行銷人員、學生以及任何處理數位顏色的人。" },
+          { q: "這些屬性元素可以在CSS中使用嗎？", a: "可以。HEX、RGB和HSL都常用於CSS和其他網頁設計工作流程。" },
+          { q: "此工具支援快速顏色檢查嗎？", a: "支援。您可以直觀地選擇顏色，立即預覽轉換值。" }
+        ]
+      },
       ruler: { title: "線上尺子", description: "使用信用卡校準測量螢幕距離。" },
       wordcounter: { title: "字數統計", description: "即時統計字元和單字數量。" },
       countdown: { title: "倒數計時", description: "設置計時器，支援全螢幕和夜間模式。" },
@@ -1241,10 +1443,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "Esta ferramenta é apenas para desenvolvedores?", a: "Não. Também é útil para estudantes, analistas e qualquer pessoa que trabalhe com dados JSON." }
         ]
       },
-      passwordgenerator: { title: "Gerador de Senhas", description: "Crie senhas seguras e aleatórias.", seo: "Gerador de senhas aleatórias." },
+      passwordgenerator: {
+        title: "Gerador de Senhas",
+        description: "Gere instantaneamente senhas fortes e aleatórias no seu navegador.",
+        seo: "Gere instantaneamente senhas fortes no seu navegador. Gerador de senhas gratuito com opções personalizáveis de comprimento e caracteres.",
+        longDescription: "O Gerador de Senhas é uma ferramenta simples que ajuda os usuários a criar senhas fortes e aleatórias para contas pessoais, de trabalho e comerciais. Projetado para quem deseja gerar senhas de forma mais rápida e segura, em vez de reutilizar combinações fracas.",
+        usageContext: "Use esta ferramenta ao criar uma nova conta, substituir uma senha antiga ou melhorar a segurança de contas com senhas curtas ou repetidas.",
+        howToUse: "1. Escolha o comprimento da senha.\n2. Selecione os tipos de caracteres a incluir (letras maiúsculas, minúsculas, números, símbolos).\n3. Clique em Gerar Senha.\n4. Copie e salve a senha em um local seguro.",
+        faq: [
+          { q: "Por que usar um gerador de senhas?", a: "Ele cria senhas mais fortes e menos previsíveis do que as feitas manualmente, reduzindo o risco de credenciais fracas." },
+          { q: "O que torna uma senha mais forte?", a: "Senhas longas com letras, números e símbolos são mais difíceis de adivinhar." },
+          { q: "Posso usar a mesma senha para vários sites?", a: "É mais seguro usar uma senha diferente para cada conta." },
+          { q: "Onde armazenar as senhas geradas?", a: "A opção mais segura geralmente é um gerenciador de senhas confiável." }
+        ]
+      },
       textdiffchecker: { title: "Comparador de Texto", description: "Compare textos e encontre diferenças.", seo: "Encontrar diferenças entre textos." },
-      base64encoder: { title: "Codificador / Decodificador Base64", description: "Codificar e Decodificar Base64 Online", seo: "Codificador e decodificador Base64 rápido e confiável. Converta texto para Base64 e decodifique no seu navegador." },
-      colorconverter: { title: "Conversor de Código de Cor", description: "Converter cores HEX, RGB e HSL", seo: "Converta rapidamente formatos de código de cores. Insira HEX ou RGB para obter instantaneamente valores HSL no navegador." },
+      base64encoder: {
+        title: "Codificador / Decodificador Base64",
+        description: "Converta texto em Base64 ou decodifique instantaneamente.",
+        seo: "Codificador e decodificador Base64 rápido e confiável. Converta texto em Base64 ou decodifique strings instantaneamente com ferramenta leve.",
+        longDescription: "O Codificador/Decodificador Base64 é um utilitário baseado em navegador que converte texto simples para o formato Base64 e decodifica strings Base64 de volta para texto legível. Útil para desenvolvimento, testes e tarefas de codificação simples.",
+        usageContext: "Use quando precisar codificar texto, inspecionar valores Base64 ou decodificar conteúdo codificado.",
+        howToUse: "1. Digite ou cole seu texto.\n2. Clique em Codificar para converter para Base64, ou Decodificar para converter Base64 em conteúdo legível.\n3. Verifique o resultado na área de saída.\n4. Clique em Copiar para usar o resultado.",
+        faq: [
+          { q: "Base64 é uma forma de criptografia?", a: "Não. Base64 é um método de codificação para representação de dados, não um sistema de segurança." },
+          { q: "Quando o Base64 é usado?", a: "Frequentemente em APIs, conteúdo de e-mail, incorporação em HTML/CSS, transporte de dados e documentação técnica." },
+          { q: "Esta ferramenta pode decodificar qualquer string Base64?", a: "Pode decodificar texto Base64 válido. Entradas incompletas ou inválidas podem falhar." },
+          { q: "Esta ferramenta é apenas para desenvolvedores?", a: "Não. Também é útil para estudantes, analistas, profissionais de marketing e outros." }
+        ]
+      },
+      colorconverter: {
+        title: "Conversor de Código de Cor",
+        description: "Converta instantaneamente valores de cor HEX, RGB e HSL.",
+        seo: "Converta instantaneamente valores de cor HEX, RGB e HSL. Útil para design web, sistemas de UI e desenvolvimento front-end.",
+        longDescription: "O Conversor de Código de Cor é uma ferramenta online que ajuda os usuários a converter valores de cor entre os formatos HEX, RGB e HSL. Útil para web design, trabalho com UI, desenvolvimento front-end e branding.",
+        usageContext: "Use quando precisar converter uma cor de um formato para outro, verificar valores correspondentes para sistemas de design ou copiar códigos de cores para CSS.",
+        howToUse: "1. Insira um valor HEX ou use o seletor de cores.\n2. Veja instantaneamente os valores convertidos HEX, RGB e HSL.\n3. Clique em Copiar ao lado do valor desejado.\n4. Clique em Redefinir para começar com uma nova cor.",
+        faq: [
+          { q: "Qual é a diferença entre HEX, RGB e HSL?", a: "HEX é comum em web design, RGB baseia-se em valores de luz vermelho, verde e azul, e HSL representa matiz, saturação e luminosidade." },
+          { q: "Para quem esta ferramenta é útil?", a: "Para designers, desenvolvedores, profissionais de marketing, estudantes e qualquer pessoa que trabalhe com cores digitais." },
+          { q: "Posso usar esses valores em CSS?", a: "Sim. HEX, RGB e HSL são todos comumente usados em CSS." },
+          { q: "Esta ferramenta suporta verificação rápida de cores?", a: "Sim. Você pode selecionar uma cor visualmente e revisar imediatamente os valores convertidos." }
+        ]
+      },
       ruler: { title: "Régua Online", description: "Meça distâncias na tela com calibração." },
       wordcounter: { title: "Contador de Palavras", description: "Conte caracteres e palavras em tempo real." },
       countdown: { title: "Cronômetro", description: "Defina temporizadores com modo tela cheia." },
@@ -1401,10 +1642,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "¿Esta herramienta es solo para desarrolladores?", a: "No. También es útil para estudiantes, analistas y cualquier persona que trabaje con datos JSON." }
         ]
       },
-      passwordgenerator: { title: "Generador de Contraseñas", description: "Cree contraseñas seguras y aleatorias.", seo: "Generador de contraseñas aleatorias." },
+      passwordgenerator: {
+        title: "Generador de Contraseñas",
+        description: "Genera instantáneamente contraseñas fuertes y aleatorias en tu navegador.",
+        seo: "Genera instantáneamente contraseñas fuertes en tu navegador. Generador de contraseñas gratuito con opciones personalizables de longitud y caracteres.",
+        longDescription: "El Generador de Contraseñas es una herramienta en línea sencilla que ayuda a los usuarios a crear contraseñas fuertes y aleatorias para cuentas personales, de trabajo y comerciales. Diseñado para quienes desean generar contraseñas de forma más rápida y segura en lugar de reutilizar combinaciones débiles.",
+        usageContext: "Use esta herramienta al crear una nueva cuenta, reemplazar una contraseña antigua o mejorar la seguridad de cuentas con contraseñas cortas o repetidas.",
+        howToUse: "1. Elija la longitud de la contraseña.\n2. Seleccione los tipos de caracteres a incluir (letras mayúsculas, minúsculas, números, símbolos).\n3. Haga clic en Generar Contraseña.\n4. Copie y guarde la contraseña en un lugar seguro.",
+        faq: [
+          { q: "¿Por qué usar un generador de contraseñas?", a: "Ayuda a crear contraseñas más fuertes y menos predecibles que las hechas manualmente, reduciendo el riesgo de credenciales débiles." },
+          { q: "¿Qué hace que una contraseña sea más fuerte?", a: "Las contraseñas largas con letras, números y símbolos son más difíciles de adivinar." },
+          { q: "¿Puedo usar la misma contraseña en varios sitios?", a: "Es más seguro usar una contraseña diferente para cada cuenta." },
+          { q: "¿Dónde guardar las contraseñas generadas?", a: "La opción más segura suele ser un administrador de contraseñas de confianza." }
+        ]
+      },
       textdiffchecker: { title: "Comparador de Texto", description: "Compare textos y encuentre diferencias.", seo: "Encontrar diferencias entre textos." },
-      base64encoder: { title: "Codificador / Decodificador Base64", description: "Codificar y Decodificar Base64 en Línea", seo: "Codificador y decodificador Base64 rápido y confiable. Convierta texto al instante." },
-      colorconverter: { title: "Conversor de Código de Color", description: "Convertir colores HEX, RGB y HSL", seo: "Convierta rápidamente formatos de código de colores. Introduzca HEX, RGB o elija un color para sus valores HSL." },
+      base64encoder: {
+        title: "Codificador / Decodificador Base64",
+        description: "Convierta texto a Base64 o decodifique instantáneamente.",
+        seo: "Codificador y decodificador Base64 rápido y confiable. Convierta texto al instante con una herramienta ligera basada en navegador.",
+        longDescription: "El Codificador/Decodificador Base64 es una utilidad basada en navegador que convierte texto sin formato al formato Base64 y decodifica cadenas Base64 de vuelta a texto legible. Útil para desarrollo, pruebas y tareas de codificación simples.",
+        usageContext: "Use cuando necesite codificar texto, inspeccionar valores Base64 o decodificar contenido codificado.",
+        howToUse: "1. Escriba o pegue su texto.\n2. Haga clic en Codificar para convertir a Base64, o Decodificar para convertir Base64 en contenido legible.\n3. Revise el resultado en el área de salida.\n4. Haga clic en Copiar para usar el resultado.",
+        faq: [
+          { q: "¿Base64 es una forma de cifrado?", a: "No. Base64 es un método de codificación para representación de datos, no un sistema de seguridad." },
+          { q: "¿Cuándo se usa comúnmente Base64?", a: "En APIs, correos electrónicos, incrustación en HTML/CSS, transporte de datos y documentación técnica." },
+          { q: "¿Esta herramienta puede decodificar cualquier cadena Base64?", a: "Puede decodificar texto Base64 válido. Las entradas incompletas o inválidas pueden fallar." },
+          { q: "¿Esta herramienta es solo para desarrolladores?", a: "No. También es útil para estudiantes, analistas, mercadólogos y otros." }
+        ]
+      },
+      colorconverter: {
+        title: "Conversor de Código de Color",
+        description: "Convierta instantáneamente valores de color HEX, RGB y HSL.",
+        seo: "Convierta instantáneamente valores de color HEX, RGB y HSL. Útil para diseño web, sistemas de UI y desarrollo front-end.",
+        longDescription: "El Conversor de Código de Color es una herramienta en línea que ayuda a los usuarios a convertir valores de color entre los formatos HEX, RGB y HSL. Útil para diseño web, trabajo con UI, desarrollo front-end y branding.",
+        usageContext: "Use cuando necesite convertir un color de un formato a otro, verificar valores coincidentes para sistemas de diseño o copiar códigos de color en CSS.",
+        howToUse: "1. Ingrese un valor HEX o use el selector de color.\n2. Vea instantáneamente los valores convertidos HEX, RGB y HSL.\n3. Haga clic en Copiar junto al valor deseado.\n4. Haga clic en Restablecer para comenzar con un nuevo color.",
+        faq: [
+          { q: "¿Cuál es la diferencia entre HEX, RGB y HSL?", a: "HEX es común en diseño web, RGB se basa en valores de luz rojo, verde y azul, y HSL representa tono, saturación y luminosidad." },
+          { q: "¿Para quién es útil esta herramienta?", a: "Para diseñadores, desarrolladores, mercadólogos, estudiantes y cualquier persona que trabaje con colores digitales." },
+          { q: "¿Puedo usar estos valores en CSS?", a: "Sí. HEX, RGB y HSL se usan comúnmente en CSS." },
+          { q: "¿Esta herramienta admite verificación rápida de colores?", a: "Sí. Puede seleccionar un color visualmente y revisar inmediatamente los valores convertidos." }
+        ]
+      },
       ruler: { title: "Regla en Línea", description: "Mida distancias en pantalla con calibración." },
       wordcounter: { title: "Contador de Palabras", description: "Cuente caracteres y palabras en tiempo real." },
       countdown: { title: "Cuenta Regresiva", description: "Configure temporizadores con modo pantalla completa." },
@@ -1561,10 +1841,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "Ist dieses Tool nur für Entwickler?", a: "Nein. Es ist auch für Studenten, Analysten und alle nützlich, die mit JSON-Daten arbeiten." }
         ]
       },
-      passwordgenerator: { title: "Passwort-Generator", description: "Sichere zufällige Passwörter erstellen.", seo: "Zufälligen Passwort-Generator." },
+      passwordgenerator: {
+        title: "Passwort-Generator",
+        description: "Generieren Sie sofort starke und zufällige Passwörter in Ihrem Browser.",
+        seo: "Generieren Sie sofort starke Passwörter in Ihrem Browser. Kostenloser Passwort-Generator mit anpassbarer Länge und Zeichenoptionen.",
+        longDescription: "Der Passwort-Generator ist ein einfaches Online-Tool, das Benutzern hilft, starke und zufällige Passwörter für persönliche, Arbeits- und Geschäftskonten zu erstellen. Es ist für Personen gedacht, die Passwörter schneller und sicherer generieren möchten, anstatt schwache Kombinationen wiederzuverwenden.",
+        usageContext: "Verwenden Sie dieses Tool beim Erstellen eines neuen Kontos, beim Ersetzen eines alten Passworts oder beim Verbessern der Sicherheit von Konten mit kurzen oder wiederholten Passwörtern.",
+        howToUse: "1. Wählen Sie die Passwortlänge.\n2. Wählen Sie die einzuschließenden Zeichentypen (Groß- und Kleinbuchstaben, Zahlen, Symbole).\n3. Klicken Sie auf Passwort generieren.\n4. Kopieren Sie das Passwort und speichern Sie es an einem sicheren Ort.",
+        faq: [
+          { q: "Warum sollte ich einen Passwort-Generator verwenden?", a: "Er erstellt stärkere und weniger vorhersehbare Passwörter als manuell erstellte, was das Risiko schwacher Anmeldedaten reduziert." },
+          { q: "Was macht ein Passwort stärker?", a: "Lange Passwörter mit Buchstaben, Zahlen und Symbolen sind im Allgemeinen schwerer zu erraten." },
+          { q: "Kann ich dasselbe Passwort auf mehreren Websites verwenden?", a: "Es ist sicherer, für jedes Konto ein anderes Passwort zu verwenden." },
+          { q: "Wo soll ich generierte Passwörter speichern?", a: "Die sicherste Option ist in der Regel ein vertrauenswürdiger Passwort-Manager." }
+        ]
+      },
       textdiffchecker: { title: "Text-Vergleicher", description: "Texte vergleichen und Unterschiede finden.", seo: "Unterschiede zwischen Texten finden." },
-      base64encoder: { title: "Base64 Encoder / Decoder", description: "Base64 online verschlüsseln und entschlüsseln", seo: "Schneller und zuverlässiger Base64-Encoder und -Decoder. Konvertieren Sie Text im Browser sofort." },
-      colorconverter: { title: "Farbcode-Konverter", description: "HEX, RGB und HSL konvertieren", seo: "Farbcodeformate schnell konvertieren. Geben Sie HEX oder RGB ein, um sofort HSL-Werte zu erhalten." },
+      base64encoder: {
+        title: "Base64 Encoder / Decoder",
+        description: "Konvertieren Sie Text in Base64 oder dekodieren Sie sofort.",
+        seo: "Schneller und zuverlässiger Base64-Encoder und -Decoder. Konvertieren Sie Text im Browser sofort in das Base64-Format oder dekodieren Sie ihn.",
+        longDescription: "Der Base64 Encoder/Decoder ist ein browserbasiertes Tool, das Klartext in das Base64-Format konvertiert und Base64-Zeichenfolgen wieder in lesbaren Text dekodiert. Nützlich für Entwicklung, Tests und einfache Codierungsaufgaben.",
+        usageContext: "Verwenden Sie es, wenn Sie Text codieren, Base64-Werte prüfen oder codierten Inhalt dekodieren müssen.",
+        howToUse: "1. Geben Sie Ihren Text ein oder fügen Sie ihn ein.\n2. Klicken Sie auf Kodieren um Text in Base64 zu konvertieren, oder auf Dekodieren um Base64 zurückzukonvertieren.\n3. Überprüfen Sie das Ergebnis im Ausgabebereich.\n4. Klicken Sie auf Kopieren, um das Ergebnis zu verwenden.",
+        faq: [
+          { q: "Ist Base64 eine Form der Verschlüsselung?", a: "Nein. Base64 ist eine Kodierungsmethode zur Datendarstellung, kein Sicherheitssystem." },
+          { q: "Wann wird Base64 häufig verwendet?", a: "Häufig in APIs, E-Mail-Inhalten, HTML/CSS-Einbettung, Datentransport und technischer Dokumentation." },
+          { q: "Kann dieses Tool jede Base64-Zeichenfolge dekodieren?", a: "Es kann gültigen Base64-Text dekodieren. Bei unvollständiger oder ungültiger Eingabe kann das Ergebnis fehlschlagen." },
+          { q: "Ist dieses Tool nur für Entwickler?", a: "Nein. Es ist auch nützlich für Studenten, Analysten, Vermarkter und andere." }
+        ]
+      },
+      colorconverter: {
+        title: "Farbcode-Konverter",
+        description: "Konvertieren Sie sofort HEX-, RGB- und HSL-Farbwerte.",
+        seo: "Konvertieren Sie sofort HEX-, RGB- und HSL-Farbwerte mit einem einfachen browserbasierten Tool. Nützlich für Webdesign, UI-Systeme und Frontend-Entwicklung.",
+        longDescription: "Der Farbcode-Konverter ist ein Online-Tool, das Benutzern hilft, Farbwerte zwischen HEX-, RGB- und HSL-Formaten zu konvertieren. Nützlich für Webdesign, UI-Arbeit, Frontend-Entwicklung und Branding.",
+        usageContext: "Verwenden Sie es, wenn Sie eine Farbe von einem Format in ein anderes konvertieren, übereinstimmende Werte für Designsysteme prüfen oder Farbcodes in CSS kopieren müssen.",
+        howToUse: "1. Geben Sie einen HEX-Wert ein oder wählen Sie eine Farbe mit dem Farbwähler.\n2. Sehen Sie die konvertierten HEX-, RGB- und HSL-Werte sofort.\n3. Klicken Sie auf Kopieren neben dem gewünschten Wert.\n4. Klicken Sie auf Zurücksetzen, um mit einer neuen Farbe zu beginnen.",
+        faq: [
+          { q: "Was ist der Unterschied zwischen HEX, RGB und HSL?", a: "HEX wird häufig im Webdesign verwendet, RGB basiert auf Rot-, Grün- und Blauwerten, und HSL steht für Farbton, Sättigung und Helligkeit." },
+          { q: "Für wen ist dieses Tool nützlich?", a: "Für Designer, Entwickler, Vermarkter, Studenten und jeden, der mit digitalen Farben arbeitet." },
+          { q: "Kann ich diese Werte in CSS verwenden?", a: "Ja. HEX, RGB und HSL werden alle üblicherweise in CSS verwendet." },
+          { q: "Unterstützt dieses Tool die schnelle Farbprüfung?", a: "Ja. Sie können eine Farbe visuell auswählen und die konvertierten Werte sofort überprüfen." }
+        ]
+      },
       ruler: { title: "Online-Lineal", description: "Messen Sie Bildschirmabstände mit Kalibrierung." },
       wordcounter: { title: "Wortzähler", description: "Zählen Sie Zeichen und Wörter in Echtzeit." },
       countdown: { title: "Countdown-Timer", description: "Stellen Sie Timer mit Vollbildmodus ein." },
@@ -1721,10 +2040,49 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "هل هذه الأداة للمطوّرين فقط؟", a: "لا. مفيدة أيضاً للطلاب والمحللين وكل من يتعامل مع بيانات JSON." }
         ]
       },
-      passwordgenerator: { title: "مولد كلمات المرور", description: "إنشاء كلمات مرور آمنة وعشوائية.", seo: "مولد كلمات مرور عشوائية." },
+      passwordgenerator: {
+        title: "مولد كلمات المرور",
+        description: "أنشئ كلمات مرور قوية وعشوائية فوراً في متصفحك.",
+        seo: "أنشئ كلمات مرور قوية فوراً في متصفحك. مولد كلمات مرور مجاني بخيارات طول وأحرف قابلة للتخصيص.",
+        longDescription: "مولد كلمات المرور هو أداة بسيطة عبر الإنترنت تساعد المستخدمين على إنشاء كلمات مرور قوية وعشوائية للحسابات الشخصية والعمل والتجارية. مصمم للمستخدمين الذين يريدون طريقة أسرع وأكثر أمانًا بدلاً من إعادة استخدام كلمات مرور ضعيفة.",
+        usageContext: "استخدم هذه الأداة عند إنشاء حساب جديد أو استبدال كلمة مرور قديمة أو تحسين أمان الحسابات ذات كلمات المرور القصيرة أو المكررة.",
+        howToUse: "1. اختر طول كلمة المرور.\n2. حدد أنواع الأحرف المطلوب تضمينها.\n3. انقر فوق زر توليد كلمة المرور.\n4. انسخ كلمة المرور واحفظها في مكان آمن.",
+        faq: [
+          { q: "لماذا أستخدم مولد كلمات المرور؟", a: "يساعد على إنشاء كلمات مرور أقوى وأقل قابلية للتنبؤ مما يقلل مخاطر الاختراق." },
+          { q: "ما الذي يجعل كلمة المرور أقوى؟", a: "كلمات المرور الطويلة التي تجمع بين الحروف والأرقام والرموز يصعب تخمينها." },
+          { q: "هل يمكنني استخدام نفس كلمة المرور في مواقع متعددة؟", a: "من الأسلم استخدام كلمة مرور مختلفة لكل حساب." },
+          { q: "أين أحفظ كلمات المرور المولدة؟", a: "الخيار الأكثر أمانًا هو عادةً مدير كلمات مرور موثوق به." }
+        ]
+      },
       textdiffchecker: { title: "مقارن النصوص", description: "قارن نصين واكتشف الفروق بينهما.", seo: "إيجاد الاختلافات بين النصوص." },
-      base64encoder: { title: "تشفير / فك تشفير Base64", description: "تشفير وفك تشفير Base64 عبر الإنترنت", seo: "مشفر ومفكك Base64 سريع وموثوق. قم بتحويل النص إلى Base64 وفك التشفير على الفور." },
-      colorconverter: { title: "محول كود الألوان", description: "تحويل ألوان HEX و RGB و HSL", seo: "تحويل تنسيقات رموز الألوان بسرعة. أدخل HEX أو RGB للحصول على قيم HSL على الفور." },
+      base64encoder: {
+        title: "تشفير / فك تشفير Base64",
+        description: "حوّل النص إلى Base64 أو فك تشفيره فوراً.",
+        seo: "مشفر ومفكك Base64 سريع وموثوق. حوّل النص إلى صيغة Base64 أو فك تشفيره فوراً بأداة خفيفة.",
+        longDescription: "يعد مشفر Base64 ومفككه أداة مستندة إلى المتصفح تحوّل النص العادي إلى صيغة Base64 وتفك تشفير سلاسل Base64 إلى نص قابل للقراءة. مفيد للتطوير والاختبار ومهام التشفير البسيطة.",
+        usageContext: "استخدمه عند الحاجة إلى تشفير النص للنقل عبر الأنظمة النصية أو فك تشفير المحتوى المشفر.",
+        howToUse: "1. أدخل نصك أو الصقه.\n2. انقر تشفير لتحويل النص إلى Base64، أو فك التشفير للعكس.\n3. راجع النتيجة في منطقة الإخراج.\n4. انقر نسخ لاستخدام النتيجة.",
+        faq: [
+          { q: "هل Base64 شكل من أشكال التشفير؟", a: "لا. Base64 هو طريقة ترميز لتمثيل البيانات، وليس نظام أمان." },
+          { q: "متى يُستخدم Base64 عادةً؟", a: "غالبًا في واجهات برمجة التطبيقات ومحتوى البريد الإلكتروني وتضمين HTML/CSS ونقل البيانات." },
+          { q: "هل تستطيع هذه الأداة فك تشفير أي سلسلة Base64؟", a: "يمكنها فك تشفير نص Base64 صالح. إذا كانت المدخلات غير مكتملة أو غير صالحة، قد تفشل النتيجة." },
+          { q: "هل هذه الأداة للمطورين فقط؟", a: "لا. مفيدة أيضًا للطلاب والمحللين والمسوقين وغيرهم." }
+        ]
+      },
+      colorconverter: {
+        title: "محول كود الألوان",
+        description: "حوّل قيم ألوان HEX وRGB وHSL فوراً.",
+        seo: "حوّل قيم ألوان HEX وRGB وHSL فوراً بمحول بسيط. مفيد لتصميم الويب وأنظمة UI وتطوير الواجهة الأمامية.",
+        longDescription: "محول كود الألوان هو أداة عبر الإنترنت تساعد المستخدمين على تحويل قيم الألوان بين صيغ HEX وRGB وHSL. مفيد لتصميم الويب وعمل UI والعلامة التجارية.",
+        usageContext: "استخدمه عند الحاجة إلى تحويل لون من صيغة إلى أخرى أو نسخ رموز الألوان إلى CSS.",
+        howToUse: "1. أدخل قيمة HEX أو استخدم محدد الألوان.\n2. اطلع على القيم المحولة لـ HEX وRGB وHSL فوراً.\n3. انقر نسخ بجانب أي قيمة تريدها.\n4. انقر إعادة تعيين للبدء بلون جديد.",
+        faq: [
+          { q: "ما الفرق بين HEX وRGB وHSL؟", a: "HEX شائع في تصميم الويب، وRGB يعتمد على قيم الضوء الأحمر والأخضر والأزرق، وHSL يمثل التدرج والتشبع والإضاءة." },
+          { q: "لمن تفيد هذه الأداة؟", a: "للمصممين والمطورين والمسوقين والطلاب وكل من يتعامل مع الألوان الرقمية." },
+          { q: "هل يمكن استخدام هذه القيم في CSS؟", a: "نعم. HEX وRGB وHSL مستخدمة بشكل شائع في CSS." },
+          { q: "هل تدعم الأداة فحص الألوان بسرعة؟", a: "نعم. يمكنك اختيار لون بصرياً ومراجعة القيم المحولة فوراً." }
+        ]
+      },
       ruler: { title: "مسطرة عبر الإنترنت", description: "قياس المسافات على الشاشة مع المعايرة." },
       wordcounter: { title: "عداد الكلمات", description: "عد الحروف والكلمات في الوقت الفعلي." },
       countdown: { title: "مؤقت العد التنازلي", description: "ضبط المؤقتات مع وضع ملء الشاشة." },
