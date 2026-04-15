@@ -227,6 +227,21 @@ export const TOOLS: ToolDefinition[] = [
     locales: [...LOCALES],
     implementationKey: "colorConverter",
   },
+  {
+    id: "unitconverter",
+    slug: "unit-converter",
+    category: "measurement",
+    titleKey: "tools.unitconverter.title",
+    descriptionKey: "tools.unitconverter.description",
+    keywords: ["unit converter", "metric conversion", "measurement converter", "inch to cm", "kg to lbs"],
+    accentColor: "#8b5cf6",
+    icon: "📏",
+    order: 16,
+    featured: true,
+    status: "stable",
+    locales: [...LOCALES],
+    implementationKey: "unitConverter",
+  },
 ];
 
 export function getVisibleTools(locale?: Locale) {

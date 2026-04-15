@@ -26,4 +26,5 @@ export const toolRenderers: Record<string, ToolRenderer> = {
   textDiffChecker: dynamic(() => import("@/features/tools/implementations/text-diff-checker").then(m => m.TextDiffCheckerTool)),
   base64Encoder: dynamic(() => import("@/features/tools/implementations/base64-converter").then(m => m.Base64ConverterTool)),
   colorConverter: dynamic(() => import("@/features/tools/implementations/color-converter").then(m => m.ColorConverterTool)),
+  unitConverter: dynamic(() => import("@/features/tools/implementations/unit-converter").then(m => m.UnitConverterTool)),
 };

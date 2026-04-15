@@ -102,6 +102,16 @@ type CommonText = {
   howToUseTitle: string;
   faqTitle: string;
   howItWorks: string;
+  unitLength: string;
+  unitWeight: string;
+  unitArea: string;
+  unitVolume: string;
+  unitTemperature: string;
+  unitSpeed: string;
+  unitDigital: string;
+  from: string;
+  to: string;
+  unitAccuracyNote: string;
 };
 
 const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: CommonText }> = {
@@ -198,6 +208,20 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "Who is this tool useful for?", a: "It is useful for designers, developers, marketers, students, and anyone working with digital colors in websites, apps, presentations, or brand materials." },
           { q: "Can I use these values in CSS?", a: "Yes. HEX, RGB, and HSL are all commonly used in CSS and other web design workflows." },
           { q: "Does this tool support quick color checking?", a: "Yes. You can select a color visually and immediately review the converted values without leaving the page." }
+        ]
+      },
+      unitconverter: {
+        title: "Unit Converter",
+        description: "Convert units for length, weight, area, volume, temperature, and more in real-time.",
+        seo: "Free online unit converter for metric and imperial systems. Convert inches to cm, kg to lbs, celsius to fahrenheit, and more instantly.",
+        longDescription: "Our Unit Converter is a high-precision tool designed to help you quickly switch between different systems of measurement across the globe. Whether you are dealing with Metric or Imperial units, this tool provides accurate results for length, mass, area, volume, temperature, speed, and digital storage. From common everyday conversions like miles to kilometers, to specialized needs like US vs UK Gallons or Korean 'Pyung', we've got you covered with scientific accuracy.",
+        usageContext: "Did you know that a US Gallon and a UK Gallon are different sizes? Our tool distinguishes between these and other regional units (like Fluid Ounces) to ensure you have the correct data for travel, international shopping, or engineering projects. It is essential for anyone who needs fast and reliable conversions without searching for manual formulas.",
+        howToUse: "1. Select a category from the top tabs (e.g., Length, Weight).\n2. Enter the value you want to convert in the 'From' input box.\n3. Choose your current unit and the unit you want to convert to from the dropdown menus.\n4. View the result instantly in the 'To' box. Use the swap button (⇄) to reverse the conversion direction.",
+        faq: [
+          { q: "How accurate are the conversions?", a: "We use standard scientific conversion factors. Calculations are performed with high precision and results are displayed up to 10 decimal places for clarity." },
+          { q: "Does it support both metric and imperial systems?", a: "Yes. You can convert between common units like meters and feet, kilograms and pounds, or liters and gallons." },
+          { q: "Why is temperature conversion different?", a: "Unlike most units that use simple ratios, temperature scales (like Celsius to Fahrenheit) include offsets. Our tool correctly applies these formulas for exact results." },
+          { q: "Can I use it on my mobile phone?", a: "Yes. The unit converter is fully responsive and works perfectly on mobile browsers for quick on-the-go measurements." }
         ]
       },
       ruler: {
@@ -364,6 +388,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "How to use {0}",
       faqTitle: "Frequently Asked Questions",
       howItWorks: "How it works",
+      unitLength: "Length",
+      unitWeight: "Weight",
+      unitArea: "Area",
+      unitVolume: "Volume",
+      unitTemperature: "Temperature",
+      unitSpeed: "Speed",
+      unitDigital: "Digital",
+      from: "From",
+      to: "To",
+      unitAccuracyNote: "* High precision conversion using standard scientific constants. Result limited to 10 decimal points for readability.",
     },
   },
   ko: {
@@ -459,6 +493,20 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "이 도구는 누구에게 유용한가요?", a: "웹사이트, 앱, 프레젠테이션, 브랜드 자료에서 디지털 색상을 다루는 디자이너, 개발자, 마케터, 학생 등 모든 분께 유용합니다." },
           { q: "이 값들을 CSS에서 사용할 수 있나요?", a: "네. HEX, RGB, HSL은 모두 CSS 및 기타 웹 디자인 워크플로에서 일반적으로 사용됩니다." },
           { q: "이 도구가 빠른 색상 확인을 지원하나요?", a: "네. 시각적으로 색상을 선택하면 페이지를 벗어나지 않고 즉시 변환된 값을 확인할 수 있습니다." }
+        ]
+      },
+      unitconverter: {
+        title: "단위 변환기 (Unit Converter)",
+        description: "길이, 무게, 넓이, 부피, 온도, 데이터 등 다양한 단위를 실시간으로 변환하세요.",
+        seo: "무료 온라인 단위 변환기. 미터법과 야드파운드법 간의 변환을 지원하며 인치-센티미터, 킬로그램-파운드, 섭씨-화씨 등을 즉시 계산할 수 있습니다.",
+        longDescription: "Apps24의 단위 변환기는 전 세계에서 사용되는 다양한 측정 시스템(미터법, 영미 야드파운드법 등) 간의 차이를 빠르고 정확하게 해결해 주는 고정밀 도구입니다. 한국에서 부동산 거래 시 필수적인 '평(坪)' 단위부터, 미국과 유럽에서 주로 사용하는 마일(mile), 파운드(lb), 갤런(gallon) 등을 모두 지원합니다. 단순한 비율 계산을 넘어 고정밀 상수를 사용하여 정확한 수치를 도출하므로, 해외 직구, 여행 및 공학 계산 등 다양한 용도로 활용할 수 있습니다.",
+        usageContext: "미국의 갤런과 영국의 갤런이 다르다는 사실을 알고 계셨나요? 본 도구는 US/UK 단위를 구분하여 제공하므로 더욱 정확한 변환이 가능합니다. 이외에도 한국인에게 친숙한 '평' 변환, 주방 요리 시 필요한 '컵'이나 '액량 온스' 등 실생활에 꼭 필요한 변환 시나리오를 지원합니다.",
+        howToUse: "1. 상단 탭에서 변환하고자 하는 카테고리(길이, 무게, 온도 등)를 선택합니다.\n2. 왼쪽 'From' 입력창에 변환할 숫자를 입력합니다.\n3. 드롭다운 메뉴에서 현재 단위와 변환하고 싶은 결과 단위를 각각 선택합니다.\n4. 결과값이 실시간으로 'To' 영역에 표시됩니다. 변환 방향을 바꾸려면 중앙의 ⇄ 버튼을 클릭하세요.",
+        faq: [
+          { q: "변환 결과의 정확도는 어느 정도인가요?", a: "국제 표준 측정 계수를 사용하여 계산하며, 자바스크립트의 높은 정밀도를 활용해 소수점 10자리까지 정확한 값을 제공합니다." },
+          { q: "미터법과 야드파운드법을 모두 지원하나요?", a: "네. 전 세계적으로 사용되는 모든 주요 단위 시스템 간의 변환을 지원합니다." },
+          { q: "온도 변환 공식은 정확한가요?", a: "온도는 단순히 비율을 곱하는 것이 아니라 오프셋(Offset)이 있는 공식을 사용해야 합니다. 본 도구는 섭씨, 화씨, 켈빈 간의 정확한 보정 수식을 적용하고 있습니다." },
+          { q: "모바일에서도 편리하게 사용할 수 있나요?", a: "네, 반응형 디자인이 적용되어 스마트폰이나 태블릿에서도 별도의 앱 설치 없이 웹 브라우저에서 편리하게 사용할 수 있습니다." }
         ]
       },
       ruler: {
@@ -625,6 +673,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "{0} 사용 방법",
       faqTitle: "자주 묻는 질문",
       howItWorks: "작동 원리",
+      unitLength: "길이",
+      unitWeight: "무게",
+      unitArea: "넓이",
+      unitVolume: "부피",
+      unitTemperature: "온도",
+      unitSpeed: "속도",
+      unitDigital: "데이터",
+      from: "변환 값",
+      to: "결과 값",
+      unitAccuracyNote: "* 국제 표준 계수를 사용한 고정밀 변환 결과입니다. 가독성을 위해 소수점 10자리까지 표시됩니다.",
     },
   },
   fr: {
@@ -713,6 +771,13 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
           { q: "Utilisable en CSS?", a: "Oui. HEX, RGB et HSL sont tous communément utilisés en CSS." },
           { q: "Vérification rapide de couleurs?", a: "Oui. Sélectionnez visuellement et obtenez les valeurs converties immédiatement." }
         ]
+      },
+      unitconverter: {
+        title: "Convertisseur d'unités",
+        description: "Convertissez les unités de longueur, poids, température et plus encore.",
+        longDescription: "Notre convertisseur d'unités est un outil de haute précision conçu pour vous aider à passer rapidement d'un système de mesure à l'autre.",
+        howToUse: "1. Sélectionnez une catégorie.\n2. Entrez la valeur.\n3. Choisissez les unités.\n4. Obtenez le résultat.",
+        faq: [{ q: "Est-ce précis?", a: "Oui, nous utilisons des constantes scientifiques standard." }]
       },
       ruler: {
         title: "Règle en ligne",
@@ -857,6 +922,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "Comment utiliser {0}",
       faqTitle: "Foire aux questions",
       howItWorks: "Comment ça marche",
+      unitLength: "Longueur",
+      unitWeight: "Poids",
+      unitArea: "Surface",
+      unitVolume: "Volume",
+      unitTemperature: "Température",
+      unitSpeed: "Vitesse",
+      unitDigital: "Numérique",
+      from: "De",
+      to: "À",
+      unitAccuracyNote: "* Conversion de haute précision.",
     },
   },
   ja: {
@@ -1089,6 +1164,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "{0}の使い方",
       faqTitle: "よくある質問",
       howItWorks: "使い方",
+      unitLength: "長さ",
+      unitWeight: "重さ",
+      unitArea: "面積",
+      unitVolume: "容量",
+      unitTemperature: "温度",
+      unitSpeed: "速度",
+      unitDigital: "デジタル",
+      from: "変換元",
+      to: "変換先",
+      unitAccuracyNote: "* 高精度の変換結果です。",
     },
   },
   zh: {
@@ -1307,6 +1392,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "如何使用 {0}",
       faqTitle: "常见问题",
       howItWorks: "工作原理",
+      unitLength: "长度",
+      unitWeight: "重量",
+      unitArea: "面积",
+      unitVolume: "体积",
+      unitTemperature: "温度",
+      unitSpeed: "速度",
+      unitDigital: "数字存储",
+      from: "从",
+      to: "到",
+      unitAccuracyNote: "* 高精度转换。",
     },
   },
   "zh-TW": {
@@ -1525,6 +1620,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "如何使用 {0}",
       faqTitle: "常見問題",
       howItWorks: "運作原理",
+      unitLength: "長度",
+      unitWeight: "重量",
+      unitArea: "面積",
+      unitVolume: "體積",
+      unitTemperature: "溫度",
+      unitSpeed: "速度",
+      unitDigital: "數位儲存",
+      from: "從",
+      to: "到",
+      unitAccuracyNote: "* 高精度轉換。",
     },
   },
   pt: {
@@ -1743,6 +1848,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "Como usar {0}",
       faqTitle: "Perguntas frequentes",
       howItWorks: "Como funciona",
+      unitLength: "Comprimento",
+      unitWeight: "Peso",
+      unitArea: "Área",
+      unitVolume: "Volume",
+      unitTemperature: "Temperatura",
+      unitSpeed: "Velocidade",
+      unitDigital: "Digital",
+      from: "De",
+      to: "Para",
+      unitAccuracyNote: "* Conversão de alta precisão.",
     },
   },
   es: {
@@ -1961,6 +2076,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "Cómo usar {0}",
       faqTitle: "Preguntas frecuentes",
       howItWorks: "Cómo funciona",
+      unitLength: "Longitud",
+      unitWeight: "Peso",
+      unitArea: "Área",
+      unitVolume: "Volumen",
+      unitTemperature: "Temperatura",
+      unitSpeed: "Velocidad",
+      unitDigital: "Digital",
+      from: "Desde",
+      to: "Hasta",
+      unitAccuracyNote: "* Conversión de alta precisión.",
     },
   },
   de: {
@@ -2179,6 +2304,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "Wie man {0} verwendet",
       faqTitle: "Häufig gestellte Fragen",
       howItWorks: "So funktioniert es",
+      unitLength: "Länge",
+      unitWeight: "Gewicht",
+      unitArea: "Fläche",
+      unitVolume: "Volumen",
+      unitTemperature: "Temperatur",
+      unitSpeed: "Geschwindigkeit",
+      unitDigital: "Digital",
+      from: "Von",
+      to: "Nach",
+      unitAccuracyNote: "* Hochpräzise Konvertierung.",
     },
   },
   ar: {
@@ -2397,6 +2532,16 @@ const TOOL_TEXTS: Record<Locale, { tools: Record<string, ToolText>; common: Comm
       howToUseTitle: "كيفية استخدام {0}",
       faqTitle: "الأسئلة الشائعة",
       howItWorks: "كيف يعمل",
+      unitLength: "الطول",
+      unitWeight: "الوزن",
+      unitArea: "المساحة",
+      unitVolume: "الحجم",
+      unitTemperature: "درجة الحرارة",
+      unitSpeed: "السرعة",
+      unitDigital: "رقمي",
+      from: "من",
+      to: "إلى",
+      unitAccuracyNote: "* تحويل عالي الدقة.",
     },
   },
 };
