@@ -33,9 +33,13 @@ export function ScreenLampTool({ locale }: ToolRendererProps) {
 
   // Load color from localStorage
   useEffect(() => {
-    const savedColor = localStorage.getItem(STORAGE_KEY_COLOR);
-    if (savedColor) setColor(savedColor);
-    setSettingsLoaded(true);
+    const timer = window.setTimeout(() => {
+      const savedColor = localStorage.getItem(STORAGE_KEY_COLOR);
+      if (savedColor) setColor(savedColor);
+      setSettingsLoaded(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   // Save color to localStorage

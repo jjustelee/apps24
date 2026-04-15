@@ -4,9 +4,10 @@ import { useState } from "react";
 import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, CheckCircle, AlertTriangle, ClipboardCheck, Braces, Code } from "lucide-react";
+import type { Locale } from "@/lib/site";
 
 export function JsonFormatterTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as any);
+  const common = getCommonText(locale as Locale);
   const [input, setInput] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,8 +18,8 @@ export function JsonFormatterTool({ locale }: ToolRendererProps) {
       const parsed = JSON.parse(input);
       setInput(JSON.stringify(parsed, null, 2));
       setError(null);
-    } catch (e: any) {
-      setError(e.message || "Invalid JSON");
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "Invalid JSON");
     }
   };
 
@@ -31,8 +32,8 @@ export function JsonFormatterTool({ locale }: ToolRendererProps) {
       JSON.parse(input);
       setError(null);
       // Optional: show a small success indication
-    } catch (e: any) {
-      setError(e.message || "Invalid JSON");
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "Invalid JSON");
     }
   };
 

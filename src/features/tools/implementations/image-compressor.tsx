@@ -4,16 +4,19 @@ import { useState, useRef, useEffect } from "react";
 import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Download, Upload, RefreshCw, Image as ImageIcon, CheckCircle, AlertCircle } from "lucide-react";
+import type { Locale } from "@/lib/site";
+
+type CompressionFormat = "image/jpeg" | "image/webp" | "image/png";
 
 export function ImageCompressorTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as any);
+  const common = getCommonText(locale as Locale);
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalPreview, setOriginalPreview] = useState<string>("");
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null);
   const [compressedPreview, setCompressedPreview] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [format, setFormat] = useState<"image/jpeg" | "image/webp" | "image/png">("image/webp");
+  const [format, setFormat] = useState<CompressionFormat>("image/webp");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -136,7 +139,7 @@ export function ImageCompressorTool({ locale }: ToolRendererProps) {
             <div className="controls-row">
               <select 
                 value={format} 
-                onChange={(e) => setFormat(e.target.value as any)}
+                onChange={(e) => setFormat(e.target.value as CompressionFormat)}
                 className="select-glass"
               >
                 <option value="image/webp">WebP</option>

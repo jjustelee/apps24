@@ -83,15 +83,19 @@ export function DigitalClockTool({ locale }: ToolRendererProps) {
 
   // Load settings from localStorage
   useEffect(() => {
-    const savedBg = localStorage.getItem(STORAGE_KEY_BG);
-    const savedFormat = localStorage.getItem(STORAGE_KEY_FORMAT);
-    const savedSize = localStorage.getItem(STORAGE_KEY_SIZE);
+    const timer = window.setTimeout(() => {
+      const savedBg = localStorage.getItem(STORAGE_KEY_BG);
+      const savedFormat = localStorage.getItem(STORAGE_KEY_FORMAT);
+      const savedSize = localStorage.getItem(STORAGE_KEY_SIZE);
 
-    if (savedBg) setBgColor(savedBg);
-    if (savedFormat) setIs24Hour(savedFormat === "true");
-    if (savedSize) setFontSizeScale(parseFloat(savedSize));
-    
-    setSettingsLoaded(true);
+      if (savedBg) setBgColor(savedBg);
+      if (savedFormat) setIs24Hour(savedFormat === "true");
+      if (savedSize) setFontSizeScale(parseFloat(savedSize));
+
+      setSettingsLoaded(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   // Save settings to localStorage

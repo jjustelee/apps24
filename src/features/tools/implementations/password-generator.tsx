@@ -1,56 +1,77 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Copy, RefreshCw, ClipboardCheck, Key } from "lucide-react";
+import type { Locale } from "@/lib/site";
+
+function createPassword(
+  length: number,
+  includeUppercase: boolean,
+  includeLowercase: boolean,
+  includeNumbers: boolean,
+  includeSymbols: boolean,
+) {
+  const chars = {
+    uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    lowercase: "abcdefghijklmnopqrstuvwxyz",
+    numbers: "0123456789",
+    symbols: "!@#$%^&*()_+~`|}{[]:;?><,./-=",
+  };
+
+  let allowed = "";
+  if (includeUppercase) allowed += chars.uppercase;
+  if (includeLowercase) allowed += chars.lowercase;
+  if (includeNumbers) allowed += chars.numbers;
+  if (includeSymbols) allowed += chars.symbols;
+
+  if (!allowed) {
+    allowed = chars.lowercase;
+  }
+
+  let result = "";
+  const randomArray = new Uint32Array(length);
+  window.crypto.getRandomValues(randomArray);
+
+  for (let i = 0; i < length; i++) {
+    result += allowed[randomArray[i] % allowed.length];
+  }
+
+  return result;
+}
 
 export function PasswordGeneratorTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as any);
+  const common = getCommonText(locale as Locale);
   
   const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);
   const [includeLowercase, setIncludeLowercase] = useState(true);
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSymbols, setIncludeSymbols] = useState(true);
-  
   const [password, setPassword] = useState("");
   const [copied, setCopied] = useState(false);
-
-  const generatePassword = () => {
-    const chars = {
-      uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      lowercase: "abcdefghijklmnopqrstuvwxyz",
-      numbers: "0123456789",
-      symbols: "!@#$%^&*()_+~`|}{[]:;?><,./-="
-    };
-
-    let allowed = "";
-    if (includeUppercase) allowed += chars.uppercase;
-    if (includeLowercase) allowed += chars.lowercase;
-    if (includeNumbers) allowed += chars.numbers;
-    if (includeSymbols) allowed += chars.symbols;
-
-    if (!allowed) {
-      // Fallback if user unchecks everything
-      allowed = chars.lowercase;
-      setIncludeLowercase(true);
-    }
-
-    let result = "";
-    const randomArray = new Uint32Array(length);
-    window.crypto.getRandomValues(randomArray);
-    
-    for (let i = 0; i < length; i++) {
-      result += allowed[randomArray[i] % allowed.length];
-    }
-    
-    setPassword(result);
-  };
+  const [generationTick, setGenerationTick] = useState(0);
 
   useEffect(() => {
-    generatePassword();
-  }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols]);
+    const timer = window.setTimeout(() => {
+      setPassword(
+        createPassword(
+          length,
+          includeUppercase,
+          includeLowercase,
+          includeNumbers,
+          includeSymbols,
+        ),
+      );
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [generationTick, length, includeUppercase, includeLowercase, includeNumbers, includeSymbols]);
+
+  const handleGenerate = () => {
+    setGenerationTick((current) => current + 1);
+  };
 
   const handleCopy = () => {
     if (!password) return;
@@ -124,7 +145,7 @@ export function PasswordGeneratorTool({ locale }: ToolRendererProps) {
       </div>
 
       <div className="action-row">
-        <button onClick={generatePassword} className="button-primary generate-btn">
+        <button onClick={handleGenerate} className="button-primary generate-btn">
           <RefreshCw size={18} />
           {common.generatePassword}
         </button>

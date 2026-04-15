@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, ShieldAlert } from "lucide-react";
 
 export function Base64ConverterTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as any);
-  
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");

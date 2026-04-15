@@ -4,9 +4,10 @@ import { useState } from "react";
 import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { SplitSquareHorizontal, Trash2 } from "lucide-react";
+import type { Locale } from "@/lib/site";
 
 export function TextDiffCheckerTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as any);
+  const common = getCommonText(locale as Locale);
   
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");

@@ -65,13 +65,17 @@ export function BarcodeGeneratorTool({
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
-    if (isQrTool) {
+    const timer = window.setTimeout(() => {
+      if (isQrTool) {
+        setSettingsLoaded(true);
+        return;
+      }
+      const saved = localStorage.getItem(STORAGE_KEY_FORMAT);
+      if (saved) setFormat(saved);
       setSettingsLoaded(true);
-      return;
-    }
-    const saved = localStorage.getItem(STORAGE_KEY_FORMAT);
-    if (saved) setFormat(saved);
-    setSettingsLoaded(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [isQrTool]);
 
   useEffect(() => {

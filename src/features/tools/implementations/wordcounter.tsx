@@ -41,9 +41,13 @@ export function WordCounterTool({ tool }: ToolRendererProps) {
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
-    const savedPos = localStorage.getItem(STORAGE_KEY_POSITION);
-    if (savedPos !== null) setPosition(savedPos);
-    setSettingsLoaded(true);
+    const timer = window.setTimeout(() => {
+      const savedPos = localStorage.getItem(STORAGE_KEY_POSITION);
+      if (savedPos !== null) setPosition(savedPos);
+      setSettingsLoaded(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {

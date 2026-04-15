@@ -109,14 +109,18 @@ export function DummyTextTool({ tool }: ToolRendererProps) {
 
   // Effect to handle initial load and locale changes
   useEffect(() => {
-    // 1. Always start paragraphs with current locale text
-    setLang(locale);
+    const timer = window.setTimeout(() => {
+      // 1. Always start paragraphs with current locale text
+      setLang(locale);
 
-    // 2. Load preferred length (paragraphs) from storage
-    const savedLen = localStorage.getItem(STORAGE_KEY_LENGTH);
-    if (savedLen) setLength(Number(savedLen));
+      // 2. Load preferred length (paragraphs) from storage
+      const savedLen = localStorage.getItem(STORAGE_KEY_LENGTH);
+      if (savedLen) setLength(Number(savedLen));
 
-    setSettingsLoaded(true);
+      setSettingsLoaded(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [locale]);
 
   useEffect(() => {

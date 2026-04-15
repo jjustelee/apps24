@@ -24,6 +24,7 @@ export function ToolShell({
 }: ToolShellProps) {
   const common = getCommonText(locale);
   const toolText = getToolText(locale, tool);
+  const formatTitle = (template: string) => template.replace("{0}", title);
 
   return (
     <div className="tool-shell">
@@ -50,28 +51,28 @@ export function ToolShell({
         <section className="tool-rich-content-section" style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--line)" }}>
           {toolText.longDescription && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
-              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>What is {title}?</h2>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{formatTitle(common.whatIs)}</h2>
               <p style={{ lineHeight: "1.8", color: "var(--muted)", fontSize: "1.05rem" }}>{toolText.longDescription}</p>
             </div>
           )}
 
           {toolText.usageContext && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
-              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>When to use this tool?</h2>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{common.whenToUse}</h2>
               <p style={{ lineHeight: "1.8", color: "var(--muted)", fontSize: "1.05rem" }}>{toolText.usageContext}</p>
             </div>
           )}
 
           {toolText.howToUse && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
-              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>How to use {title}</h2>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{formatTitle(common.howToUseTitle)}</h2>
               <p style={{ lineHeight: "1.8", color: "var(--muted)", fontSize: "1.05rem", whiteSpace: "pre-wrap" }}>{toolText.howToUse}</p>
             </div>
           )}
 
           {toolText.faq && toolText.faq.length > 0 && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
-              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1.25rem", color: "var(--text)" }}>Frequently Asked Questions</h2>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1.25rem", color: "var(--text)" }}>{common.faqTitle}</h2>
               <div style={{ display: "grid", gap: "1.5rem" }}>
                 {toolText.faq.map((item, i) => (
                   <div key={i} className="faq-item" style={{ padding: "1.5rem", background: "var(--accent-soft)", borderRadius: "16px" }}>
@@ -87,7 +88,7 @@ export function ToolShell({
 
           {seo && (
             <div className="tool-seo-rich-content" style={{ marginBottom: "2rem", padding: "1.5rem", background: "var(--panel-glass)", borderRadius: "16px", border: "1px solid var(--panel-border)" }}>
-              <h2 style={{ fontSize: "1.1rem", color: "var(--accent)", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>Developer Notes & Technical SEO</h2>
+              <h2 style={{ fontSize: "1.1rem", color: "var(--accent)", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>{common.howItWorks}</h2>
               <p style={{ lineHeight: "1.7", color: "var(--muted)", fontSize: "0.95rem" }}>
                 {seo}
               </p>
