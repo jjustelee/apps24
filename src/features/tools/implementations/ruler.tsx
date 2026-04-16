@@ -94,16 +94,20 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
         setStageSize({ width: window.innerWidth, height: window.innerHeight });
       } else if (containerRef.current) {
         const measuredWidth = containerRef.current.offsetWidth || window.innerWidth;
-        // Use measured width of parent container for true responsiveness
         const newWidth = Math.min(MAX_STAGE_WIDTH, measuredWidth - 4); 
-        const newHeight = 400; // Fixed height or could be dynamic
-
-        setStageSize({ width: newWidth, height: newHeight });
         
-        // Keep origin within visible bounds (a bit more padding for safety)
+        // Only auto-update width if it wasn't manually changed or if it's too wide for the container
+        setStageSize(prev => {
+          const updatedWidth = Math.min(newWidth, prev.width || newWidth);
+          return {
+            width: updatedWidth,
+            height: prev.height > 0 ? prev.height : 400
+          };
+        });
+        
         setOrigin(prev => ({
           x: Math.min(prev.x, Math.max(0, newWidth - 20)),
-          y: Math.min(prev.y, Math.max(0, newHeight - 20))
+          y: Math.min(prev.y, Math.max(0, stageSize.height - 20))
         }));
       }
     };
@@ -471,9 +475,23 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
           {!isFullscreen && (
             <div
               onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setDraggingResize(true); }}
-              style={{ position: "absolute", bottom: 0, right: 0, width: "20px", height: "20px", background: "#3b82f6", cursor: "nwse-resize", zIndex: 10, borderRadius: "4px 0 0 0", display: "flex", alignItems: "center", justifyContent: "center" }}
+              style={{ 
+                position: "absolute", 
+                bottom: 0, 
+                right: 0, 
+                width: "24px", 
+                height: "24px", 
+                background: "var(--accent)", 
+                cursor: "nwse-resize", 
+                zIndex: 10, 
+                borderRadius: "8px 0 0 0", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center",
+                touchAction: "none"
+              }}
             >
-              <div style={{ width: "4px", height: "4px", background: "white", borderRadius: "50%" }}></div>
+              <div style={{ width: "6px", height: "6px", background: "white", borderRadius: "50%", opacity: 0.8 }}></div>
             </div>
           )}
         </div>
