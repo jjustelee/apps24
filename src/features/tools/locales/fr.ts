@@ -332,5 +332,9 @@ export default {
       whyUseTitle: "Pourquoi utiliser {0} ?",
       popularConversionsTitle: "Conversions populaires",
       relatedToolsTitle: "Outils connexes",
+      quality: "Qualité",
+      dimensions: "Redimensionnement",
+      width: "Largeur",
+      height: "Hauteur",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

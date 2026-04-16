@@ -362,5 +362,9 @@ export default {
       whyUseTitle: "Why use {0}?",
       popularConversionsTitle: "Popular Conversions",
       relatedToolsTitle: "Related Tools",
+      quality: "Quality",
+      dimensions: "Resizing",
+      width: "Width",
+      height: "Height",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

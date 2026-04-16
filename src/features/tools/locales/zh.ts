@@ -318,5 +318,9 @@ export default {
       whyUseTitle: "为什么要使用 {0}？",
       popularConversionsTitle: "热门转换",
       relatedToolsTitle: "相关工具",
+      quality: "质量",
+      dimensions: "调整大小",
+      width: "宽度",
+      height: "高度",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

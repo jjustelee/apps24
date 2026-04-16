@@ -122,6 +122,10 @@ export type CommonText = {
   whyUseTitle: string;
   popularConversionsTitle: string;
   relatedToolsTitle: string;
+  quality: string;
+  dimensions: string;
+  width: string;
+  height: string;
 };
 
 export type LocaleData = {

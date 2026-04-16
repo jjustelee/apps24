@@ -362,5 +362,9 @@ export default {
       whyUseTitle: "{0}를(을) 왜 사용해야 하나요?",
       popularConversionsTitle: "인기 있는 변환",
       relatedToolsTitle: "관련 도구",
+      quality: "품질",
+      dimensions: "크기 조정",
+      width: "가로",
+      height: "세로",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

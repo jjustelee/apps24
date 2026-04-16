@@ -333,5 +333,9 @@ export default {
       whyUseTitle: "{0}を使う理由は？",
       popularConversionsTitle: "人気の変換",
       relatedToolsTitle: "関連ツール",
+      quality: "品質",
+      dimensions: "サイズ変更",
+      width: "幅",
+      height: "高さ",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };
