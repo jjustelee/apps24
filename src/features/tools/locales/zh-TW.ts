@@ -172,7 +172,7 @@ export default {
       backToTools: "返回工具列表",
       copied: "已複製到剪貼簿！",
       languageSelect: "選擇內容語言",
-      highlightHelp: "* 指定索引處의 字元將在上面的文字區域中即時突出顯示。",
+      highlightHelp: "* 指定索引處的字元將在上面的文字區域中即時突出顯示。",
       allTools: "所有工具",
       footerNote1: "此工具是 apps24 實用工具套件的一部分。",
       footerNote2: "所有處理均在您的瀏覽器中本地完成，以實現最大的隱私和速度。",
