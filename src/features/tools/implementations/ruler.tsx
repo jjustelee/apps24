@@ -423,63 +423,61 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
       )}
 
       {/* 실제 연산 및 캔버스 영역 (Interactive Tool) */}
-      {!isFullscreen && (
-        <div style={{ marginTop: "2rem" }}>
-          <div 
-            ref={stageRef} 
-            className="tool-canvas-wrap" 
-            style={{ 
-              position: isFullscreen ? "fixed" : "relative", 
-              top: 0,
-              left: 0,
-              width: isFullscreen ? "100vw" : "100%",
-              height: isFullscreen ? "100vh" : `${stageSize.height}px`,
-              maxWidth: isFullscreen ? "none" : `${stageSize.width}px`,
-              margin: isFullscreen ? 0 : "0 auto",
-              background: "white",
-              boxShadow: isFullscreen ? "none" : "var(--shadow)",
-              border: isFullscreen ? "none" : "1px solid var(--panel-border)",
-              borderRadius: isFullscreen ? 0 : "16px",
-              overflow: "hidden",
-              zIndex: isFullscreen ? 9999 : 1
+      <div style={{ marginTop: "2rem" }}>
+        <div 
+          ref={stageRef} 
+          className="tool-canvas-wrap" 
+          style={{ 
+            position: isFullscreen ? "fixed" : "relative", 
+            top: 0,
+            left: 0,
+            width: isFullscreen ? "100vw" : "100%",
+            height: isFullscreen ? "100vh" : `${stageSize.height}px`,
+            maxWidth: isFullscreen ? "none" : `${stageSize.width}px`,
+            margin: isFullscreen ? 0 : "0 auto",
+            background: "white",
+            boxShadow: isFullscreen ? "none" : "var(--shadow)",
+            border: isFullscreen ? "none" : "1px solid var(--panel-border)",
+            borderRadius: isFullscreen ? 0 : "16px",
+            overflow: "hidden",
+            zIndex: isFullscreen ? 9999 : 1
+          }}
+        >
+          <canvas
+            ref={canvasRef}
+            style={{ cursor: "crosshair", display: "block", width: "100%", height: "100%" }}
+            onDoubleClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              setOrigin({ x: e.clientX - rect.left, y: e.clientY - rect.top });
             }}
-          >
-            <canvas
-              ref={canvasRef}
-              style={{ cursor: "crosshair", display: "block", width: "100%", height: "100%" }}
-              onDoubleClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                setOrigin({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-              }}
-            />
+          />
 
-            {isFullscreen && (
-              <>
-                <div style={{ position: "absolute", top: "20px", left: "20px", background: "rgba(0,0,0,0.7)", color: "white", padding: "8px 16px", borderRadius: "20px", fontSize: "0.85rem", fontWeight: 600, opacity: showControls ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: "none" }}>
-                  {common.currentUnit}: {currentUnitLabel}
-                </div>
-                <div style={{ position: "absolute", top: "20px", right: "20px", display: "flex", gap: "10px", opacity: showControls ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: showControls ? "auto" : "none" }}>
-                  <button className="tool-button secondary" style={{ background: "rgba(255,255,255,0.9)", border: "none" }} onClick={() => setUnit(unit === "cm" ? "in" : "cm")}>
-                    {unit.toUpperCase()}
-                  </button>
-                  <button className="tool-button" onClick={toggleFs}>
-                    {common.exitFullscreen}
-                  </button>
-                </div>
-              </>
-            )}
-
-            {!isFullscreen && (
-              <div
-                onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setDraggingResize(true); }}
-                style={{ position: "absolute", bottom: 0, right: 0, width: "20px", height: "20px", background: "#3b82f6", cursor: "nwse-resize", zIndex: 10, borderRadius: "4px 0 0 0", display: "flex", alignItems: "center", justifyContent: "center" }}
-              >
-                <div style={{ width: "4px", height: "4px", background: "white", borderRadius: "50%" }}></div>
+          {isFullscreen && (
+            <>
+              <div style={{ position: "absolute", top: "20px", left: "20px", background: "rgba(0,0,0,0.7)", color: "white", padding: "8px 16px", borderRadius: "20px", fontSize: "0.85rem", fontWeight: 600, opacity: showControls ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: "none" }}>
+                {common.currentUnit}: {currentUnitLabel}
               </div>
-            )}
-          </div>
+              <div style={{ position: "absolute", top: "20px", right: "20px", display: "flex", gap: "10px", opacity: showControls ? 1 : 0, transition: "opacity 0.3s ease", pointerEvents: showControls ? "auto" : "none" }}>
+                <button className="tool-button secondary" style={{ background: "rgba(255,255,255,0.9)", border: "none" }} onClick={() => setUnit(unit === "cm" ? "in" : "cm")}>
+                  {unit.toUpperCase()}
+                </button>
+                <button className="tool-button" onClick={toggleFs}>
+                  {common.exitFullscreen}
+                </button>
+              </div>
+            </>
+          )}
+
+          {!isFullscreen && (
+            <div
+              onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); setDraggingResize(true); }}
+              style={{ position: "absolute", bottom: 0, right: 0, width: "20px", height: "20px", background: "#3b82f6", cursor: "nwse-resize", zIndex: 10, borderRadius: "4px 0 0 0", display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
+              <div style={{ width: "4px", height: "4px", background: "white", borderRadius: "50%" }}></div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
     </div>
   );
