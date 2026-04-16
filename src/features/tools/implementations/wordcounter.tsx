@@ -198,7 +198,7 @@ export function WordCounterTool({ tool, commonText: common }: ToolRendererProps)
       </div>
 
       {/* 4. Footer Help */}
-      <p className="tool-note" style={{ marginTop: "2rem", fontSize: "0.85rem", opacity: 0.7 }}>
+      <p className="tool-note" style={{ marginTop: "2rem", fontSize: "0.95rem", opacity: 0.8 }}>
         {common.highlightHelp}
       </p>
     </div>

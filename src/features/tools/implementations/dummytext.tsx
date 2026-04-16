@@ -190,7 +190,7 @@ export function DummyTextTool({ tool, commonText: common }: ToolRendererProps) {
           <h3 style={{ margin: 0 }}>{common.generatedText}</h3>
           <button 
             className="tool-button secondary" 
-            style={{ padding: "6px 12px", fontSize: "0.8rem" }}
+            style={{ padding: "8px 16px", fontSize: "0.95rem" }}
             onClick={() => {
               navigator.clipboard.writeText(paragraphs.join("\n\n"));
             }}

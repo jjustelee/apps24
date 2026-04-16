@@ -32,7 +32,7 @@ export async function SiteShell({ locale, title, description, children }: SiteSh
 
       <footer className="site-footer">
         <div className="footer-container">
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1.25rem", fontSize: "0.85rem", fontWeight: 500 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "1.5rem", fontSize: "0.95rem", fontWeight: 500 }}>
             <Link href={`/${locale}/about`} style={{ color: "var(--text-muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: "5px" }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
               {common.about}
@@ -50,7 +50,7 @@ export async function SiteShell({ locale, title, description, children }: SiteSh
               {common.contact}
             </Link>
           </div>
-          <span style={{ fontSize: "0.8rem", color: "var(--text-muted)", opacity: 0.8 }}>
+          <span style={{ fontSize: "0.85rem", color: "var(--text-muted)", opacity: 0.8 }}>
             © {new Date().getFullYear()} apps24.io. All rights reserved.
           </span>
         </div>

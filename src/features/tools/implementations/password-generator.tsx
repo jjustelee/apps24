@@ -209,10 +209,11 @@ export function PasswordGeneratorTool({ locale, commonText: common }: ToolRender
         }
         .length-value {
           color: var(--accent);
-          font-size: 1.1rem;
-          background: rgba(255, 255, 255, 0.05);
+          font-size: 1.25rem;
+          background: var(--accent-soft);
           padding: 0.25rem 0.75rem;
           border-radius: 0.5rem;
+          font-weight: 700;
         }
         .slider {
           width: 100%;
@@ -247,7 +248,7 @@ export function PasswordGeneratorTool({ locale, commonText: common }: ToolRender
           gap: 0.75rem;
           cursor: pointer;
           color: var(--text);
-          font-size: 0.95rem;
+          font-size: 1.05rem;
           user-select: none;
         }
         .checkbox-label input {

@@ -13,8 +13,8 @@ export function ToolCard({ href, title, description, icon }: ToolCardProps) {
       <span className="tool-card-icon" aria-hidden="true">
         {icon}
       </span>
-      <h3 style={{ fontSize: "1.1rem", margin: 0, fontWeight: 700 }}>{title}</h3>
-      <span style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: "1.5" }}>{description}</span>
+      <h3 style={{ fontSize: "1.2rem", margin: 0, fontWeight: 700 }}>{title}</h3>
+      <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: "1.5", margin: 0 }}>{description}</p>
     </Link>
   );
 }

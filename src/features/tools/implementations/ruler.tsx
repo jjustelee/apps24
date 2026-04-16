@@ -278,7 +278,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
                   <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "var(--accent)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem", fontWeight: 800, flexShrink: 0 }}>
                     {item.step}
                   </div>
-                  <div style={{ color: "var(--text-soft)", fontSize: "0.9rem", lineHeight: "1.5", fontWeight: 500 }}>
+                  <div style={{ color: "var(--text-soft)", fontSize: "1rem", lineHeight: "1.6", fontWeight: 500 }}>
                     {item.text}
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
               <h2 style={{ fontSize: "1.1rem", fontWeight: 800, color: "var(--text)", marginBottom: "0.5rem" }}>
                 {common.calibrationTitle}
               </h2>
-              <p style={{ fontSize: "0.9rem", color: "var(--muted)", lineHeight: "1.6" }}>
+              <p style={{ fontSize: "1rem", color: "var(--muted)", lineHeight: "1.7" }}>
                 {common.calibrationDesc}
               </p>
             </div>
@@ -347,7 +347,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
               </div>
             </div>
             
-            <p style={{ fontSize: "0.85rem", color: "var(--muted)", fontStyle: "italic", textAlign: "center", marginTop: "1.5rem" }}>
+            <p style={{ fontSize: "0.95rem", color: "var(--muted)", fontStyle: "italic", textAlign: "center", marginTop: "1.5rem" }}>
               {common.guideMessage}
             </p>
           </div>
@@ -387,7 +387,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
               <label htmlFor="ruler-card-width" style={{ display: "block", fontWeight: 800, fontSize: "1rem", marginBottom: "0.5rem", color: "var(--text)" }}>
                 {common.rulerEnterCardWidth}
               </label>
-              <p style={{ fontSize: "0.85rem", color: "var(--muted)", marginBottom: "1rem" }}>
+              <p style={{ fontSize: "0.95rem", color: "var(--muted)", marginBottom: "1rem" }}>
                 {common.rulerExample}
               </p>
               <input
@@ -413,7 +413,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
             </div>
 
             <div style={{ marginTop: "1.5rem", padding: "1.25rem", background: "var(--bg)", border: "1px solid var(--line)", borderRadius: "12px" }}>
-              <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--muted)", lineHeight: "1.6" }}>
+              <p style={{ margin: 0, fontSize: "0.95rem", color: "var(--muted)", lineHeight: "1.6" }}>
                 <strong>{common.notice}:</strong> {common.rulerTip}
               </p>
             </div>
