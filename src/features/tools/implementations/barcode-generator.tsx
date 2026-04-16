@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { getCommonText } from "@/features/tools/copy";
 import type { Locale } from "@/lib/site";
 
 type BarcodeFormatOption = {
@@ -41,8 +40,8 @@ export function BarcodeGeneratorTool({
   locale,
   tool,
   toolData,
+  commonText,
 }: ToolRendererProps) {
-  const commonText = getCommonText(locale as Locale);
   const data = toolData as BarcodeToolData | undefined;
   const isQrTool = tool.slug === "qrgenerator";
   const availableFormats = useMemo(() => {

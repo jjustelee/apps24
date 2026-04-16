@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ToolShell } from "@/components/tool-shell";
 import { buildLocaleAlternates } from "@/lib/seo";
 import { getStaticToolParams, getToolBySlug } from "@/features/tools/registry";
-import { getToolText } from "@/features/tools/copy";
+import { getToolText, getCommonText } from "@/features/tools/copy";
 import { toolRenderers } from "@/features/tools/implementations";
 import { isLocale, type Locale } from "@/lib/site";
 
@@ -32,7 +32,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const text = getToolText(locale as Locale, tool);
+  const text = await getToolText(locale as Locale, tool);
 
   return {
     alternates: buildLocaleAlternates(locale as Locale, `/${slug}`),
@@ -57,7 +57,8 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
     notFound();
   }
 
-  const text = getToolText(validLocale, tool);
+  const text = await getToolText(validLocale, tool);
+  const common = await getCommonText(validLocale);
 
   const Renderer = toolRenderers[tool.implementationKey];
   const toolData =
@@ -103,6 +104,8 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
             tool={tool}
             searchParams={resolvedSearchParams}
             toolData={toolData}
+            commonText={common}
+            toolText={text}
           />
         ) : (
           <div className="empty-state">

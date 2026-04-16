@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { getCommonText } from "@/features/tools/copy";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/lib/site";
 
@@ -97,10 +96,9 @@ const SENTENCES: Record<string, string[]> = {
 const STORAGE_KEY_LANG = "apps24.dummytext.lang";
 const STORAGE_KEY_LENGTH = "apps24.dummytext.length";
 
-export function DummyTextTool({ tool }: ToolRendererProps) {
+export function DummyTextTool({ tool, commonText: common }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
-  const common = getCommonText(locale);
   
   // Strongly prioritize the current page locale over saved settings
   const [lang, setLang] = useState<string>(locale);

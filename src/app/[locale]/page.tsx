@@ -20,7 +20,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const commonText = getCommonText(locale as Locale);
+  const commonText = await getCommonText(locale as Locale);
 
   return {
     alternates: buildLocaleAlternates(locale),
@@ -38,7 +38,14 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
 
   const validLocale = locale as Locale;
   const tools = getVisibleTools(validLocale);
-  const commonText = getCommonText(validLocale);
+  const commonText = await getCommonText(validLocale);
+
+  const toolsWithText = await Promise.all(
+    tools.map(async (tool) => ({
+      tool,
+      text: await getToolText(validLocale, tool),
+    }))
+  );
 
   return (
     <>
@@ -49,9 +56,7 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
       <section className="panel">
         {tools.length > 0 ? (
           <div className="tool-grid">
-            {tools.map((tool) => {
-              const text = getToolText(validLocale, tool);
-
+            {toolsWithText.map(({ tool, text }) => {
               return (
                 <ToolCard
                   key={tool.id}

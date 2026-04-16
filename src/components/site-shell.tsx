@@ -11,8 +11,8 @@ type SiteShellProps = {
   children: ReactNode;
 };
 
-export function SiteShell({ locale, title, description, children }: SiteShellProps) {
-  const common = getCommonText(locale);
+export async function SiteShell({ locale, title, description, children }: SiteShellProps) {
+  const common = await getCommonText(locale);
   return (
     <div className="site-shell">
       <header className="site-header">

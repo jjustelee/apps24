@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Download, Upload, RefreshCw, Image as ImageIcon, CheckCircle, AlertCircle } from "lucide-react";
 import type { Locale } from "@/lib/site";
 
 type CompressionFormat = "image/jpeg" | "image/webp" | "image/png";
 
-export function ImageCompressorTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as Locale);
+export function ImageCompressorTool({ locale, commonText: common }: ToolRendererProps) {
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalPreview, setOriginalPreview] = useState<string>("");
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null);

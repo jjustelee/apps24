@@ -7,7 +7,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   const validLocale = locale as Locale;
   const legal = LEGAL_TEXTS[validLocale] || LEGAL_TEXTS.en;
-  const common = getCommonText(validLocale);
+  const common = await getCommonText(validLocale);
   const about = legal.about;
 
   return (

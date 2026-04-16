@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { getCommonText } from "@/features/tools/copy";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/lib/site";
 
@@ -30,10 +29,9 @@ function getHighlightedPreview(text: string, position: number) {
   };
 }
 
-export function WordCounterTool({ tool }: ToolRendererProps) {
+export function WordCounterTool({ tool, commonText: common }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
-  const common = getCommonText(locale);
 
   const [text, setText] = useState("");
   const [position, setPosition] = useState("0");

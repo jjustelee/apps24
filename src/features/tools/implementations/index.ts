@@ -7,6 +7,8 @@ export type ToolRendererProps = {
   tool: ToolDefinition;
   searchParams?: Record<string, string | string[] | undefined>;
   toolData?: unknown;
+  commonText: any;
+  toolText?: any;
 };
 
 export type ToolRenderer = ComponentType<ToolRendererProps>;
@@ -27,4 +29,6 @@ export const toolRenderers: Record<string, ToolRenderer> = {
   base64Encoder: dynamic(() => import("@/features/tools/implementations/base64-converter").then(m => m.Base64ConverterTool)),
   colorConverter: dynamic(() => import("@/features/tools/implementations/color-converter").then(m => m.ColorConverterTool)),
   unitConverter: dynamic(() => import("@/features/tools/implementations/unit-converter").then(m => m.UnitConverterTool)),
+  percentageCalculator: dynamic(() => import("@/features/tools/implementations/percentage-calculator").then(m => m.PercentageCalculatorTool)),
+  ipLookup: dynamic(() => import("@/features/tools/implementations/ip-lookup").then(m => m.IpLookupTool)),
 };

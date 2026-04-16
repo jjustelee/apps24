@@ -14,7 +14,7 @@ type ToolShellProps = {
   children: ReactNode;
 };
 
-export function ToolShell({
+export async function ToolShell({
   locale,
   tool,
   title,
@@ -22,8 +22,8 @@ export function ToolShell({
   seo,
   children,
 }: ToolShellProps) {
-  const common = getCommonText(locale);
-  const toolText = getToolText(locale, tool);
+  const common = await getCommonText(locale);
+  const toolText = await getToolText(locale, tool);
   const formatTitle = (template: string) => template.replace("{0}", title);
 
   return (
@@ -31,7 +31,7 @@ export function ToolShell({
       <ToolSidebar locale={locale} activeSlug={tool.slug} />
 
       <main className="tool-main-content">
-        <header className="tool-header" style={{ marginBottom: "2rem" }}>
+        <header className="tool-header" style={{ marginBottom: "4rem" }}>
           <nav style={{ marginBottom: "0.5rem" }}>
             <Link className="back-link" href={`/${locale}`}>
               ← {common.backToTools}
@@ -70,6 +70,26 @@ export function ToolShell({
             </div>
           )}
 
+          {toolText.whyUse && (
+            <div className="content-block" style={{ marginBottom: "2.5rem" }}>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{formatTitle(common.whyUseTitle)}</h2>
+              <p style={{ lineHeight: "1.8", color: "var(--muted)", fontSize: "1.05rem" }}>{toolText.whyUse}</p>
+            </div>
+          )}
+
+          {toolText.popularConversions && toolText.popularConversions.length > 0 && (
+            <div className="content-block" style={{ marginBottom: "2.5rem" }}>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{common.popularConversionsTitle}</h2>
+              <ul style={{ listStyle: "none", padding: 0, display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "1rem" }}>
+                {toolText.popularConversions.map((conv, i) => (
+                  <li key={i} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
+                    {conv}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {toolText.faq && toolText.faq.length > 0 && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
               <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1.25rem", color: "var(--text)" }}>{common.faqTitle}</h2>
@@ -81,6 +101,19 @@ export function ToolShell({
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {toolText.relatedTools && (
+            <div className="content-block" style={{ marginBottom: "2.5rem" }}>
+              <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{common.relatedToolsTitle}</h2>
+              <Link 
+                href={toolText.relatedTools.includes("Percent") ? `/${locale}/percentage-calculator` : "#"} 
+                className="tool-button secondary"
+                style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
+              >
+                {toolText.relatedTools}
+              </Link>
             </div>
           )}
 

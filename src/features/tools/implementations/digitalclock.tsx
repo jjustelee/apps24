@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { getCommonText } from "@/features/tools/copy";
 import type { Locale } from "@/lib/site";
 
 const AUTO_HIDE_DELAY_MS = 2200;
@@ -67,8 +66,7 @@ async function toggleFullscreen(element: HTMLElement | null) {
   }
 }
 
-export function DigitalClockTool({ locale }: ToolRendererProps) {
-  const commonText = getCommonText(locale as Locale);
+export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hideTimerRef = useRef<number | null>(null);
   

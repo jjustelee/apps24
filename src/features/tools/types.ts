@@ -8,7 +8,8 @@ export type ToolCategory =
   | "display"
   | "utility"
   | "image"
-  | "security";
+  | "security"
+  | "network";
 
 export type ToolStatus = "stable" | "beta" | "hidden";
 

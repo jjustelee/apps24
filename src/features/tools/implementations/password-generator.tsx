@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Copy, RefreshCw, ClipboardCheck, Key } from "lucide-react";
 import type { Locale } from "@/lib/site";
@@ -41,8 +40,7 @@ function createPassword(
   return result;
 }
 
-export function PasswordGeneratorTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as Locale);
+export function PasswordGeneratorTool({ locale, commonText: common }: ToolRendererProps) {
   
   const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);

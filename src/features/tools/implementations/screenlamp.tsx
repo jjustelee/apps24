@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { getCommonText } from "@/features/tools/copy";
 import type { Locale } from "@/lib/site";
 
 const AUTO_HIDE_DELAY_MS = 2200;
@@ -21,8 +20,7 @@ const PRESET_COLORS = [
   { name: "Black", value: "#000000" },
 ];
 
-export function ScreenLampTool({ locale }: ToolRendererProps) {
-  const commonText = getCommonText(locale as Locale);
+export function ScreenLampTool({ locale, commonText }: ToolRendererProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const hideTimerRef = useRef<number | null>(null);
   

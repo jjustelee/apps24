@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { getCommonText } from "@/features/tools/copy";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, CheckCircle, AlertTriangle, ClipboardCheck, Braces, Code } from "lucide-react";
 import type { Locale } from "@/lib/site";
 
-export function JsonFormatterTool({ locale }: ToolRendererProps) {
-  const common = getCommonText(locale as Locale);
+export function JsonFormatterTool({ locale, commonText: common }: ToolRendererProps) {
   const [input, setInput] = useState("");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);

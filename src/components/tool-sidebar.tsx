@@ -8,16 +8,22 @@ type ToolSidebarProps = {
   activeSlug: string;
 };
 
-export function ToolSidebar({ locale, activeSlug }: ToolSidebarProps) {
+export async function ToolSidebar({ locale, activeSlug }: ToolSidebarProps) {
   const tools = getVisibleTools(locale);
-  const common = getCommonText(locale);
+  const common = await getCommonText(locale);
+
+  const toolsWithText = await Promise.all(
+    tools.map(async (tool) => ({
+      tool,
+      text: await getToolText(locale, tool),
+    }))
+  );
 
   return (
     <aside className="tool-sidebar">
       <h3 className="sidebar-title">{common.allTools}</h3>
       <nav className="tool-sidebar-nav">
-        {tools.map((tool) => {
-          const text = getToolText(locale, tool);
+        {toolsWithText.map(({ tool, text }) => {
           const isActive = tool.slug === activeSlug;
 
           return (

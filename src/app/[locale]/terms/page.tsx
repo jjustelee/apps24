@@ -7,7 +7,7 @@ export default async function TermsPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   const validLocale = locale as Locale;
   const legal = LEGAL_TEXTS[validLocale] || LEGAL_TEXTS.en;
-  const common = getCommonText(validLocale);
+  const common = await getCommonText(validLocale);
 
   return (
     <div className="content-page-wrapper" style={{ maxWidth: "900px", margin: "0 auto", width: "100%" }}>
