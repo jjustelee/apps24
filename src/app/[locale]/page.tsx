@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CategoryNav } from "@/components/category-nav";
 import { ToolCard } from "@/components/tool-card";
+import { getCategoryCopy, getCategoryGroups } from "@/features/tools/categories";
 import { buildLocaleAlternates } from "@/lib/seo";
-import { getVisibleTools } from "@/features/tools/registry";
 import { getToolText, getCommonText } from "@/features/tools/copy";
 import { isLocale, type Locale } from "@/lib/site";
 
@@ -37,51 +38,68 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
   }
 
   const validLocale = locale as Locale;
-  const tools = getVisibleTools(validLocale);
   const commonText = await getCommonText(validLocale);
+  const categoryCopy = getCategoryCopy(validLocale);
+  const categories = await Promise.all(
+    getCategoryGroups(validLocale).map(async (group) => {
+      const toolsWithText = await Promise.all(
+        group.tools.map(async (tool) => ({
+          tool,
+          text: await getToolText(validLocale, tool),
+        })),
+      );
 
-  const toolsWithText = await Promise.all(
-    tools.map(async (tool) => ({
-      tool,
-      text: await getToolText(validLocale, tool),
-    }))
+      return {
+        ...group,
+        toolsWithText,
+      };
+    }),
   );
 
   return (
     <>
       <section className="hero">
         <h1>{commonText.homeTitle || "Fast Multilingual Tools"}</h1>
+        <p>{commonText.homeSubtitle || "Simple multilingual utilities for quick tasks."}</p>
       </section>
 
-      <section className="panel">
-        {tools.length > 0 ? (
-          <div className="tool-grid">
-            {toolsWithText.map(({ tool, text }) => {
-              return (
-                <ToolCard
-                  key={tool.id}
-                  href={`/${validLocale}/${tool.slug}`}
-                  title={text.title}
-                  description={text.description}
-                  icon={tool.icon}
-                />
-              );
-            })}
+      <section className="home-category-browser">
+        <div className="home-category-browser-header">
+          <div>
+            <h2>{categoryCopy.sectionTitle}</h2>
+            <p>{categoryCopy.sectionDescription}</p>
           </div>
-        ) : (
-          <div className="empty-state">
-            <strong>No tools yet.</strong>
-            <span>
-              Add the first tool in <code>src/features/tools/registry.ts</code> and then
-              add its implementation in <code>src/features/tools/implementations</code>.
-            </span>
-            <span>
-              A future tool page will automatically appear at{" "}
-              <code>/{validLocale}/your-tool-slug</code>.
-            </span>
-            <Link href={`/${validLocale}/contact`}>Contact page</Link>
-          </div>
-        )}
+        </div>
+
+        <CategoryNav locale={validLocale} mode="home" />
+
+        <div className="home-category-list">
+          {categories.map((group) => (
+            <section key={group.id} id={group.slug} className="home-category-section">
+              <div className="home-category-section-header">
+                <div>
+                  <h3>{group.title}</h3>
+                  <p>{group.description}</p>
+                </div>
+                <Link href={group.href} className="category-view-link">
+                  {categoryCopy.viewAll}
+                </Link>
+              </div>
+
+              <div className="tool-grid home-category-grid">
+                {group.toolsWithText.slice(0, 4).map(({ tool, text }) => (
+                  <ToolCard
+                    key={tool.id}
+                    href={`/${validLocale}/${tool.slug}`}
+                    title={text.title}
+                    description={text.description}
+                    icon={tool.icon}
+                  />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
       </section>
 
       <section className="tool-main-content">

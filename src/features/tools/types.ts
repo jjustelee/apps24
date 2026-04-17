@@ -11,15 +11,25 @@ export type ToolCategory =
   | "security"
   | "network";
 
+export type ToolCategoryGroup =
+  | "write-text-tools"
+  | "images-pdf-tools"
+  | "code-data-tools"
+  | "convert-calculate-tools"
+  | "generator-tools"
+  | "time-display-tools";
+
 export type ToolStatus = "stable" | "beta" | "hidden";
 
 export interface ToolDefinition {
   id: string;
   slug: string;
   category: ToolCategory;
+  categoryGroup: ToolCategoryGroup;
   titleKey: string;
   descriptionKey: string;
   keywords: string[];
+  tags: string[];
   accentColor: string;
   icon: string;
   order: number;
@@ -28,4 +38,3 @@ export interface ToolDefinition {
   locales: Locale[];
   implementationKey: string;
 }
-
