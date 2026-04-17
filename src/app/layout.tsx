@@ -24,7 +24,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
-        <meta name="impact-site-verification" value="63357a1c-cdb1-4be0-b902-123c9758b597" />
+        <meta name="impact-site-verification" {...({ value: "63357a1c-cdb1-4be0-b902-123c9758b597" } as any)} />
       </head>
       <body>{children}</body>
     </html>
