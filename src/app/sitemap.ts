@@ -3,6 +3,8 @@ import type { MetadataRoute } from "next";
 import { getLocalizedUrl, LOCALES } from "@/lib/site";
 import { CATEGORY_GROUPS } from "@/features/tools/categories";
 import { getStaticToolParams } from "@/features/tools/registry";
+import { PERCENTAGE_CALCULATOR_LONGTAIL_SLUGS } from "@/features/tools/percentage-calculator-longtails";
+import { UNIT_CONVERTER_LONGTAIL_SLUGS } from "@/features/tools/unit-converter-longtails";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const homeEntries = LOCALES.map((locale) => ({
@@ -33,5 +35,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...toolEntries];
+  const unitConverterEntries = LOCALES.flatMap((locale) =>
+    UNIT_CONVERTER_LONGTAIL_SLUGS.map((conversion) => ({
+      url: getLocalizedUrl(locale, `/unit-converter/${conversion}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  const percentageCalculatorEntries = LOCALES.flatMap((locale) =>
+    PERCENTAGE_CALCULATOR_LONGTAIL_SLUGS.map((mode) => ({
+      url: getLocalizedUrl(locale, `/percentage-calculator/${mode}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...unitConverterEntries, ...percentageCalculatorEntries, ...toolEntries];
 }

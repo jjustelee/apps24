@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/lib/site";
+import { getUnitConverterLongtailPreset } from "@/features/tools/unit-converter-longtails";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -76,12 +77,31 @@ const CONVERSION_MAP: Record<UnitCategory, Record<string, UnitData>> = {
 export function UnitConverterTool({ tool, commonText: common }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
+  const conversion = typeof params.conversion === "string" ? params.conversion : undefined;
 
-  const [category, setCategory] = useState<UnitCategory>("length");
-  const [fromUnit, setFromUnit] = useState<string>("m");
-  const [toUnit, setToUnit] = useState<string>("km");
-  const [inputValue, setInputValue] = useState<string>("1");
+  const defaultSelection = useMemo(() => {
+    const preset = conversion ? getUnitConverterLongtailPreset(conversion) : undefined;
+
+    return preset ?? {
+      category: "length" as UnitCategory,
+      fromUnit: "m",
+      toUnit: "km",
+      inputValue: "1",
+    };
+  }, [conversion]);
+
+  const [category, setCategory] = useState<UnitCategory>(defaultSelection.category);
+  const [fromUnit, setFromUnit] = useState<string>(defaultSelection.fromUnit);
+  const [toUnit, setToUnit] = useState<string>(defaultSelection.toUnit);
+  const [inputValue, setInputValue] = useState<string>(defaultSelection.inputValue);
   const [precision, setPrecision] = useState<number>(4);
+
+  useEffect(() => {
+    setCategory(defaultSelection.category);
+    setFromUnit(defaultSelection.fromUnit);
+    setToUnit(defaultSelection.toUnit);
+    setInputValue(defaultSelection.inputValue);
+  }, [defaultSelection]);
 
   const units = useMemo(() => Object.keys(CONVERSION_MAP[category]), [category]);
 

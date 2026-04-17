@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import type { ToolDefinition } from "@/features/tools/types";
 import { getCommonText, getToolText } from "@/features/tools/copy";
+import { getUnitConverterLongtailLinks } from "@/features/tools/unit-converter-longtails";
+import { getPercentageCalculatorLongtailLinks } from "@/features/tools/percentage-calculator-longtails";
 import type { Locale } from "@/lib/site";
 import { ToolSidebar } from "@/components/tool-sidebar";
 
@@ -25,6 +27,8 @@ export async function ToolShell({
   const common = await getCommonText(locale);
   const toolText = await getToolText(locale, tool);
   const formatTitle = (template: string) => template.replace("{0}", title);
+  const unitConverterLinks = tool.id === "unitconverter" ? getUnitConverterLongtailLinks(locale) : [];
+  const percentageCalculatorLinks = tool.id === "percentagecalculator" ? getPercentageCalculatorLongtailLinks(locale) : [];
   const categoryLabel = (() => {
     switch (tool.category) {
       case "text":
@@ -113,11 +117,27 @@ export async function ToolShell({
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
               <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{common.popularConversionsTitle}</h2>
               <ul style={{ listStyle: "none", padding: 0, display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "1rem" }}>
-                {toolText.popularConversions.map((conv, i) => (
-                  <li key={i} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
-                    {conv}
-                  </li>
-                ))}
+                {tool.id === "unitconverter"
+                  ? unitConverterLinks.map((link, i) => (
+                    <li key={link.slug} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
+                      <Link href={link.href} style={{ display: "block", color: "inherit" }}>
+                        {toolText.popularConversions?.[i] ?? link.title}
+                      </Link>
+                    </li>
+                  ))
+                  : tool.id === "percentagecalculator"
+                    ? percentageCalculatorLinks.map((link) => (
+                      <li key={link.slug} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
+                        <Link href={link.href} style={{ display: "block", color: "inherit" }}>
+                          {link.title}
+                        </Link>
+                      </li>
+                    ))
+                  : toolText.popularConversions.map((conv, i) => (
+                    <li key={i} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
+                      {conv}
+                    </li>
+                  ))}
               </ul>
             </div>
           )}

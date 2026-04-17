@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { getPercentageCalculatorLongtailPreset } from "@/features/tools/percentage-calculator-longtails";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -12,15 +14,33 @@ import type { ToolRendererProps } from "@/features/tools/implementations";
 type CalcMode = "value" | "increase" | "decrease" | "discount";
 
 export function PercentageCalculatorTool({ locale, toolText, commonText: common }: ToolRendererProps) {
+  const params = useParams();
   const t = toolText!;
   const modeLabels = t.modeLabels!;
   const inputLabels = t.inputLabels!;
   const resultLabel = t.resultLabel || (locale === "ko" ? "계산 결과" : "RESULT");
   const resultPlaceholder = t.placeholderText || "...";
-  const [mode, setMode] = useState<CalcMode>("value");
-  const [val1, setVal1] = useState<string>("200");
-  const [val2, setVal2] = useState<string>("25");
+  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const defaultSelection = useMemo(() => {
+    const preset = modeSlug ? getPercentageCalculatorLongtailPreset(modeSlug) : undefined;
+
+    return preset ?? {
+      mode: "value" as CalcMode,
+      val1: "200",
+      val2: "25",
+    };
+  }, [modeSlug]);
+
+  const [mode, setMode] = useState<CalcMode>(defaultSelection.mode);
+  const [val1, setVal1] = useState<string>(defaultSelection.val1);
+  const [val2, setVal2] = useState<string>(defaultSelection.val2);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setMode(defaultSelection.mode);
+    setVal1(defaultSelection.val1);
+    setVal2(defaultSelection.val2);
+  }, [defaultSelection]);
 
   const modes: { key: CalcMode; label: string; desc: string; formula: string; l1: string; l2: string }[] = [
     { 
