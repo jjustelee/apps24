@@ -366,5 +366,9 @@ export default {
       dimensions: "Resizing",
       width: "Width",
       height: "Height",
+      enterQrText: "QR Text or URL",
+      enterBarcodeText: "Enter Barcode Data",
+      type: "Type",
+      copy: "Copy",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

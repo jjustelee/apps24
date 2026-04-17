@@ -366,5 +366,9 @@ export default {
       dimensions: "크기 조정",
       width: "가로",
       height: "세로",
+      enterQrText: "QR 코드 내용 (URL 또는 텍스트)",
+      enterBarcodeText: "바코드 데이터 입력",
+      type: "종류",
+      copy: "복사",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

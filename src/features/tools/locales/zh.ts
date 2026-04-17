@@ -322,5 +322,9 @@ export default {
       dimensions: "调整大小",
       width: "宽度",
       height: "高度",
+      enterQrText: "QR码文本或URL",
+      enterBarcodeText: "输入条形码数据",
+      type: "类型",
+      copy: "复制",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

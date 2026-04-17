@@ -277,5 +277,9 @@ export default {
       dimensions: "Größe ändern",
       width: "Breite",
       height: "Höhe",
+      enterQrText: "QR-Text oder URL",
+      enterBarcodeText: "Barcode-Daten eingeben",
+      type: "Typ",
+      copy: "Kopieren",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

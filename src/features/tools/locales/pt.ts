@@ -278,5 +278,9 @@ export default {
       dimensions: "Redimensionar",
       width: "Largura",
       height: "Altura",
+      enterQrText: "Texto ou URL QR",
+      enterBarcodeText: "Insira os dados do código de barras",
+      type: "Tipo",
+      copy: "Copiar",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

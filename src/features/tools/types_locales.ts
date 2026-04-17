@@ -126,6 +126,10 @@ export type CommonText = {
   dimensions: string;
   width: string;
   height: string;
+  enterQrText: string;
+  enterBarcodeText: string;
+  type: string;
+  copy: string;
 };
 
 export type LocaleData = {

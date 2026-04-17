@@ -337,5 +337,9 @@ export default {
       dimensions: "サイズ変更",
       width: "幅",
       height: "高さ",
+      enterQrText: "QRコードのテキストまたはURL",
+      enterBarcodeText: "バーコードデータの入力",
+      type: "タイプ",
+      copy: "コピー",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

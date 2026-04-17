@@ -277,5 +277,9 @@ export default {
       dimensions: "تغيير الحجم",
       width: "العرض",
       height: "الارتفاع",
+      enterQrText: "نص QR أو رابط",
+      enterBarcodeText: "أدخل بيانات الباركود",
+      type: "نوع",
+      copy: "نسخ",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };

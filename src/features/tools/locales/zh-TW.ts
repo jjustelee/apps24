@@ -278,5 +278,9 @@ export default {
       dimensions: "調整大小",
       width: "寬度",
       height: "高度",
+      enterQrText: "QR碼文本或URL",
+      enterBarcodeText: "輸入條形碼數據",
+      type: "類型",
+      copy: "複製",
     },
   } as { tools: Record<string, ToolText>; common: CommonText };
