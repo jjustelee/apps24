@@ -51,6 +51,11 @@ export async function ToolShell({
   })();
   const relatedToolHrefById: Partial<Record<string, string>> = {
     dummytext: `/${locale}/wordcounter`,
+    wordcounter: `/${locale}/dummytext`,
+    countdown: `/${locale}/digitalclock`,
+    digitalclock: `/${locale}/countdown`,
+    screenlamp: `/${locale}/digitalclock`,
+    qrgenerator: `/${locale}/barcodegenerator`,
     percentagecalculator: `/${locale}/unit-converter`,
     unitconverter: `/${locale}/percentage-calculator`,
     iplookup: `/${locale}/json-formatter`,

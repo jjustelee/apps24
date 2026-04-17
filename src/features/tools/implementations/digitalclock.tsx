@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import type { Locale } from "@/lib/site";
 
 const AUTO_HIDE_DELAY_MS = 2200;
 const STORAGE_KEY_BG = "apps24.digitalclock.bgColor";

@@ -2,29 +2,30 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import type { Locale } from "@/lib/site";
 
 const AUTO_HIDE_DELAY_MS = 2200;
 const STORAGE_KEY_COLOR = "apps24.screenlamp.color";
 
 const PRESET_COLORS = [
-  { name: "White", value: "#ffffff" },
-  { name: "Warm", value: "#fff3c4" },
-  { name: "Red", value: "#ef4444" },
-  { name: "Orange", value: "#f97316" },
-  { name: "Yellow", value: "#facc15" },
-  { name: "Green", value: "#22c55e" },
-  { name: "Blue", value: "#3b82f6" },
-  { name: "Indigo", value: "#4f46e5" },
-  { name: "Violet", value: "#8b5cf6" },
-  { name: "Black", value: "#000000" },
-];
+  { key: "white", name: "White", value: "#ffffff" },
+  { key: "warm", name: "Warm", value: "#fff3c4" },
+  { key: "red", name: "Red", value: "#ef4444" },
+  { key: "orange", name: "Orange", value: "#f97316" },
+  { key: "yellow", name: "Yellow", value: "#facc15" },
+  { key: "green", name: "Green", value: "#22c55e" },
+  { key: "blue", name: "Blue", value: "#3b82f6" },
+  { key: "indigo", name: "Indigo", value: "#4f46e5" },
+  { key: "violet", name: "Violet", value: "#8b5cf6" },
+  { key: "black", name: "Black", value: "#000000" },
+] as const;
 
-export function ScreenLampTool({ locale, commonText }: ToolRendererProps) {
+export function ScreenLampTool({ commonText, toolText }: ToolRendererProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const hideTimerRef = useRef<number | null>(null);
-  
-  const [color, setColor] = useState(PRESET_COLORS[0].value);
+
+  const presetColorLabels = (toolText?.presetColorLabels as Record<string, string> | undefined) ?? {};
+  const previewLabel = typeof toolText?.previewLabel === "string" ? toolText.previewLabel : undefined;
+  const [color, setColor] = useState<string>(PRESET_COLORS[0].value);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showUI, setShowUI] = useState(true);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
@@ -100,7 +101,8 @@ export function ScreenLampTool({ locale, commonText }: ToolRendererProps) {
     <div className="tool-stack" style={{ position: "relative" }}>
       <div
         ref={stageRef}
-        aria-label="Screen lamp preview"
+        role="region"
+        aria-label={previewLabel ?? "Screen lamp preview"}
         style={{
           minHeight: isFullscreen ? "100vh" : "max(400px, 50vh)",
           borderRadius: isFullscreen ? 0 : "24px",
@@ -155,7 +157,8 @@ export function ScreenLampTool({ locale, commonText }: ToolRendererProps) {
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.15)")}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                  title={preset.name}
+                  aria-label={presetColorLabels?.[preset.key] ?? preset.name}
+                  title={presetColorLabels?.[preset.key] ?? preset.name}
                 />
               ))}
             </div>

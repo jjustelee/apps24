@@ -250,12 +250,12 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
   const isRunning = status === "running";
   const displayStatus =
     status === "complete"
-      ? "Complete"
+      ? common.complete
       : status === "running"
-        ? "Running"
+        ? common.running
         : status === "paused"
-          ? "Paused"
-          : "Ready";
+          ? common.paused
+          : common.ready;
 
   return (
     <div
@@ -302,7 +302,7 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
         {!isFullscreen && (
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginBottom: "2rem" }}>
             <label className="tool-field" style={{ flex: "0 1 100px" }}>
-              <span style={{ textAlign: "center", fontSize: "0.9rem", fontWeight: 700, opacity: 0.8 }}>Hours</span>
+              <span style={{ textAlign: "center", fontSize: "0.9rem", fontWeight: 700, opacity: 0.8 }}>{common.hours}</span>
               <input
                 className="tool-input"
                 style={{ textAlign: "center", fontSize: "1.25rem", padding: "0.5rem" }}
@@ -314,7 +314,7 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
               />
             </label>
             <label className="tool-field" style={{ flex: "0 1 100px" }}>
-              <span style={{ textAlign: "center", fontSize: "0.9rem", fontWeight: 700, opacity: 0.8 }}>Minutes</span>
+              <span style={{ textAlign: "center", fontSize: "0.9rem", fontWeight: 700, opacity: 0.8 }}>{common.minutes}</span>
               <input
                 className="tool-input"
                 style={{ textAlign: "center", fontSize: "1.25rem", padding: "0.5rem" }}
@@ -326,7 +326,7 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
               />
             </label>
             <label className="tool-field" style={{ flex: "0 1 100px" }}>
-              <span style={{ textAlign: "center", fontSize: "0.9rem", fontWeight: 700, opacity: 0.8 }}>Seconds</span>
+              <span style={{ textAlign: "center", fontSize: "0.9rem", fontWeight: 700, opacity: 0.8 }}>{common.seconds}</span>
               <input
                 className="tool-input"
                 style={{ textAlign: "center", fontSize: "1.25rem", padding: "0.5rem" }}
@@ -344,15 +344,15 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
           <div className="tool-actions" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center", marginBottom: "1.5rem" }}>
             {isRunning ? (
               <button className="tool-button" type="button" onClick={pause} style={{ minWidth: "120px" }}>
-                Pause
+                {common.pause}
               </button>
             ) : (
               <button className="tool-button" type="button" onClick={startOrResume} style={{ minWidth: "120px" }}>
-                {status === "paused" ? "Resume" : "Start"}
+                {status === "paused" ? common.resume : common.start}
               </button>
             )}
             <button className="tool-button secondary" type="button" onClick={reset} style={{ minWidth: "120px" }}>
-              Reset
+              {common.reset}
             </button>
             <button
               className="tool-button secondary"
@@ -360,7 +360,7 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
               onClick={() => setNightMode((current) => !current)}
               style={{ minWidth: "120px" }}
             >
-              {nightMode ? "Day Mode" : "Night Mode"}
+              {nightMode ? common.dayMode : common.nightMode}
             </button>
             <button
               className="tool-button secondary"
@@ -375,7 +375,7 @@ export function CountdownTool({ commonText: common }: ToolRendererProps) {
 
         {!isFullscreen && (
           <p className="tool-note" style={{ textAlign: "center" }}>
-            Set hours, minutes, and seconds, then start the timer. Night mode is saved on this device.
+            {common.countdownNote}
           </p>
         )}
       </div>
