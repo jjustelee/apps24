@@ -1,3 +1,5 @@
+type ToolTextExtras = string | string[] | { q: string; a: string }[] | Record<string, string> | undefined;
+
 export type ToolText = {
   title: string;
   description: string;
@@ -9,7 +11,31 @@ export type ToolText = {
   whyUse?: string;
   popularConversions?: string[];
   relatedTools?: string;
-  [key: string]: any;
+  modeLabels?: {
+    value: string;
+    increase: string;
+    decrease: string;
+    discount: string;
+  };
+  inputLabels?: {
+    totalValue: string;
+    percentage: string;
+    originalValue: string;
+    newValue: string;
+    originalPrice: string;
+    discountPercentage: string;
+  };
+  resultLabel?: string;
+  placeholderText?: string;
+  savedAmount?: string;
+  isText?: string;
+  ofText?: string;
+  percentText?: string;
+  fromText?: string;
+  toText?: string;
+  increaseText?: string;
+  decreaseText?: string;
+  [key: string]: ToolTextExtras;
 };
 
 export type CommonText = {
@@ -87,6 +113,7 @@ export type CommonText = {
   displayCategory: string;
   measurementCategory: string;
   generatorCategory: string;
+  networkCategory?: string;
   uploadImage: string;
   compress: string;
   convertToWebP: string;

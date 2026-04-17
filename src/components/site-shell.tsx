@@ -51,7 +51,7 @@ export async function SiteShell({ locale, title, description, children }: SiteSh
             </Link>
           </div>
           <span style={{ fontSize: "0.85rem", color: "var(--text-muted)", opacity: 0.8 }}>
-            © {new Date().getFullYear()} apps24.io. All rights reserved.
+            © {new Date().getFullYear()} apps24.io.
           </span>
         </div>
       </footer>

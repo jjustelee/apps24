@@ -110,7 +110,20 @@ export default {
         ],
         relatedTools: "Ferramenta Relacionada: Calculadora de Porcentagem"
       },
-      ruler: { title: "Régua Online", description: "Meça distâncias na tela com calibração." },
+      ruler: {
+        title: "Régua Online",
+        description: "Meça distâncias na tela com calibração.",
+        seo: "Meça pequenos objetos na tela com calibração por cartão e alinhamento do ponto zero.",
+        longDescription: "A régua online permite medir pequenos objetos diretamente na tela. Calibre com um objeto padrão, como um cartão de crédito, defina o ponto zero e alterne entre centímetros e polegadas para medições rápidas.",
+        usageContext: "É útil quando você precisa verificar rapidamente o tamanho de um objeto pequeno, um elemento da tela ou qualquer item cuja dimensão queira estimar sem usar uma régua física.",
+        howToUse: "1. Escolha cm ou polegada.\n2. Digite a largura de um cartão padrão e clique em Calibrar.\n3. Dê um duplo clique na régua para definir o ponto zero.\n4. Posicione o objeto na tela e leia a medida.",
+        whyUse: "Ela economiza tempo quando você não tem uma régua física por perto e ajuda a estimar dimensões pequenas no desktop ou no celular.",
+        faq: [
+          { q: "Quão precisa é a régua?", a: "A precisão depende da calibração. Se o dispositivo, o zoom do navegador ou a tela mudarem, calibre novamente." },
+          { q: "Posso alternar entre cm e polegadas?", a: "Sim. Depois de calibrar, você pode medir em qualquer uma das unidades." },
+          { q: "Funciona no celular?", a: "Sim. Calibre primeiro com um objeto real para obter o melhor resultado." },
+        ],
+      },
       wordcounter: { title: "Contador de Palavras", description: "Conte caracteres e palavras em tempo real." },
       countdown: { title: "Cronômetro", description: "Defina temporizadores com modo tela cheia." },
       digitalclock: { title: "Relógio Digital", description: "Verifique a hora atual em tempo real." },
@@ -157,7 +170,21 @@ export default {
         ],
         relatedTools: "Ferramentas Relacionadas: Formatador de JSON, Codificador Base64"
       },
-      dummytext: { title: "Lorem Ipsum", description: "Gere parágrafos de texto fictício." },
+      dummytext: {
+        title: "Lorem Ipsum",
+        description: "Gere parágrafos de texto fictício.",
+        seo: "Gere parágrafos de preenchimento para rascunhos, layouts e mockups.",
+        longDescription: "O texto fictício ajuda você a criar rapidamente parágrafos de preenchimento quando precisa testar um mockup de design, wireframe, rascunho de conteúdo ou layout. Escolha o idioma e o número de parágrafos e copie o resultado para o documento, app ou protótipo.",
+        usageContext: "Use esta ferramenta ao criar uma página, testar a tipografia, preencher áreas vazias de um mockup ou preparar conteúdo de exemplo antes do texto final ficar pronto.",
+        howToUse: "1. Escolha o idioma do conteúdo.\n2. Defina quantos parágrafos deseja.\n3. Copie o texto gerado e cole no lugar em que precisar de conteúdo de preenchimento.",
+        whyUse: "O texto de preenchimento mantém o layout andando enquanto o conteúdo final ainda está sendo escrito. Assim fica mais fácil avaliar espaçamento, legibilidade e equilíbrio visual sem esperar a versão final.",
+        faq: [
+          { q: "Posso usar o texto gerado em uma publicação final?", a: "Não. Ele serve como conteúdo temporário para rascunhos, mockups e layouts provisórios." },
+          { q: "Posso gerar mais de um parágrafo?", a: "Sim. Aumente a quantidade de parágrafos para criar um bloco maior de preenchimento." },
+          { q: "Ele funciona em outros idiomas?", a: "Sim. Você pode alternar entre os idiomas disponíveis." },
+        ],
+        relatedTools: "Ferramenta relacionada: Contador de palavras",
+      },
     },
     common: {
       copyAll: "Copiar tudo",

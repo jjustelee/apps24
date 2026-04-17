@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { useParams } from "next/navigation";
-import type { Locale } from "@/lib/site";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -13,84 +11,86 @@ import type { Locale } from "@/lib/site";
 
 type CalcMode = "value" | "increase" | "decrease" | "discount";
 
-export function PercentageCalculatorTool({ locale, tool, toolText, commonText: common }: ToolRendererProps) {
+export function PercentageCalculatorTool({ locale, toolText, commonText: common }: ToolRendererProps) {
   const t = toolText!;
+  const modeLabels = t.modeLabels!;
+  const inputLabels = t.inputLabels!;
+  const resultLabel = t.resultLabel || (locale === "ko" ? "계산 결과" : "RESULT");
+  const resultPlaceholder = t.placeholderText || "...";
   const [mode, setMode] = useState<CalcMode>("value");
   const [val1, setVal1] = useState<string>("200");
   const [val2, setVal2] = useState<string>("25");
   const [copied, setCopied] = useState(false);
 
-  const modes: { key: CalcMode; label: string; desc: string; formula: string; l1: string; l2: string }[] = useMemo(() => [
+  const modes: { key: CalcMode; label: string; desc: string; formula: string; l1: string; l2: string }[] = [
     { 
       key: "value", 
-      label: t.modeLabels.value, 
+      label: modeLabels.value, 
       desc: locale === "ko" ? "기준값에서 특정 퍼센트가 얼마인지 계산합니다." : "Calculate what the percentage of a value is.",
       formula: locale === "ko" ? "기준값 × 퍼센트 ÷ 100" : "Base Value × Percentage ÷ 100",
-      l1: t.inputLabels.totalValue, 
-      l2: t.inputLabels.percentage 
+      l1: inputLabels.totalValue, 
+      l2: inputLabels.percentage 
     },
     { 
       key: "increase", 
-      label: t.modeLabels.increase, 
+      label: modeLabels.increase, 
       desc: locale === "ko" ? "기준값에서 대상값으로 얼마만큼 늘어났는지 계산합니다." : "Calculate the percentage increase from one value to another.",
       formula: locale === "ko" ? "(대상값 - 기준값) ÷ 기준값 × 100" : "(Target - Base) ÷ Base × 100",
-      l1: t.inputLabels.originalValue, 
-      l2: t.inputLabels.newValue 
+      l1: inputLabels.originalValue, 
+      l2: inputLabels.newValue 
     },
     { 
       key: "decrease", 
-      label: t.modeLabels.decrease, 
+      label: modeLabels.decrease, 
       desc: locale === "ko" ? "기준값에서 대상값으로 얼마만큼 줄어들었는지 계산합니다." : "Calculate the percentage decrease from one value to another.",
       formula: locale === "ko" ? "(기준값 - 대상값) ÷ 기준값 × 100" : "(Base - Target) ÷ Base × 100",
-      l1: t.inputLabels.originalValue, 
-      l2: t.inputLabels.newValue 
+      l1: inputLabels.originalValue, 
+      l2: inputLabels.newValue 
     },
     { 
       key: "discount", 
-      label: t.modeLabels.discount, 
+      label: modeLabels.discount, 
       desc: locale === "ko" ? "원가에서 특정 할인율이 적용된 최종 가격을 계산합니다." : "Calculate the final price after a percentage discount.",
       formula: locale === "ko" ? "원가 × (1 - 할인율 ÷ 100)" : "Price × (1 - Discount ÷ 100)",
-      l1: t.inputLabels.originalPrice, 
-      l2: t.inputLabels.discountPercentage 
+      l1: inputLabels.originalPrice, 
+      l2: inputLabels.discountPercentage 
     },
-  ], [t, locale]);
+  ];
 
   const activeMode = modes.find(m => m.key === mode)!;
 
-  const results = useMemo(() => {
-    const n1 = parseFloat(val1);
-    const n2 = parseFloat(val2);
-    if (isNaN(n1) || isNaN(n2)) return null;
+  const n1 = parseFloat(val1);
+  const n2 = parseFloat(val2);
+  const hasValidInputs = !isNaN(n1) && !isNaN(n2);
 
-    let result = 0;
-    let summary = "";
+  let result = 0;
+  let summary = "";
 
+  if (hasValidInputs) {
     switch (mode) {
       case "value":
         result = (n1 * n2) / 100;
-        summary = `${n1}${t.ofText} ${n2}%${t.isText} ${result.toLocaleString()}${t.percentText}`;
+        summary = `${inputLabels.totalValue}: ${n1}, ${inputLabels.percentage}: ${n2}% => ${result.toLocaleString(undefined, { maximumFractionDigits: 2 })}${t.percentText ? ` ${t.percentText}` : ""}`;
         break;
       case "increase":
         result = n1 === 0 ? 0 : ((n2 - n1) / n1) * 100;
-        summary = `${n1}${t.fromText} ${n2}${t.toText} ${result.toFixed(2)}% ${t.increaseText}`;
+        summary = `${inputLabels.originalValue}: ${n1}, ${inputLabels.newValue}: ${n2} => ${result.toFixed(2)}% ${t.increaseText}`;
         break;
       case "decrease":
         result = n1 === 0 ? 0 : ((n1 - n2) / n1) * 100;
-        summary = `${n1}${t.fromText} ${n2}${t.toText} ${result.toFixed(2)}% ${t.decreaseText}`;
+        summary = `${inputLabels.originalValue}: ${n1}, ${inputLabels.newValue}: ${n2} => ${result.toFixed(2)}% ${t.decreaseText}`;
         break;
       case "discount":
         const discountAmount = (n1 * n2) / 100;
         result = n1 - discountAmount;
-        summary = `${n1}원에서 ${n2}% ${t.discount} -> ${result.toLocaleString()}원 (${t.savedAmount}: ${discountAmount.toLocaleString()}원)`;
+        summary = `${inputLabels.originalPrice}: ${n1}, ${inputLabels.discountPercentage}: ${n2}% => ${result.toLocaleString(undefined, { maximumFractionDigits: 2 })} (${t.savedAmount}: ${discountAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })})`;
         break;
     }
-
-    return { result, summary };
-  }, [mode, val1, val2, t]);
+  }
 
   const handleCopy = () => {
-    if (results) {
-      navigator.clipboard.writeText(results.summary);
+    if (hasValidInputs) {
+      navigator.clipboard.writeText(summary);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -189,8 +189,8 @@ export function PercentageCalculatorTool({ locale, tool, toolText, commonText: c
               </button>
               <button 
                 onClick={handleCopy} 
-                disabled={!results}
-                className={`flex-[1.5] sm:flex-none py-4 sm:py-5 px-3 sm:px-8 rounded-xl sm:rounded-2xl bg-black/5 dark:bg-white/5 text-[var(--text-soft)] font-black transition-all border border-[var(--panel-border)] flex items-center justify-center gap-2 text-xs sm:text-base ${!results ? "opacity-30" : "hover:bg-black/10 active:scale-95"}`}
+                disabled={!hasValidInputs}
+                className={`flex-[1.5] sm:flex-none py-4 sm:py-5 px-3 sm:px-8 rounded-xl sm:rounded-2xl bg-black/5 dark:bg-white/5 text-[var(--text-soft)] font-black transition-all border border-[var(--panel-border)] flex items-center justify-center gap-2 text-xs sm:text-base ${!hasValidInputs ? "opacity-30" : "hover:bg-black/10 active:scale-95"}`}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-70"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 <span className="whitespace-nowrap">
@@ -205,27 +205,27 @@ export function PercentageCalculatorTool({ locale, tool, toolText, commonText: c
         <div className="bg-[var(--panel-glass)] border border-[var(--panel-border)] rounded-[32px] sm:rounded-[40px] p-5 sm:p-10 lg:p-12 shadow-2xl flex flex-col items-stretch relative overflow-hidden min-w-0">
           <div className="flex flex-col gap-4 sm:gap-6 min-w-0">
             <span className="inline-flex max-w-fit px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#EAEAFF] dark:bg-white/10 text-[9px] sm:text-[11px] font-black text-[#4B48D9] dark:text-white uppercase tracking-wider">
-              {locale === "ko" ? "계산 결과" : "RESULT"}
+              {resultLabel}
             </span>
             <div className="flex flex-col justify-center min-h-[80px] sm:min-h-[140px] w-full overflow-hidden">
-              {results ? (
-                <div className="flex items-baseline gap-2 animate-in slide-in-from-bottom-2 duration-500 w-full overflow-hidden">
-                  <span className="text-4xl sm:text-7xl md:text-9xl font-black text-[#2D336B] dark:text-white tracking-tighter truncate max-w-full">
-                    {results.result.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              {hasValidInputs ? (
+                <div className="flex items-baseline gap-2 animate-in slide-in-from-bottom-2 duration-500 w-full min-w-0 overflow-hidden">
+                  <span className="min-w-0 whitespace-nowrap text-4xl sm:text-7xl lg:text-8xl font-black text-[#2D336B] dark:text-white tracking-tighter">
+                    {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                   </span>
                   {(mode === "increase" || mode === "decrease") && (
-                    <span className="text-xl sm:text-4xl font-black text-[#4B48D9]">%</span>
+                    <span className="shrink-0 text-xl sm:text-4xl lg:text-5xl font-black text-[#4B48D9]">%</span>
                   )}
                 </div>
               ) : (
-                <span className="text-4xl sm:text-7xl md:text-9xl font-black text-[var(--text)] opacity-10">0</span>
+                <span className="text-4xl sm:text-7xl lg:text-8xl font-black text-[var(--text)] opacity-10">0</span>
               )}
             </div>
             
             <div className="w-full h-[1px] bg-[var(--panel-border)] opacity-50 my-1 sm:my-2" />
             
-            <p className={`text-base sm:text-xl font-bold text-[var(--text)] transition-opacity duration-300 break-words leading-tight sm:leading-snug min-w-0 ${results ? "opacity-90" : "opacity-10"}`}>
-              {results?.summary || "..."}
+            <p className={`text-base sm:text-xl font-bold text-[var(--text)] transition-opacity duration-300 break-words leading-tight sm:leading-snug min-w-0 ${hasValidInputs ? "opacity-90" : "opacity-10"}`}>
+              {hasValidInputs ? summary : resultPlaceholder}
             </p>
           </div>
 

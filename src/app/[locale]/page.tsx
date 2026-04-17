@@ -25,7 +25,7 @@ export async function generateMetadata({
   return {
     alternates: buildLocaleAlternates(locale),
     title: commonText.homeTitle || "Home",
-    description: commonText.homeSubtitle || "Discover fast, multilingual utility tools designed for search traffic and future expansion.",
+    description: commonText.homeSubtitle || "Fast, practical browser tools for everyday tasks.",
   };
 }
 

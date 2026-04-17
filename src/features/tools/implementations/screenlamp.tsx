@@ -207,7 +207,7 @@ export function ScreenLampTool({ locale, commonText }: ToolRendererProps) {
                 borderRadius: "14px",
               }}
             >
-              {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+              {isFullscreen ? commonText.exitFullscreen : commonText.fullscreen}
             </button>
             {!isFullscreen && (
               <p className="tool-note" style={{ maxWidth: "400px", margin: 0 }}>

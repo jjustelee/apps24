@@ -1,7 +1,30 @@
+import type { Metadata } from "next";
 import { LEGAL_TEXTS } from "@/features/tools/legal";
 import { getCommonText } from "@/features/tools/copy";
-import type { Locale } from "@/lib/site";
+import { buildLocaleAlternates } from "@/lib/seo";
+import { isLocale, type Locale } from "@/lib/site";
 import Link from "next/link";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!isLocale(locale)) {
+    return {};
+  }
+
+  const validLocale = locale as Locale;
+  const legal = LEGAL_TEXTS[validLocale] || LEGAL_TEXTS.en;
+
+  return {
+    alternates: buildLocaleAlternates(validLocale, "/contact"),
+    title: legal.contact.title,
+    description: legal.contact.intro,
+  };
+}
 
 export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -19,7 +42,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               ← {common.backToTools}
             </Link>
           </nav>
-          <div className="tool-badge">CONTACT</div>
+          <div className="tool-badge">{common.contact}</div>
           <h1 style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>{contact.title}</h1>
         </header>
 
@@ -44,7 +67,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           </h2>
           <div style={{ marginBottom: "2rem", padding: "1.5rem", borderRadius: "0.75rem", border: "1px solid var(--line)", textAlign: "center" }}>
             <p style={{ marginBottom: "1rem", fontSize: "1rem", color: "var(--text)" }}>
-              Email:{" "}
               <a
                 href={`mailto:${contact.email}`}
                 style={{ fontWeight: 700, color: "var(--accent, #6366f1)", textDecoration: "none" }}

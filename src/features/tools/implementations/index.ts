@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
+import type { CommonText, ToolText } from "@/features/tools/copy";
 import type { ToolDefinition } from "@/features/tools/types";
 
 export type ToolRendererProps = {
@@ -7,8 +8,8 @@ export type ToolRendererProps = {
   tool: ToolDefinition;
   searchParams?: Record<string, string | string[] | undefined>;
   toolData?: unknown;
-  commonText: any;
-  toolText?: any;
+  commonText: CommonText;
+  toolText?: ToolText;
 };
 
 export type ToolRenderer = ComponentType<ToolRendererProps>;

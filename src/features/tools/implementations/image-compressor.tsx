@@ -8,6 +8,7 @@ import type { Locale } from "@/lib/site";
 type CompressionFormat = "image/jpeg" | "image/webp" | "image/png";
 
 export function ImageCompressorTool({ locale, commonText: common }: ToolRendererProps) {
+  const isKo = locale === "ko";
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalPreview, setOriginalPreview] = useState<string>("");
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null);
@@ -53,7 +54,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
 
   const processFile = (file: File) => {
     if (!file.type.startsWith("image/")) {
-      setError("Please upload an image file.");
+      setError(isKo ? "이미지 파일을 업로드해 주세요." : "Please upload an image file.");
       return;
     }
     setError(null);
@@ -121,7 +122,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
       }
     } catch (err) {
       console.error(err);
-      setError("An error occurred during compression.");
+      setError(isKo ? "압축 중 오류가 발생했습니다." : "An error occurred during compression.");
     } finally {
       setIsRecompressing(false);
     }
@@ -171,7 +172,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
             <div className="preview-pair">
               <div className="preview-box">
                 <span className="badge">{common.original}</span>
-                <img src={originalPreview} alt="Original" />
+                <img src={originalPreview} alt={common.original} />
                 <div className="info-overlay">
                   <div>{formatSize(originalFile.size)}</div>
                   <div>{originalDimensions.width} × {originalDimensions.height} px</div>
@@ -181,7 +182,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
               <div className={`preview-box animated fadeIn ${isRecompressing ? 'recompressing' : ''}`}>
                 <span className="badge accent">{common.compressed}</span>
                 {compressedPreview ? (
-                  <img src={compressedPreview} alt="Compressed" className={isRecompressing ? 'blur' : ''} />
+                  <img src={compressedPreview} alt={common.compressed} className={isRecompressing ? 'blur' : ''} />
                 ) : (
                   <div className="empty-preview">
                     <ImageIcon size={48} className="animate-pulse opacity-20" />

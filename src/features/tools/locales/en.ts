@@ -166,10 +166,16 @@ export default {
       ruler: {
         title: "Online Ruler",
         description: "Measure screen distances with zero-point placement, credit-card calibration, and cm/inch toggles.",
-        longDescription: "The Online Ruler is a high-precision measurement tool that allows you to measure objects directly on your screen. It features zero-point adjustment and calibration against standard objects like credit cards to ensure accuracy regardless of your screen resolution or size.",
-        usageContext: "Perfect for designers, hobbyists, or anyone needing quick measurements of small physical objects or screen elements when a physical ruler isn't handy.",
-        howToUse: "1. Select your preferred unit (cm or inch).\n2. Calibrate by entering the width of a standard object (like a credit card).\n3. Double-click on the ruler to set a zero point.\n4. Place your object against the screen to measure.",
-        faq: [{"q":"How accurate is the screen ruler?","a":"Accuracy depends on calibration. Since screen sizes and resolutions vary, calibrating with a physical object (like a credit card) is essential for precision."}]
+        seo: "Measure small objects on your screen with credit-card calibration and zero-point alignment.",
+        longDescription: "Online Ruler helps you measure small objects directly on your screen. Calibrate it with a standard object like a credit card, align the zero point, and switch between centimeters and inches for quick on-screen measurements.",
+        usageContext: "Use it when you need a fast size check for a small object, a screenshot element, or any item you want to estimate without reaching for a physical ruler.",
+        howToUse: "1. Choose cm or inch.\n2. Enter the width of a standard card and click Calibrate.\n3. Double-click the ruler to set the zero point.\n4. Place the object on screen and read the measurement.",
+        whyUse: "It saves time when you do not have a physical ruler nearby and gives you a quick way to estimate small dimensions on desktop or mobile screens.",
+        faq: [
+          { q: "How accurate is the screen ruler?", a: "Accuracy depends on calibration. Recalibrate whenever the device, browser zoom, or screen changes." },
+          { q: "Can I switch between cm and inches?", a: "Yes. You can measure in either unit after calibration." },
+          { q: "Does it work on mobile?", a: "Yes. Calibrate with a real object first for the best result." },
+        ]
       },
       wordcounter: {
         title: "Word Counter",
@@ -245,7 +251,21 @@ export default {
         ],
         relatedTools: "Related Tools: JSON Formatter, Base64 Encoder"
       },
-      dummytext: { title: "Lorem Ipsum", description: "Generate placeholder paragraphs with a chosen length." },
+      dummytext: {
+        title: "Lorem Ipsum",
+        description: "Generate placeholder paragraphs with a chosen length.",
+        seo: "Generate placeholder paragraphs for drafts, layouts, and mockups.",
+        longDescription: "Dummy Text helps you generate realistic placeholder paragraphs when you need text for design mockups, wireframes, content drafts, or testing layouts. Choose the language and paragraph count, then copy the result into your document, app, or prototype.",
+        usageContext: "Use this tool when you are building a page design, testing typography, filling empty sections in a mockup, or preparing sample content before the final copy is ready.",
+        howToUse: "1. Pick a content language.\n2. Choose how many paragraphs you want.\n3. Copy the generated text and paste it where you need filler content.",
+        whyUse: "Placeholder text keeps layouts moving while the final content is still being written. It makes it easier to review spacing, readability, and visual balance without waiting on final copy.",
+        faq: [
+          { q: "Is the generated text meant for publication?", a: "No. It is placeholder content for drafts, mockups, and temporary layouts." },
+          { q: "Can I generate more than one paragraph?", a: "Yes. Increase the paragraph count to create a longer block of filler text." },
+          { q: "Does it work in Korean too?", a: "Yes. You can switch between Korean and English content." },
+        ],
+        relatedTools: "Related Tool: Word Counter",
+      },
     },
     common: {
       copyAll: "Copy All",

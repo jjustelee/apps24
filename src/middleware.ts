@@ -11,13 +11,22 @@ import { LOCALES, DEFAULT_LOCALE } from "./lib/site";
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  // 1. 이미 URL에 언어 코드(예: /ko, /en)가 포함되어 있는지 확인
-  const pathnameHasLocale = LOCALES.some(
+  const matchedLocale = LOCALES.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathnameHasLocale) return;
+  // 1. 이미 URL에 언어 코드(예: /ko, /en)가 포함되어 있는지 확인
+  const pathnameHasLocale = Boolean(matchedLocale);
+
+  if (pathnameHasLocale && matchedLocale) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-locale", matchedLocale);
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
 
   // 2. 브라우저의 'Accept-Language' 헤더를 분석하여 선호 언어 추출
   const acceptLanguage = request.headers.get("accept-language");

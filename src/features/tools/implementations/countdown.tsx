@@ -70,9 +70,7 @@ async function toggleFullscreen(element: HTMLElement | null) {
   await element.requestFullscreen?.();
 }
 
-export function CountdownTool(props: ToolRendererProps) {
-  void props;
-
+export function CountdownTool({ commonText: common }: ToolRendererProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const targetTimeRef = useRef<number | null>(null);
   const pausedSecondsRef = useRef(0);
@@ -297,7 +295,7 @@ export function CountdownTool(props: ToolRendererProps) {
              onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
              onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
            >
-             Exit Fullscreen
+             {common.exitFullscreen}
            </button>
         )}
 
@@ -370,7 +368,7 @@ export function CountdownTool(props: ToolRendererProps) {
               onClick={() => toggleFullscreen(containerRef.current)}
               style={{ minWidth: "120px" }}
             >
-              Fullscreen
+              {common.fullscreen}
             </button>
           </div>
         )}

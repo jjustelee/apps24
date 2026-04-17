@@ -361,10 +361,10 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
             
             {/* 단위 선택 탭 */}
             <div style={{ display: "flex", background: "var(--bg)", borderRadius: "12px", padding: "4px", marginBottom: "1.5rem", border: "1px solid var(--line)" }}>
-              {["cm", "in"].map((u) => (
+              {(["cm", "in"] as const).map((u) => (
                 <button 
                   key={u}
-                  onClick={() => setUnit(u as any)}
+                  onClick={() => setUnit(u)}
                   style={{ 
                     flex: 1, 
                     padding: "0.75rem", 

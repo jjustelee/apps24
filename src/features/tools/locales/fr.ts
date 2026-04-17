@@ -157,10 +157,16 @@ export default {
       ruler: {
         title: "Règle en ligne",
         description: "Mesurez les distances à l'écran avec étalonnage par carte de crédit.",
-        longDescription: "The Online Ruler is a high-precision measurement tool that allows you to measure objects directly on your screen. It features zero-point adjustment and calibration against standard objects like credit cards to ensure accuracy regardless of your screen resolution or size.",
-        usageContext: "Perfect for designers, hobbyists, or anyone needing quick measurements of small physical objects or screen elements when a physical ruler isn't handy.",
-        howToUse: "1. Select your preferred unit (cm or inch).\n2. Calibrate by entering the width of a standard object (like a credit card).\n3. Double-click on the ruler to set a zero point.\n4. Place your object against the screen to measure.",
-        faq: [{"q":"How accurate is the screen ruler?","a":"Accuracy depends on calibration. Since screen sizes and resolutions vary, calibrating with a physical object (like a credit card) is essential for precision."}]
+        seo: "Mesurez de petits objets à l'écran grâce à l'étalonnage par carte de crédit et au point zéro.",
+        longDescription: "La règle en ligne vous permet de mesurer de petits objets directement à l'écran. Étalonnez-la avec un objet standard comme une carte de crédit, placez le point zéro, puis basculez entre centimètres et pouces pour des mesures rapides.",
+        usageContext: "Elle est utile lorsque vous devez vérifier la taille d'un petit objet, d'un élément d'interface ou d'une capture d'écran sans règle physique sous la main.",
+        howToUse: "1. Choisissez cm ou pouce.\n2. Saisissez la largeur d'une carte standard et cliquez sur Calibrer.\n3. Double-cliquez sur la règle pour définir le point zéro.\n4. Placez l'objet à l'écran et lisez la mesure.",
+        whyUse: "Elle vous fait gagner du temps lorsque vous n'avez pas de règle physique et permet d'estimer rapidement de petites dimensions sur ordinateur ou mobile.",
+        faq: [
+          { q: "La règle à l'écran est-elle précise ?", a: "La précision dépend de l'étalonnage. Il est conseillé de réétalonner si l'appareil, le zoom du navigateur ou l'écran change." },
+          { q: "Puis-je passer des centimètres aux pouces ?", a: "Oui. Après l'étalonnage, vous pouvez mesurer dans l'une ou l'autre unité." },
+          { q: "Fonctionne-t-elle sur mobile ?", a: "Oui. Pour un meilleur résultat, étalonnez-la d'abord avec un objet réel." },
+        ]
       },
       wordcounter: {
         title: "Compteur de mots",
@@ -215,7 +221,21 @@ export default {
         ],
         relatedTools: "Outils associés : Formateur JSON, Encodeur Base64"
       },
-      dummytext: { title: "Lorem Ipsum", description: "Générez des paragraphes de texte de remplacement." },
+      dummytext: {
+        title: "Lorem Ipsum",
+        description: "Générez des paragraphes de texte de remplacement.",
+        seo: "Générez des paragraphes factices pour les brouillons, les mises en page et les maquettes.",
+        longDescription: "Le texte factice vous aide à créer rapidement des paragraphes de remplacement quand vous devez remplir une maquette, un wireframe, un brouillon de contenu ou un test de mise en page. Choisissez la langue et le nombre de paragraphes, puis copiez le résultat dans votre document, votre application ou votre prototype.",
+        usageContext: "Utilisez cet outil pour concevoir une page, tester la typographie, remplir une zone vide dans une maquette ou préparer un contenu d'exemple avant que le texte final ne soit prêt.",
+        howToUse: "1. Choisissez la langue du contenu.\n2. Sélectionnez le nombre de paragraphes.\n3. Copiez le texte généré et collez-le là où vous avez besoin de texte de remplissage.",
+        whyUse: "Le texte de remplacement permet d'avancer sur la mise en page avant la version finale. Il facilite l'évaluation des espacements, de la lisibilité et de l'équilibre visuel sans attendre le texte définitif.",
+        faq: [
+          { q: "Puis-je l'utiliser dans une page finale ?", a: "Non. C'est un contenu temporaire pour les brouillons, les maquettes et les mises en page intermédiaires." },
+          { q: "Peut-on générer plusieurs paragraphes ?", a: "Oui. Augmentez le nombre de paragraphes pour créer un bloc plus long de texte de remplissage." },
+          { q: "Est-ce disponible dans d'autres langues ?", a: "Oui. Vous pouvez basculer entre les langues disponibles." },
+        ],
+        relatedTools: "Outil associé : Compteur de mots",
+      },
     },
     common: {
       copyAll: "Tout copier",

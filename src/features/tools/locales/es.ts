@@ -110,7 +110,20 @@ export default {
         ],
         relatedTools: "Herramienta Relacionada: Calculadora de Porcentajes"
       },
-      ruler: { title: "Regla en Línea", description: "Mida distancias en pantalla con calibración." },
+      ruler: {
+        title: "Regla en Línea",
+        description: "Mida distancias en pantalla con calibración.",
+        seo: "Mida objetos pequeños en pantalla con calibración por tarjeta y alineación del punto cero.",
+        longDescription: "La regla en línea le permite medir objetos pequeños directamente en la pantalla. Calibre con un objeto estándar, como una tarjeta de crédito, defina el punto cero y alterne entre centímetros y pulgadas para obtener medidas rápidas.",
+        usageContext: "Úsela cuando necesite comprobar rápidamente el tamaño de un objeto pequeño, un elemento de la pantalla o cualquier cosa cuya dimensión quiera estimar sin una regla física.",
+        howToUse: "1. Elija cm o pulgada.\n2. Ingrese el ancho de una tarjeta estándar y haga clic en Calibrar.\n3. Haga doble clic en la regla para definir el punto cero.\n4. Coloque el objeto en pantalla y lea la medida.",
+        whyUse: "Ahorra tiempo cuando no tiene una regla física a mano y permite estimar dimensiones pequeñas en escritorio o móvil.",
+        faq: [
+          { q: "¿Qué tan precisa es la regla?", a: "La precisión depende de la calibración. Si cambia el dispositivo, el zoom del navegador o la pantalla, calibre de nuevo." },
+          { q: "¿Puedo cambiar entre cm e pulgadas?", a: "Sí. Después de calibrar, puede medir en cualquiera de las dos unidades." },
+          { q: "¿Funciona en el móvil?", a: "Sí. Calibre primero con un objeto real para obtener mejores resultados." },
+        ],
+      },
       wordcounter: { title: "Contador de Palabras", description: "Cuente caracteres y palabras en tiempo real." },
       countdown: { title: "Cuenta Regresiva", description: "Configure temporizadores con modo pantalla completa." },
       digitalclock: { title: "Reloj Digital", description: "Consulte la hora actual en tiempo real." },
@@ -157,7 +170,21 @@ export default {
         ],
         relatedTools: "Herramientas Relacionadas: Formateador JSON, Codificador Base64"
       },
-      dummytext: { title: "Lorem Ipsum", description: "Genere párrafos de texto de relleno." },
+      dummytext: {
+        title: "Lorem Ipsum",
+        description: "Genere párrafos de texto de relleno.",
+        seo: "Genera párrafos de relleno para borradores, maquetas y prototipos.",
+        longDescription: "El texto de relleno te ayuda a crear rápidamente párrafos de apoyo cuando necesitas probar una maqueta, un wireframe, un borrador de contenido o un diseño. Elige el idioma y la cantidad de párrafos, luego copia el resultado en tu documento, aplicación o prototipo.",
+        usageContext: "Usa esta herramienta cuando estés diseñando una página, probando tipografía, rellenando espacios vacíos en una maqueta o preparando contenido de ejemplo antes de tener el texto final.",
+        howToUse: "1. Elige el idioma del contenido.\n2. Selecciona cuántos párrafos quieres.\n3. Copia el texto generado y pégalo donde necesites contenido de relleno.",
+        whyUse: "El texto de relleno permite avanzar con el diseño mientras el contenido final todavía se está escribiendo. También facilita revisar espaciado, legibilidad y equilibrio visual sin esperar la versión definitiva.",
+        faq: [
+          { q: "¿Puedo usar el texto generado en una publicación final?", a: "No. Es contenido temporal para borradores, maquetas y diseños provisionales." },
+          { q: "¿Puedo generar más de un párrafo?", a: "Sí. Aumenta la cantidad de párrafos para crear un bloque más largo." },
+          { q: "¿Funciona en otros idiomas?", a: "Sí. Puedes cambiar entre los idiomas disponibles." },
+        ],
+        relatedTools: "Herramienta relacionada: Contador de palabras",
+      },
     },
     common: {
       copyAll: "Copiar todo",

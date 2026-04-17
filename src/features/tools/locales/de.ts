@@ -109,7 +109,20 @@ export default {
         ],
         relatedTools: "Verwandtes Tool: Prozentrechner"
       },
-      ruler: { title: "Online-Lineal", description: "Messen Sie Bildschirmabstände mit Kalibrierung." },
+      ruler: {
+        title: "Online-Lineal",
+        description: "Messen Sie Bildschirmabstände mit Kalibrierung.",
+        seo: "Messen Sie kleine Objekte auf dem Bildschirm mit Kartenkalibrierung und Nullpunkt-Ausrichtung.",
+        longDescription: "Das Online-Lineal ermöglicht es Ihnen, kleine Objekte direkt auf dem Bildschirm zu messen. Kalibrieren Sie es mit einem Standardobjekt wie einer Kreditkarte, setzen Sie den Nullpunkt und wechseln Sie zwischen Zentimetern und Zoll für schnelle Messungen.",
+        usageContext: "Nützlich, wenn Sie schnell die Größe eines kleinen Objekts, eines Bildschirmelements oder eines beliebigen Gegenstands abschätzen möchten, ohne ein physisches Lineal zur Hand zu haben.",
+        howToUse: "1. Wählen Sie cm oder Zoll.\n2. Geben Sie die Breite einer Standardkarte ein und klicken Sie auf Kalibrieren.\n3. Doppelklicken Sie auf das Lineal, um den Nullpunkt zu setzen.\n4. Platzieren Sie das Objekt auf dem Bildschirm und lesen Sie die Messung ab.",
+        whyUse: "Es spart Zeit, wenn kein physisches Lineal verfügbar ist, und hilft Ihnen, kleine Abmessungen auf Desktop oder Mobilgerät schnell abzuschätzen.",
+        faq: [
+          { q: "Wie genau ist das Lineal?", a: "Die Genauigkeit hängt von der Kalibrierung ab. Wenn sich Gerät, Browser-Zoom oder Bildschirm ändern, sollten Sie neu kalibrieren." },
+          { q: "Kann ich zwischen cm und Zoll wechseln?", a: "Ja. Nach der Kalibrierung können Sie in beiden Einheiten messen." },
+          { q: "Funktioniert es auf Mobilgeräten?", a: "Ja. Für das beste Ergebnis zuerst mit einem echten Objekt kalibrieren." },
+        ],
+      },
       wordcounter: { title: "Wortzähler", description: "Zählen Sie Zeichen und Wörter in Echtzeit." },
       countdown: { title: "Countdown-Timer", description: "Stellen Sie Timer mit Vollbildmodus ein." },
       digitalclock: { title: "Digitale Uhr", description: "Überprüfen Sie die aktuelle Uhrzeit in Echtzeit." },
@@ -156,7 +169,21 @@ export default {
         ],
         relatedTools: "Verwandte Tools: JSON Formatter, Base64 Encoder"
       },
-      dummytext: { title: "Blindtext", description: "Generieren Sie Platzhaltertexte." },
+      dummytext: {
+        title: "Blindtext",
+        description: "Generieren Sie Platzhaltertexte.",
+        seo: "Erzeuge Platzhalterabsätze für Entwürfe, Layouts und Mockups.",
+        longDescription: "Blindtext hilft dir dabei, realistische Platzhalterabsätze zu erzeugen, wenn du Text für Design-Mockups, Wireframes, Inhaltsentwürfe oder Layout-Tests brauchst. Wähle die Sprache und die Anzahl der Absätze und kopiere das Ergebnis in dein Dokument, deine App oder deinen Prototyp.",
+        usageContext: "Nutze dieses Tool, wenn du eine Seite gestaltest, Typografie testest, leere Bereiche in einem Mockup füllst oder Beispielinhalte vorbereitest, bevor der finale Text fertig ist.",
+        howToUse: "1. Wähle die Inhaltssprache.\n2. Lege fest, wie viele Absätze du möchtest.\n3. Kopiere den generierten Text und füge ihn dort ein, wo du Fülltext brauchst.",
+        whyUse: "Platzhaltertext hält das Layout in Bewegung, während der finale Inhalt noch geschrieben wird. So lassen sich Abstände, Lesbarkeit und visuelle Balance prüfen, ohne auf den Endtext zu warten.",
+        faq: [
+          { q: "Kann ich den erzeugten Text direkt veröffentlichen?", a: "Nein. Er ist Platzhalter für Entwürfe, Mockups und temporäre Layouts." },
+          { q: "Kann ich mehr als einen Absatz erzeugen?", a: "Ja. Erhöhe die Absatzanzahl, um einen längeren Fülltext zu erstellen." },
+          { q: "Unterstützt das Tool mehrere Sprachen?", a: "Ja. Du kannst zwischen den verfügbaren Sprachen wechseln." },
+        ],
+        relatedTools: "Verwandtes Tool: Wortzähler",
+      },
     },
     common: {
       copyAll: "Alles kopieren",

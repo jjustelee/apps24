@@ -14,11 +14,33 @@ type BarcodeToolData = {
   formats: BarcodeFormatOption[];
 };
 
-const FORMAT_DESCRIPTIONS: Record<string, string> = {
-  qrcode: "URL이나 텍스트를 QR 코드로 변환합니다.",
-  code128: "알파뉴메릭 라벨, 재고 ID, 배송 코드 등에 사용됩니다.",
-  code39: "대문자 라벨 및 짧은 운영 코드에 사용됩니다.",
-  ean13: "13자리 숫자로 된 소매 제품 번호에 사용됩니다.",
+const BARCODE_COPY = {
+  ko: {
+    formatDescriptions: {
+      qrcode: "URL이나 텍스트를 QR 코드로 변환합니다.",
+      code128: "알파뉴메릭 라벨, 재고 ID, 배송 코드 등에 사용됩니다.",
+      code39: "대문자 라벨 및 짧은 운영 코드에 사용됩니다.",
+      ean13: "13자리 숫자로 된 소매 제품 번호에 사용됩니다.",
+    },
+    qrHint: "텍스트를 입력하면 QR 코드를 생성합니다.",
+    barcodeHint: "텍스트를 입력하면 바코드를 생성합니다.",
+    generationFailed: "생성에 실패했습니다.",
+    generationError: "생성 중 오류가 발생했습니다.",
+    relatedBarcodeTool: "바코드 생성기",
+  },
+  en: {
+    formatDescriptions: {
+      qrcode: "Converts a URL or text into a QR code.",
+      code128: "Used for alphanumeric labels, inventory IDs, and shipping codes.",
+      code39: "Used for uppercase labels and short operational codes.",
+      ean13: "Used for 13-digit retail product numbers.",
+    },
+    qrHint: "Enter text to generate a QR code.",
+    barcodeHint: "Enter text to generate a barcode.",
+    generationFailed: "Generation failed.",
+    generationError: "Generation error.",
+    relatedBarcodeTool: "Barcode Generator",
+  },
 };
 
 const STORAGE_KEY_FORMAT = "apps24.barcode.format";
@@ -31,6 +53,7 @@ export function BarcodeGeneratorTool({
 }: ToolRendererProps) {
   const data = toolData as BarcodeToolData | undefined;
   const isQrTool = tool.slug === "qrgenerator";
+  const copy = locale === "ko" ? BARCODE_COPY.ko : BARCODE_COPY.en;
   
   const availableFormats = useMemo(() => {
     const formats = data?.formats ?? [{ value: "qrcode", label: "QR Code" }];
@@ -83,15 +106,15 @@ export function BarcodeGeneratorTool({
           | { success: false; message: string };
 
         if (!response.ok || !payload.success) {
-          setRequestError(payload.success ? "Generation failed." : payload.message);
+          setRequestError(payload.success ? copy.generationFailed : payload.message);
           setImage("");
         } else {
           setRequestError("");
           setImage(payload.image);
         }
       } catch (fetchError) {
-        if ((fetchError as any).name !== "AbortError") {
-          setRequestError("Generation error.");
+        if (!(fetchError instanceof DOMException && fetchError.name === "AbortError")) {
+          setRequestError(copy.generationError);
         }
       } finally {
         setIsGenerating(false);
@@ -102,7 +125,7 @@ export function BarcodeGeneratorTool({
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [selectedFormat, text]);
+  }, [selectedFormat, text, copy.generationError, copy.generationFailed]);
 
   const copyToClipboard = async () => {
     if (!image) return;
@@ -161,7 +184,9 @@ export function BarcodeGeneratorTool({
 
           <div className="info-box">
             <AlertCircle size={16} />
-            <span>{FORMAT_DESCRIPTIONS[selectedFormat] || "Generate standard barcodes."}</span>
+            <span>
+              {copy.formatDescriptions[selectedFormat as keyof typeof copy.formatDescriptions] || "Generate standard barcodes."}
+            </span>
           </div>
         </div>
 
@@ -169,12 +194,15 @@ export function BarcodeGeneratorTool({
           <div className={`preview-card ${isGenerating ? 'loading' : ''}`}>
             {image ? (
               <div className="image-wrapper fadeIn">
-                <img src={image} alt="Generated result" />
+                <img
+                  src={image}
+                  alt={locale === "ko" ? (isQrTool ? "QR 코드 결과" : "바코드 결과") : (isQrTool ? "QR code result" : "Barcode result")}
+                />
               </div>
             ) : (
               <div className="empty-state">
                 {isQrTool ? <QrCode size={64} /> : <BarcodeIcon size={64} />}
-                <p>{requestError || (isQrTool ? "Enter text to generate QR" : "Enter text to generate Barcode")}</p>
+                <p>{requestError || (isQrTool ? copy.qrHint : copy.barcodeHint)}</p>
               </div>
             )}
             
@@ -200,7 +228,11 @@ export function BarcodeGeneratorTool({
           
           {isQrTool && (
             <div className="tool-tip">
-              💡 <Link href={`/${locale}/barcodegenerator`}>바코드 생성기</Link>를 찾으시나요?
+              {locale === "ko" ? (
+                <>💡 <Link href={`/${locale}/barcodegenerator`}>{copy.relatedBarcodeTool}</Link>를 찾으시나요?</>
+              ) : (
+                <>💡 Looking for the <Link href={`/${locale}/barcodegenerator`}>{copy.relatedBarcodeTool}</Link>?</>
+              )}
             </div>
           )}
         </div>

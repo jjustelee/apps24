@@ -25,6 +25,37 @@ export async function ToolShell({
   const common = await getCommonText(locale);
   const toolText = await getToolText(locale, tool);
   const formatTitle = (template: string) => template.replace("{0}", title);
+  const categoryLabel = (() => {
+    switch (tool.category) {
+      case "text":
+        return common.textCategory;
+      case "utility":
+        return common.utilityCategory;
+      case "image":
+        return common.imageCategory;
+      case "security":
+        return common.securityCategory;
+      case "time":
+        return common.timeCategory;
+      case "display":
+        return common.displayCategory;
+      case "measurement":
+        return common.measurementCategory;
+      case "generator":
+        return common.generatorCategory;
+      case "network":
+        return common.networkCategory || tool.category;
+      default:
+        return tool.category;
+    }
+  })();
+  const relatedToolHrefById: Partial<Record<string, string>> = {
+    dummytext: `/${locale}/wordcounter`,
+    percentagecalculator: `/${locale}/unit-converter`,
+    unitconverter: `/${locale}/percentage-calculator`,
+    iplookup: `/${locale}/json-formatter`,
+  };
+  const relatedToolHref = relatedToolHrefById[tool.id];
 
   return (
     <div className="tool-shell">
@@ -37,11 +68,7 @@ export async function ToolShell({
               ← {common.backToTools}
             </Link>
           </nav>
-          <div className="tool-badge">
-            {tool.category === "text" ? common.textCategory : 
-             tool.category === "utility" ? common.utilityCategory : 
-             tool.category}
-          </div>
+          <div className="tool-badge">{categoryLabel}</div>
           <h1 style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}>{title}</h1>
           <p className="tool-note">{description}</p>
         </header>
@@ -107,13 +134,22 @@ export async function ToolShell({
           {toolText.relatedTools && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
               <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{common.relatedToolsTitle}</h2>
-              <Link 
-                href={toolText.relatedTools.includes("Percent") ? `/${locale}/percentage-calculator` : "#"} 
-                className="tool-button secondary"
-                style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
-              >
-                {toolText.relatedTools}
-              </Link>
+              {relatedToolHref ? (
+                <Link
+                  href={relatedToolHref}
+                  className="tool-button secondary"
+                  style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
+                >
+                  {toolText.relatedTools}
+                </Link>
+              ) : (
+                <span
+                  className="tool-button secondary"
+                  style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
+                >
+                  {toolText.relatedTools}
+                </span>
+              )}
             </div>
           )}
 
@@ -133,7 +169,7 @@ export async function ToolShell({
               <strong>{title}</strong> {common.aboutPrefix} {description}
             </p>
             <p className="tool-muted" style={{ fontSize: "0.9rem", margin: 0, opacity: 0.8 }}>
-              {common.footerNote1.replace("this tool", title)}
+              {common.footerNote1}
               <br />
               {common.footerNote2}
             </p>

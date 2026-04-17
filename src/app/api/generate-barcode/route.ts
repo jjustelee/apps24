@@ -1,5 +1,6 @@
 import bwipjs from "bwip-js/node";
 import { NextRequest, NextResponse } from "next/server";
+import type * as BwipJs from "bwip-js/node";
 
 const supportedBcids = new Set(bwipjs.symbolList.map((symbol) => symbol.bcid));
 
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const options: any = {
+    const options: BwipJs.RenderOptions = {
       bcid: format,
       text,
       scale: 3,

@@ -282,7 +282,7 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
             color: textColor !== "inherit" ? textColor : undefined,
           }}
         >
-          {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          {isFullscreen ? commonText.exitFullscreen : commonText.fullscreen}
         </button>
       </div>
     </div>
