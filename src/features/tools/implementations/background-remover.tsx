@@ -527,14 +527,14 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
           <div>
             <p className="text-xs font-black uppercase tracking-[0.25em] text-[var(--muted)]">{previewTitle}</p>
             <h3 className="mt-1 text-lg font-extrabold text-[var(--text)]">
-              {hasResult ? ui.ready : isWorking ? previewStatus : originalFile ? ui.originalPreview : ui.uploadHint}
+              {hasResult ? ui.ready : isWorking ? previewStatus : originalFile ? ui.originalPreview : common.uploadImage}
             </h3>
             <p className="mt-1 text-sm text-[var(--muted)]">
               {originalFile
                 ? isWorking
                   ? `${progressLabel || previewStatus} · ${previewProgress}%`
                   : `${formatFileSize(originalFile.size)} · ${originalDimensions.width} × ${originalDimensions.height}px`
-                : ui.uploadHint}
+                : ui.maxSize}
             </p>
           </div>
           <div className="rounded-full border border-[var(--line)] bg-[var(--bg)] px-3 py-1 text-xs font-bold text-[var(--muted)]">
