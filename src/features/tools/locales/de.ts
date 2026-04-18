@@ -8,6 +8,11 @@ export default {
         seo: "Bilder komprimieren und zu WebP konvertieren.",
         longDescription: "Unser kostenloser Bildkompressor hilft Ihnen dabei, Bilddateigrößen in Sekunden zu reduzieren, ohne Software installieren zu müssen. Sie können Bilder auch in das WebP-Format konvertieren, um eine bessere Web-Performance und kleinere Dateigrößen zu erzielen. Dieses Tool eignet sich für Blogger, Online-Shop-Besitzer, Studenten, Marketer und alle, die schnell ladende Bilder benötigen.",
         usageContext: "Das Komprimieren von Bildern ist hilfreich, wenn Sie die Seitenladegeschwindigkeit verbessern, den Speicherplatz reduzieren oder Dateigrößenlimits für Websites und E-Mails einhalten möchten. Kleinere Bilder verbessern auch die Benutzererfahrung auf mobilen Geräten. WebP ist ein modernes Bildformat, das kleinere Dateigrößen bei guter visueller Qualität bietet.",
+        examples: [
+          "Bilder für Blogbeiträge",
+          "Produktfotos für Shops",
+          "E-Mail-Anhänge und Web-Banner"
+        ],
         howToUse: "1. Laden Sie Ihre Bilddatei hoch.\n2. Wählen Sie, ob Sie das Bild komprimieren oder in WebP konvertieren möchten.\n3. Sehen Sie sich das Ergebnis an und laden Sie die optimierte Datei herunter.",
         faq: [
           { q: "Ist dieses Tool kostenlos?", a: "Ja. Sie können Bilder online kostenlos komprimieren und konvertieren." },
@@ -36,6 +41,11 @@ export default {
         seo: "JSON online formatieren und validieren.",
         longDescription: "Der JSON-Formatierer und Validator hilft Ihnen dabei, JSON-Daten online zu bereinigen, zu organisieren und zu überprüfen. Er ist nützlich für Entwickler, Tester, Studenten und API-Benutzer, die eine lesbare JSON-Ausgabe benötigen oder Syntaxfehler schnell finden möchten.",
         usageContext: "Rohes JSON ist oft schwer zu lesen, besonders wenn es in eine einzige Zeile komprimiert ist. Das Formatieren fügt eine ordentliche Einrückung und Struktur hinzu, was das Debuggen und Teilen erleichtert. Ein kleiner Syntaxfehler in JSON kann eine API-Anfrage oder Konfigurationsdatei beschädigen. Die Validierung hilft dabei, solche Probleme zu erkennen.",
+        examples: [
+          "API-Antworten formatieren",
+          "Konfigurationsdateien prüfen",
+          "Zum Debuggen und Teilen"
+        ],
         howToUse: "1. Fügen Sie Ihr JSON in das Eingabefeld ein.\n2. Klicken Sie auf die Schaltfläche zum Formatieren oder Validieren.\n3. Überprüfen Sie das formatierte Ergebnis oder sehen Sie die Fehlermeldung.",
         faq: [
           { q: "Was ist JSON?", a: "JSON steht für JavaScript Object Notation. Es ist ein gängiges Format zum Speichern und Austauschen strukturierter Daten." },
@@ -50,6 +60,11 @@ export default {
         seo: "Generieren Sie sofort starke Passwörter in Ihrem Browser. Kostenloser Passwort-Generator mit anpassbarer Länge und Zeichenoptionen.",
         longDescription: "Der Passwort-Generator ist ein einfaches Online-Tool, das Benutzern hilft, starke und zufällige Passwörter für persönliche, Arbeits- und Geschäftskonten zu erstellen. Es ist für Personen gedacht, die Passwörter schneller und sicherer generieren möchten, anstatt schwache Kombinationen wiederzuverwenden.",
         usageContext: "Verwenden Sie dieses Tool beim Erstellen eines neuen Kontos, beim Ersetzen eines alten Passworts oder beim Verbessern der Sicherheit von Konten mit kurzen oder wiederholten Passwörtern.",
+        examples: [
+          "Neues Konto erstellen",
+          "Altes Passwort ersetzen",
+          "Persönliche und Arbeitskonten absichern"
+        ],
         howToUse: "1. Wählen Sie die Passwortlänge.\n2. Wählen Sie die einzuschließenden Zeichentypen (Groß- und Kleinbuchstaben, Zahlen, Symbole).\n3. Klicken Sie auf Passwort generieren.\n4. Kopieren Sie das Passwort und speichern Sie es an einem sicheren Ort.",
         faq: [
           { q: "Warum sollte ich einen Passwort-Generator verwenden?", a: "Er erstellt stärkere und weniger vorhersehbare Passwörter als manuell erstellte, was das Risiko schwacher Anmeldedaten reduziert." },
@@ -93,6 +108,11 @@ export default {
         seo: "Kostenloser Online-Einheitenumrechner für metrische und imperiale Systeme. Zoll in cm, kg in Pfund, Celsius in Fahrenheit und vieles mehr.",
         longDescription: "Unser Einheitenumrechner ist ein hochpräzises Tool, um schnell zwischen weltweit unterschiedlichen Maßsystemen zu wechseln. Ob metrisch oder imperial – hier finden Sie stets exakte Ergebnisse.",
         usageContext: "Wussten Sie, dass US-Gallonen und UK-Gallonen unterschiedlich groß sind? Unser Tool unterscheidet dies exakt, sodass Sie im Technik- oder Shopping-Alltag stets mit verlässlichen Zahlen arbeiten.",
+        examples: [
+          "Zoll in Zentimeter",
+          "Kilogramm in Pfund",
+          "Celsius in Fahrenheit"
+        ],
         howToUse: "1. Wählen Sie eine Kategorie aus (z. B. Länge, Gewicht).\n2. Tragen Sie den gewünschten Wert ein.\n3. Wählen Sie Ausgangs- und Zieleinheit.\n4. Sehen Sie sofort das Ergebnis. Nutzen Sie ⇄, um die Richtung zu tauschen.\n5. Passen Sie die Nachkommastellen nach Bedarf an.",
         whyUse: "Geschwindigkeit und Genauigkeit sind entscheidend. Im Kopf oder manuell kommt es häufig zu Fehlern – insbesondere bei Temperaturwerten oder Zollmaßen. Dieses Tool schützt davor.",
         popularConversions: [
@@ -202,6 +222,11 @@ export default {
         seo: "Erstellen Sie QR-Codes sofort aus Texten, Links und Kontaktdaten.",
         longDescription: "Der QR-Code-Generator ermöglicht es Ihnen, QR-Codes für Text, Links, Kontaktdaten und andere einfache Inhalte zu erstellen. Er ist nützlich für Unternehmen, Veranstaltungen, Restaurants, Verpackungen und den persönlichen Gebrauch. Sie können in Sekunden einen QR-Code generieren und ihn für digitale oder gedruckte Verwendung herunterladen.",
         usageContext: "QR-Codes werden häufig für Website-Links, Menüzugriff, Event-Check-ins, Kontaktaustausch, Zahlungsanweisungen und Produktetiketten verwendet. Ein QR-Code macht es Benutzern leichter, eine Seite zu öffnen oder auf Informationen zuzugreifen, ohne langen Text manuell einzugeben.",
+        examples: [
+          "Restaurantmenüs und Tischaufsteller",
+          "Veranstaltungsplakate und Check-in-Seiten",
+          "Visitenkarten, Flyer und Paketetiketten"
+        ],
         howToUse: "1. Geben Sie den Text, die URL oder den Inhalt ein, den Sie kodieren möchten.\n2. Generieren Sie den QR-Code.\n3. Laden Sie das Bild herunter und verwenden Sie es wo benötigt.",
         whyUse: "So teilen Sie Informationen schnell, ohne lange Texte manuell einzutippen.",
         faq: [
@@ -218,6 +243,11 @@ export default {
         seo: "Erstellen Sie sofort Barcodes für Produkte, Etiketten und Inventar.",
         longDescription: "Der Barcode-Generator hilft Ihnen dabei, Barcodes für Produkte, Etiketten, Inventar, Verpackungen und interne Verfolgung zu erstellen. Er ist nützlich für kleine Unternehmen, Lager, Büros, Schulen und alle, die schnelle Online-Barcode-Erstellung benötigen.",
         usageContext: "Barcodes werden im Einzelhandel, in der Bestandskontrolle, im Versand, im Asset-Tracking und in der Dokumentenbeschriftung weit verbreitet eingesetzt. Sie erleichtern die schnelle Identifizierung von Artikeln und reduzieren manuelle Eingabefehler. Die Wahl des richtigen Formats gewährleistet die Kompatibilität mit Scannern und Arbeitsabläufen.",
+        examples: [
+          "SKU-Etiketten im Einzelhandel",
+          "Lager-Inventar-Tags",
+          "Versand- oder Asset-Tracking-Codes"
+        ],
         howToUse: "1. Geben Sie die für Ihren Barcode erforderliche Zahl oder den Text ein.\n2. Wählen Sie das Barcode-Format.\n3. Generieren und laden Sie das Barcode-Bild herunter.",
         whyUse: "So erzeugen Sie schnell maschinenlesbare Etiketten für Handel, Nachverfolgung und interne Abläufe.",
         faq: [
@@ -244,6 +274,11 @@ export default {
         seo: "Finden Sie sofort Ihre öffentliche IP-Adresse, Standort, ISP und Netzwerkdetails.",
         longDescription: "„Wie lautet meine IP“ ist ein schnelles und einfaches Werkzeug, das Ihre öffentliche IP-Adresse und zugehörige Netzwerk-Informationen anzeigt. Es hilft Ihnen dabei, Ihren aktuellen digitalen Fußabdruck zu überprüfen, einschließlich Land, Region, Stadt, ISP (Internetzdienstanbieter) und die Zeitzone, die mit Ihrer Verbindung verknüpft ist. Es erkennt auch grundlegende Geräte- und Browserinformationen.",
         usageContext: "Dieses Werkzeug ist besonders nützlich, wenn Sie ein VPN oder einen Proxy verwenden und überprüfen möchten, ob Ihr Standort erfolgreich verborgen wird. Es hilft auch bei der Fehlersuche im Netzwerk, ob IPv6 aktiv ist, oder bei der Suche nach Ihrer IP-Adresse, um sie für den Zugriff auf Remote-Server zur Zulassungsliste (Whitelist) hinzuzufügen.",
+        examples: [
+          "Prüfen, ob ein VPN die sichtbare IP geändert hat",
+          "Die zu whitelisting IP anzeigen",
+          "Remote-Zugriff oder Netzwerkblockaden untersuchen"
+        ],
         howToUse: "1. Wenn Sie das Tool öffnen, wird die IP sofort ausgewertet.\n2. Überprüfen Sie den Schnellüberblick auf Standort und Provider, um mehr zu erfahren.\n3. Schauen Sie auf das sichere Verbindung & VPN Zeichen.\n4. Kopieren Sie die IP indem Sie auf den dafür vorgesehenen Knopf drücken um die Information für ihre Nutzung passend zu lagern.",
         whyUse: "Die öffentliche IP-Adresse zu kennen, ist wichtig, um die Netzwerkintegrität aufrechtzuerhalten, Verbindungen und Route neu auszurichten und um externe Applikationen auf die richtige Nutzung zu prüfen.",
         faq: [

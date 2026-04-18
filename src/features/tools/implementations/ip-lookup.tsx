@@ -229,7 +229,7 @@ export function IpLookupTool({ locale }: ToolRendererProps) {
     setLoading(true);
     setError(false);
     try {
-      const res = await fetch("https://ipwho.is/", { cache: "no-store" });
+      const res = await fetch("/api/ip-lookup", { cache: "no-store" });
       if (!res.ok) throw new Error("fetch failed");
       const data = await res.json();
       if (!data?.success) throw new Error("ip lookup failed");
@@ -347,7 +347,7 @@ export function IpLookupTool({ locale }: ToolRendererProps) {
               {L.currentIp}
             </div>
             <div style={{
-              fontSize: "clamp(1.8rem, 5vw, 3rem)",
+              fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
               fontWeight: 900,
               color: "var(--text)",
               letterSpacing: "-0.02em",

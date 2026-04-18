@@ -8,6 +8,11 @@ export default {
         seo: "Comprimir e converter para WebP online.",
         longDescription: "Nosso compressor de imagens gratuito ajuda você a reduzir o tamanho dos arquivos de imagem em segundos, sem instalar nenhum software. Você também pode converter imagens para o formato WebP para melhor desempenho na web. Esta ferramenta é útil para blogueiros, donos de lojas online, estudantes, profissionais de marketing e qualquer pessoa que precise de imagens de carregamento rápido.",
         usageContext: "Comprimir imagens é útil quando você deseja melhorar a velocidade das páginas, reduzir o uso de armazenamento ou atender aos limites de tamanho de arquivo para sites e e-mails. Imagens menores também melhoram a experiência do usuário em dispositivos móveis. WebP é um formato moderno projetado para fornecer arquivos menores mantendo boa qualidade visual.",
+        examples: [
+          "Imagens de artigos de blog",
+          "Fotos de produtos da loja",
+          "Anexos de e-mail e banners da web"
+        ],
         howToUse: "1. Envie seu arquivo de imagem.\n2. Escolha comprimir a imagem ou convertê-la para WebP.\n3. Visualize o resultado e baixe o arquivo otimizado.",
         faq: [
           { q: "Esta ferramenta é gratuita?", a: "Sim. Você pode comprimir e converter imagens online gratuitamente." },
@@ -36,6 +41,11 @@ export default {
         seo: "Formatar e validar JSON online.",
         longDescription: "O Formatador e Validador JSON ajuda você a limpar, organizar e verificar dados JSON online. É útil para desenvolvedores, testadores, estudantes e usuários de API que precisam de saída JSON legível ou querem encontrar erros de sintaxe rapidamente.",
         usageContext: "JSON bruto é frequentemente difícil de ler, especialmente quando comprimido em uma única linha. A formatação adiciona indentação e estrutura adequadas, facilitando a depuração e o compartilhamento. Um pequeno erro de sintaxe no JSON pode quebrar uma requisição de API ou arquivo de configuração.",
+        examples: [
+          "Formatar respostas de API",
+          "Validar arquivos de configuração",
+          "Depuração e compartilhamento"
+        ],
         howToUse: "1. Cole seu JSON na caixa de entrada.\n2. Clique no botão de formatar ou validar.\n3. Revise o resultado formatado ou verifique a mensagem de erro.",
         faq: [
           { q: "O que é JSON?", a: "JSON significa JavaScript Object Notation. É um formato comum usado para armazenar e trocar dados estruturados." },
@@ -50,6 +60,11 @@ export default {
         seo: "Gere instantaneamente senhas fortes no seu navegador. Gerador de senhas gratuito com opções personalizáveis de comprimento e caracteres.",
         longDescription: "O Gerador de Senhas é uma ferramenta simples que ajuda os usuários a criar senhas fortes e aleatórias para contas pessoais, de trabalho e comerciais. Projetado para quem deseja gerar senhas de forma mais rápida e segura, em vez de reutilizar combinações fracas.",
         usageContext: "Use esta ferramenta ao criar uma nova conta, substituir uma senha antiga ou melhorar a segurança de contas com senhas curtas ou repetidas.",
+        examples: [
+          "Criar nova conta",
+          "Trocar senha antiga",
+          "Fortalecer contas pessoais e de trabalho"
+        ],
         howToUse: "1. Escolha o comprimento da senha.\n2. Selecione os tipos de caracteres a incluir (letras maiúsculas, minúsculas, números, símbolos).\n3. Clique em Gerar Senha.\n4. Copie e salve a senha em um local seguro.",
         faq: [
           { q: "Por que usar um gerador de senhas?", a: "Ele cria senhas mais fortes e menos previsíveis do que as feitas manualmente, reduzindo o risco de credenciais fracas." },
@@ -93,6 +108,11 @@ export default {
         seo: "Conversor de unidades online gratuito para sistemas métrico e imperial. Converta polegadas para cm, kg para lbs, celsius para fahrenheit e muito mais.",
         longDescription: "Nosso Conversor de Unidades é uma ferramenta de alta precisão projetada para ajudá-lo a alternar rapidamente entre diferentes sistemas de medição em todo o mundo. Esteja você lidando com unidades métricas ou imperiais, esta ferramenta fornece resultados precisos para comprimento, massa, área, volume, temperatura e tempo.",
         usageContext: "Você sabia que o Galão dos EUA e o Galão do Reino Unido têm tamanhos diferentes? Nossa ferramenta distingue entre essas medidas para garantir os dados corretos para compras internacionais ou projetos de engenharia. É essencial para qualquer um que precise de conversões rápidas.",
+        examples: [
+          "Polegadas para centímetros",
+          "Quilos para libras",
+          "Celsius para Fahrenheit"
+        ],
         howToUse: "1. Selecione uma categoria nas guias (ex: Comprimento, Peso).\n2. Insira o valor que deseja converter.\n3. Escolha sua unidade atual e a unidade para a qual deseja converter.\n4. Veja o resultado instantaneamente. Use o botão de troca (⇄) para inverter.\n5. Ajuste as casas decimais ou copie o resultado conforme necessário.",
         whyUse: "Cálculos manuais muitas vezes levam a erros, especialmente com diferenças de temperatura ou taxas imperiais/métricas. Esta ferramenta garante a precisão instantânea.",
         popularConversions: [
@@ -203,6 +223,11 @@ export default {
         seo: "Crie QR codes instantaneamente a partir de textos, links e contatos.",
         longDescription: "O Gerador de QR Code permite criar QR codes para texto, links, informações de contato e outros conteúdos simples. É útil para empresas, eventos, restaurantes, embalagens e compartilhamento pessoal. Você pode gerar um QR code em segundos e baixá-lo para uso digital ou impresso.",
         usageContext: "QR codes são comumente usados para links de sites, acesso a menus, check-ins de eventos, compartilhamento de contatos, instruções de pagamento e etiquetas de produtos. Um QR code facilita o acesso dos usuários a informações sem digitar textos longos manualmente.",
+        examples: [
+          "Cardápios de restaurante e mesas",
+          "Pôsteres de eventos e páginas de check-in",
+          "Cartões de visita, folhetos e etiquetas de embalagem"
+        ],
         howToUse: "1. Digite o texto, URL ou conteúdo que deseja codificar.\n2. Gere o QR code.\n3. Baixe e use a imagem onde necessário.",
         whyUse: "É uma forma rápida de compartilhar informações sem digitar textos longos manualmente.",
         faq: [
@@ -219,6 +244,11 @@ export default {
         seo: "Crie códigos de barras para produtos, etiquetas e inventário instantaneamente.",
         longDescription: "O Gerador de Código de Barras ajuda você a criar códigos de barras para produtos, etiquetas, inventário, embalagens e rastreamento interno. É útil para pequenas empresas, armazéns, escritórios, escolas e qualquer pessoa que precise de geração rápida de códigos de barras online.",
         usageContext: "Códigos de barras são amplamente usados em varejo, controle de inventário, remessa, rastreamento de ativos e rotulagem de documentos. Eles facilitam a identificação rápida de itens e reduzem erros de entrada manual. Escolher o formato correto garante compatibilidade com scanners e fluxos de trabalho.",
+        examples: [
+          "Etiquetas SKU de varejo",
+          "Etiquetas de inventário do armazém",
+          "Códigos de envio ou rastreamento de ativos"
+        ],
         howToUse: "1. Insira o número ou texto necessário para seu código de barras.\n2. Selecione o formato do código de barras.\n3. Gere e baixe a imagem do código de barras.",
         whyUse: "É uma forma rápida de gerar rótulos legíveis por máquina para varejo, rastreamento e uso interno.",
         faq: [
@@ -245,6 +275,11 @@ export default {
         seo: "Encontre seu endereço IP público, localização, ISP e detalhes da rede instantaneamente.",
         longDescription: "'Qual é o meu IP' é uma ferramenta rápida e simples que exibe seu endereço IP público e informações de rede relacionadas. Ela ajuda a verificar sua pegada digital atual, incluindo país, região, cidade, ISP (Provedor de Acesso) e fuso horário associado à sua conexão. Também detecta as informações básicas do seu dispositivo e navegador.",
         usageContext: "Essa ferramenta é especialmente útil se você estiver usando uma VPN ou proxy e desejar verificar se sua localização foi ocultada com sucesso. Também ajuda na solução de problemas de rede, verificar se o IPv6 está ativo ou descobrir o seu endereço IP para incluí-lo em uma lista de acessos permitidos em servidores remotos.",
+        examples: [
+          "Confirmar se uma VPN mudou o IP visível",
+          "Ver o IP a ser adicionado à whitelist",
+          "Investigar acesso remoto ou bloqueios de rede"
+        ],
         howToUse: "1. Abra a ferramenta, a informação do IP irá aparecer automaticamente.\n2. Revise o 'Resumo Rápido' para saber detalhes da localização e ISP.\n3. Olhe para a etiqueta VPN / Conexão Segura para conferir o status atual.\n4. Clique em 'Copiar IP' para salvar o endereço, ou em 'Atualizar' para recarregar as informações.",
         whyUse: "Saber o seu endereço IP público é fundamental para administrar a segurança das redes, configurar os roteadores, acessar redes restritas ou simplesmente validar se ferramentas de privacidade como o VPN estão de fato online.",
         faq: [

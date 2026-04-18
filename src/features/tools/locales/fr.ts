@@ -8,6 +8,11 @@ export default {
         seo: "Compresser et convertir en WebP.",
         longDescription: "Notre compresseur d'images gratuit vous aide à réduire la taille des fichiers image en quelques secondes, sans installer de logiciel. Vous pouvez également convertir des images en format WebP pour de meilleures performances web. Cet outil est utile pour les blogueurs, les propriétaires de boutiques en ligne, les étudiants, les spécialistes du marketing et toute personne ayant besoin d'images à chargement rapide.",
         usageContext: "La compression d'images est utile lorsque vous souhaitez améliorer la vitesse des pages, réduire l'utilisation du stockage ou respecter les limites de taille de fichier pour les sites Web et les e-mails. Des images plus petites améliorent également l'expérience utilisateur sur les appareils mobiles. WebP est un format d'image moderne conçu pour offrir des fichiers plus petits tout en conservant une bonne qualité visuelle.",
+        examples: [
+          "Images de blog avant publication",
+          "Photos de produits pour une boutique en ligne",
+          "Pièces jointes d'e-mail à réduire"
+        ],
         howToUse: "1. Téléchargez votre fichier image.\n2. Choisissez de compresser l'image ou de la convertir en WebP.\n3. Prévisualisez le résultat et téléchargez le fichier optimisé.",
         faq: [
           { q: "Cet outil est-il gratuit ?", a: "Oui. Vous pouvez compresser et convertir des images en ligne gratuitement." },
@@ -36,6 +41,11 @@ export default {
         seo: "Formater et valider du JSON.",
         longDescription: "Le Formateur et validateur JSON vous aide à nettoyer, organiser et vérifier des données JSON en ligne. Il est utile pour les développeurs, les testeurs, les étudiants et les utilisateurs d'API qui ont besoin d'une sortie JSON lisible ou souhaitent trouver rapidement des erreurs de syntaxe.",
         usageContext: "Le JSON brut est souvent difficile à lire, surtout lorsqu'il est compressé sur une seule ligne. Le formatage ajoute une indentation et une structure appropriées, facilitant le débogage et le partage. Une petite erreur de syntaxe dans JSON peut casser une requête API ou un fichier de configuration.",
+        examples: [
+          "Réponses API minifiées",
+          "Fichiers de configuration difficiles à lire",
+          "JSON copié depuis des journaux ou des outils de développement"
+        ],
         howToUse: "1. Collez votre JSON dans la zone de saisie.\n2. Cliquez sur le bouton de formatage ou de validation.\n3. Consultez le résultat formaté ou vérifiez le message d'erreur.",
         faq: [
           { q: "Qu'est-ce que le JSON ?", a: "JSON signifie JavaScript Object Notation. C'est un format courant pour stocker et échanger des données structurées." },
@@ -50,6 +60,11 @@ export default {
         seo: "Générez instantanément des mots de passe forts dans votre navigateur. Cet outil gratuit vous aide à créer des mots de passe sécurisés avec des options personnalisables.",
         longDescription: "Le Générateur de mot de passe est un outil en ligne simple qui aide les utilisateurs à créer des mots de passe forts et aléatoires pour des comptes personnels, professionnels et commerciaux. Conçu pour les personnes souhaitant une méthode plus rapide et sécurisée que la réutilisation de combinaisons faibles.",
         usageContext: "Utilisez cet outil lors de la création d'un nouveau compte, du remplacement d'un ancien mot de passe ou de l'amélioration de la sécurité d'un compte existant.",
+        examples: [
+          "Nouveaux comptes e-mail ou d'applications",
+          "Identifiants d'administration partagés à renforcer",
+          "Remplacement de mots de passe faibles réutilisés"
+        ],
         howToUse: "1. Choisissez la longueur du mot de passe.\n2. Sélectionnez les types de caractères (majuscules, minuscules, chiffres, symboles).\n3. Cliquez sur Générer.\n4. Copiez et enregistrez dans un endroit sécurisé.",
         faq: [
           { q: "Pourquoi utiliser un générateur?", a: "Il crée des mots de passe plus forts et moins prévisibles que ceux faits manuellement." },
@@ -93,6 +108,11 @@ export default {
         seo: "Convertisseur d'unités en ligne gratuit pour les systèmes métrique et impérial. Convertissez rapidement pouces en cm, kg en lbs, celsius en fahrenheit, etc.",
         longDescription: "Notre convertisseur d'unités est un outil de haute précision conçu pour vous aider à passer rapidement d'un système de mesure à l'autre. Que vous utilisiez le système métrique ou impérial, cet outil fournit des résultats précis pour la longueur, la masse, la surface, le volume, la température et le temps.",
         usageContext: "Saviez-vous qu'un gallon américain et un gallon britannique ont des tailles différentes ? Notre outil distingue ces unités pour garantir des données correctes pour vos voyages ou achats internationaux. Il est indispensable pour quiconque a besoin de conversions fiables sans chercher de formules.",
+        examples: [
+          "Mesures de recettes en cuisine",
+          "Distances et vitesses de voyage",
+          "Conversions en classe ou en ingénierie"
+        ],
         howToUse: "1. Sélectionnez une catégorie dans les onglets (ex: Longueur, Poids).\n2. Entrez la valeur à convertir.\n3. Choisissez vos unités de départ et d'arrivée dans les menus.\n4. Affichez le résultat instantanément. Utilisez le bouton d'échange (⇄) si besoin.\n5. Ajustez la précision décimale ou copiez le résultat.",
         whyUse: "L'exactitude et la rapidité sont cruciales. Les calculs manuels entraînent souvent des erreurs, surtout avec des décalages de température complexes. Cet outil garantit la précision pour les étudiants, voyageurs et professionnels.",
         popularConversions: [
@@ -115,6 +135,11 @@ export default {
         seo: "Calculez des pourcentages, des augmentations/diminutions et des remises instantanément avec notre calculatrice en ligne gratuite.",
         longDescription: "La calculatrice de pourcentage d'Apps24 est un outil polyvalent conçu pour résoudre les questions liées aux pourcentages les plus courantes. Que vous calculiez des pourboires, des remises, des augmentations de ventes ou des problèmes scolaires, cet outil fournit des résultats instantanés et précis.",
         usageContext: "Utilisez cet outil pour les remises de shopping, l'analyse de la croissance dans les rapports d'activité, le calcul des taxes ou la résolution de problèmes mathématiques éducatifs.",
+        examples: [
+          "Prix de produits remisés",
+          "Calculs de taux de conversion",
+          "Hausses et baisses en pourcentage"
+        ],
         howToUse: "1. Sélectionnez un mode (ex: Quelle est X% de Y, Remise).\n2. Entrez les chiffres requis dans les champs.\n3. Le résultat est calculé instantanément.",
         whyUse: "Les pourcentages peuvent être déroutants, surtout avec des augmentations composées. Cette calculatrice simplifie les maths et évite les erreurs de calcul manuel.",
         popularConversions: [
@@ -247,6 +272,11 @@ export default {
         seo: "Créez instantanément des QR codes à partir de texte, de liens et de coordonnées.",
         longDescription: "Le générateur de QR Code vous permet de créer des QR codes pour du texte, des liens, des coordonnées et d'autres contenus simples. Il est utile pour les entreprises, les événements, les restaurants et le partage personnel. Vous pouvez générer un QR code en quelques secondes et le télécharger pour une utilisation numérique ou imprimée.",
         usageContext: "Les QR codes sont couramment utilisés pour les liens vers des sites Web, l'accès aux menus, le partage de contacts et les étiquettes produit. Un QR code facilite l'ouverture d'une page ou l'accès à des informations sans avoir à taper manuellement de longs textes, réduisant ainsi les frictions en ligne et hors ligne.",
+        examples: [
+          "Menus de restaurant et chevalets de table",
+          "Affiches d'événement et pages d'inscription",
+          "Cartes de visite, flyers et étiquettes de colis"
+        ],
         howToUse: "1. Entrez le texte, l'URL ou le contenu que vous souhaitez encoder.\n2. Générez le QR code.\n3. Téléchargez et utilisez l'image là où vous en avez besoin.",
         whyUse: "C'est un moyen rapide de partager des informations sans taper de longs textes manuellement.",
         faq: [
@@ -263,6 +293,11 @@ export default {
         seo: "Créez instantanément des codes-barres pour les produits, les étiquettes et l'inventaire.",
         longDescription: "Le générateur de code-barres vous aide à créer des codes-barres pour les produits, les étiquettes, l'inventaire, les emballages et le suivi interne. Il est utile pour les petites entreprises, les entrepôts, les bureaux et toute personne ayant besoin d'une génération rapide de codes-barres en ligne.",
         usageContext: "Les codes-barres sont largement utilisés dans le commerce de détail, le contrôle des stocks, l'expédition et l'étiquetage de documents. Ils permettent d'identifier les articles rapidement et de réduire les erreurs de saisie manuelle. Choisir le bon format garantit la compatibilité avec les scanners.",
+        examples: [
+          "Étiquettes SKU de vente au détail",
+          "Étiquettes d'inventaire d'entrepôt",
+          "Codes d'expédition ou de suivi d'actifs"
+        ],
         howToUse: "1. Entrez le numéro ou le texte requis pour votre code-barres.\n2. Sélectionnez le format du code-barres.\n3. Générez et téléchargez l'image du code-barres.",
         whyUse: "C'est un moyen rapide de générer des étiquettes lisibles par machine pour la vente, le suivi et le travail interne.",
         faq: [
@@ -289,6 +324,11 @@ export default {
         seo: "Trouvez votre adresse IP publique, votre localisation, votre FAI et les détails de votre réseau instantanément.",
         longDescription: "« Quelle est mon IP » est un outil rapide et simple qui affiche votre adresse IP publique et les informations réseau associées. Il vous permet de vérifier votre empreinte numérique actuelle, notamment le pays, la région, la ville, le FAI (Fournisseur d'Accès de l'Internet) et le fuseau horaire de votre connexion. Il détecte également des informations de base sur l'appareil et le navigateur afin de vous offrir une vision complète de la façon dont les sites web vous identifient.",
         usageContext: "Cet outil s'avère particulièrement utile si vous utilisez un VPN ou un proxy et que vous souhaitez vérifier que votre emplacement a bien été masqué. Il aide également pour le dépannage réseau, pour vérifier si l'IPv6 est actif ou encore pour lister votre adresse IP afin d'autoriser l'accès à un serveur distant.",
+        examples: [
+          "Vérifier qu'un VPN a changé l'IP visible",
+          "Afficher l'IP à mettre en liste blanche",
+          "Dépanner un accès distant ou un blocage réseau"
+        ],
         howToUse: "1. Ouvrez l'outil, vos données IP s'affichent automatiquement.\n2. Parcourez le résumé rapide pour repérer les détails de votre emplacement et du FAI.\n3. Vérifiez les badges VPN / Connexion sécurisée pour connaître votre statut.\n4. Cliquez sur 'Copier l'IP' ou sur 'Actualiser' pour mettre les données à jour.",
         whyUse: "Connaître votre IP publique est essentiel pour gérer la sécurité de votre réseau, paramétrer des routeurs, accéder à certains serveurs limités ou simplement revérifier le bon fonctionnement de vos outils de confidentialité (comme les VPN).",
         faq: [
