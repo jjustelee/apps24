@@ -82,7 +82,7 @@ export const CATEGORY_GROUPS: readonly CategoryGroupDefinition[] = [
   {
     id: "write-text-tools",
     slug: "write-text-tools",
-    order: 1,
+    order: 5,
     title: {
       en: "Text Tools",
       ko: "텍스트 도구",
@@ -123,7 +123,7 @@ export const CATEGORY_GROUPS: readonly CategoryGroupDefinition[] = [
   {
     id: "images-pdf-tools",
     slug: "images-pdf-tools",
-    order: 2,
+    order: 1,
     title: {
       en: "Image Tools",
       ko: "이미지 도구",
@@ -164,7 +164,7 @@ export const CATEGORY_GROUPS: readonly CategoryGroupDefinition[] = [
   {
     id: "code-data-tools",
     slug: "code-data-tools",
-    order: 3,
+    order: 4,
     title: {
       en: "Code Tools",
       ko: "코드 도구",
@@ -205,7 +205,7 @@ export const CATEGORY_GROUPS: readonly CategoryGroupDefinition[] = [
   {
     id: "convert-calculate-tools",
     slug: "convert-calculate-tools",
-    order: 4,
+    order: 2,
     title: {
       en: "Convert Tools",
       ko: "변환 도구",
@@ -246,7 +246,7 @@ export const CATEGORY_GROUPS: readonly CategoryGroupDefinition[] = [
   {
     id: "generator-tools",
     slug: "generator-tools",
-    order: 5,
+    order: 3,
     title: {
       en: "Create Tools",
       ko: "생성 도구",
@@ -338,14 +338,16 @@ export function getCategoryGroupBySlug(slug: string) {
 }
 
 export function getCategoryGroups(locale: Locale): LocalizedCategoryGroup[] {
-  return CATEGORY_GROUPS.map((group) => ({
-    ...group,
-    title: group.title[locale] ?? group.title.en,
-    shortLabel: group.shortLabel[locale] ?? group.shortLabel.en,
-    description: group.description[locale] ?? group.description.en,
-    href: `/${locale}/${group.slug}`,
-    tools: getCategoryGroupTools(locale, group.id),
-  }));
+  return [...CATEGORY_GROUPS]
+    .sort((a, b) => a.order - b.order)
+    .map((group) => ({
+      ...group,
+      title: group.title[locale] ?? group.title.en,
+      shortLabel: group.shortLabel[locale] ?? group.shortLabel.en,
+      description: group.description[locale] ?? group.description.en,
+      href: `/${locale}/${group.slug}`,
+      tools: getCategoryGroupTools(locale, group.id),
+    }));
 }
 
 export function getCategoryGroupTools(locale: Locale, groupId: ToolCategoryGroup) {

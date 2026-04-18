@@ -12,6 +12,7 @@
     "check": "npm run typecheck && npm run lint"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.1.0",
     "bwip-js": "^4.9.0",
     "lucide-react": "^1.8.0",
     "next": "^16.2.3",

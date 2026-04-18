@@ -21,6 +21,58 @@ export default {
           { q: "Why should I convert images to WebP?", a: "WebP files are often smaller than JPG or PNG, which makes them useful for websites, blogs, and other online content." }
         ]
       },
+      backgroundremover: {
+        title: "Background Remover",
+        description: "Remove image backgrounds and export transparent PNGs.",
+        seo: "Remove image backgrounds in the browser and export transparent, white, or black PNG outputs.",
+        longDescription: "Background Remover is a browser-based image tool that removes the background from a photo or illustration without sending the file to a server. It is useful for product photos, profile images, simple objects, and quick cutouts that you want to reuse in design work or web publishing. After processing, you can export a transparent PNG or place the cutout on a white or black background.",
+        usageContext: "Use it when you need to isolate a subject, create a transparent asset for a layout, or quickly make a cleaner version of an image for a listing or profile.",
+        examples: [
+          "Product photos for an online store",
+          "Profile images with a clean cutout",
+          "Transparent PNG assets for layouts"
+        ],
+        howToUse: "1. Upload an image.\n2. Click Remove Background and wait for the model to finish.\n3. Choose Transparent, White, or Black background.\n4. Download the PNG result.",
+        whyUse: "It keeps the workflow in the browser, so you can remove backgrounds without extra software or a separate editing step.",
+        faq: [
+          { q: "Does the tool run in the browser?", a: "Yes. The image is processed locally in your browser after the model files are loaded." },
+          { q: "Can I keep a transparent background?", a: "Yes. Transparent PNG is the default output." },
+          { q: "Can I export white or black versions?", a: "Yes. You can switch the output background before downloading." },
+          { q: "What kind of images work best?", a: "Simple subjects, portraits, and product photos usually give the cleanest results." }
+        ],
+        relatedTools: "Related Tool: Image Compressor",
+      },
+      pixelconverter: {
+        title: "Pixel Unit Converter",
+        description: "Convert px to rem, em, %, vw, vh, pt, in, cm, and mm with CSS reference values.",
+        seo: "Convert px to rem, em, percentage, vw, vh, pt, in, cm, and mm with adjustable CSS reference values.",
+        longDescription: "Pixel Unit Converter helps you move between pixel values and common CSS or print units. It is useful when you are adjusting spacing, font sizes, responsive layouts, screen measurements, or print-ready dimensions. Because em, percentage, vw, and vh depend on context, the tool lets you set the reference values you want to use and then converts everything from the same px-based source.",
+        usageContext: "Use this tool for UI spacing, typography scales, responsive layout values, image dimensions, and quick print-related checks.",
+        examples: [
+          "Design token values for a UI system",
+          "Responsive spacing and layout checks",
+          "Print and asset size conversions"
+        ],
+        howToUse: "1. Enter a value and choose the source unit.\n2. Set the reference values for rem, em, percentage, and viewport units.\n3. Choose the target unit and copy the converted result.",
+        whyUse: "Pixel-based design often has to move between CSS units, responsive units, and print measurements. This tool keeps the reference values visible so you can convert with less guesswork.",
+        faq: [
+          { q: "Why do em, %, vw, and vh need reference values?", a: "Those units depend on the current font size, percentage basis, or viewport size, so the tool asks for the values that define them." },
+          { q: "What does 100% mean here?", a: "It means the percentage base you enter below. That lets you match the context you are converting for." },
+          { q: "Can I use this for print sizing?", a: "Yes. The tool includes pt, in, cm, and mm using standard CSS and print-style conversions." },
+          { q: "Are the conversions reversible?", a: "Yes. Any supported unit can be converted into any other supported unit." }
+        ],
+        relatedTools: "Related Tool: Unit Converter",
+        resultLabel: "Converted result",
+        referenceValuesTitle: "Reference values",
+        rootFontSizeLabel: "Root font size (1rem)",
+        currentFontSizeLabel: "Current font size (1em)",
+        percentBaseLabel: "100% equals",
+        viewportWidthLabel: "Viewport width",
+        viewportHeightLabel: "Viewport height",
+        formulaTitle: "Conversion formula",
+        swapLabel: "Swap units",
+        referenceNote: "em, %, vw, and vh use the reference values below.",
+      },
       caseconverter: {
         title: "Case Converter",
         description: "Change text between uppercase, lowercase, and title case.",
@@ -274,6 +326,33 @@ export default {
           violet: "Violet",
           black: "Black",
         },
+      },
+      signboard: {
+        title: "Signboard",
+        description: "Show messages in large text with custom background, text color, and font size.",
+        seo: "Create an online signboard with a custom message, background color, text color, and font size.",
+        longDescription: "Signboard is a browser-based display tool for showing short messages in large, readable text. It is useful for notices, announcements, events, shop displays, and quick status messages. You can type the message, choose the background and text colors, and adjust the font size until it fits the screen.",
+        usageContext: "Use it for desks, stores, classrooms, event screens, or presentation setups when you need one clear message at a glance.",
+        examples: [
+          "Store notices and opening hours",
+          "Event signs and short announcements",
+          "Status messages for a room or desk display"
+        ],
+        howToUse: "1. Enter the message you want to display.\n2. Choose the background color, text color, and font size.\n3. Check the preview and adjust the style until it looks right.",
+        whyUse: "It turns a browser window into a clean signboard without extra software or formatting steps.",
+        faq: [
+          { q: "Can I change the colors?", a: "Yes. You can set the background color and text color directly in the tool." },
+          { q: "Can I make the text bigger?", a: "Yes. Use the font size control to increase or reduce the display size." },
+          { q: "Is this useful for shops or events?", a: "Yes. It is a simple way to show notices, directions, or short messages on a screen." }
+        ],
+        relatedTools: "Related Tool: Screen Lamp",
+        messageLabel: "Message",
+        messagePlaceholder: "Enter the message you want to display.",
+        backgroundColorLabel: "Background color",
+        textColorLabel: "Text color",
+        fontSizeLabel: "Font size",
+        previewLabel: "Preview",
+        previewHint: "Your message appears here.",
       },
       qrgenerator: {
         title: "QR Code Generator",

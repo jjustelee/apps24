@@ -14,6 +14,8 @@ import { getJsonFormatterLongtailLinks } from "@/features/tools/json-formatter-l
 import { getQrGeneratorLongtailLinks } from "@/features/tools/qrgenerator-longtails";
 import { getBarcodeGeneratorLongtailLinks } from "@/features/tools/barcode-generator-longtails";
 import { getPercentageCalculatorLongtailLinks } from "@/features/tools/percentage-calculator-longtails";
+import { getPixelConverterLongtailLinks } from "@/features/tools/pixel-converter-longtails";
+import { getBackgroundRemoverLongtailLinks } from "@/features/tools/background-remover-longtails";
 import { getUnitConverterLongtailLinks } from "@/features/tools/unit-converter-longtails";
 import type { Locale } from "@/lib/site";
 
@@ -47,6 +49,8 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
   const percentageCalculatorLinks = categorySlug === "convert-calculate-tools" ? getPercentageCalculatorLongtailLinks(locale) : [];
   const qrGeneratorLinks = categorySlug === "generator-tools" ? getQrGeneratorLongtailLinks(locale) : [];
   const imageCompressorLinks = categorySlug === "images-pdf-tools" ? getImageCompressorLongtailLinks(locale) : [];
+  const pixelConverterLinks = categorySlug === "images-pdf-tools" ? getPixelConverterLongtailLinks(locale) : [];
+  const backgroundRemoverLinks = categorySlug === "images-pdf-tools" ? getBackgroundRemoverLongtailLinks(locale) : [];
   const base64EncoderLinks = categorySlug === "code-data-tools" ? getBase64EncoderLongtailLinks(locale) : [];
   const jsonFormatterLinks = categorySlug === "code-data-tools" ? getJsonFormatterLongtailLinks(locale) : [];
   const barcodeGeneratorLinks = categorySlug === "generator-tools" ? getBarcodeGeneratorLongtailLinks(locale) : [];
@@ -54,6 +58,8 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
   const percentageCalculatorTitle = toolsWithText.find(({ tool }) => tool.id === "percentagecalculator")?.text.title;
   const qrGeneratorTitle = toolsWithText.find(({ tool }) => tool.id === "qrgenerator")?.text.title;
   const imageCompressorTitle = toolsWithText.find(({ tool }) => tool.id === "imagecompressor")?.text.title;
+  const pixelConverterTitle = toolsWithText.find(({ tool }) => tool.id === "pixelconverter")?.text.title;
+  const backgroundRemoverTitle = toolsWithText.find(({ tool }) => tool.id === "backgroundremover")?.text.title;
   const base64EncoderTitle = toolsWithText.find(({ tool }) => tool.id === "base64encoder")?.text.title;
   const jsonFormatterTitle = toolsWithText.find(({ tool }) => tool.id === "jsonformatter")?.text.title;
   const barcodeGeneratorTitle = toolsWithText.find(({ tool }) => tool.id === "barcodegenerator")?.text.title;
@@ -88,7 +94,7 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
           </div>
         </section>
 
-        {(unitConverterLinks.length > 0 || percentageCalculatorLinks.length > 0 || qrGeneratorLinks.length > 0 || imageCompressorLinks.length > 0 || base64EncoderLinks.length > 0 || jsonFormatterLinks.length > 0 || barcodeGeneratorLinks.length > 0) && (
+        {(unitConverterLinks.length > 0 || percentageCalculatorLinks.length > 0 || qrGeneratorLinks.length > 0 || imageCompressorLinks.length > 0 || pixelConverterLinks.length > 0 || backgroundRemoverLinks.length > 0 || base64EncoderLinks.length > 0 || jsonFormatterLinks.length > 0 || barcodeGeneratorLinks.length > 0) && (
           <section style={{ marginTop: "3rem", display: "grid", gap: "2.5rem" }}>
             {unitConverterLinks.length > 0 && (
               <div>
@@ -160,6 +166,44 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
                       title={link.title}
                       description={link.description}
                       icon="IMG"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {pixelConverterLinks.length > 0 && (
+              <div>
+                <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>
+                  {pixelConverterTitle || common.popularConversionsTitle}
+                </h2>
+                <div className="tool-grid">
+                  {pixelConverterLinks.map((link) => (
+                    <ToolCard
+                      key={link.slug}
+                      href={link.href}
+                      title={link.title}
+                      description={link.description}
+                      icon="PX"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {backgroundRemoverLinks.length > 0 && (
+              <div>
+                <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>
+                  {backgroundRemoverTitle || common.relatedToolsTitle}
+                </h2>
+                <div className="tool-grid">
+                  {backgroundRemoverLinks.map((link) => (
+                    <ToolCard
+                      key={link.slug}
+                      href={link.href}
+                      title={link.title}
+                      description={link.description}
+                      icon="BG"
                     />
                   ))}
                 </div>

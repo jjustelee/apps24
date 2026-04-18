@@ -21,6 +21,58 @@ export default {
           { q: "Pourquoi convertir les images en WebP ?", a: "Les fichiers WebP sont souvent plus petits que JPG ou PNG, ce qui les rend utiles pour les sites Web et les blogs." }
         ]
       },
+      backgroundremover: {
+        title: "Suppresseur d'arrière-plan",
+        description: "Supprimez l'arrière-plan des images et exportez des PNG transparents.",
+        seo: "Supprimez l'arrière-plan d'une image dans le navigateur et exportez des PNG transparents, blancs ou noirs.",
+        longDescription: "Le Suppresseur d'arrière-plan est un outil d'image basé sur le navigateur qui retire l'arrière-plan d'une photo ou d'une illustration sans envoyer le fichier à un serveur. Il est utile pour les photos de produits, les images de profil, les objets simples et les détourages rapides que vous souhaitez réutiliser dans des maquettes ou sur le web. Après le traitement, vous pouvez exporter un PNG transparent ou placer le détouré sur un fond blanc ou noir.",
+        usageContext: "Utilisez-le lorsque vous devez isoler un sujet, créer un asset transparent pour une mise en page ou préparer rapidement une version plus propre d'une image pour une fiche produit ou un profil.",
+        examples: [
+          "Photos de produits pour une boutique en ligne",
+          "Images de profil avec un détouré propre",
+          "Assets PNG transparents pour une mise en page"
+        ],
+        howToUse: "1. Téléchargez une image.\n2. Cliquez sur Supprimer l'arrière-plan et attendez la fin du modèle.\n3. Choisissez un fond transparent, blanc ou noir.\n4. Téléchargez le résultat PNG.",
+        whyUse: "Le flux reste dans le navigateur, ce qui vous permet de supprimer les arrière-plans sans logiciel supplémentaire ni étape de retouche séparée.",
+        faq: [
+          { q: "L'outil fonctionne-t-il dans le navigateur ?", a: "Oui. L'image est traitée localement dans votre navigateur après le chargement du modèle." },
+          { q: "Puis-je conserver un fond transparent ?", a: "Oui. Le PNG transparent est la sortie par défaut." },
+          { q: "Puis-je exporter des versions blanches ou noires ?", a: "Oui. Vous pouvez changer le fond de sortie avant le téléchargement." },
+          { q: "Quels types d'images donnent les meilleurs résultats ?", a: "Les sujets simples, les portraits et les photos de produits donnent généralement les résultats les plus nets." }
+        ],
+        relatedTools: "Outil associé : Compresseur d'images",
+      },
+      pixelconverter: {
+        title: "Convertisseur de pixels",
+        description: "Convertissez px, rem, em, %, vw, vh, pt, in, cm et mm avec des valeurs de référence CSS.",
+        seo: "Convertissez px en rem, em, pourcentage, vw, vh, pt, in, cm et mm avec des valeurs de référence CSS ajustables.",
+        longDescription: "Le Convertisseur de pixels vous aide à transformer des valeurs px en unités CSS et d'impression courantes. Il est utile pour ajuster les espacements, les tailles de police, les mises en page adaptatives, les mesures d'écran et les dimensions prêtes pour l'impression. Comme em, le pourcentage, vw et vh dépendent du contexte, l'outil vous permet de définir les valeurs de référence que vous souhaitez utiliser et de tout convertir à partir de la même base px.",
+        usageContext: "Utilisez cet outil pour vérifier les espacements d'interface, les échelles typographiques, les valeurs de mise en page responsive, les dimensions d'image et les contrôles rapides d'impression.",
+        examples: [
+          "Valeurs de jetons d'un système d'interface",
+          "Vérifications d'espacement et de mise en page responsive",
+          "Conversions d'impression et de tailles d'assets"
+        ],
+        howToUse: "1. Saisissez une valeur et choisissez l'unité source.\n2. Définissez les valeurs de référence pour rem, em, pourcentage et unités de viewport.\n3. Choisissez l'unité cible et copiez le résultat converti.",
+        whyUse: "Les conceptions basées sur px doivent souvent passer entre des unités CSS, des unités responsives et des mesures d'impression. Cet outil affiche les valeurs de référence pour réduire les approximations.",
+        faq: [
+          { q: "Pourquoi em, %, vw et vh ont-ils besoin de valeurs de référence ?", a: "Ces unités dépendent de la taille de police actuelle, de la base de pourcentage ou de la taille du viewport, donc l'outil vous demande les valeurs qui les définissent." },
+          { q: "Que signifie 100 % ici ?", a: "Cela signifie la base de pourcentage que vous saisissez ci-dessous. Vous pouvez ainsi adapter le calcul au contexte que vous convertissez." },
+          { q: "Puis-je l'utiliser pour des tailles d'impression ?", a: "Oui. L'outil inclut pt, in, cm et mm avec des conversions CSS et d'impression standard." },
+          { q: "Les conversions sont-elles réversibles ?", a: "Oui. Toute unité prise en charge peut être convertie vers n'importe quelle autre unité prise en charge." }
+        ],
+        relatedTools: "Outil associé : Convertisseur d'unités",
+        resultLabel: "Résultat converti",
+        referenceValuesTitle: "Valeurs de référence",
+        rootFontSizeLabel: "Taille de police racine (1rem)",
+        currentFontSizeLabel: "Taille de police actuelle (1em)",
+        percentBaseLabel: "100 % correspond à",
+        viewportWidthLabel: "Largeur du viewport",
+        viewportHeightLabel: "Hauteur du viewport",
+        formulaTitle: "Formule de conversion",
+        swapLabel: "Inverser les unités",
+        referenceNote: "em, %, vw et vh utilisent les valeurs de référence ci-dessous.",
+      },
       caseconverter: {
         title: "Convertisseur de casse",
         description: "Changez le texte en majuscules, minuscules ou format titre.",
@@ -265,6 +317,33 @@ export default {
           violet: "Violet",
           black: "Noir",
         },
+      },
+      signboard: {
+        title: "Panneau d'affichage",
+        description: "Affichez un message en grand avec une couleur de fond, une couleur de texte et une taille de police personnalisées.",
+        seo: "Créez un panneau d'affichage en ligne avec message, couleur de fond, couleur de texte et taille de police personnalisés.",
+        longDescription: "Le panneau d'affichage est un outil de navigateur pour afficher un court message en grand et de façon lisible. Il est utile pour les annonces, les messages en boutique, les événements, les salles de classe et les statuts rapides. Vous pouvez saisir le texte, choisir les couleurs et ajuster la taille de police jusqu'à ce que l'affichage tienne bien à l'écran.",
+        usageContext: "Utilisez-le pour un bureau, un magasin, une salle de classe, un écran d'événement ou une présentation lorsque vous voulez qu'un seul message soit visible d'un coup d'œil.",
+        examples: [
+          "Horaires et avis en boutique",
+          "Panneaux d'événements et annonces courtes",
+          "Messages d'état pour un bureau ou une pièce"
+        ],
+        howToUse: "1. Saisissez le message à afficher.\n2. Choisissez la couleur de fond, la couleur du texte et la taille de police.\n3. Vérifiez l'aperçu et ajustez le style jusqu'à obtenir le rendu souhaité.",
+        whyUse: "Il transforme une fenêtre de navigateur en panneau propre, sans logiciel supplémentaire ni étape de mise en forme.",
+        faq: [
+          { q: "Puis-je changer les couleurs ?", a: "Oui. Vous pouvez définir directement la couleur de fond et la couleur du texte." },
+          { q: "Puis-je agrandir le texte ?", a: "Oui. Utilisez le contrôle de taille de police pour ajuster l'affichage." },
+          { q: "Est-ce utile pour une boutique ou un événement ?", a: "Oui. C'est une manière simple d'afficher des avis, des directions ou de courts messages sur un écran." }
+        ],
+        relatedTools: "Outil associé : Lampe d'écran",
+        messageLabel: "Message",
+        messagePlaceholder: "Saisissez le message à afficher.",
+        backgroundColorLabel: "Couleur de fond",
+        textColorLabel: "Couleur du texte",
+        fontSizeLabel: "Taille de police",
+        previewLabel: "Aperçu",
+        previewHint: "Votre message s'affiche ici.",
       },
       qrgenerator: {
         title: "Générateur de QR Code",

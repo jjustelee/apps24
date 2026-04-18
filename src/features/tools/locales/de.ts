@@ -21,6 +21,58 @@ export default {
           { q: "Warum sollte ich Bilder in WebP konvertieren?", a: "WebP-Dateien sind oft kleiner als JPG oder PNG, was sie für Websites, Blogs und andere Online-Inhalte nützlich macht." }
         ]
       },
+      backgroundremover: {
+        title: "Hintergrundentferner",
+        description: "Entfernen Sie Bildhintergründe und exportieren Sie transparente PNGs.",
+        seo: "Entfernen Sie im Browser den Hintergrund eines Bildes und exportieren Sie transparente, weiße oder schwarze PNG-Ausgaben.",
+        longDescription: "Der Hintergrundentferner ist ein browserbasiertes Bildwerkzeug, das den Hintergrund eines Fotos oder einer Illustration entfernt, ohne die Datei an einen Server zu senden. Er ist nützlich für Produktfotos, Profilbilder, einfache Objekte und schnelle Freistellungen, die Sie in Designs oder im Web wiederverwenden möchten. Nach der Verarbeitung können Sie ein transparentes PNG exportieren oder die Freistellung auf weißem oder schwarzem Hintergrund speichern.",
+        usageContext: "Nutzen Sie ihn, wenn Sie ein Motiv freistellen, ein transparentes Asset für ein Layout erstellen oder schnell eine sauberere Version eines Bildes für einen Eintrag oder ein Profil benötigen.",
+        examples: [
+          "Produktfotos für einen Online-Shop",
+          "Profilbilder mit sauberer Freistellung",
+          "Transparente PNG-Assets für Layouts"
+        ],
+        howToUse: "1. Laden Sie ein Bild hoch.\n2. Klicken Sie auf Hintergrund entfernen und warten Sie, bis das Modell fertig ist.\n3. Wählen Sie transparenten, weißen oder schwarzen Hintergrund.\n4. Laden Sie das PNG-Ergebnis herunter.",
+        whyUse: "Der gesamte Ablauf bleibt im Browser, sodass Sie Hintergründe ohne zusätzliche Software oder einen separaten Bearbeitungsschritt entfernen können.",
+        faq: [
+          { q: "Funktioniert das Tool im Browser?", a: "Ja. Das Bild wird lokal in Ihrem Browser verarbeitet, nachdem die Modelldateien geladen wurden." },
+          { q: "Kann ich einen transparenten Hintergrund behalten?", a: "Ja. Transparentes PNG ist die Standardausgabe." },
+          { q: "Kann ich weiße oder schwarze Versionen exportieren?", a: "Ja. Sie können den Ausgabehintergrund vor dem Download ändern." },
+          { q: "Welche Bilder eignen sich am besten?", a: "Einfache Motive, Porträts und Produktfotos liefern meist die saubersten Ergebnisse." }
+        ],
+        relatedTools: "Verwandtes Tool: Bildkompressor",
+      },
+      pixelconverter: {
+        title: "Pixel-Einheitenkonverter",
+        description: "Wandeln Sie px, rem, em, %, vw, vh, pt, in, cm und mm mit CSS-Referenzwerten um.",
+        seo: "Wandeln Sie px mit anpassbaren CSS-Referenzwerten in rem, em, Prozent, vw, vh, pt, in, cm und mm um.",
+        longDescription: "Der Pixel-Einheitenkonverter hilft Ihnen dabei, px-Werte in gängige CSS- und Druckeinheiten umzuwandeln. Er ist nützlich für Abstände, Schriftgrößen, responsive Layouts, Bildschirmmaße und druckfertige Größen. Da em, Prozent, vw und vh vom Kontext abhängen, können Sie die Referenzwerte eingeben und alles von derselben px-Basis aus umrechnen.",
+        usageContext: "Verwenden Sie dieses Tool für UI-Abstände, Typografie-Skalen, responsive Layout-Werte, Bildgrößen und schnelle Druckprüfungen.",
+        examples: [
+          "Token-Werte eines UI-Systems",
+          "Responsive Abstände und Layout-Prüfungen",
+          "Druck- und Asset-Größenumrechnungen"
+        ],
+        howToUse: "1. Geben Sie einen Wert ein und wählen Sie die Ausgangseinheit.\n2. Legen Sie die Referenzwerte für rem, em, Prozent und Viewport-Einheiten fest.\n3. Wählen Sie die Ziel-Einheit und kopieren Sie das umgerechnete Ergebnis.",
+        whyUse: "Px-basierte Designs müssen oft zwischen CSS-Einheiten, responsiven Einheiten und Druckmaßen wechseln. Dieses Tool zeigt die Referenzwerte an, damit Sie mit weniger Schätzung umrechnen können.",
+        faq: [
+          { q: "Warum brauchen em, %, vw und vh Referenzwerte?", a: "Diese Einheiten hängen von der aktuellen Schriftgröße, der Prozentbasis oder der Viewport-Größe ab. Daher fragt das Tool nach den Werten, die sie definieren." },
+          { q: "Was bedeutet hier 100 %?", a: "Es bedeutet die Prozentbasis, die Sie unten eingeben. So können Sie den Kontext passend zur Umrechnung festlegen." },
+          { q: "Kann ich das für Druckgrößen verwenden?", a: "Ja. Das Tool enthält pt, in, cm und mm mit standardmäßigen CSS- und Druckumrechnungen." },
+          { q: "Sind die Umrechnungen umkehrbar?", a: "Ja. Jede unterstützte Einheit kann in jede andere unterstützte Einheit umgerechnet werden." }
+        ],
+        relatedTools: "Verwandtes Tool: Einheitenumrechner",
+        resultLabel: "Umgerechnetes Ergebnis",
+        referenceValuesTitle: "Referenzwerte",
+        rootFontSizeLabel: "Basis-Schriftgröße (1rem)",
+        currentFontSizeLabel: "Aktuelle Schriftgröße (1em)",
+        percentBaseLabel: "100 % entspricht",
+        viewportWidthLabel: "Viewport-Breite",
+        viewportHeightLabel: "Viewport-Höhe",
+        formulaTitle: "Umrechnungsformel",
+        swapLabel: "Einheiten tauschen",
+        referenceNote: "em, %, vw und vh verwenden die unten angegebenen Referenzwerte.",
+      },
       caseconverter: {
         title: "Groß- und Kleinschreibung Konverter",
         description: "Text in Großbuchstaben, Kleinbuchstaben oder Titelschreibweise umwandeln.",
@@ -215,6 +267,33 @@ export default {
           violet: "Violett",
           black: "Schwarz",
         },
+      },
+      signboard: {
+        title: "Anzeigetafel",
+        description: "Zeige Nachrichten in großer Schrift mit anpassbarer Hintergrundfarbe, Textfarbe und Schriftgröße an.",
+        seo: "Erstelle eine Anzeigetafel im Browser mit Nachricht, Hintergrundfarbe, Textfarbe und Schriftgröße.",
+        longDescription: "Die Anzeigetafel ist ein Browser-Tool, mit dem kurze Nachrichten in großer, gut lesbarer Schrift angezeigt werden. Sie eignet sich für Hinweise, Ankündigungen, Veranstaltungen, Ladenanzeigen und schnelle Statusmeldungen. Du kannst den Text eingeben, Farben wählen und die Schriftgröße so anpassen, dass die Anzeige gut auf den Bildschirm passt.",
+        usageContext: "Nutze sie für Schreibtische, Geschäfte, Klassenzimmer, Eventbildschirme oder Präsentationen, wenn eine klare Nachricht auf einen Blick sichtbar sein soll.",
+        examples: [
+          "Hinweise und Öffnungszeiten im Laden",
+          "Event-Schilder und kurze Ankündigungen",
+          "Statusmeldungen für Schreibtisch oder Raum"
+        ],
+        howToUse: "1. Gib die Nachricht ein, die angezeigt werden soll.\n2. Wähle Hintergrundfarbe, Textfarbe und Schriftgröße.\n3. Prüfe die Vorschau und passe das Design an.",
+        whyUse: "Sie macht aus einem Browserfenster eine saubere Anzeigetafel, ohne zusätzliche Software oder Formatierungsschritte.",
+        faq: [
+          { q: "Kann ich die Farben ändern?", a: "Ja. Du kannst Hintergrundfarbe und Textfarbe direkt festlegen." },
+          { q: "Kann ich den Text größer machen?", a: "Ja. Mit der Schriftgröße kannst du die Anzeige anpassen." },
+          { q: "Ist das für Läden oder Veranstaltungen geeignet?", a: "Ja. Es ist eine einfache Möglichkeit, Hinweise, Richtungen oder kurze Nachrichten auf einem Bildschirm anzuzeigen." }
+        ],
+        relatedTools: "Verwandtes Tool: Bildschirmlicht",
+        messageLabel: "Nachricht",
+        messagePlaceholder: "Gib die Nachricht ein, die angezeigt werden soll.",
+        backgroundColorLabel: "Hintergrundfarbe",
+        textColorLabel: "Textfarbe",
+        fontSizeLabel: "Schriftgröße",
+        previewLabel: "Vorschau",
+        previewHint: "Deine Nachricht erscheint hier.",
       },
       qrgenerator: {
         title: "QR-Code-Generator",

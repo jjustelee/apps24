@@ -7,6 +7,8 @@ import { getBase64EncoderLongtailLinks } from "@/features/tools/base64-encoder-l
 import { getJsonFormatterLongtailLinks } from "@/features/tools/json-formatter-longtails";
 import { getQrGeneratorLongtailLinks } from "@/features/tools/qrgenerator-longtails";
 import { getBarcodeGeneratorLongtailLinks } from "@/features/tools/barcode-generator-longtails";
+import { getPixelConverterLongtailLinks } from "@/features/tools/pixel-converter-longtails";
+import { getBackgroundRemoverLongtailLinks } from "@/features/tools/background-remover-longtails";
 import { getUnitConverterLongtailLinks } from "@/features/tools/unit-converter-longtails";
 import { getPercentageCalculatorLongtailLinks } from "@/features/tools/percentage-calculator-longtails";
 import type { Locale } from "@/lib/site";
@@ -38,11 +40,14 @@ export async function ToolShell({
   const percentageCalculatorLinks = tool.id === "percentagecalculator" ? getPercentageCalculatorLongtailLinks(locale) : [];
   const qrGeneratorLinks = tool.id === "qrgenerator" ? getQrGeneratorLongtailLinks(locale) : [];
   const imageCompressorLinks = tool.id === "imagecompressor" ? getImageCompressorLongtailLinks(locale) : [];
+  const pixelConverterLinks = tool.id === "pixelconverter" ? getPixelConverterLongtailLinks(locale) : [];
+  const backgroundRemoverLinks = tool.id === "backgroundremover" ? getBackgroundRemoverLongtailLinks(locale) : [];
   const base64EncoderLinks = tool.id === "base64encoder" ? getBase64EncoderLongtailLinks(locale) : [];
   const jsonFormatterLinks = tool.id === "jsonformatter" ? getJsonFormatterLongtailLinks(locale) : [];
   const barcodeGeneratorLinks = tool.id === "barcodegenerator" ? getBarcodeGeneratorLongtailLinks(locale) : [];
   const popularConversions = toolText.popularConversions ?? [];
   const longtailSectionTitle = tool.id === "base64encoder" || tool.id === "jsonformatter" || tool.id === "barcodegenerator"
+    || tool.id === "backgroundremover"
     ? common.relatedToolsTitle
     : common.popularConversionsTitle;
   const categoryLabel = (() => {
@@ -77,6 +82,9 @@ export async function ToolShell({
     screenlamp: `/${locale}/digitalclock`,
     qrgenerator: `/${locale}/barcodegenerator`,
     barcodegenerator: `/${locale}/qrgenerator`,
+    backgroundremover: `/${locale}/image-compressor`,
+    signboard: `/${locale}/screenlamp`,
+    pixelconverter: `/${locale}/unit-converter`,
     percentagecalculator: `/${locale}/unit-converter`,
     unitconverter: `/${locale}/percentage-calculator`,
     base64encoder: `/${locale}/json-formatter`,
@@ -164,7 +172,7 @@ export async function ToolShell({
             </div>
           )}
 
-          {(unitConverterLinks.length > 0 || percentageCalculatorLinks.length > 0 || qrGeneratorLinks.length > 0 || imageCompressorLinks.length > 0 || base64EncoderLinks.length > 0 || jsonFormatterLinks.length > 0 || barcodeGeneratorLinks.length > 0 || popularConversions.length > 0) && (
+          {(unitConverterLinks.length > 0 || percentageCalculatorLinks.length > 0 || qrGeneratorLinks.length > 0 || imageCompressorLinks.length > 0 || pixelConverterLinks.length > 0 || backgroundRemoverLinks.length > 0 || base64EncoderLinks.length > 0 || jsonFormatterLinks.length > 0 || barcodeGeneratorLinks.length > 0 || popularConversions.length > 0) && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
               <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{longtailSectionTitle}</h2>
               <ul style={{ listStyle: "none", padding: 0, display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "1rem" }}>
@@ -193,14 +201,30 @@ export async function ToolShell({
                         </li>
                       ))
                       : tool.id === "imagecompressor"
-                      ? imageCompressorLinks.map((link) => (
+                        ? imageCompressorLinks.map((link) => (
                           <li key={link.slug} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
                             <Link href={link.href} style={{ display: "block", color: "inherit" }}>
                               {link.title}
                             </Link>
                           </li>
                         ))
-                      : tool.id === "base64encoder"
+                        : tool.id === "pixelconverter"
+                          ? pixelConverterLinks.map((link) => (
+                          <li key={link.slug} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
+                            <Link href={link.href} style={{ display: "block", color: "inherit" }}>
+                              {link.title}
+                            </Link>
+                          </li>
+                        ))
+                        : tool.id === "backgroundremover"
+                          ? backgroundRemoverLinks.map((link) => (
+                            <li key={link.slug} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
+                              <Link href={link.href} style={{ display: "block", color: "inherit" }}>
+                                {link.title}
+                              </Link>
+                            </li>
+                          ))
+                        : tool.id === "base64encoder"
                         ? base64EncoderLinks.map((link) => (
                           <li key={link.slug} style={{ padding: "0.75rem 1rem", background: "var(--surface-soft)", borderRadius: "10px", color: "var(--text-soft)", border: "1px solid var(--line)" }}>
                             <Link href={link.href} style={{ display: "block", color: "inherit" }}>

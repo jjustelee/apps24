@@ -9,6 +9,8 @@ import { IMAGE_COMPRESSOR_LONGTAIL_SLUGS } from "@/features/tools/image-compress
 import { BARCODE_GENERATOR_LONGTAIL_SLUGS } from "@/features/tools/barcode-generator-longtails";
 import { QR_GENERATOR_LONGTAIL_SLUGS } from "@/features/tools/qrgenerator-longtails";
 import { PERCENTAGE_CALCULATOR_LONGTAIL_SLUGS } from "@/features/tools/percentage-calculator-longtails";
+import { PIXEL_CONVERTER_LONGTAIL_SLUGS } from "@/features/tools/pixel-converter-longtails";
+import { BACKGROUND_REMOVER_LONGTAIL_SLUGS } from "@/features/tools/background-remover-longtails";
 import { UNIT_CONVERTER_LONGTAIL_SLUGS } from "@/features/tools/unit-converter-longtails";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -34,10 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]);
 
   const categoryEntries = LOCALES.flatMap((locale) =>
-    CATEGORY_GROUPS.map((group) => ({
-      url: getLocalizedUrl(locale, `/${group.slug}`),
-      lastModified: new Date(),
-    })),
+    [...CATEGORY_GROUPS]
+      .sort((a, b) => a.order - b.order)
+      .map((group) => ({
+        url: getLocalizedUrl(locale, `/${group.slug}`),
+        lastModified: new Date(),
+      })),
   );
 
   const unitConverterEntries = LOCALES.flatMap((locale) =>
@@ -68,6 +72,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
+  const backgroundRemoverEntries = LOCALES.flatMap((locale) =>
+    BACKGROUND_REMOVER_LONGTAIL_SLUGS.map((preset) => ({
+      url: getLocalizedUrl(locale, `/background-remover/${preset}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  const pixelConverterEntries = LOCALES.flatMap((locale) =>
+    PIXEL_CONVERTER_LONGTAIL_SLUGS.map((preset) => ({
+      url: getLocalizedUrl(locale, `/pixel-converter/${preset}`),
+      lastModified: new Date(),
+    })),
+  );
+
   const base64EncoderEntries = LOCALES.flatMap((locale) =>
     BASE64_ENCODER_LONGTAIL_SLUGS.map((mode) => ({
       url: getLocalizedUrl(locale, `/base64-encoder-decoder/${mode}`),
@@ -89,5 +107,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...unitConverterEntries, ...percentageCalculatorEntries, ...qrGeneratorEntries, ...imageCompressorEntries, ...base64EncoderEntries, ...jsonFormatterEntries, ...barcodeGeneratorEntries, ...toolEntries];
+  return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...unitConverterEntries, ...percentageCalculatorEntries, ...qrGeneratorEntries, ...imageCompressorEntries, ...backgroundRemoverEntries, ...pixelConverterEntries, ...base64EncoderEntries, ...jsonFormatterEntries, ...barcodeGeneratorEntries, ...toolEntries];
 }

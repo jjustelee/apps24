@@ -21,6 +21,58 @@ export default {
           { q: "¿Por qué convertir imágenes a WebP?", a: "Los archivos WebP suelen ser más pequeños que JPG o PNG, lo que los hace útiles para sitios web, blogs y otros contenidos en línea." }
         ]
       },
+      backgroundremover: {
+        title: "Eliminador de fondo",
+        description: "Elimine el fondo de las imágenes y exporte PNG transparentes.",
+        seo: "Elimine el fondo de una imagen en el navegador y exporte PNG transparentes, blancos o negros.",
+        longDescription: "El Eliminador de fondo es una herramienta de imagen basada en el navegador que quita el fondo de una foto o ilustración sin enviar el archivo a un servidor. Es útil para fotos de productos, imágenes de perfil, objetos simples y recortes rápidos que quiera reutilizar en diseños o en la web. Después del procesamiento, puede exportar un PNG transparente o colocar el recorte sobre un fondo blanco o negro.",
+        usageContext: "Úselo cuando necesite aislar un sujeto, crear un recurso transparente para una composición o preparar rápidamente una versión más limpia de una imagen para un anuncio o perfil.",
+        examples: [
+          "Fotos de productos para tiendas online",
+          "Imágenes de perfil con un recorte limpio",
+          "Recursos PNG transparentes para diseños"
+        ],
+        howToUse: "1. Suba una imagen.\n2. Haga clic en Eliminar fondo y espere a que termine el modelo.\n3. Elija fondo transparente, blanco o negro.\n4. Descargue el resultado en PNG.",
+        whyUse: "El flujo permanece en el navegador, así que puede eliminar fondos sin software adicional ni un paso de edición separado.",
+        faq: [
+          { q: "¿La herramienta funciona en el navegador?", a: "Sí. La imagen se procesa localmente en su navegador después de cargar los archivos del modelo." },
+          { q: "¿Puedo mantener un fondo transparente?", a: "Sí. El PNG transparente es la salida predeterminada." },
+          { q: "¿Puedo exportar versiones blancas o negras?", a: "Sí. Puede cambiar el fondo de salida antes de descargar." },
+          { q: "¿Qué tipo de imágenes funcionan mejor?", a: "Los sujetos simples, retratos y fotos de productos suelen dar los resultados más limpios." }
+        ],
+        relatedTools: "Herramienta relacionada: Compresor de imágenes",
+      },
+      pixelconverter: {
+        title: "Conversor de unidades de píxeles",
+        description: "Convierta px, rem, em, %, vw, vh, pt, in, cm y mm con valores de referencia CSS.",
+        seo: "Convierta px a rem, em, porcentaje, vw, vh, pt, in, cm y mm con valores de referencia CSS ajustables.",
+        longDescription: "El Conversor de unidades de píxeles le ayuda a transformar valores en px a unidades comunes de CSS e impresión. Es útil para ajustar espaciado, tamaños de fuente, diseños responsivos, medidas en pantalla y dimensiones listas para impresión. Como em, porcentaje, vw y vh dependen del contexto, la herramienta le permite definir los valores de referencia que desea usar y convertir todo desde la misma fuente en px.",
+        usageContext: "Use esta herramienta para espaciado de UI, escalas tipográficas, valores de diseño responsivo, dimensiones de imágenes y comprobaciones rápidas de impresión.",
+        examples: [
+          "Valores de tokens de un sistema de UI",
+          "Comprobaciones de espaciado y diseño responsivo",
+          "Conversiones de impresión y tamaño de recursos"
+        ],
+        howToUse: "1. Ingrese un valor y elija la unidad de origen.\n2. Defina los valores de referencia para rem, em, porcentaje y unidades de viewport.\n3. Elija la unidad de destino y copie el resultado convertido.",
+        whyUse: "Los diseños basados en px suelen moverse entre unidades CSS, unidades responsivas y medidas de impresión. Esta herramienta muestra los valores de referencia para reducir las conjeturas.",
+        faq: [
+          { q: "¿Por qué em, %, vw y vh necesitan valores de referencia?", a: "Estas unidades dependen del tamaño de fuente actual, de la base porcentual o del tamaño de la ventana, por lo que la herramienta le pide los valores que las definen." },
+          { q: "¿Qué significa 100% aquí?", a: "Significa la base porcentual que introduzca abajo. Así puede ajustar el cálculo al contexto que está convirtiendo." },
+          { q: "¿Puedo usarla para tamaños de impresión?", a: "Sí. La herramienta incluye pt, in, cm y mm con conversiones estándar de CSS e impresión." },
+          { q: "¿Las conversiones son reversibles?", a: "Sí. Cualquier unidad compatible puede convertirse en cualquier otra unidad compatible." }
+        ],
+        relatedTools: "Herramienta relacionada: Conversor de unidades",
+        resultLabel: "Resultado convertido",
+        referenceValuesTitle: "Valores de referencia",
+        rootFontSizeLabel: "Tamaño de fuente raíz (1rem)",
+        currentFontSizeLabel: "Tamaño de fuente actual (1em)",
+        percentBaseLabel: "100% equivale a",
+        viewportWidthLabel: "Ancho del viewport",
+        viewportHeightLabel: "Alto del viewport",
+        formulaTitle: "Fórmula de conversión",
+        swapLabel: "Cambiar unidades",
+        referenceNote: "em, %, vw y vh usan los valores de referencia de abajo.",
+      },
       caseconverter: {
         title: "Conversor de Mayúsculas y Minúsculas",
         description: "Convierta texto a mayúsculas, minúsculas o formato de título.",
@@ -216,6 +268,33 @@ export default {
           violet: "Violeta",
           black: "Negro",
         },
+      },
+      signboard: {
+        title: "Panel de avisos",
+        description: "Muestra mensajes en texto grande con fondo, color de texto y tamaño de fuente personalizables.",
+        seo: "Crea un panel de avisos en el navegador con mensaje, color de fondo, color de texto y tamaño de fuente.",
+        longDescription: "El panel de avisos es una herramienta del navegador para mostrar mensajes cortos en texto grande y legible. Es útil para avisos, anuncios, eventos, escaparates, aulas y mensajes rápidos de estado. Puedes escribir el texto, elegir los colores y ajustar el tamaño de la fuente hasta que la vista encaje bien en pantalla.",
+        usageContext: "Úsalo en escritorios, tiendas, aulas, pantallas de eventos o presentaciones cuando necesites mostrar un mensaje claro de un vistazo.",
+        examples: [
+          "Avisos de tienda y horario de apertura",
+          "Carteles de eventos y anuncios cortos",
+          "Mensajes de estado para un escritorio o una sala"
+        ],
+        howToUse: "1. Escribe el mensaje que quieres mostrar.\n2. Elige el color de fondo, el color del texto y el tamaño de fuente.\n3. Revisa la vista previa y ajusta el estilo hasta que se vea bien.",
+        whyUse: "Convierte una ventana del navegador en un panel limpio, sin software adicional ni pasos de formato.",
+        faq: [
+          { q: "¿Puedo cambiar los colores?", a: "Sí. Puedes configurar directamente el color de fondo y el color del texto." },
+          { q: "¿Puedo hacer el texto más grande?", a: "Sí. Usa el control de tamaño de fuente para ajustar la visualización." },
+          { q: "¿Sirve para tiendas o eventos?", a: "Sí. Es una forma sencilla de mostrar avisos, direcciones o mensajes cortos en una pantalla." }
+        ],
+        relatedTools: "Herramienta relacionada: Luz de Pantalla",
+        messageLabel: "Mensaje",
+        messagePlaceholder: "Escribe el mensaje que quieres mostrar.",
+        backgroundColorLabel: "Color de fondo",
+        textColorLabel: "Color del texto",
+        fontSizeLabel: "Tamaño de fuente",
+        previewLabel: "Vista previa",
+        previewHint: "Tu mensaje aparece aquí.",
       },
       qrgenerator: {
         title: "Generador de Código QR",
