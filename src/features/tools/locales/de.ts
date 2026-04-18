@@ -3,7 +3,7 @@ import type { ToolText, CommonText } from "../copy";
 export default {
     tools: {
       imagecompressor: {
-        title: "Bildkompressor / WebP-Konverter",
+        title: "Bildkompressor und WebP-Konverter",
         description: "Reduzieren Sie die Bildgröße und konvertieren Sie zu WebP für bessere Web-Performance.",
         seo: "Bilder komprimieren und zu WebP konvertieren.",
         longDescription: "Unser kostenloser Bildkompressor hilft Ihnen dabei, Bilddateigrößen in Sekunden zu reduzieren, ohne Software installieren zu müssen. Sie können Bilder auch in das WebP-Format konvertieren, um eine bessere Web-Performance und kleinere Dateigrößen zu erzielen. Dieses Tool eignet sich für Blogger, Online-Shop-Besitzer, Studenten, Marketer und alle, die schnell ladende Bilder benötigen.",
@@ -22,7 +22,7 @@ export default {
         ]
       },
       caseconverter: {
-        title: "Groß-/Kleinschreibung Konverter",
+        title: "Groß- und Kleinschreibung Konverter",
         description: "Text in Großbuchstaben, Kleinbuchstaben oder Titelschreibweise umwandeln.",
         seo: "Text online in Groß- oder Kleinbuchstaben konvertieren.",
         longDescription: "Der Groß-/Kleinschreibung Konverter ist ein einfaches Online-Tool, das Text zwischen Großbuchstaben, Kleinbuchstaben und Titelschreibweise umwandelt. Es ist nützlich für die Bearbeitung von Titeln, die Korrektur von Formatierungen, die Vorbereitung von Dokumenten und die Bereinigung von Text für Websites, E-Mails und Berichte.",
@@ -75,7 +75,7 @@ export default {
       },
       textdiffchecker: { title: "Text-Vergleicher", description: "Texte vergleichen und Unterschiede finden.", seo: "Unterschiede zwischen Texten finden." },
       base64encoder: {
-        title: "Base64 Encoder / Decoder",
+        title: "Base64-Encoder und -Decoder",
         description: "Konvertieren Sie Text in Base64 oder dekodieren Sie sofort.",
         seo: "Schneller und zuverlässiger Base64-Encoder und -Decoder. Konvertieren Sie Text im Browser sofort in das Base64-Format oder dekodieren Sie ihn.",
         longDescription: "Der Base64 Encoder/Decoder ist ein browserbasiertes Tool, das Klartext in das Base64-Format konvertiert und Base64-Zeichenfolgen wieder in lesbaren Text dekodiert. Nützlich für Entwicklung, Tests und einfache Codierungsaufgaben.",

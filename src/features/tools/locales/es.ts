@@ -3,7 +3,7 @@ import type { ToolText, CommonText } from "../copy";
 export default {
     tools: {
       imagecompressor: {
-        title: "Compresor de Imágenes / Conversor WebP",
+        title: "Compresor de imágenes y conversor WebP",
         description: "Reduzca el tamaño de los archivos de imagen y convierta a WebP para un mejor rendimiento web.",
         seo: "Comprimir y convertir a WebP en línea.",
         longDescription: "Nuestro compresor de imágenes gratuito le ayuda a reducir el tamaño de los archivos de imagen en segundos, sin instalar ningún software. También puede convertir imágenes al formato WebP para un mejor rendimiento web. Esta herramienta es útil para bloggers, propietarios de tiendas en línea, estudiantes, especialistas en marketing y cualquier persona que necesite imágenes de carga rápida.",
@@ -75,7 +75,7 @@ export default {
       },
       textdiffchecker: { title: "Comparador de Texto", description: "Compare textos y encuentre diferencias.", seo: "Encontrar diferencias entre textos." },
       base64encoder: {
-        title: "Codificador / Decodificador Base64",
+        title: "Codificador y decodificador Base64",
         description: "Convierta texto a Base64 o decodifique instantáneamente.",
         seo: "Codificador y decodificador Base64 rápido y confiable. Convierta texto al instante con una herramienta ligera basada en navegador.",
         longDescription: "El Codificador/Decodificador Base64 es una utilidad basada en navegador que convierte texto sin formato al formato Base64 y decodifica cadenas Base64 de vuelta a texto legible. Útil para desarrollo, pruebas y tareas de codificación simples.",

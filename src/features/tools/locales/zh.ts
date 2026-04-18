@@ -3,7 +3,7 @@ import type { ToolText, CommonText } from "../copy";
 export default {
     tools: {
       imagecompressor: {
-        title: "图片压缩 / WebP 转换器",
+        title: "图片压缩与WebP转换器",
         description: "在线压缩图片并转换为 WebP 格式，提升网页性能。",
         seo: "在线压缩图片并转换为 WebP。",
         longDescription: "我们的免费图片压缩工具可在几秒钟内减小图片文件大小，无需安装任何软件。您还可以将图片转换为 WebP 格式，以获得更好的网页性能和更小的文件大小。该工具适用于博主、网店店主、学生、营销人员以及需要快速加载图片的任何人。",
@@ -75,7 +75,7 @@ export default {
       },
       textdiffchecker: { title: "文本对比工具", description: "快速对比两段文本的差异。", seo: "查找两段文本的差异。" },
       base64encoder: {
-        title: "Base64 编码 / 解码器",
+        title: "Base64 编码与解码器",
         description: "将文本转换为Base64或即时解码Base64字符串。",
         seo: "快速可靠的Base64编码器和解码器。用轻量级浏览器工具即时将文本转换为Base64格式或解码。",
         longDescription: "Base64编码＆解码器是一个基于浏览器的工具，可将纯文本转换为Base64格式，并将Base64字符串解码回可读文本。适用于开发、测试、数据处理和简单编码任务。",
