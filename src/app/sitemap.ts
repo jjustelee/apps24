@@ -3,6 +3,11 @@ import type { MetadataRoute } from "next";
 import { getLocalizedUrl, LOCALES } from "@/lib/site";
 import { CATEGORY_GROUPS } from "@/features/tools/categories";
 import { getStaticToolParams } from "@/features/tools/registry";
+import { BASE64_ENCODER_LONGTAIL_SLUGS } from "@/features/tools/base64-encoder-longtails";
+import { JSON_FORMATTER_LONGTAIL_SLUGS } from "@/features/tools/json-formatter-longtails";
+import { IMAGE_COMPRESSOR_LONGTAIL_SLUGS } from "@/features/tools/image-compressor-longtails";
+import { BARCODE_GENERATOR_LONGTAIL_SLUGS } from "@/features/tools/barcode-generator-longtails";
+import { QR_GENERATOR_LONGTAIL_SLUGS } from "@/features/tools/qrgenerator-longtails";
 import { PERCENTAGE_CALCULATOR_LONGTAIL_SLUGS } from "@/features/tools/percentage-calculator-longtails";
 import { UNIT_CONVERTER_LONGTAIL_SLUGS } from "@/features/tools/unit-converter-longtails";
 
@@ -49,5 +54,40 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...unitConverterEntries, ...percentageCalculatorEntries, ...toolEntries];
+  const qrGeneratorEntries = LOCALES.flatMap((locale) =>
+    QR_GENERATOR_LONGTAIL_SLUGS.map((preset) => ({
+      url: getLocalizedUrl(locale, `/qrgenerator/${preset}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  const imageCompressorEntries = LOCALES.flatMap((locale) =>
+    IMAGE_COMPRESSOR_LONGTAIL_SLUGS.map((mode) => ({
+      url: getLocalizedUrl(locale, `/image-compressor/${mode}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  const base64EncoderEntries = LOCALES.flatMap((locale) =>
+    BASE64_ENCODER_LONGTAIL_SLUGS.map((mode) => ({
+      url: getLocalizedUrl(locale, `/base64-encoder-decoder/${mode}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  const jsonFormatterEntries = LOCALES.flatMap((locale) =>
+    JSON_FORMATTER_LONGTAIL_SLUGS.map((mode) => ({
+      url: getLocalizedUrl(locale, `/json-formatter/${mode}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  const barcodeGeneratorEntries = LOCALES.flatMap((locale) =>
+    BARCODE_GENERATOR_LONGTAIL_SLUGS.map((format) => ({
+      url: getLocalizedUrl(locale, `/barcodegenerator/${format}`),
+      lastModified: new Date(),
+    })),
+  );
+
+  return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...unitConverterEntries, ...percentageCalculatorEntries, ...qrGeneratorEntries, ...imageCompressorEntries, ...base64EncoderEntries, ...jsonFormatterEntries, ...barcodeGeneratorEntries, ...toolEntries];
 }

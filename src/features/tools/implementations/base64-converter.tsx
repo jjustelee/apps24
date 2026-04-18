@@ -1,32 +1,66 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, ShieldAlert } from "lucide-react";
+import { getBase64EncoderLongtailPreset, isBase64EncoderLongtailSlug } from "@/features/tools/base64-encoder-longtails";
 
-export function Base64ConverterTool({ locale }: ToolRendererProps) {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
-  const [error, setError] = useState("");
+function encodeBase64(value: string) {
+  return btoa(unescape(encodeURIComponent(value)));
+}
+
+function decodeBase64(value: string) {
+  return decodeURIComponent(escape(atob(value)));
+}
+
+export function Base64ConverterTool({}: ToolRendererProps) {
+  const params = useParams();
+  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const preset = modeSlug && isBase64EncoderLongtailSlug(modeSlug) ? getBase64EncoderLongtailPreset(modeSlug) : undefined;
+  const [input, setInput] = useState(() => preset?.text ?? "");
+  const [output, setOutput] = useState(() => {
+    if (!preset) return "";
+
+    try {
+      return preset.action === "encode" ? encodeBase64(preset.text) : decodeBase64(preset.text);
+    } catch {
+      return "";
+    }
+  });
+  const [error, setError] = useState(() => {
+    if (!preset) return "";
+
+    try {
+      if (preset.action === "encode") {
+        encodeBase64(preset.text);
+      } else {
+        decodeBase64(preset.text);
+      }
+      return "";
+    } catch {
+      return preset.action === "encode" ? "Invalid format for encoding." : "Invalid Base64 string. Cannot decode.";
+    }
+  });
   const [copied, setCopied] = useState(false);
 
   const handleEncode = () => {
     try {
       setError("");
-      // utf-8 encode
-      const encoded = btoa(unescape(encodeURIComponent(input)));
+      const encoded = encodeBase64(input);
       setOutput(encoded);
-    } catch (e) {
+    } catch {
       setError("Invalid format for encoding.");
+      setOutput("");
     }
   };
 
   const handleDecode = () => {
     try {
       setError("");
-      const decoded = decodeURIComponent(escape(atob(input)));
+      const decoded = decodeBase64(input);
       setOutput(decoded);
-    } catch (e) {
+    } catch {
       setError("Invalid Base64 string. Cannot decode.");
       setOutput("");
     }
@@ -36,6 +70,7 @@ export function Base64ConverterTool({ locale }: ToolRendererProps) {
     setInput("");
     setOutput("");
     setError("");
+    setCopied(false);
   };
 
   const handleCopy = async () => {

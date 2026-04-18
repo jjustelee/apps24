@@ -25,8 +25,8 @@ export async function generateMetadata({
 
   return {
     alternates: buildLocaleAlternates(locale),
-    title: commonText.homeTitle || "Home",
-    description: commonText.homeSubtitle || "Fast, practical browser tools for everyday tasks.",
+    title: commonText.homeTitle || "Web Utility Suite",
+    description: commonText.homeSubtitle || "A browser-based collection of tools for text editing, image handling, QR code generation, barcode generation, JSON validation, unit conversion, and other everyday web tasks.",
   };
 }
 
@@ -59,8 +59,8 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
   return (
     <>
       <section className="hero">
-        <h1>{commonText.homeTitle || "Fast Multilingual Tools"}</h1>
-        <p>{commonText.homeSubtitle || "Simple multilingual utilities for quick tasks."}</p>
+        <h1>{commonText.homeTitle || "Web Utility Suite"}</h1>
+        <p>{commonText.homeSubtitle || "A browser-based collection of tools for text editing, image handling, QR code generation, barcode generation, JSON validation, unit conversion, and other everyday web tasks."}</p>
       </section>
 
       <section className="home-category-browser">
@@ -86,7 +86,7 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
                 </Link>
               </div>
 
-              <div className="tool-grid home-category-grid">
+              <div id={`${group.slug}-tools`} className="tool-grid home-category-grid">
                 {group.toolsWithText.slice(0, 4).map(({ tool, text }) => (
                   <ToolCard
                     key={tool.id}
@@ -109,10 +109,10 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
               {commonText.homeAboutTitle || "About Apps24"}
             </h2>
             <p style={{ fontSize: "1.1rem", marginBottom: "1.25rem", color: "var(--muted)", lineHeight: "1.7" }}>
-              {commonText.homeIntro1 || "Apps24 is a multilingual online tools website built for people who want fast, simple, and practical utilities without unnecessary steps."}
+              {commonText.homeIntro1 || "Open a tool, run the task, and get the result without extra steps."}
             </p>
             <p style={{ fontSize: "1.1rem", margin: 0, color: "var(--muted)", lineHeight: "1.7" }}>
-              {commonText.homeIntro2 || "Instead of downloading software or creating an account for small tasks, users can open a page, use a tool immediately, and get the result in just a few clicks."}
+              {commonText.homeIntro2 || "Built for practical workflows, fast access, and clear results on desktop and mobile."}
             </p>
           </div>
 

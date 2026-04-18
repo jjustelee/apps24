@@ -5,10 +5,10 @@ import type { ToolRendererProps } from "@/features/tools/implementations";
 
 /**
  * [백엔드 개발진 참고용 주석]
- * 1. IP 조회 API: 현재 클라이언트에서 무료 공개 API(ipapi.co)를 호출합니다.
- *    프로덕션에서는 자체 백엔드 프록시를 통해 API 키를 숨기고 레이트 리밋을 관리해야 합니다.
+ * 1. IP 조회 API: 현재 클라이언트에서 무료 공개 API(ipwho.is)를 호출합니다.
+ *    이 엔드포인트는 IP, 위치, ISP, 타임존 정보를 한 번에 제공하며 CORS도 허용합니다.
  * 2. VPN 감지: 실제 VPN 감지는 서버 사이드에서 IP reputation DB를 조회해야 정확합니다.
- *    현재는 클라이언트 타임존과 서버 응답 타임존 비교로 추정합니다.
+ *    현재는 클라이언트 타임존과 IP 응답 타임존 비교로 추정합니다.
  * 3. 브라우저/OS 정보: navigator.userAgent를 통해 추출하므로 백엔드에서는
  *    요청 헤더의 User-Agent를 파싱하여 동일 정보를 제공할 수 있습니다.
  */
@@ -229,20 +229,21 @@ export function IpLookupTool({ locale }: ToolRendererProps) {
     setLoading(true);
     setError(false);
     try {
-      const res = await fetch("https://ipapi.co/json/", { cache: "no-store" });
+      const res = await fetch("https://ipwho.is/", { cache: "no-store" });
       if (!res.ok) throw new Error("fetch failed");
       const data = await res.json();
+      if (!data?.success) throw new Error("ip lookup failed");
 
       const info: IpInfo = {
         ip: data.ip || "",
-        country: data.country_name || "",
+        country: data.country || "",
         region: data.region || "",
         city: data.city || "",
-        timezone: data.timezone || "",
-        isp: data.org || "",
-        hostname: data.hostname || `host-${(data.ip || "").replace(/\./g, "-")}`,
-        ipv4: data.version === "IPv4" ? data.ip : data.ip || "",
-        ipv6: data.version === "IPv6" ? data.ip : "",
+        timezone: data.timezone?.id || data.timezone || "",
+        isp: data.connection?.isp || data.connection?.org || "",
+        hostname: data.connection?.domain || `host-${(data.ip || "").replace(/\./g, "-")}`,
+        ipv4: data.type === "IPv4" ? data.ip : "",
+        ipv6: data.type === "IPv6" ? data.ip : "",
       };
       setIpInfo(info);
 

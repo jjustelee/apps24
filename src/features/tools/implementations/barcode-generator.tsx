@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "@/features/tools/implementations";
 import { Download, Copy, RefreshCw, QrCode, BarChart as BarcodeIcon, AlertCircle, CheckCircle } from "lucide-react";
+import { getQrGeneratorLongtailPreset } from "@/features/tools/qrgenerator-longtails";
+import { getBarcodeGeneratorLongtailPreset, isBarcodeGeneratorLongtailSlug } from "@/features/tools/barcode-generator-longtails";
 
 type BarcodeFormatOption = {
   label: string;
@@ -43,14 +46,31 @@ export function BarcodeGeneratorTool({
   commonText,
   toolText,
 }: ToolRendererProps) {
+  const params = useParams();
   const data = toolData as BarcodeToolData | undefined;
   const isQrTool = tool.slug === "qrgenerator";
+  const presetSlug = typeof params.preset === "string" ? params.preset : undefined;
+  const barcodeFormatSlug = typeof params.format === "string" ? params.format : undefined;
+  const barcodePreset = !isQrTool && barcodeFormatSlug && isBarcodeGeneratorLongtailSlug(barcodeFormatSlug)
+    ? getBarcodeGeneratorLongtailPreset(barcodeFormatSlug)
+    : undefined;
   const localizedCopy = toolText as BarcodeGeneratorText | undefined;
   const formatDescriptions = localizedCopy?.formatDescriptions ?? DEFAULT_BARCODE_COPY.formatDescriptions;
   const qrHint = localizedCopy?.qrHint ?? DEFAULT_BARCODE_COPY.qrHint;
   const barcodeHint = localizedCopy?.barcodeHint ?? DEFAULT_BARCODE_COPY.barcodeHint;
   const generationFailed = localizedCopy?.generationFailed ?? DEFAULT_BARCODE_COPY.generationFailed;
   const generationError = localizedCopy?.generationError ?? DEFAULT_BARCODE_COPY.generationError;
+  const defaultText = useMemo(() => {
+    if (isQrTool && presetSlug) {
+      return getQrGeneratorLongtailPreset(presetSlug)?.text ?? "";
+    }
+
+    if (!isQrTool && barcodePreset) {
+      return barcodePreset.text;
+    }
+
+    return "";
+  }, [isQrTool, presetSlug, barcodePreset]);
   
   const availableFormats = useMemo(() => {
     const formats = data?.formats ?? [{ value: "qrcode", label: "QR Code" }];
@@ -60,8 +80,8 @@ export function BarcodeGeneratorTool({
     return formats;
   }, [data?.formats, isQrTool]);
 
-  const [format, setFormat] = useState(isQrTool ? "qrcode" : "code128");
-  const [text, setText] = useState("");
+  const [format, setFormat] = useState(isQrTool ? "qrcode" : barcodePreset?.format ?? "code128");
+  const [text, setText] = useState(defaultText);
   const [image, setImage] = useState("");
   const [requestError, setRequestError] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -69,16 +89,29 @@ export function BarcodeGeneratorTool({
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_FORMAT);
-    if (saved && !isQrTool) setFormat(saved);
-    setSettingsLoaded(true);
-  }, [isQrTool]);
+    setText(defaultText);
+    setImage("");
+    setRequestError("");
+    setCopied(false);
+  }, [defaultText]);
 
   useEffect(() => {
-    if (settingsLoaded && !isQrTool) {
+    if (barcodePreset) {
+      setFormat(barcodePreset.format);
+    }
+  }, [barcodePreset]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY_FORMAT);
+    if (saved && !isQrTool && !barcodePreset) setFormat(saved);
+    setSettingsLoaded(true);
+  }, [barcodePreset, isQrTool]);
+
+  useEffect(() => {
+    if (settingsLoaded && !isQrTool && !barcodePreset) {
       localStorage.setItem(STORAGE_KEY_FORMAT, format);
     }
-  }, [format, settingsLoaded, isQrTool]);
+  }, [barcodePreset, format, isQrTool, settingsLoaded]);
 
   const selectedFormat = isQrTool ? "qrcode" : format;
 

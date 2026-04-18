@@ -1,20 +1,52 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "./index";
-import { Copy, Trash2, CheckCircle, AlertTriangle, ClipboardCheck, Braces, Code } from "lucide-react";
-import type { Locale } from "@/lib/site";
+import { Copy, Trash2, AlertTriangle, ClipboardCheck, Braces, Code } from "lucide-react";
+import { getJsonFormatterLongtailPreset, isJsonFormatterLongtailSlug } from "@/features/tools/json-formatter-longtails";
 
-export function JsonFormatterTool({ locale, commonText: common }: ToolRendererProps) {
-  const [input, setInput] = useState("");
+function formatJsonValue(value: string) {
+  return JSON.stringify(JSON.parse(value), null, 2);
+}
+
+function validateJsonValue(value: string) {
+  JSON.parse(value);
+}
+
+export function JsonFormatterTool({ commonText: common }: ToolRendererProps) {
+  const params = useParams();
+  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const preset = modeSlug && isJsonFormatterLongtailSlug(modeSlug) ? getJsonFormatterLongtailPreset(modeSlug) : undefined;
+  const [input, setInput] = useState(() => {
+    if (!preset) return "";
+
+    try {
+      return preset.action === "format" ? formatJsonValue(preset.text) : preset.text;
+    } catch {
+      return preset.text;
+    }
+  });
   const [copied, setCopied] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(() => {
+    if (!preset) return null;
+
+    try {
+      if (preset.action === "format") {
+        formatJsonValue(preset.text);
+      } else {
+        validateJsonValue(preset.text);
+      }
+      return null;
+    } catch (caughtError: unknown) {
+      return caughtError instanceof Error ? caughtError.message : "Invalid JSON";
+    }
+  });
 
   const handleFormat = () => {
     if (!input.trim()) return;
     try {
-      const parsed = JSON.parse(input);
-      setInput(JSON.stringify(parsed, null, 2));
+      setInput(formatJsonValue(input));
       setError(null);
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Invalid JSON");
@@ -27,7 +59,7 @@ export function JsonFormatterTool({ locale, commonText: common }: ToolRendererPr
       return;
     }
     try {
-      JSON.parse(input);
+      validateJsonValue(input);
       setError(null);
       // Optional: show a small success indication
     } catch (error: unknown) {
@@ -45,6 +77,7 @@ export function JsonFormatterTool({ locale, commonText: common }: ToolRendererPr
   const handleClear = () => {
     setInput("");
     setError(null);
+    setCopied(false);
   };
 
   return (

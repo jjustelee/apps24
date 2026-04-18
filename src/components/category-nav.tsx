@@ -20,7 +20,7 @@ export function CategoryNav({ locale, mode, activeSlug }: CategoryNavProps) {
 
         if (mode === "home") {
           return (
-            <a key={group.id} href={`#${group.slug}`} className={className}>
+            <a key={group.id} href={`#${group.slug}-tools`} className={className}>
               {group.shortLabel}
             </a>
           );

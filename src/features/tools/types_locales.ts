@@ -8,6 +8,7 @@ export type ToolText = {
   usageContext?: string;
   howToUse?: string;
   faq?: { q: string; a: string }[];
+  examples?: string[];
   whyUse?: string;
   popularConversions?: string[];
   relatedTools?: string;
@@ -148,6 +149,7 @@ export type CommonText = {
   whenToUse: string;
   howToUseTitle: string;
   faqTitle: string;
+  examplesTitle: string;
   howItWorks: string;
   unitLength: string;
   unitWeight: string;

@@ -8,6 +8,11 @@ export default {
         seo: "Compress and convert to webp.",
         longDescription: "Our free Image Compressor helps you reduce image file size in seconds without installing any software. You can also convert supported images to WebP format for better web performance and smaller file sizes. This tool is useful for bloggers, online store owners, students, marketers, and anyone who needs faster-loading images for websites, email attachments, or document uploads.",
         usageContext: "Compressing images is helpful when you want to improve page speed, reduce storage usage, or meet file size limits for websites, forms, and emails. Smaller images can also improve the user experience on mobile devices and slower internet connections. WebP is a modern image format designed to provide smaller file sizes while keeping good visual quality. If you manage a website or blog, converting large images to WebP can help improve loading speed and overall performance.",
+        examples: [
+          "Blog images before publishing",
+          "Product photos for an online store",
+          "Email attachments that need a smaller file size"
+        ],
         howToUse: "1. Upload your image file.\n2. Choose to compress the image or convert it to WebP.\n3. Preview the result and download the optimized file.",
         faq: [
           { q: "Is this tool free to use?", a: "Yes. You can compress and convert images online for free." },
@@ -36,6 +41,11 @@ export default {
         seo: "Format invalid JSON.",
         longDescription: "JSON Formatter & Validator helps you clean up, organize, and check JSON data online. It is useful for developers, testers, students, and API users who need readable JSON output or want to find syntax errors quickly. If your JSON is difficult to read or not working correctly, this tool makes it easier to format the content and validate whether the structure is correct.",
         usageContext: "Raw JSON is often hard to read, especially when it is compressed into a single line. Formatting adds proper indentation and structure, making it easier to debug, review, and share. A small syntax mistake in JSON can break an API request, configuration file, or app feature. Validation helps detect problems such as missing commas, invalid brackets, or incorrect quotation marks before you use the data elsewhere.",
+        examples: [
+          "Minified API responses",
+          "Configuration files that are hard to scan",
+          "JSON copied from logs or browser devtools"
+        ],
         howToUse: "1. Paste your JSON into the input box.\n2. Click the format or validate button.\n3. Review the formatted result or check the error message.",
         faq: [
           { q: "What is JSON?", a: "JSON stands for JavaScript Object Notation. It is a common format used to store and exchange structured data." },
@@ -50,6 +60,11 @@ export default {
         seo: "Generate strong random passwords instantly in your browser. This free password generator helps users create secure passwords with customizable length and character options for safer online accounts.",
         longDescription: "Password Generator is a simple online tool that helps users create strong and random passwords for personal, work, and business accounts. It is designed for people who want a faster and safer way to generate passwords instead of reusing weak or predictable combinations. This tool is useful for creating passwords for email accounts, websites, apps, online stores, social media platforms, and other services that require secure login credentials.",
         usageContext: "Use this tool when creating a new account, replacing an old password, or improving the security of accounts that currently use short or repeated passwords. It is also helpful for users who manage multiple accounts and want stronger password options for each service.",
+        examples: [
+          "New email or app accounts",
+          "Shared admin logins that need a stronger password",
+          "Replacing weak passwords that have been reused"
+        ],
         howToUse: "1. Choose the password length.\n2. Select the character types you want to include, such as uppercase letters, lowercase letters, numbers, and symbols.\n3. Click the Generate Password button to create a new password.\n4. Copy the generated password and save it in a secure place, such as a trusted password manager.",
         faq: [
           { q: "Why should I use a password generator?", a: "A password generator helps create stronger and less predictable passwords than passwords made manually. This reduces the risk of weak or repeated credentials." },
@@ -101,6 +116,11 @@ export default {
         seo: "Free online unit converter for metric and imperial systems. Convert inches to cm, kg to lbs, celsius to fahrenheit, and more instantly.",
         longDescription: "Our Unit Converter is a high-precision tool designed to help you quickly switch between different systems of measurement across the globe. Whether you are dealing with Metric or Imperial units, this tool provides accurate results for length, mass, area, volume, temperature, and time. From common everyday conversions like miles to kilometers, to specialized needs like US vs UK Gallons or Korean 'Pyung', we've got you covered with scientific accuracy.",
         usageContext: "Did you know that a US Gallon and a UK Gallon are different sizes? Our tool distinguishes between these and other regional units to ensure you have the correct data for travel, international shopping, or engineering projects. It is essential for anyone who needs fast and reliable conversions without searching for manual formulas.",
+        examples: [
+          "Recipe measurements while cooking",
+          "Travel distances and speeds",
+          "Classroom or engineering conversions"
+        ],
         howToUse: "1. Select a category from the top tabs (e.g., Length, Weight).\n2. Enter the value you want to convert in the 'From' input box.\n3. Choose your current unit and the unit you want to convert to from the dropdown menus.\n4. View the result instantly. Use the swap button (⇄) to reverse the direction.\n5. Adjust decimal precision or copy the result as needed.",
         whyUse: "Accuracy and speed are critical when converting measurements. Manual calculations often lead to errors, especially with complex temperature offsets or imperial-to-metric ratios. This tool ensures precision for students, travelers, and professionals alike.",
         popularConversions: [
@@ -124,6 +144,11 @@ export default {
         seo: "Calculate percentages, percentage increase/decrease, and discounts instantly with our free online percentage calculator. Perfect for students, shoppers, and businesses.",
         longDescription: "The Percentage Calculator is a versatile tool designed to resolve the most common percentage-related questions in one place. Whether you are calculating tips, discounts, sales increases, or school problems, this tool provides instant and accurate results.",
         usageContext: "Use this tool for shopping discounts, analyzing growth in business reports, calculating taxes, or solving educational math problems. It covers four major modes: finding a percentage of a value, percentage change, and direct discount calculations.",
+        examples: [
+          "Discounted product prices",
+          "Conversion-rate calculations",
+          "Percentage increases and decreases"
+        ],
         howToUse: "1. Select a mode (e.g., What is X% of Y, Discount).\n2. Enter the required numbers in the input fields.\n3. The result is calculated instantly. Use 'Copy Result' to save it.",
         whyUse: "Percentages can be confusing, especially when dealing with compound increases or price reductions. This calculator simplifies the math and prevents manual calculation errors.",
         popularConversions: [
@@ -256,6 +281,11 @@ export default {
         seo: "Create QR codes from text, links, and contact details instantly.",
         longDescription: "QR Code Generator lets you create QR codes for text, links, contact details, and other simple content. It is useful for businesses, events, classrooms, restaurants, packaging, and personal sharing. You can generate a QR code in seconds and download it for digital or printed use.",
         usageContext: "QR codes are commonly used for website links, menu access, event check-ins, contact sharing, payment instructions, and product labels. A QR code makes it easier for users to open a page or access information without typing long text manually. This can reduce friction and improve response rates in both online and offline environments.",
+        examples: [
+          "Restaurant menus and table tents",
+          "Event posters and check-in pages",
+          "Business cards, flyers, and package labels"
+        ],
         howToUse: "1. Enter the text, URL, or content you want to encode.\n2. Generate the QR code.\n3. Download and use the image where needed.",
         whyUse: "It is a fast way to share information without typing long text manually.",
         faq: [
@@ -272,6 +302,11 @@ export default {
         seo: "Create barcodes for products, labels, and inventory instantly.",
         longDescription: "Barcode Generator helps you create barcodes for products, labels, inventory, packaging, and internal tracking. It is useful for small businesses, warehouses, offices, schools, and anyone who needs quick barcode generation online. You can enter your value, choose a barcode type, and download the generated barcode image.",
         usageContext: "Barcodes are widely used in retail, inventory control, shipping, asset tracking, and document labeling. They make it easier to identify items quickly and reduce manual entry errors. Choosing the correct format helps ensure compatibility with scanners and workflows.",
+        examples: [
+          "Retail SKU labels",
+          "Warehouse inventory tags",
+          "Shipping or asset tracking codes"
+        ],
         howToUse: "1. Enter the number or text required for your barcode.\n2. Select the barcode format.\n3. Generate and download the barcode image.",
         whyUse: "It is a fast way to generate machine-readable labels for retail, tracking, and internal workflows.",
         faq: [
@@ -298,6 +333,11 @@ export default {
         seo: "Find your public IP address, location, ISP, and network details instantly.",
         longDescription: "What Is My IP is a fast and simple tool that shows your public IP address and related network information. It helps you check your current digital footprint, including the country, region, city, ISP (Internet Service Provider), and timezone associated with your connection. It also detects basic device and browser information to give you a complete view of how websites identify you.",
         usageContext: "This tool is especially useful if you are using a VPN or proxy and want to verify that your location is successfully hidden. It is also helpful for network troubleshooting, checking if IPv6 is active, or finding your IP address to whitelist it for remote server access.",
+        examples: [
+          "Confirming that a VPN changed your visible IP",
+          "Checking the IP address you need to whitelist",
+          "Troubleshooting remote access or network blocks"
+        ],
         howToUse: "1. Open the tool—your IP information is displayed automatically.\n2. Review the Quick Summary for location and ISP details.\n3. Check the VPN / Secure Connection badges to see your connection status.\n4. Click 'Copy IP' to copy your address, or 'Refresh' to update the information.",
         whyUse: "Knowing your public IP address is essential for managing network security, configuring routers, accessing restricted servers, or simply verifying that your privacy tools (like VPNs) are working correctly.",
         faq: [
@@ -364,10 +404,10 @@ export default {
       minutes: "Minutes",
       seconds: "Seconds",
       countdownNote: "Set the hours, minutes, and seconds, then start the timer. Night mode is saved on this device.",
-      homeTitle: "Fast Multilingual Tools",
-      homeSubtitle: "Apps24 is a multilingual online tools website built for fast, simple, practical utilities without unnecessary steps.",
-      homeIntro1: "Apps24 is a multilingual online tools website built for people who want fast, simple, and practical utilities without unnecessary steps. Instead of downloading software or creating an account for small tasks, users can open a page, use a tool immediately, and get the result in just a few clicks.",
-      homeIntro2: "Our goal is to make everyday digital tasks easier for a wide range of users. Whether you are a student counting words, a marketer preparing links or content, a developer checking JSON or Base64 data, a designer working with colors, or a business owner creating QR codes and barcodes, Apps24 provides lightweight tools that are quick to access and easy to understand.",
+      homeTitle: "Web Utility Suite",
+      homeSubtitle: "A browser-based collection of tools for text editing, image handling, QR code generation, barcode generation, JSON validation, unit conversion, and other everyday web tasks.",
+      homeIntro1: "Open a tool, run the task, and get the result without extra steps.",
+      homeIntro2: "Built for practical workflows, fast access, and clear results on desktop and mobile.",
       homeAboutTitle: "About Apps24",
       homeWhatYouCanDoTitle: "What You Can Do on Apps24",
       homeWhatYouCanDoBody: "Apps24 brings together a growing collection of useful browser-based tools for text, images, formatting, visual utilities, and technical workflows. You can compress images, convert text case, validate JSON, generate passwords, compare text differences, encode and decode Base64, create QR codes, generate barcodes, and more. These tools are designed for short, focused tasks, so you can solve one problem at a time with a clean layout and a simple workflow.",
@@ -438,6 +478,7 @@ export default {
       whenToUse: "When to use this tool?",
       howToUseTitle: "How to use {0}",
       faqTitle: "Frequently Asked Questions",
+      examplesTitle: "Examples",
       howItWorks: "How it works",
       unitLength: "Length",
       unitWeight: "Weight",

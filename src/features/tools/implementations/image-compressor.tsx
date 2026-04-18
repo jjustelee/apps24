@@ -1,28 +1,46 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "./index";
 import { Download, Upload, RefreshCw, Image as ImageIcon, CheckCircle, AlertCircle } from "lucide-react";
-import type { Locale } from "@/lib/site";
+import { getImageCompressorLongtailPreset } from "@/features/tools/image-compressor-longtails";
 
 type CompressionFormat = "image/jpeg" | "image/webp" | "image/png";
 
 export function ImageCompressorTool({ locale, commonText: common }: ToolRendererProps) {
+  const params = useParams();
   const isKo = locale === "ko";
+  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const defaultSelection = useMemo(() => {
+    const preset = modeSlug ? getImageCompressorLongtailPreset(modeSlug) : undefined;
+
+    return preset ?? {
+      format: "image/webp" as CompressionFormat,
+      quality: 0.8,
+      scale: 1,
+    };
+  }, [modeSlug]);
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalPreview, setOriginalPreview] = useState<string>("");
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null);
   const [compressedPreview, setCompressedPreview] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [format, setFormat] = useState<CompressionFormat>("image/webp");
+  const [format, setFormat] = useState<CompressionFormat>(defaultSelection.format);
 
-  const [quality, setQuality] = useState(0.8);
+  const [quality, setQuality] = useState(defaultSelection.quality);
   const [targetWidth, setTargetWidth] = useState<number>(0);
   const [originalDimensions, setOriginalDimensions] = useState({ width: 0, height: 0 });
-  const [scale, setScale] = useState(1); // 1 = 100%
+  const [scale, setScale] = useState(defaultSelection.scale); // 1 = 100%
 
   const [isRecompressing, setIsRecompressing] = useState(false);
   const recompressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setFormat(defaultSelection.format);
+    setQuality(defaultSelection.quality);
+    setScale(defaultSelection.scale);
+  }, [defaultSelection]);
 
   // Auto-compress when settings change
   useEffect(() => {
@@ -69,7 +87,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
     img.onload = () => {
       setOriginalDimensions({ width: img.width, height: img.height });
       setTargetWidth(img.width);
-      setScale(1);
+      setScale(defaultSelection.scale);
     };
 
     setCompressedBlob(null);
