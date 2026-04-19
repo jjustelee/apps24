@@ -64,6 +64,8 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
   const [effect, setEffect] = useState<SignboardEffect>(DEFAULT_EFFECT);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFullscreenControlsVisible, setIsFullscreenControlsVisible] = useState(true);
+  const fullscreenControlsTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     try {
@@ -121,6 +123,42 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
       document.body.style.overflow = previousOverflow;
     };
   }, [isFullscreen]);
+
+  useEffect(() => {
+    if (fullscreenControlsTimeoutRef.current !== null) {
+      window.clearTimeout(fullscreenControlsTimeoutRef.current);
+      fullscreenControlsTimeoutRef.current = null;
+    }
+
+    if (!isFullscreen) {
+      setIsFullscreenControlsVisible(true);
+      return;
+    }
+
+    setIsFullscreenControlsVisible(true);
+    fullscreenControlsTimeoutRef.current = window.setTimeout(() => {
+      setIsFullscreenControlsVisible(false);
+    }, 1500);
+
+    return () => {
+      if (fullscreenControlsTimeoutRef.current !== null) {
+        window.clearTimeout(fullscreenControlsTimeoutRef.current);
+        fullscreenControlsTimeoutRef.current = null;
+      }
+    };
+  }, [isFullscreen]);
+
+  const showFullscreenControls = () => {
+    if (!isFullscreen) return;
+
+    setIsFullscreenControlsVisible(true);
+    if (fullscreenControlsTimeoutRef.current !== null) {
+      window.clearTimeout(fullscreenControlsTimeoutRef.current);
+    }
+    fullscreenControlsTimeoutRef.current = window.setTimeout(() => {
+      setIsFullscreenControlsVisible(false);
+    }, 1500);
+  };
 
   const previewMessage = message.trim();
   const marqueeMessage = previewMessage.replace(/\s+/g, " ");
@@ -229,6 +267,7 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
     <div className="tool-stack">
       <section
         ref={displayRef}
+        onPointerMove={showFullscreenControls}
         className={`rounded-[36px] border border-[var(--panel-border)] bg-[var(--panel-glass)] shadow-2xl ${isFullscreen ? "fixed inset-0 z-50 flex h-screen w-screen flex-col rounded-none border-0 p-0 shadow-none" : "p-5 md:p-6"}`}
         style={isFullscreen ? { backgroundColor } : undefined}
       >
@@ -255,7 +294,9 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
           {isFullscreen && (
             <button
               type="button"
-              className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-4 py-2 text-sm font-semibold backdrop-blur-md transition hover:bg-black/45"
+              className={`absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-4 py-2 text-sm font-semibold backdrop-blur-md transition duration-200 hover:bg-black/45 ${
+                isFullscreenControlsVisible ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
               style={{ color: uiTextColor }}
               onClick={toggleFullscreen}
             >

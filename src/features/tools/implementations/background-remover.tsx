@@ -551,7 +551,11 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
         </div>
 
         <div className="overflow-hidden rounded-[24px] border border-[var(--line)]" style={previewBackground}>
-          <div className="relative flex min-h-[420px] items-center justify-center p-4">
+          <div
+            className={`relative flex items-center justify-center p-4 ${
+              originalFile ? "min-h-[420px]" : "min-h-[360px] md:min-h-[400px]"
+            }`}
+          >
             {!originalFile ? (
               <button
                 type="button"
