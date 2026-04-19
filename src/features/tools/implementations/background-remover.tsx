@@ -11,25 +11,31 @@ import {
 import type { Locale } from "@/lib/site";
 import type { BackgroundRemoverOutputBackground, BackgroundRemoverPreset } from "@/features/tools/background-remover-longtails";
 
-const MODEL_ID = "Xenova/modnet";
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 type RemovalPhase = "idle" | "loading" | "processing" | "done";
 
-type BackgroundRemovalProgressInfo = {
-  status: "initiate" | "download" | "progress" | "progress_total" | "done" | "ready";
-  progress?: number;
-  file?: string;
-  task?: string;
-  model?: string;
+type BackgroundRemovalWorkerRequest = {
+  type: "remove-background";
+  runId: number;
+  file: Blob;
 };
 
-type BackgroundRemovalResult = {
-  toBlob: (type?: string, quality?: number) => Promise<Blob>;
-  toCanvas: () => HTMLCanvasElement | OffscreenCanvas;
-};
-
-type BackgroundRemovalPipeline = (images: Blob) => Promise<BackgroundRemovalResult>;
+type BackgroundRemovalWorkerResponse =
+  | {
+      type: "ready";
+      runId: number;
+    }
+  | {
+      type: "result";
+      runId: number;
+      blob: Blob;
+    }
+  | {
+      type: "error";
+      runId: number;
+      message: string;
+    };
 
 type BackgroundRemoverUI = {
   removeBackground: string;
@@ -237,44 +243,8 @@ function getBackgroundRemoverUI(locale: string): BackgroundRemoverUI {
   return BACKGROUND_REMOVER_UI[(locale in BACKGROUND_REMOVER_UI ? locale : "en") as Locale];
 }
 
-let backgroundRemovalPipelinePromise: Promise<BackgroundRemovalPipeline> | null = null;
-
-async function createBackgroundRemovalPipeline(
-  device: "webgpu" | "wasm",
-  progressCallback?: (info: BackgroundRemovalProgressInfo) => void,
-) {
-  const { pipeline } = await import("@huggingface/transformers");
-  return pipeline("background-removal", MODEL_ID, {
-    device,
-    progress_callback: progressCallback,
-  }) as Promise<BackgroundRemovalPipeline>;
-}
-
-async function getBackgroundRemovalPipeline(progressCallback?: (info: BackgroundRemovalProgressInfo) => void) {
-  if (!backgroundRemovalPipelinePromise) {
-    const preferredDevice = typeof navigator !== "undefined" && "gpu" in navigator ? "webgpu" : "wasm";
-
-    try {
-      backgroundRemovalPipelinePromise = createBackgroundRemovalPipeline(preferredDevice, progressCallback);
-      return await backgroundRemovalPipelinePromise;
-    } catch (error) {
-      backgroundRemovalPipelinePromise = null;
-
-      if (preferredDevice !== "webgpu") {
-        throw error;
-      }
-
-      try {
-        backgroundRemovalPipelinePromise = createBackgroundRemovalPipeline("wasm", progressCallback);
-        return await backgroundRemovalPipelinePromise;
-      } catch (fallbackError) {
-        backgroundRemovalPipelinePromise = null;
-        throw fallbackError;
-      }
-    }
-  }
-
-  return backgroundRemovalPipelinePromise;
+function createBackgroundRemovalWorker() {
+  return new Worker(new URL("./background-remover.worker.ts", import.meta.url), { type: "module" });
 }
 
 function formatFileSize(bytes: number) {
@@ -308,7 +278,7 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   const presetBackground = preset?.outputBackground ?? "transparent";
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const resultImageRef = useRef<BackgroundRemovalResult | null>(null);
+  const workerRef = useRef<Worker | null>(null);
   const runIdRef = useRef(0);
   const mountedRef = useRef(true);
 
@@ -319,10 +289,10 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   const [resultPreviewUrl, setResultPreviewUrl] = useState("");
   const [outputBackground, setOutputBackground] = useState<BackgroundRemoverOutputBackground>(presetBackground);
   const [phase, setPhase] = useState<RemovalPhase>("idle");
-  const [progress, setProgress] = useState(0);
-  const [progressLabel, setProgressLabel] = useState("");
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const ui = getBackgroundRemoverUI(locale);
+  const isWorking = phase === "loading" || phase === "processing";
 
   useEffect(() => {
     setOutputBackground(presetBackground);
@@ -331,6 +301,13 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   useEffect(() => {
     return () => {
       mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      workerRef.current?.terminate();
+      workerRef.current = null;
     };
   }, []);
 
@@ -346,12 +323,22 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
     };
   }, [resultPreviewUrl]);
 
+  useEffect(() => {
+    if (!isWorking) {
+      setElapsedSeconds(0);
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setElapsedSeconds((current) => current + 1);
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [isWorking]);
+
   const clearResult = () => {
-    resultImageRef.current = null;
     setResultBlob(null);
     setResultPreviewUrl("");
-    setProgress(0);
-    setProgressLabel("");
     setPhase("idle");
     setError(null);
   };
@@ -416,55 +403,70 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
 
     const runId = ++runIdRef.current;
     setError(null);
-    setProgress(8);
-    setProgressLabel(ui.loadingModel);
+    setElapsedSeconds(1);
     setPhase("loading");
 
     try {
-      const segmenter = await getBackgroundRemovalPipeline((info) => {
-        if (!mountedRef.current || runIdRef.current !== runId) return;
+      const worker = workerRef.current ?? (workerRef.current = createBackgroundRemovalWorker());
 
-        if (info.status === "progress" || info.status === "progress_total") {
-          const nextProgress = typeof info.progress === "number" ? Math.min(Math.round(info.progress), 90) : 8;
-          setProgress(nextProgress);
-          setProgressLabel(ui.loadingModel);
-        } else if (info.status === "ready") {
-          setProgress(90);
-          setProgressLabel(ui.loadingModel);
-        }
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        const cleanup = () => {
+          worker.removeEventListener("message", handleMessage);
+          worker.removeEventListener("error", handleError);
+        };
+
+        const handleMessage = (event: MessageEvent<BackgroundRemovalWorkerResponse>) => {
+          const data = event.data;
+          if (data.runId !== runId) return;
+
+          if (data.type === "ready") {
+            if (mountedRef.current && runIdRef.current === runId) {
+              setPhase("processing");
+            }
+            return;
+          }
+
+          if (data.type === "result") {
+            cleanup();
+            resolve(data.blob);
+            return;
+          }
+
+          cleanup();
+          reject(new Error(data.message));
+        };
+
+        const handleError = () => {
+          cleanup();
+          reject(new Error(ui.modelError));
+        };
+
+        worker.addEventListener("message", handleMessage);
+        worker.addEventListener("error", handleError);
+        worker.postMessage({
+          type: "remove-background",
+          runId,
+          file: originalFile,
+        } satisfies BackgroundRemovalWorkerRequest);
       });
 
-      if (!mountedRef.current || runIdRef.current !== runId) return;
-
-      setPhase("processing");
-      setProgress((current) => Math.max(current, 92));
-      setProgressLabel(ui.processingImage);
-
-      const output = await segmenter(originalFile);
-      if (!mountedRef.current || runIdRef.current !== runId) return;
-
-      resultImageRef.current = output;
-      const blob = await output.toBlob("image/png");
       if (!mountedRef.current || runIdRef.current !== runId) return;
 
       setResultBlob(blob);
       setResultPreviewUrl(URL.createObjectURL(blob));
       setPhase("done");
-      setProgress(100);
-      setProgressLabel(ui.ready);
     } catch (caughtError: unknown) {
       if (!mountedRef.current || runIdRef.current !== runId) return;
 
-      backgroundRemovalPipelinePromise = null;
+      workerRef.current?.terminate();
+      workerRef.current = null;
       setPhase("idle");
-      setProgress(0);
-      setProgressLabel("");
       setError(caughtError instanceof Error ? caughtError.message : ui.modelError);
     }
   };
 
   const handleDownload = async () => {
-    if (!resultImageRef.current || !originalFile) return;
+    if (!resultBlob || !originalFile) return;
 
     const baseName = originalFile.name.replace(/\.[^.]+$/, "") || "background-removed";
     const outputName = `${baseName}-${outputBackground}.png`;
@@ -474,17 +476,18 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
       return;
     }
 
-    const sourceCanvas = resultImageRef.current.toCanvas();
+    const bitmap = await createImageBitmap(resultBlob);
     const canvas = document.createElement("canvas");
-    canvas.width = sourceCanvas.width;
-    canvas.height = sourceCanvas.height;
+    canvas.width = bitmap.width;
+    canvas.height = bitmap.height;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     ctx.fillStyle = getBackgroundColor(outputBackground);
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(sourceCanvas as CanvasImageSource, 0, 0);
+    ctx.drawImage(bitmap, 0, 0);
+    bitmap.close();
 
     const blob = await new Promise<Blob | null>((resolve) => {
       canvas.toBlob((nextBlob) => resolve(nextBlob), "image/png");
@@ -495,12 +498,17 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
     }
   };
 
-  const isWorking = phase === "loading" || phase === "processing";
   const hasResult = phase === "done" && Boolean(resultPreviewUrl);
-  const previewProgress = isWorking ? Math.max(8, Math.min(progress, 99)) : 0;
-  const previewStatus = phase === "loading" ? ui.loadingModel : phase === "processing" ? ui.processingImage : ui.previewHint;
-  const previewTitle = hasResult ? ui.result : originalFile ? common.original : ui.preview;
-  const previewBadge = hasResult ? ui.ready : isWorking ? `${previewProgress}%` : originalFile ? common.original : ui.preview;
+  const previewTitle = hasResult
+    ? ui.result
+    : isWorking
+      ? phase === "loading"
+        ? ui.loadingModel
+        : ui.processingImage
+      : originalFile
+        ? ui.originalPreview
+        : ui.preview;
+  const previewBadge = hasResult ? ui.ready : originalFile ? common.original : ui.preview;
   const previewBackground = hasResult
     ? outputBackground === "transparent"
       ? {
@@ -527,19 +535,19 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
           <div>
             <p className="text-xs font-black uppercase tracking-[0.25em] text-[var(--muted)]">{previewTitle}</p>
             <h3 className="mt-1 text-lg font-extrabold text-[var(--text)]">
-              {hasResult ? ui.ready : isWorking ? previewStatus : originalFile ? ui.originalPreview : common.uploadImage}
+              {hasResult ? ui.ready : isWorking ? previewTitle : originalFile ? ui.originalPreview : common.uploadImage}
             </h3>
             <p className="mt-1 text-sm text-[var(--muted)]">
               {originalFile
-                ? isWorking
-                  ? `${progressLabel || previewStatus} · ${previewProgress}%`
-                  : `${formatFileSize(originalFile.size)} · ${originalDimensions.width} × ${originalDimensions.height}px`
+                ? `${formatFileSize(originalFile.size)} · ${originalDimensions.width} × ${originalDimensions.height}px`
                 : ui.maxSize}
             </p>
           </div>
-          <div className="rounded-full border border-[var(--line)] bg-[var(--bg)] px-3 py-1 text-xs font-bold text-[var(--muted)]">
-            {previewBadge}
-          </div>
+          {!isWorking ? (
+            <div className="rounded-full border border-[var(--line)] bg-[var(--bg)] px-3 py-1 text-xs font-bold text-[var(--muted)]">
+              {previewBadge}
+            </div>
+          ) : null}
         </div>
 
         <div className="overflow-hidden rounded-[24px] border border-[var(--line)]" style={previewBackground}>
@@ -574,16 +582,27 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
             {isWorking && (
               <div className="absolute inset-0 flex items-center justify-center bg-[var(--bg)]/70 px-6 backdrop-blur-sm">
                 <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-[28px] border border-[var(--line)] bg-[var(--panel)]/95 px-6 py-5 text-center shadow-[var(--shadow)]">
-                  <Loader2 size={40} className="animate-spin text-[var(--accent)]" />
                   <div className="space-y-2">
-                    <p className="text-base font-semibold text-[var(--text)]">{progressLabel || previewStatus}</p>
-                    <p className="text-sm font-bold text-[var(--muted)]">{previewProgress}%</p>
-                    <div className="h-2 w-64 overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
-                      <div
-                        className="h-full rounded-full bg-[var(--accent)] transition-all duration-300"
-                        style={{ width: `${previewProgress}%` }}
+                    <p className="text-base font-semibold text-[var(--text)]">
+                      {phase === "loading" ? ui.loadingModel : ui.processingImage}
+                    </p>
+                    <div className="flex items-center justify-center gap-2 pt-1">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full bg-[var(--accent)]"
+                        style={{ animation: "backgroundRemoverDot 0.9s ease-in-out infinite" }}
+                      />
+                      <span
+                        className="h-2.5 w-2.5 rounded-full bg-[var(--accent)]"
+                        style={{ animation: "backgroundRemoverDot 0.9s ease-in-out infinite", animationDelay: "0.14s" }}
+                      />
+                      <span
+                        className="h-2.5 w-2.5 rounded-full bg-[var(--accent)]"
+                        style={{ animation: "backgroundRemoverDot 0.9s ease-in-out infinite", animationDelay: "0.28s" }}
                       />
                     </div>
+                    <p className="text-xs font-medium tracking-[0.18em] text-[var(--muted)]">
+                      +{elapsedSeconds}s
+                    </p>
                   </div>
                 </div>
               </div>
@@ -708,6 +727,23 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
 
         <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileChange} hidden />
       </section>
+
+      <style>{`
+        @keyframes backgroundRemoverDot {
+          0% {
+            transform: translateY(0);
+            opacity: 0.45;
+          }
+          50% {
+            transform: translateY(-4px);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 0.45;
+          }
+        }
+      `}</style>
 
       {error && (
         <div className="rounded-[20px] border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200">
