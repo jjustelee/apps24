@@ -18,6 +18,7 @@ const DEFAULT_FONT_SIZE = 72;
 const DEFAULT_EFFECT = "static" as const;
 
 type SignboardEffect = "static" | "scroll" | "blink" | "glow";
+type FullscreenMode = "native" | "pseudo" | null;
 
 type SignboardText = {
   messageLabel: string;
@@ -63,9 +64,10 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
   const [fontSize, setFontSize] = useState(DEFAULT_FONT_SIZE);
   const [effect, setEffect] = useState<SignboardEffect>(DEFAULT_EFFECT);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [fullscreenMode, setFullscreenMode] = useState<FullscreenMode>(null);
   const [isFullscreenControlsVisible, setIsFullscreenControlsVisible] = useState(true);
   const fullscreenControlsTimeoutRef = useRef<number | null>(null);
+  const isFullscreen = fullscreenMode !== null;
 
   useEffect(() => {
     try {
@@ -102,7 +104,11 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement === displayRef.current);
+      const isNativeFullscreen = document.fullscreenElement === displayRef.current;
+      setFullscreenMode((currentMode) => {
+        if (currentMode === "pseudo") return currentMode;
+        return isNativeFullscreen ? "native" : null;
+      });
     };
 
     document.addEventListener("fullscreenchange", handleFullscreenChange);
@@ -212,12 +218,28 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
   const toggleFullscreen = async () => {
     if (!displayRef.current) return;
 
-    if (document.fullscreenElement) {
+    if (fullscreenMode === "native" && document.fullscreenElement) {
       await document.exitFullscreen();
       return;
     }
 
-    await displayRef.current.requestFullscreen();
+    if (fullscreenMode === "pseudo") {
+      setFullscreenMode(null);
+      return;
+    }
+
+    try {
+      if (displayRef.current.requestFullscreen) {
+        await displayRef.current.requestFullscreen();
+        setFullscreenMode("native");
+        return;
+      }
+    } catch {
+      // Fall through to pseudo fullscreen.
+    }
+
+    setFullscreenMode("pseudo");
+    showFullscreenControls();
   };
 
   const previewContent = (() => {
@@ -268,7 +290,7 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
       <section
         ref={displayRef}
         onPointerMove={showFullscreenControls}
-        className={`rounded-[36px] border border-[var(--panel-border)] bg-[var(--panel-glass)] shadow-2xl ${isFullscreen ? "fixed inset-0 z-50 flex h-screen w-screen flex-col rounded-none border-0 p-0 shadow-none" : "p-5 md:p-6"}`}
+        className={`rounded-[36px] border border-[var(--panel-border)] bg-[var(--panel-glass)] shadow-2xl ${isFullscreen ? "fixed inset-0 z-50 flex h-[100dvh] w-[100dvw] flex-col rounded-none border-0 p-0 shadow-none" : "p-5 md:p-6"}`}
         style={isFullscreen ? { backgroundColor } : undefined}
       >
         {!isFullscreen && (
