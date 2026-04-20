@@ -65,6 +65,7 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
   const [effect, setEffect] = useState<SignboardEffect>(DEFAULT_EFFECT);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
   const [fullscreenMode, setFullscreenMode] = useState<FullscreenMode>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [isFullscreenControlsVisible, setIsFullscreenControlsVisible] = useState(true);
   const fullscreenControlsTimeoutRef = useRef<number | null>(null);
   const isFullscreen = fullscreenMode !== null;
@@ -101,6 +102,15 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
     window.localStorage.setItem(STORAGE_KEYS.fontSize, String(fontSize));
     window.localStorage.setItem(STORAGE_KEYS.effect, effect);
   }, [backgroundColor, effect, fontSize, message, settingsLoaded, textColor]);
+
+  useEffect(() => {
+    const coarsePointer = window.matchMedia?.("(pointer: coarse)").matches ?? false;
+    const isIOS =
+      /iPad|iPhone|iPod/.test(window.navigator.userAgent) ||
+      (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
+
+    setIsTouchDevice(Boolean(coarsePointer || isIOS));
+  }, []);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -141,6 +151,11 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
       return;
     }
 
+    if (fullscreenMode === "pseudo" && isTouchDevice) {
+      setIsFullscreenControlsVisible(true);
+      return;
+    }
+
     setIsFullscreenControlsVisible(true);
     fullscreenControlsTimeoutRef.current = window.setTimeout(() => {
       setIsFullscreenControlsVisible(false);
@@ -152,10 +167,14 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
         fullscreenControlsTimeoutRef.current = null;
       }
     };
-  }, [isFullscreen]);
+  }, [fullscreenMode, isFullscreen, isTouchDevice]);
 
   const showFullscreenControls = () => {
     if (!isFullscreen) return;
+    if (fullscreenMode === "pseudo" && isTouchDevice) {
+      setIsFullscreenControlsVisible(true);
+      return;
+    }
 
     setIsFullscreenControlsVisible(true);
     if (fullscreenControlsTimeoutRef.current !== null) {
@@ -225,6 +244,12 @@ export function SignboardTool({ commonText, toolText }: ToolRendererProps) {
 
     if (fullscreenMode === "pseudo") {
       setFullscreenMode(null);
+      return;
+    }
+
+    if (isTouchDevice) {
+      setFullscreenMode("pseudo");
+      setIsFullscreenControlsVisible(true);
       return;
     }
 

@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import { isLocale } from "@/lib/site";
 
 type LegacyIndexProps = {
@@ -9,9 +9,8 @@ export default async function LegacyIndex({ params }: LegacyIndexProps) {
   const { locale } = await params;
 
   if (!isLocale(locale)) {
-    redirect("/");
+    permanentRedirect("/");
   }
 
-  redirect(`/${locale}`);
+  permanentRedirect(`/${locale}`);
 }
-

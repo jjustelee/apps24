@@ -11,6 +11,12 @@ import { LOCALES, DEFAULT_LOCALE } from "./lib/site";
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname === "/") {
+    const url = new URL(`/${DEFAULT_LOCALE}`, request.url);
+    return NextResponse.redirect(url, 308);
+  }
+
   const matchedLocale = LOCALES.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
