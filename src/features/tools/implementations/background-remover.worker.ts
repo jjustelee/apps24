@@ -3,7 +3,7 @@
 import { AutoModel, AutoProcessor, RawImage } from "@huggingface/transformers";
 
 const PRIMARY_MODEL_ID = "onnx-community/BiRefNet_512x512-ONNX";
-const MAX_INFERENCE_EDGE = 512;
+const MAX_INFERENCE_EDGE = 448;
 
 type BackgroundRemovalWorkerRequest = {
   type: "remove-background";
