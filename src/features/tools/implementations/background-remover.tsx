@@ -19,6 +19,9 @@ type BackgroundRemovalWorkerRequest = {
   type: "remove-background";
   runId: number;
   file: Blob;
+} | {
+  type: "warmup";
+  runId: 0;
 };
 
 type BackgroundRemovalWorkerResponse =
@@ -305,6 +308,8 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   }, []);
 
   useEffect(() => {
+    workerRef.current = createBackgroundRemovalWorker();
+
     return () => {
       workerRef.current?.terminate();
       workerRef.current = null;
@@ -372,6 +377,11 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
 
     const url = URL.createObjectURL(file);
     setOriginalPreviewUrl(url);
+
+    workerRef.current?.postMessage({
+      type: "warmup",
+      runId: 0,
+    } satisfies BackgroundRemovalWorkerRequest);
 
     const img = new Image();
     img.onload = () => {

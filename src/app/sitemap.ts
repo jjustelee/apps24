@@ -16,23 +16,20 @@ import { UNIT_CONVERTER_LONGTAIL_SLUGS } from "@/features/tools/unit-converter-l
 export default function sitemap(): MetadataRoute.Sitemap {
   const homeEntries = LOCALES.map((locale) => ({
     url: getLocalizedUrl(locale),
-    lastModified: new Date(),
   }));
 
   const toolEntries = getStaticToolParams().map(({ locale, slug }) => ({
     url: getLocalizedUrl(locale, `/${slug}`),
-    lastModified: new Date(),
   }));
 
   const contactEntries = LOCALES.map((locale) => ({
     url: getLocalizedUrl(locale, "/contact"),
-    lastModified: new Date(),
   }));
 
   const legalEntries = LOCALES.flatMap((locale) => [
-    { url: getLocalizedUrl(locale, "/about"), lastModified: new Date() },
-    { url: getLocalizedUrl(locale, "/privacy"), lastModified: new Date() },
-    { url: getLocalizedUrl(locale, "/terms"), lastModified: new Date() },
+    { url: getLocalizedUrl(locale, "/about") },
+    { url: getLocalizedUrl(locale, "/privacy") },
+    { url: getLocalizedUrl(locale, "/terms") },
   ]);
 
   const categoryEntries = LOCALES.flatMap((locale) =>
@@ -40,70 +37,60 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .sort((a, b) => a.order - b.order)
       .map((group) => ({
         url: getLocalizedUrl(locale, `/${group.slug}`),
-        lastModified: new Date(),
       })),
   );
 
   const unitConverterEntries = LOCALES.flatMap((locale) =>
     UNIT_CONVERTER_LONGTAIL_SLUGS.map((conversion) => ({
       url: getLocalizedUrl(locale, `/unit-converter/${conversion}`),
-      lastModified: new Date(),
     })),
   );
 
   const percentageCalculatorEntries = LOCALES.flatMap((locale) =>
     PERCENTAGE_CALCULATOR_LONGTAIL_SLUGS.map((mode) => ({
       url: getLocalizedUrl(locale, `/percentage-calculator/${mode}`),
-      lastModified: new Date(),
     })),
   );
 
   const qrGeneratorEntries = LOCALES.flatMap((locale) =>
     QR_GENERATOR_LONGTAIL_SLUGS.map((preset) => ({
       url: getLocalizedUrl(locale, `/qrgenerator/${preset}`),
-      lastModified: new Date(),
     })),
   );
 
   const imageCompressorEntries = LOCALES.flatMap((locale) =>
     IMAGE_COMPRESSOR_LONGTAIL_SLUGS.map((mode) => ({
       url: getLocalizedUrl(locale, `/image-compressor/${mode}`),
-      lastModified: new Date(),
     })),
   );
 
   const backgroundRemoverEntries = LOCALES.flatMap((locale) =>
     BACKGROUND_REMOVER_LONGTAIL_SLUGS.map((preset) => ({
       url: getLocalizedUrl(locale, `/background-remover/${preset}`),
-      lastModified: new Date(),
     })),
   );
 
   const pixelConverterEntries = LOCALES.flatMap((locale) =>
     PIXEL_CONVERTER_LONGTAIL_SLUGS.map((preset) => ({
       url: getLocalizedUrl(locale, `/pixel-converter/${preset}`),
-      lastModified: new Date(),
     })),
   );
 
   const base64EncoderEntries = LOCALES.flatMap((locale) =>
     BASE64_ENCODER_LONGTAIL_SLUGS.map((mode) => ({
       url: getLocalizedUrl(locale, `/base64-encoder-decoder/${mode}`),
-      lastModified: new Date(),
     })),
   );
 
   const jsonFormatterEntries = LOCALES.flatMap((locale) =>
     JSON_FORMATTER_LONGTAIL_SLUGS.map((mode) => ({
       url: getLocalizedUrl(locale, `/json-formatter/${mode}`),
-      lastModified: new Date(),
     })),
   );
 
   const barcodeGeneratorEntries = LOCALES.flatMap((locale) =>
     BARCODE_GENERATOR_LONGTAIL_SLUGS.map((format) => ({
       url: getLocalizedUrl(locale, `/barcodegenerator/${format}`),
-      lastModified: new Date(),
     })),
   );
 

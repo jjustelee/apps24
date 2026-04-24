@@ -135,8 +135,9 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
       });
 
       if (blob) {
+        const previewUrl = URL.createObjectURL(blob);
         setCompressedBlob(blob);
-        setCompressedPreview(URL.createObjectURL(blob));
+        setCompressedPreview(previewUrl);
       }
     } catch (err) {
       console.error(err);
@@ -170,6 +171,27 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
   const handleScaleChange = (val: number) => {
     setScale(val);
   };
+
+  const resetImage = () => {
+    setOriginalFile(null);
+    setOriginalPreview("");
+    setCompressedBlob(null);
+    setCompressedPreview("");
+    setOriginalDimensions({ width: 0, height: 0 });
+    setError(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (originalPreview) URL.revokeObjectURL(originalPreview);
+    };
+  }, [originalPreview]);
+
+  useEffect(() => {
+    return () => {
+      if (compressedPreview) URL.revokeObjectURL(compressedPreview);
+    };
+  }, [compressedPreview]);
 
   return (
     <div className="tool-container card-glass">
@@ -280,7 +302,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
                     {common.download}
                   </button>
                   
-                  <button onClick={() => setOriginalFile(null)} className="button-ghost">
+                  <button onClick={resetImage} className="button-ghost">
                     <RefreshCw size={18} />
                   </button>
                 </div>

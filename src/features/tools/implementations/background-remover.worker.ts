@@ -6,6 +6,9 @@ const PRIMARY_MODEL_ID = "onnx-community/BiRefNet_512x512-ONNX";
 const MAX_INFERENCE_EDGE = 384;
 
 type BackgroundRemovalWorkerRequest = {
+  type: "warmup";
+  runId: 0;
+} | {
   type: "remove-background";
   runId: number;
   file: Blob;
@@ -55,6 +58,21 @@ async function loadPipeline() {
 }
 
 self.addEventListener("message", async (event: MessageEvent<BackgroundRemovalWorkerRequest>) => {
+  if (event.data.type === "warmup") {
+    try {
+      await loadPipeline();
+      self.postMessage({ type: "ready", runId: event.data.runId } satisfies BackgroundRemovalWorkerResponse);
+    } catch (error: unknown) {
+      pipelinePromise = null;
+      self.postMessage({
+        type: "error",
+        runId: event.data.runId,
+        message: error instanceof Error ? error.message : "Background removal failed.",
+      } satisfies BackgroundRemovalWorkerResponse);
+    }
+    return;
+  }
+
   if (event.data.type !== "remove-background") return;
 
   const { runId, file } = event.data;
