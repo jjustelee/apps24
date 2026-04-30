@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: ImageCompressorLongtailPagePr
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "image compressor", mode],
+    robots: { index: false, follow: true },
   };
 }
 

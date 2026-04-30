@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: PixelConverterLongtailPagePro
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "pixel converter", preset],
+    robots: { index: false, follow: true },
   };
 }
 

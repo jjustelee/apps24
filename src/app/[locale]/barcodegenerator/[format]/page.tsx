@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: BarcodeGeneratorLongtailPageP
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "barcode", format],
+    robots: { index: false, follow: true },
   };
 }
 

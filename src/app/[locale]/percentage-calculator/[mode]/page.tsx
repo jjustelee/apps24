@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ToolShell } from "@/components/tool-shell";
 import { buildLocaleAlternates } from "@/lib/seo";
-import { getCommonText } from "@/features/tools/copy";
+import { getCommonText, getToolText } from "@/features/tools/copy";
 import { getToolBySlug } from "@/features/tools/registry";
 import { PercentageCalculatorTool } from "@/features/tools/implementations/percentage-calculator";
 import {
@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: PercentageCalculatorLongtailP
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "percentage calculator", mode],
+    robots: { index: false, follow: true },
   };
 }
 
@@ -57,6 +58,7 @@ export default async function PercentageCalculatorLongtailPage({ params }: Perce
   }
 
   const common = await getCommonText(validLocale);
+  const toolText = await getToolText(validLocale, tool);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -84,7 +86,7 @@ export default async function PercentageCalculatorLongtailPage({ params }: Perce
         description={text.description}
         seo={text.description}
       >
-        <PercentageCalculatorTool locale={validLocale} tool={tool} commonText={common} />
+        <PercentageCalculatorTool locale={validLocale} tool={tool} commonText={common} toolText={toolText} />
       </ToolShell>
     </>
   );

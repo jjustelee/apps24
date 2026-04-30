@@ -304,16 +304,6 @@ export async function ToolShell({
             </div>
           )}
 
-          <div style={{ padding: "2rem", background: "var(--bg)", borderRadius: "20px", marginTop: "2rem" }}>
-            <p className="tool-muted" style={{ fontSize: "1rem", lineHeight: "1.7", margin: "0 0 1rem 0" }}>
-              <strong>{title}</strong> {common.aboutPrefix} {description}
-            </p>
-            <p className="tool-muted" style={{ fontSize: "0.9rem", margin: 0, opacity: 0.8 }}>
-              {common.footerNote1}
-              <br />
-              {common.footerNote2}
-            </p>
-          </div>
         </section>
       </main>
     </div>

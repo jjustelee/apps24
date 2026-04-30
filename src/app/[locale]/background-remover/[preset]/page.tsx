@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: BackgroundRemoverLongtailPage
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "background remover", preset],
+    robots: { index: false, follow: true },
   };
 }
 

@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: Base64LongtailPageProps): Pro
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "base64", mode],
+    robots: { index: false, follow: true },
   };
 }
 

@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: UnitConverterLongtailPageProp
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, conversion, "unit converter"],
+    robots: { index: false, follow: true },
   };
 }
 

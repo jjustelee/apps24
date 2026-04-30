@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: JsonFormatterLongtailPageProp
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "json formatter", mode],
+    robots: { index: false, follow: true },
   };
 }
 

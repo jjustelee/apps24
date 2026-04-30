@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: QrGeneratorLongtailPageProps)
     title: text.title,
     description: text.description,
     keywords: [text.title, text.description, "qr code", preset],
+    robots: { index: false, follow: true },
   };
 }
 
