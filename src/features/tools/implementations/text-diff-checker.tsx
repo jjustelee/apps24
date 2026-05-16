@@ -3,9 +3,8 @@
 import { useState } from "react";
 import type { ToolRendererProps } from "./index";
 import { SplitSquareHorizontal, Trash2 } from "lucide-react";
-import type { Locale } from "@/lib/site";
 
-export function TextDiffCheckerTool({ locale, commonText: common }: ToolRendererProps) {
+export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
   
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");

@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import type { ToolRendererProps } from "./index";
-import { Copy, Trash2, Type, ArrowDown, ClipboardCheck } from "lucide-react";
-import type { Locale } from "@/lib/site";
+import { Copy, Trash2, Type, ClipboardCheck } from "lucide-react";
 
-export function CaseConverterTool({ locale, commonText: common }: ToolRendererProps) {
+export function CaseConverterTool({ commonText: common }: ToolRendererProps) {
   const [input, setInput] = useState("");
   const [copied, setCopied] = useState(false);
 

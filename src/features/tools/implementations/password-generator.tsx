@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { ToolRendererProps } from "./index";
-import { Copy, RefreshCw, ClipboardCheck, Key } from "lucide-react";
-import type { Locale } from "@/lib/site";
+import { Copy, RefreshCw, ClipboardCheck } from "lucide-react";
 
 function createPassword(
   length: number,
@@ -40,7 +39,7 @@ function createPassword(
   return result;
 }
 
-export function PasswordGeneratorTool({ locale, commonText: common }: ToolRendererProps) {
+export function PasswordGeneratorTool({ commonText: common }: ToolRendererProps) {
   
   const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);

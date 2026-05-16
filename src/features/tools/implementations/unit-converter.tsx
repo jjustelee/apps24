@@ -74,7 +74,7 @@ const CONVERSION_MAP: Record<UnitCategory, Record<string, UnitData>> = {
   },
 };
 
-export function UnitConverterTool({ tool, commonText: common }: ToolRendererProps) {
+export function UnitConverterTool({ commonText: common }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
   const conversion = typeof params.conversion === "string" ? params.conversion : undefined;

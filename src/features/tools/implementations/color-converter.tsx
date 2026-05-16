@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { ToolRendererProps } from "./index";
 import { Copy, RefreshCw, AlertCircle } from "lucide-react";
 
 // Helper functions
@@ -52,7 +51,7 @@ function rgbToHsl(r: number, g: number, b: number) {
   };
 }
 
-export function ColorConverterTool({ locale }: ToolRendererProps) {
+export function ColorConverterTool() {
   const [hex, setHex] = useState("#3b82f6");
   const [rgb, setRgb] = useState("rgb(59, 130, 246)");
   const [hsl, setHsl] = useState("hsl(217, 90%, 60%)");

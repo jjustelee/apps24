@@ -2,37 +2,9 @@
 
 import { useEffect, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import { useParams } from "next/navigation";
-import type { Locale } from "@/lib/site";
-
-const SAMPLE_TEXT =
-  "Apps24 helps you work faster with small browser tools. Paste your text here to count characters, words, and lines instantly.";
 const STORAGE_KEY_POSITION = "apps24.wordcounter.position";
 
-function getHighlightedPreview(text: string, position: number) {
-  if (!text || position < 1 || position > text.length) {
-    return {
-      before: text.slice(0, 80),
-      target: "",
-      after: text.length > 80 ? text.slice(80, 160) : "",
-    };
-  }
-
-  const index = position - 1;
-  const start = Math.max(0, index - 42);
-  const end = Math.min(text.length, index + 43);
-
-  return {
-    before: text.slice(start, index),
-    target: text.charAt(index),
-    after: text.slice(index + 1, end),
-  };
-}
-
-export function WordCounterTool({ tool, commonText: common }: ToolRendererProps) {
-  const params = useParams();
-  const locale = (params.locale as Locale) || "en";
-
+export function WordCounterTool({ commonText: common }: ToolRendererProps) {
   const [text, setText] = useState("");
   const [position, setPosition] = useState("0");
   const [isFocused, setIsFocused] = useState(false);

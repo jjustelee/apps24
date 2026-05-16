@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/lib/site";
@@ -56,7 +56,7 @@ const SENTENCES: Record<string, string[]> = {
     "他們賦有理性和良心，並應以兄弟關係的精神相對待。",
     "人人有資格享有本宣言所載的一切權利和自由，不分種族、膚色、性別、語言、宗教。",
     "人人有權享有生命、自由和人身安全。",
-    "任何人不得加以奴役或隸屬；一切形式의 奴役和奴隸販賣，均應予以禁止。",
+    "任何人不得加以奴役或隸屬；一切形式的奴役和奴隸販賣，均應予以禁止。",
     "任何人不得加以酷刑，或施以殘忍的、不人道的或侮辱性的待遇或刑罰。",
   ],
   es: [
@@ -72,7 +72,7 @@ const SENTENCES: Record<string, string[]> = {
     "Sie sind mit Vernunft und Gewissen begabt und sollen einander im Geist der Brüderlichkeit begegnen.",
     "Jeder hat Anspruch auf die in dieser Erklärung verkündeten Rechte und Freiheiten, ohne irgendeinen Unterschied.",
     "Jeder hat das Recht auf Leben, Freiheit und Sicherheit der Person.",
-    "Niemand darf in Slaverei oder Leibeigenschaft gehalten werden; Sklaverei und Sklavenhandel sind verboten.",
+    "Niemand darf in Sklaverei oder Leibeigenschaft gehalten werden; Sklaverei und Sklavenhandel sind verboten.",
     "Niemand darf der Folter oder grausamer, unmenschlicher oder erniedrigender Behandlung unterworfen werden.",
   ],
   pt: [
@@ -96,7 +96,7 @@ const SENTENCES: Record<string, string[]> = {
 const STORAGE_KEY_LANG = "apps24.dummytext.lang";
 const STORAGE_KEY_LENGTH = "apps24.dummytext.length";
 
-export function DummyTextTool({ tool, commonText: common }: ToolRendererProps) {
+export function DummyTextTool({ commonText: common }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
   

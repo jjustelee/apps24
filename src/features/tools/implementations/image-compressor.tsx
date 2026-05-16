@@ -1,9 +1,11 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "./index";
-import { Download, Upload, RefreshCw, Image as ImageIcon, CheckCircle, AlertCircle } from "lucide-react";
+import { Download, Upload, RefreshCw, Image as ImageIcon, AlertCircle } from "lucide-react";
 import { getImageCompressorLongtailPreset } from "@/features/tools/image-compressor-longtails";
 
 type CompressionFormat = "image/jpeg" | "image/webp" | "image/png";
@@ -29,7 +31,6 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
   const [format, setFormat] = useState<CompressionFormat>(defaultSelection.format);
 
   const [quality, setQuality] = useState(defaultSelection.quality);
-  const [targetWidth, setTargetWidth] = useState<number>(0);
   const [originalDimensions, setOriginalDimensions] = useState({ width: 0, height: 0 });
   const [scale, setScale] = useState(defaultSelection.scale); // 1 = 100%
 
@@ -61,6 +62,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
     return () => {
       if (recompressTimeoutRef.current) clearTimeout(recompressTimeoutRef.current);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [originalFile, quality, scale, format]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +88,6 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
     img.src = url;
     img.onload = () => {
       setOriginalDimensions({ width: img.width, height: img.height });
-      setTargetWidth(img.width);
       setScale(defaultSelection.scale);
     };
 

@@ -182,6 +182,56 @@ export default {
         ],
         relatedTools: "Ferramenta Relacionada: Calculadora de Porcentagem"
       },
+      percentagecalculator: {
+        title: "Calculadora de Porcentagem",
+        description: "Calcule porcentagens, aumentos, reduções e descontos instantaneamente.",
+        seo: "Calculadora de porcentagem online gratuita para descontos, aumentos, reduções e valores percentuais.",
+        longDescription: "A Calculadora de Porcentagem resolve as dúvidas percentuais mais comuns em um só lugar. Ela é útil para descontos de compras, crescimento de vendas, variação de preços, impostos e exercícios de matemática.",
+        usageContext: "Use para calcular descontos, analisar crescimento em relatórios, comparar valores antigos e novos ou descobrir quanto representa uma porcentagem de um total.",
+        examples: [
+          "Preços com desconto",
+          "Cálculos de taxa de conversão",
+          "Aumentos e reduções percentuais"
+        ],
+        howToUse: "1. Escolha um modo, como X% de Y ou desconto.\n2. Digite os números necessários.\n3. O resultado aparece instantaneamente e pode ser copiado.",
+        whyUse: "Porcentagens podem confundir quando há aumento, redução ou desconto. Esta calculadora separa os casos comuns e reduz erros de cálculo manual.",
+        popularConversions: [
+          "20% de 150",
+          "Aumento de 80 para 100",
+          "30% de desconto em 200",
+          "50 é quantos por cento de 200"
+        ],
+        faq: [
+          { q: "A ferramenta é gratuita?", a: "Sim. Ela pode ser usada online gratuitamente." },
+          { q: "Como calculo um desconto?", a: "Escolha o modo de desconto, informe o preço original e a porcentagem de desconto." },
+          { q: "Posso copiar o resultado?", a: "Sim. Use o botão de copiar para salvar o valor final com um resumo." }
+        ],
+        relatedTools: "Ferramenta relacionada: Conversor de unidades",
+        modeLabels: {
+          value: "X% de Y",
+          increase: "Taxa de aumento",
+          decrease: "Taxa de redução",
+          discount: "Taxa de desconto"
+        },
+        inputLabels: {
+          totalValue: "Valor total (Y)",
+          percentage: "Porcentagem (X%)",
+          originalValue: "Valor inicial",
+          newValue: "Valor final",
+          originalPrice: "Preço original",
+          discountPercentage: "Desconto (%)"
+        },
+        resultLabel: "Resultado do cálculo",
+        placeholderText: "Os resultados aparecem instantaneamente após inserir os números.",
+        savedAmount: "Economizado",
+        isText: "é",
+        ofText: "de",
+        percentText: "",
+        fromText: "de",
+        toText: "para",
+        increaseText: "aumentou.",
+        decreaseText: "diminuiu."
+      },
       ruler: {
         title: "Régua Online",
         description: "Meça distâncias na tela com calibração.",

@@ -181,6 +181,56 @@ export default {
         ],
         relatedTools: "Verwandtes Tool: Prozentrechner"
       },
+      percentagecalculator: {
+        title: "Prozentrechner",
+        description: "Berechnen Sie Prozente, Erhöhungen, Senkungen und Rabatte sofort.",
+        seo: "Kostenloser Online-Prozentrechner für Rabatte, prozentuale Änderungen, Erhöhungen und Senkungen.",
+        longDescription: "Der Prozentrechner löst die häufigsten Prozentfragen an einem Ort. Er ist nützlich für Einkaufsrabatte, Umsatzwachstum, Preisänderungen, Steuern und Mathematikaufgaben.",
+        usageContext: "Nutzen Sie ihn für Rabatte, Wachstumsanalysen, Vergleiche zwischen alten und neuen Werten oder um zu berechnen, welcher Anteil ein Wert ist.",
+        examples: [
+          "Reduzierte Produktpreise",
+          "Berechnung von Conversion-Rates",
+          "Prozentuale Erhöhungen und Senkungen"
+        ],
+        howToUse: "1. Wählen Sie einen Modus, zum Beispiel X% von Y oder Rabatt.\n2. Geben Sie die benötigten Zahlen ein.\n3. Das Ergebnis wird sofort berechnet und kann kopiert werden.",
+        whyUse: "Prozentrechnungen führen leicht zu Fehlern, besonders bei Erhöhungen, Senkungen oder Rabatten. Dieser Rechner trennt die häufigsten Fälle klar voneinander.",
+        popularConversions: [
+          "20% von 150",
+          "Erhöhung von 80 auf 100",
+          "30% Rabatt auf 200",
+          "50 ist wie viel Prozent von 200"
+        ],
+        faq: [
+          { q: "Ist dieses Tool kostenlos?", a: "Ja. Es kann kostenlos online verwendet werden." },
+          { q: "Wie berechne ich einen Rabatt?", a: "Wählen Sie den Rabattmodus und geben Sie den ursprünglichen Preis sowie den Rabattprozentsatz ein." },
+          { q: "Kann ich das Ergebnis kopieren?", a: "Ja. Mit der Kopieren-Schaltfläche speichern Sie den Endwert mit einer kurzen Zusammenfassung." }
+        ],
+        relatedTools: "Verwandtes Tool: Einheitenumrechner",
+        modeLabels: {
+          value: "X% von Y",
+          increase: "Erhöhungsrate",
+          decrease: "Senkungsrate",
+          discount: "Rabattrate"
+        },
+        inputLabels: {
+          totalValue: "Gesamtwert (Y)",
+          percentage: "Prozentsatz (X%)",
+          originalValue: "Startwert",
+          newValue: "Endwert",
+          originalPrice: "Originalpreis",
+          discountPercentage: "Rabatt (%)"
+        },
+        resultLabel: "Berechnungsergebnis",
+        placeholderText: "Die Ergebnisse erscheinen sofort nach der Eingabe.",
+        savedAmount: "Gespart",
+        isText: "ist",
+        ofText: "von",
+        percentText: "",
+        fromText: "von",
+        toText: "bis",
+        increaseText: "gestiegen.",
+        decreaseText: "gesunken."
+      },
       ruler: {
         title: "Online-Lineal",
         description: "Messen Sie Bildschirmabstände mit Kalibrierung.",

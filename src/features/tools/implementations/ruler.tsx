@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
-import type { Locale } from "@/lib/site";
 
 const DEFAULT_CARD_WIDTH_CM = 8.56;
 const REFERENCE_CARD_WIDTH_PX = 324;
@@ -25,7 +24,7 @@ function formatValue(value: number) {
   return Number.isFinite(value) ? value.toFixed(2) : "0.00";
 }
 
-export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRendererProps) {
+export function RulerTool({ commonText: common }: ToolRendererProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   
@@ -39,9 +38,6 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
   const [settingsLoaded, setSettingsLoaded] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Store pre-fullscreen size to restore it correctly
-  const preFsSizeRef = useRef<Size>({ width: 800, height: 500 });
 
   const pixelsPerCm = REFERENCE_CARD_WIDTH_PX / cardWidthCm;
   const pixelsPerIn = pixelsPerCm * 2.54;
@@ -84,7 +80,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
       window.removeEventListener("mousemove", handleMouseMove);
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, stageSize.height]);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -121,7 +117,7 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("fullscreenchange", handleResize);
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, stageSize.height]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -156,7 +152,6 @@ export function RulerTool({ locale, tool, commonText: common, toolText }: ToolRe
     }
 
     const drawAxis = (isVertical: boolean) => {
-      const length = isVertical ? stageSize.height : stageSize.width;
       const start = isVertical ? -origin.y : -origin.x;
       const end = isVertical ? stageSize.height - origin.y : stageSize.width - origin.x;
 

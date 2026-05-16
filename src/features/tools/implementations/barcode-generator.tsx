@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
+
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "@/features/tools/implementations";

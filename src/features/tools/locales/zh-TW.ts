@@ -182,6 +182,56 @@ export default {
         ],
         relatedTools: "相關工具：百分比計算器"
       },
+      percentagecalculator: {
+        title: "百分比計算器",
+        description: "立即計算百分比、增加、減少與折扣。",
+        seo: "免費線上百分比計算器，可快速計算百分比、增減率與折扣。",
+        longDescription: "百分比計算器可集中處理常見的百分比問題。無論是購物折扣、業績成長、價格變化、稅費估算或學習題目，都能即時得到清楚的計算結果。",
+        usageContext: "適合用於折扣價格、成長率、降低率、某數值的百分比，以及日常工作和學習中的快速計算。",
+        examples: [
+          "商品折扣價格",
+          "轉換率或成長率計算",
+          "百分比增加與減少"
+        ],
+        howToUse: "1. 選擇計算模式，例如 X% 的 Y 或折扣。\n2. 輸入需要的數字。\n3. 結果會立即顯示，並可複製使用。",
+        whyUse: "百分比計算容易因公式混淆而出錯。此工具能把常見情境拆成清楚模式，減少手動計算錯誤。",
+        popularConversions: [
+          "150 的 20%",
+          "從 80 增加到 100",
+          "200 元打 7 折",
+          "50 是 200 的百分之幾"
+        ],
+        faq: [
+          { q: "這個工具免費嗎？", a: "是的，可以免費線上使用。" },
+          { q: "如何計算折扣？", a: "選擇折扣模式，輸入原價與折扣百分比即可。" },
+          { q: "可以複製結果嗎？", a: "可以。點擊複製即可保存計算結果摘要。" }
+        ],
+        relatedTools: "相關工具：單位換算器",
+        modeLabels: {
+          value: "X% 的 Y",
+          increase: "成長率",
+          decrease: "降低率",
+          discount: "折扣率"
+        },
+        inputLabels: {
+          totalValue: "總值 (Y)",
+          percentage: "百分比 (X%)",
+          originalValue: "起始值",
+          newValue: "結束值",
+          originalPrice: "原價",
+          discountPercentage: "折扣 (%)"
+        },
+        resultLabel: "計算結果",
+        placeholderText: "輸入數字後會立即顯示結果。",
+        savedAmount: "節省",
+        isText: "是",
+        ofText: "的",
+        percentText: "",
+        fromText: "從",
+        toText: "到",
+        increaseText: "增加。",
+        decreaseText: "減少。"
+      },
       ruler: {
         title: "線上尺子",
         description: "使用信用卡校準測量螢幕距離。",
