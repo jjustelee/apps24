@@ -125,7 +125,25 @@ export default {
           { q: "Wo soll ich generierte Passwörter speichern?", a: "Die sicherste Option ist in der Regel ein vertrauenswürdiger Passwort-Manager." }
         ]
       },
-      textdiffchecker: { title: "Text-Vergleicher", description: "Texte vergleichen und Unterschiede finden.", seo: "Unterschiede zwischen Texten finden." },
+      textdiffchecker: {
+        title: "Text-Vergleicher",
+        description: "Vergleichen Sie zwei Texte und finden Sie Unterschiede schnell.",
+        seo: "Finden Sie Unterschiede zwischen zwei Texten direkt im Browser.",
+        longDescription: "Der Text-Vergleicher hilft dabei, zwei Versionen eines Textes nebeneinander zu prüfen und hinzugefügte, entfernte oder geänderte Stellen zu erkennen. Er eignet sich für Entwürfe, Übersetzungen, Notizen und kleine Inhaltsänderungen vor der Veröffentlichung.",
+        usageContext: "Nutzen Sie ihn, wenn Sie schnell verstehen möchten, was sich zwischen zwei Versionen geändert hat, ohne ein komplexes Vergleichsprogramm zu öffnen.",
+        examples: [
+          "Einen Entwurf mit einer überarbeiteten Version vergleichen",
+          "Unterschiede zwischen Übersetzungen prüfen",
+          "Inhaltsänderungen vor der Veröffentlichung kontrollieren"
+        ],
+        howToUse: "1. Fügen Sie den Originaltext in das erste Feld ein.\n2. Fügen Sie die geänderte Version in das zweite Feld ein.\n3. Starten Sie den Vergleich und prüfen Sie die hervorgehobenen Unterschiede.",
+        faq: [
+          { q: "Werden die Texte an einen Server gesendet?", a: "Nein. Der Vergleich ist für die Ausführung im Browser ausgelegt." },
+          { q: "Kann ich Code vergleichen?", a: "Ja. Das Tool kann Klartext, kurze Codeausschnitte und Konfigurationen vergleichen." },
+          { q: "Werden Leerzeichen erkannt?", a: "Ja. Leerzeichen und Zeilenumbrüche können angezeigt werden, wenn sich der Inhalt unterscheidet." }
+        ],
+        relatedTools: "Verwandtes Tool: Wortzähler",
+      },
       base64encoder: {
         title: "Base64-Encoder und -Decoder",
         description: "Konvertieren Sie Text in Base64 oder dekodieren Sie sofort.",

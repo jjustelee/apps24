@@ -125,7 +125,25 @@ export default {
           { q: "Où stocker les mots de passe générés?", a: "Un gestionnaire de mots de passe fiable est la meilleure option." }
         ]
       },
-      textdiffchecker: { title: "Comparateur de texte", description: "Comparer des textes", seo: "Trouver des différences entre deux textes." },
+      textdiffchecker: {
+        title: "Comparateur de texte",
+        description: "Comparez deux textes et repérez rapidement les différences.",
+        seo: "Trouver les différences entre deux textes directement dans le navigateur.",
+        longDescription: "Le comparateur de texte vous aide à placer deux versions d'un texte côte à côte et à repérer les lignes ajoutées, supprimées ou modifiées. Il est utile pour relire des brouillons, vérifier des traductions, comparer des notes ou contrôler de petites modifications de code ou de contenu.",
+        usageContext: "Utilisez-le lorsque vous devez vérifier ce qui a changé entre deux versions sans ouvrir un logiciel complexe de comparaison.",
+        examples: [
+          "Comparer deux brouillons d'article",
+          "Vérifier les différences entre deux traductions",
+          "Contrôler une modification de contenu avant publication"
+        ],
+        howToUse: "1. Collez le texte original dans le premier champ.\n2. Collez la version modifiée dans le second champ.\n3. Lancez la comparaison et examinez les différences mises en évidence.",
+        faq: [
+          { q: "Les textes sont-ils envoyés à un serveur ?", a: "Non. La comparaison est conçue pour fonctionner dans le navigateur." },
+          { q: "Puis-je comparer du code ?", a: "Oui. L'outil peut comparer du texte brut, y compris de petits extraits de code." },
+          { q: "Les espaces sont-ils importants ?", a: "Oui. Les changements d'espacement peuvent être signalés si le contenu diffère." }
+        ],
+        relatedTools: "Outil associé : Compteur de mots",
+      },
       base64encoder: {
         title: "Encodeur et décodeur Base64",
         description: "Convertissez du texte en Base64 ou décodez instantanément.",

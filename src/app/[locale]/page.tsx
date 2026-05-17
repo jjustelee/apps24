@@ -32,7 +32,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: string;
     featuredDescription: string;
     bestForLabel: string;
-    openTool: string;
     useCasesTitle: string;
     useCasesDescription: string;
     useCases: string[];
@@ -47,7 +46,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "Popular tools for everyday web tasks",
     featuredDescription: "Start with the tools people most often need for images, text, data, security, and quick calculations.",
     bestForLabel: "Useful for",
-    openTool: "Open tool",
     useCasesTitle: "What Apps24 helps you finish",
     useCasesDescription: "Each tool is focused on one practical task, so visitors can understand the purpose of the page and get a result quickly.",
     useCases: [
@@ -71,7 +69,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "자주 쓰는 웹 작업용 대표 툴",
     featuredDescription: "이미지, 텍스트, 데이터, 보안, 빠른 계산에 필요한 핵심 도구부터 바로 사용할 수 있습니다.",
     bestForLabel: "추천 사용",
-    openTool: "툴 열기",
     useCasesTitle: "Apps24로 처리할 수 있는 작업",
     useCasesDescription: "각 도구는 하나의 실용적인 작업에 집중해, 방문자가 페이지 목적을 바로 이해하고 결과를 빠르게 얻도록 설계되었습니다.",
     useCases: [
@@ -95,7 +92,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "Outils populaires pour les tâches web courantes",
     featuredDescription: "Commencez par les outils les plus utiles pour les images, le texte, les données, la sécurité et les calculs rapides.",
     bestForLabel: "Utile pour",
-    openTool: "Ouvrir l’outil",
     useCasesTitle: "Ce qu’Apps24 vous aide à terminer",
     useCasesDescription: "Chaque outil se concentre sur une tâche pratique afin que les visiteurs comprennent vite son objectif et obtiennent un résultat.",
     useCases: [
@@ -119,7 +115,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "日常のWeb作業でよく使うツール",
     featuredDescription: "画像、テキスト、データ、セキュリティ、簡単な計算に役立つ主要ツールから始められます。",
     bestForLabel: "主な用途",
-    openTool: "ツールを開く",
     useCasesTitle: "Apps24で完了できる作業",
     useCasesDescription: "各ツールは実用的なひとつの作業に集中しており、ページの目的を理解しやすく、すばやく結果を得られます。",
     useCases: [
@@ -143,7 +138,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "日常网页任务常用工具",
     featuredDescription: "从图片、文本、数据、安全和快速计算等最常用的工具开始。",
     bestForLabel: "适用于",
-    openTool: "打开工具",
     useCasesTitle: "Apps24 可以帮助你完成什么",
     useCasesDescription: "每个工具都专注于一个实际任务，让访问者能快速理解页面用途并获得结果。",
     useCases: [
@@ -167,7 +161,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "日常網頁任務常用工具",
     featuredDescription: "從圖片、文字、資料、安全和快速計算等最常用的工具開始。",
     bestForLabel: "適用於",
-    openTool: "開啟工具",
     useCasesTitle: "Apps24 可以幫你完成什麼",
     useCasesDescription: "每個工具都專注於一個實用任務，讓訪客能快速理解頁面用途並取得結果。",
     useCases: [
@@ -191,7 +184,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "Ferramentas populares para tarefas web diárias",
     featuredDescription: "Comece pelas ferramentas mais usadas para imagens, texto, dados, segurança e cálculos rápidos.",
     bestForLabel: "Útil para",
-    openTool: "Abrir ferramenta",
     useCasesTitle: "O que o Apps24 ajuda você a concluir",
     useCasesDescription: "Cada ferramenta foca uma tarefa prática para que os visitantes entendam o objetivo da página e obtenham um resultado rápido.",
     useCases: [
@@ -215,7 +207,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "Herramientas populares para tareas web diarias",
     featuredDescription: "Empiece por las herramientas más usadas para imágenes, texto, datos, seguridad y cálculos rápidos.",
     bestForLabel: "Útil para",
-    openTool: "Abrir herramienta",
     useCasesTitle: "Qué le ayuda a terminar Apps24",
     useCasesDescription: "Cada herramienta se centra en una tarea práctica para que los visitantes entiendan el propósito de la página y obtengan un resultado rápido.",
     useCases: [
@@ -239,7 +230,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "Beliebte Tools für tägliche Webaufgaben",
     featuredDescription: "Beginnen Sie mit den meistgenutzten Tools für Bilder, Text, Daten, Sicherheit und schnelle Berechnungen.",
     bestForLabel: "Nützlich für",
-    openTool: "Tool öffnen",
     useCasesTitle: "Was Apps24 Ihnen erleichtert",
     useCasesDescription: "Jedes Tool konzentriert sich auf eine praktische Aufgabe, damit Besucher den Zweck verstehen und schnell ein Ergebnis erhalten.",
     useCases: [
@@ -263,7 +253,6 @@ const HOME_REVIEW_COPY: Record<
     featuredTitle: "أدوات شائعة لمهام الويب اليومية",
     featuredDescription: "ابدأ بالأدوات الأكثر استخداماً للصور والنصوص والبيانات والأمان والحسابات السريعة.",
     bestForLabel: "مفيد لـ",
-    openTool: "فتح الأداة",
     useCasesTitle: "ما الذي يساعدك Apps24 على إنجازه",
     useCasesDescription: "تركز كل أداة على مهمة عملية واحدة حتى يفهم الزائر الغرض من الصفحة ويحصل على نتيجة بسرعة.",
     useCases: [
@@ -354,19 +343,15 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
 
   return (
     <>
-      <section className="hero">
-        <h1>{commonText.homeTitle || "Web Utility Suite"}</h1>
-        <p>{commonText.homeSubtitle || "A browser-based collection of tools for text editing, image handling, QR code generation, barcode generation, JSON validation, unit conversion, and other everyday web tasks."}</p>
+      <section className="home-hero-panel">
+        <div className="home-hero-copy">
+          <span className="home-eyebrow">{categoryCopy.sectionTitle}</span>
+          <h1>{commonText.homeTitle || "Web Utility Suite"}</h1>
+          <p>{commonText.homeSubtitle || "A browser-based collection of tools for text editing, image handling, QR code generation, barcode generation, JSON validation, unit conversion, and other everyday web tasks."}</p>
+        </div>
       </section>
 
-      <section className="home-category-browser">
-        <div className="home-category-browser-header">
-          <div>
-            <h2>{categoryCopy.sectionTitle}</h2>
-            <p>{categoryCopy.sectionDescription}</p>
-          </div>
-        </div>
-
+      <section className="home-category-browser" aria-label={categoryCopy.sectionTitle}>
         <ToolSearch locale={validLocale} tools={searchTools}>
           <section className="home-featured-tools">
             <div className="home-featured-header">
@@ -378,7 +363,12 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
 
             <div className="home-featured-grid">
               {featuredTools.map(({ tool, text }) => (
-                <article key={tool.id} className="home-featured-card">
+                <Link
+                  key={tool.id}
+                  href={`/${validLocale}/${tool.slug}`}
+                  className="home-featured-card"
+                  aria-label={text.title}
+                >
                   <div className="home-featured-card-top">
                     <span className="tool-card-icon" aria-hidden="true">
                       {tool.icon}
@@ -400,10 +390,7 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
                   ) : (
                     <p className="home-featured-context">{text.usageContext || text.longDescription}</p>
                   )}
-                  <Link href={`/${validLocale}/${tool.slug}`} className="home-featured-link">
-                    {reviewCopy.openTool}
-                  </Link>
-                </article>
+                </Link>
               ))}
             </div>
           </section>

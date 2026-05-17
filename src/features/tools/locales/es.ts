@@ -125,7 +125,25 @@ export default {
           { q: "¿Dónde guardar las contraseñas generadas?", a: "La opción más segura suele ser un administrador de contraseñas de confianza." }
         ]
       },
-      textdiffchecker: { title: "Comparador de Texto", description: "Compare textos y encuentre diferencias.", seo: "Encontrar diferencias entre textos." },
+      textdiffchecker: {
+        title: "Comparador de Texto",
+        description: "Compare textos y encuentre diferencias rápidamente.",
+        seo: "Encuentre diferencias entre dos textos directamente en el navegador.",
+        longDescription: "El Comparador de Texto ayuda a poner dos versiones de un texto lado a lado y detectar partes añadidas, eliminadas o modificadas. Es útil para revisar borradores, comparar traducciones, comprobar notas y verificar pequeños cambios antes de publicar.",
+        usageContext: "Úselo cuando necesite entender qué cambió entre dos versiones sin abrir un programa complejo de comparación.",
+        examples: [
+          "Comparar un borrador con una versión revisada",
+          "Revisar diferencias entre traducciones",
+          "Comprobar cambios de contenido antes de publicar"
+        ],
+        howToUse: "1. Pegue el texto original en el primer campo.\n2. Pegue la versión modificada en el segundo campo.\n3. Ejecute la comparación y revise las diferencias resaltadas.",
+        faq: [
+          { q: "¿Los textos se envían a un servidor?", a: "No. La comparación está diseñada para funcionar en el navegador." },
+          { q: "¿Puedo comparar código?", a: "Sí. La herramienta puede comparar texto plano, fragmentos cortos de código y configuraciones." },
+          { q: "¿Detecta diferencias de espacios?", a: "Sí. Los espacios y saltos de línea pueden aparecer cuando el contenido difiere." }
+        ],
+        relatedTools: "Herramienta relacionada: Contador de palabras",
+      },
       base64encoder: {
         title: "Codificador y decodificador Base64",
         description: "Convierta texto a Base64 o decodifique instantáneamente.",

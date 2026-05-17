@@ -125,7 +125,25 @@ export default {
           { q: "Onde armazenar as senhas geradas?", a: "A opção mais segura geralmente é um gerenciador de senhas confiável." }
         ]
       },
-      textdiffchecker: { title: "Comparador de Texto", description: "Compare textos e encontre diferenças.", seo: "Encontrar diferenças entre textos." },
+      textdiffchecker: {
+        title: "Comparador de Texto",
+        description: "Compare textos e encontre diferenças rapidamente.",
+        seo: "Encontre diferenças entre dois textos diretamente no navegador.",
+        longDescription: "O Comparador de Texto ajuda a colocar duas versões de um texto lado a lado e identificar trechos adicionados, removidos ou alterados. É útil para revisar rascunhos, comparar traduções, conferir notas e verificar pequenas alterações antes da publicação.",
+        usageContext: "Use quando precisar entender o que mudou entre duas versões sem abrir um software complexo de comparação.",
+        examples: [
+          "Comparar um rascunho com a versão revisada",
+          "Verificar diferenças entre traduções",
+          "Conferir alterações de conteúdo antes de publicar"
+        ],
+        howToUse: "1. Cole o texto original no primeiro campo.\n2. Cole a versão modificada no segundo campo.\n3. Execute a comparação e revise as diferenças destacadas.",
+        faq: [
+          { q: "Os textos são enviados para um servidor?", a: "Não. A comparação foi projetada para funcionar no navegador." },
+          { q: "Posso comparar código?", a: "Sim. A ferramenta pode comparar texto simples, pequenos trechos de código e configurações." },
+          { q: "Diferenças de espaço são detectadas?", a: "Sim. Espaços e quebras de linha podem aparecer quando o conteúdo difere." }
+        ],
+        relatedTools: "Ferramenta relacionada: Contador de palavras",
+      },
       base64encoder: {
         title: "Codificador e decodificador Base64",
         description: "Converta texto em Base64 ou decodifique instantaneamente.",
