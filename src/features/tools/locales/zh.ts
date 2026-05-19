@@ -198,6 +198,7 @@ export default {
           { q: "为什么温度的换算不同？", a: "与其他大多数使用简单比例的单位不同，温度标度（如摄氏到华氏）包含偏移量，本工具会应用其精确公式。" },
           { q: "可以在手机上使用吗？", a: "可以。单位换算器完全具有响应性，在手机浏览器中运行完美。" }
         ],
+        relatedTools: "相关工具：百分比计算器",
       },
       percentagecalculator: {
         title: "百分比计算器",
@@ -248,6 +249,25 @@ export default {
         toText: "到",
         increaseText: "增长了。",
         decreaseText: "减少了。"
+      },
+      currencyconverter: {
+        title: "汇率转换器",
+        description: "使用每日参考汇率快速换算主要货币。",
+        seo: "换算 USD、EUR、KRW、JPY、CNY 等主要货币，并显示汇率来源和基准日期。",
+        longDescription: "汇率转换器可帮助你快速估算主要货币之间的金额。它使用 Frankfurter 的参考汇率，并清楚显示基础货币、目标货币、汇率和基准日期。",
+        usageContext: "适合比较商品价格、规划旅行预算、查看海外购物金额、核对发票或估算汇款金额。本工具用于参考，不代表最终银行结算汇率。",
+        examples: [
+          "USD 到 CNY 预算估算",
+          "EUR 到 KRW 价格比较",
+          "JPY 到 CNY 购买金额检查"
+        ],
+        howToUse: "1. 输入金额。\n2. 选择来源货币和目标货币。\n3. 查看换算结果和主要汇率。\n4. 检查基准日期，并注意银行或银行卡实际汇率可能不同。",
+        whyUse: "汇率会随日期和数据来源变化。本工具保持界面简洁，同时清楚显示来源和日期。",
+        faq: [
+          { q: "这是实时银行汇率吗？", a: "不是。这是每日参考汇率。银行、银行卡、兑换点和汇款服务的实际汇率及手续费可能不同。" },
+          { q: "使用哪个数据来源？", a: "本工具使用 Frankfurter，一个基于机构参考数据的免费汇率 API。" },
+          { q: "汇率多久更新一次？", a: "Frankfurter 在工作日更新汇率，页面会显示数据提供方返回的基准日期。" }
+        ]
       },
       ruler: {
         title: "在线标尺",
@@ -538,12 +558,12 @@ export default {
       esLabel: "西班牙语",
       deLabel: "德语",
       arLabel: "阿拉伯语",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
-      contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      about: "关于我们",
+      privacy: "隐私政策",
+      terms: "条款",
+      contact: "联系我们",
+      seoTitle: "专业指南",
+      aboutPrefix: "这款免费的在线工具经过优化，适用于",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

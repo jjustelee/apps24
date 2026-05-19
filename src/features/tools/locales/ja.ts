@@ -250,6 +250,25 @@ export default {
         increaseText: "増加しました。",
         decreaseText: "減少しました。"
       },
+      currencyconverter: {
+        title: "為替レート変換",
+        description: "毎日の参考レートで主要通貨をすばやく換算します。",
+        seo: "USD、EUR、KRW、JPY、CNY などの主要通貨を、提供元と基準日を確認しながら換算できます。",
+        longDescription: "為替レート変換は、主要通貨間の金額をすばやく見積もるためのツールです。Frankfurter の参考レートを使用し、基準通貨、変換先通貨、レート、基準日を分かりやすく表示します。",
+        usageContext: "海外商品の価格比較、旅行予算、海外決済額の確認、請求書の確認、送金前の概算に使えます。最終的な銀行決済レートではなく参考用です。",
+        examples: [
+          "USD から JPY の旅行予算",
+          "EUR から KRW の価格比較",
+          "JPY から USD の金額確認"
+        ],
+        howToUse: "1. 金額を入力します。\n2. 変換元と変換先の通貨を選びます。\n3. 換算結果と主要レートを確認します。\n4. 基準日を確認し、銀行やカード会社の実際のレートとは異なる場合がある点に注意してください。",
+        whyUse: "為替レートは日付や提供元によって変わります。このツールはシンプルな画面で、出典と基準日を明確に表示します。",
+        faq: [
+          { q: "これはリアルタイムの銀行レートですか？", a: "いいえ。毎日の参考レートです。銀行、カード会社、両替所、送金サービスの実際のレートや手数料とは異なる場合があります。" },
+          { q: "どの提供元を使っていますか？", a: "機関系の参考データをもとにした無料 API の Frankfurter を使用しています。" },
+          { q: "どのくらいの頻度で更新されますか？", a: "Frankfurter は営業日にレートを更新します。ページには提供元が返した基準日を表示します。" }
+        ]
+      },
       ruler: {
         title: "定規オンライン",
         description: "カード調整機能付きで画面上の長さを測定します。",
@@ -539,12 +558,12 @@ export default {
       esLabel: "スペイン語",
       deLabel: "ドイツ語",
       arLabel: "アラビア語",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
-      contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      about: "概要",
+      privacy: "プライバシー",
+      terms: "利用規約",
+      contact: "お問い合わせ",
+      seoTitle: "プロ向けガイド",
+      aboutPrefix: "この無料オンラインツールは",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

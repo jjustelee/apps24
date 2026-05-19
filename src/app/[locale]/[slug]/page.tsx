@@ -6,7 +6,7 @@ import { buildLocaleAlternates } from "@/lib/seo";
 import { getStaticToolParams, getToolBySlug } from "@/features/tools/registry";
 import { getToolText, getCommonText } from "@/features/tools/copy";
 import { toolRenderers } from "@/features/tools/implementations";
-import { isLocale, type Locale } from "@/lib/site";
+import { getLocalizedUrl, isLocale, type Locale } from "@/lib/site";
 
 type ToolPageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -35,7 +35,7 @@ export async function generateMetadata({
   const text = await getToolText(locale as Locale, tool);
 
   return {
-    alternates: buildLocaleAlternates(locale as Locale, `/${slug}`),
+    alternates: buildLocaleAlternates(locale as Locale, `/${slug}`, tool.locales),
     title: text.title,
     description: text.description,
     keywords: tool.keywords,
@@ -59,6 +59,7 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
 
   const text = await getToolText(validLocale, tool);
   const common = await getCommonText(validLocale);
+  const toolUrl = getLocalizedUrl(validLocale, `/${tool.slug}`);
 
   const Renderer = toolRenderers[tool.implementationKey];
   const toolData =
@@ -73,16 +74,60 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": text.title,
-    "description": text.description,
-    "applicationCategory": tool.category,
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": text.title,
+        "description": text.description,
+        "applicationCategory": tool.category,
+        "operatingSystem": "Any",
+        "url": toolUrl,
+        "inLanguage": validLocale,
+        "isAccessibleForFree": true,
+        "publisher": {
+          "@type": "Organization",
+          "name": "Apps24",
+          "url": getLocalizedUrl(validLocale),
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Apps24",
+            "item": getLocalizedUrl(validLocale),
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": text.title,
+            "item": toolUrl,
+          },
+        ],
+      },
+      ...(text.faq?.length
+        ? [
+            {
+              "@type": "FAQPage",
+              "mainEntity": text.faq.map((item) => ({
+                "@type": "Question",
+                "name": item.q,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": item.a,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
   };
 
   return (

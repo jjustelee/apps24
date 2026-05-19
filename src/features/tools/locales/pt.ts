@@ -250,6 +250,25 @@ export default {
         increaseText: "aumentou.",
         decreaseText: "diminuiu."
       },
+      currencyconverter: {
+        title: "Conversor de moedas",
+        description: "Converta moedas principais com taxas de referência diárias.",
+        seo: "Converta USD, EUR, KRW, JPY, CNY e outras moedas com fonte e data de referência visíveis.",
+        longDescription: "O conversor de moedas ajuda a estimar rapidamente valores entre moedas principais. Ele usa taxas de referência do Frankfurter e mostra moeda base, moeda de destino, taxa e data de referência.",
+        usageContext: "Use para comparar preços, planejar viagens, revisar compras internacionais, conferir faturas ou estimar transferências. É uma ferramenta de referência, não uma cotação bancária final.",
+        examples: [
+          "Estimativa de USD para BRL",
+          "Comparação de EUR para KRW",
+          "Verificação de JPY para EUR"
+        ],
+        howToUse: "1. Insira o valor.\n2. Escolha a moeda de origem e destino.\n3. Veja o valor convertido e as principais taxas.\n4. Confira a data de referência e lembre-se de que bancos e cartões podem aplicar taxas diferentes.",
+        whyUse: "As taxas de câmbio mudam por data e fornecedor. Esta ferramenta mantém a interface simples e mostra fonte e data com clareza.",
+        faq: [
+          { q: "São taxas bancárias em tempo real?", a: "Não. São taxas de referência diárias. Bancos, cartões, casas de câmbio e transferências podem aplicar taxas e tarifas diferentes." },
+          { q: "Qual fonte é usada?", a: "A ferramenta usa o Frankfurter, uma API gratuita baseada em dados de referência institucionais." },
+          { q: "Com que frequência as taxas são atualizadas?", a: "O Frankfurter atualiza as taxas em dias úteis e a página mostra a data de referência retornada." }
+        ]
+      },
       ruler: {
         title: "Régua Online",
         description: "Meça distâncias na tela com calibração.",
@@ -539,12 +558,12 @@ export default {
       esLabel: "Espanhol",
       deLabel: "Alemão",
       arLabel: "Árabe",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
-      contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      about: "Sobre",
+      privacy: "Privacidade",
+      terms: "Termos",
+      contact: "Contato",
+      seoTitle: "Guia profissional",
+      aboutPrefix: "Esta ferramenta online gratuita é otimizada para",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

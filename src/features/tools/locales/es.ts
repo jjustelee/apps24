@@ -250,6 +250,25 @@ export default {
         increaseText: "aumentó.",
         decreaseText: "disminuyó."
       },
+      currencyconverter: {
+        title: "Conversor de divisas",
+        description: "Convierte divisas principales con tipos de referencia diarios.",
+        seo: "Convierte USD, EUR, KRW, JPY, CNY y otras divisas con fecha de referencia y fuente visible.",
+        longDescription: "El conversor de divisas ayuda a estimar rápidamente importes entre monedas principales. Usa tipos de referencia de Frankfurter y muestra la moneda base, la moneda destino, el tipo y la fecha de referencia.",
+        usageContext: "Úsalo para comparar precios, planificar viajes, revisar compras internacionales, comprobar facturas o estimar transferencias. Es una herramienta de referencia, no un tipo bancario final.",
+        examples: [
+          "Estimación de USD a EUR",
+          "Comparación de EUR a KRW",
+          "Revisión de JPY a EUR"
+        ],
+        howToUse: "1. Introduce el importe.\n2. Elige la divisa de origen y destino.\n3. Consulta el importe convertido y los tipos principales.\n4. Revisa la fecha de referencia y recuerda que los bancos o tarjetas pueden aplicar otros tipos.",
+        whyUse: "Los tipos de cambio cambian por fecha y proveedor. Esta herramienta mantiene una interfaz simple y muestra claramente la fuente y la fecha.",
+        faq: [
+          { q: "¿Son tipos bancarios en vivo?", a: "No. Son tipos de referencia diarios. Los tipos y comisiones reales de bancos, tarjetas o transferencias pueden variar." },
+          { q: "¿Qué fuente se usa?", a: "La herramienta usa Frankfurter, una API gratuita basada en datos de referencia institucionales." },
+          { q: "¿Cada cuánto se actualizan?", a: "Frankfurter actualiza los tipos en días laborables y la página muestra la fecha de referencia devuelta." }
+        ]
+      },
       ruler: {
         title: "Regla en Línea",
         description: "Mida distancias en pantalla con calibración.",
@@ -539,12 +558,12 @@ export default {
       esLabel: "Español",
       deLabel: "Alemán",
       arLabel: "Árabe",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
-      contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      about: "Acerca de",
+      privacy: "Privacidad",
+      terms: "Términos",
+      contact: "Contacto",
+      seoTitle: "Guía profesional",
+      aboutPrefix: "Esta herramienta en línea gratuita está optimizada para",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

@@ -250,6 +250,25 @@ export default {
         increaseText: "增加。",
         decreaseText: "減少。"
       },
+      currencyconverter: {
+        title: "匯率轉換器",
+        description: "使用每日參考匯率快速換算主要貨幣。",
+        seo: "換算 USD、EUR、KRW、JPY、CNY 等主要貨幣，並顯示匯率來源與基準日期。",
+        longDescription: "匯率轉換器可協助你快速估算主要貨幣之間的金額。它使用 Frankfurter 的參考匯率，並清楚顯示基礎貨幣、目標貨幣、匯率與基準日期。",
+        usageContext: "適合比較商品價格、規劃旅行預算、查看海外購物金額、核對發票或估算匯款金額。本工具用於參考，不代表最終銀行結算匯率。",
+        examples: [
+          "USD 到 TWD 預算估算",
+          "EUR 到 KRW 價格比較",
+          "JPY 到 TWD 購買金額檢查"
+        ],
+        howToUse: "1. 輸入金額。\n2. 選擇來源貨幣與目標貨幣。\n3. 查看換算結果與主要匯率。\n4. 檢查基準日期，並注意銀行或信用卡實際匯率可能不同。",
+        whyUse: "匯率會隨日期和資料來源變化。本工具保持介面簡潔，同時清楚顯示來源與日期。",
+        faq: [
+          { q: "這是即時銀行匯率嗎？", a: "不是。這是每日參考匯率。銀行、信用卡、換匯點與匯款服務的實際匯率及手續費可能不同。" },
+          { q: "使用哪個資料來源？", a: "本工具使用 Frankfurter，一個基於機構參考資料的免費匯率 API。" },
+          { q: "匯率多久更新一次？", a: "Frankfurter 會在工作日更新匯率，頁面會顯示資料提供方返回的基準日期。" }
+        ]
+      },
       ruler: {
         title: "線上尺子",
         description: "使用信用卡校準測量螢幕距離。",
@@ -539,12 +558,12 @@ export default {
       esLabel: "西班牙語",
       deLabel: "德語",
       arLabel: "阿拉伯語",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
-      contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      about: "關於我們",
+      privacy: "隱私政策",
+      terms: "條款",
+      contact: "聯絡我們",
+      seoTitle: "專業指南",
+      aboutPrefix: "這個免費線上工具經過最佳化，適用於",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

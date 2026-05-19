@@ -34,5 +34,8 @@ export const toolRenderers: Record<string, ToolRenderer> = {
   colorConverter: dynamic(() => import("@/features/tools/implementations/color-converter").then(m => m.ColorConverterTool)),
   unitConverter: dynamic(() => import("@/features/tools/implementations/unit-converter").then(m => m.UnitConverterTool)),
   percentageCalculator: dynamic(() => import("@/features/tools/implementations/percentage-calculator").then(m => m.PercentageCalculatorTool)),
+  currencyConverter: dynamic(() => import("@/features/tools/implementations/currency-converter").then(m => m.CurrencyConverterTool)),
+  salaryCalculator: dynamic(() => import("@/features/tools/implementations/salary-calculator").then(m => m.SalaryCalculatorTool)),
+  outdoorHealthIndex: dynamic(() => import("@/features/tools/implementations/outdoor-health-index").then(m => m.OutdoorHealthIndexTool)),
   ipLookup: dynamic(() => import("@/features/tools/implementations/ip-lookup").then(m => m.IpLookupTool)),
 };

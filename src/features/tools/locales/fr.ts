@@ -198,6 +198,7 @@ export default {
           { q: "Pourquoi la conversion de température est-elle différente ?", a: "Puisque les échelles de température incluent des décalages (offsets), notre outil applique correctement ces formules exactes." },
           { q: "Puis-je l'utiliser sur mon téléphone mobile ?", a: "Oui. Le convertisseur est entièrement réactif et fonctionne parfaitement sur les navigateurs mobiles." }
         ],
+        relatedTools: "Outil associé : Calculatrice de pourcentage",
       },
       percentagecalculator: {
         title: "Calculatrice de Pourcentage",
@@ -248,6 +249,25 @@ export default {
         toText: "à",
         increaseText: "augmenté.",
         decreaseText: "diminué."
+      },
+      currencyconverter: {
+        title: "Convertisseur de devises",
+        description: "Convertissez les principales devises avec des taux de référence quotidiens.",
+        seo: "Convertissez USD, EUR, KRW, JPY, CNY et d'autres devises avec la date et la source du taux affichées.",
+        longDescription: "Le convertisseur de devises permet d'estimer rapidement une valeur entre les principales monnaies. Il utilise les taux de référence de Frankfurter et affiche la devise de base, la devise cible, le taux et la date de référence.",
+        usageContext: "Utilisez-le pour comparer des prix, préparer un voyage, vérifier un achat à l'étranger, relire une facture ou estimer un transfert. Il s'agit d'un outil de référence, pas d'un taux bancaire final.",
+        examples: [
+          "Estimation USD vers EUR",
+          "Comparaison EUR vers KRW",
+          "Vérification JPY vers EUR"
+        ],
+        howToUse: "1. Saisissez le montant.\n2. Choisissez la devise source et la devise cible.\n3. Consultez le montant converti et les principaux taux.\n4. Vérifiez la date de référence et gardez à l'esprit que les taux bancaires peuvent varier.",
+        whyUse: "Les taux changent selon la date et le fournisseur. Cet outil garde l'interface simple tout en affichant clairement la source et la date.",
+        faq: [
+          { q: "Est-ce un taux bancaire en direct ?", a: "Non. Il s'agit de taux de référence quotidiens. Les taux et frais réels des banques, cartes ou services de transfert peuvent différer." },
+          { q: "Quelle source est utilisée ?", a: "L'outil utilise Frankfurter, une API gratuite basée sur des données de référence institutionnelles." },
+          { q: "À quelle fréquence les taux sont-ils mis à jour ?", a: "Frankfurter met à jour les taux les jours ouvrés et la page affiche la date de référence retournée." }
+        ]
       },
       ruler: {
         title: "Règle en ligne",
@@ -538,12 +558,12 @@ export default {
       esLabel: "Espagnol",
       deLabel: "Allemand",
       arLabel: "Arabe",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
+      about: "À propos",
+      privacy: "Confidentialité",
+      terms: "Conditions",
       contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      seoTitle: "Guide professionnel",
+      aboutPrefix: "Cet outil en ligne gratuit est optimisé pour",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

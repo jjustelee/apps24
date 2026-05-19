@@ -16,6 +16,7 @@ export type ToolCategoryGroup =
   | "images-pdf-tools"
   | "code-data-tools"
   | "convert-calculate-tools"
+  | "daily-life-tools"
   | "generator-tools"
   | "time-display-tools";
 

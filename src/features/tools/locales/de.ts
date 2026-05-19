@@ -249,6 +249,25 @@ export default {
         increaseText: "gestiegen.",
         decreaseText: "gesunken."
       },
+      currencyconverter: {
+        title: "Währungsrechner",
+        description: "Rechnen Sie wichtige Währungen mit täglichen Referenzkursen um.",
+        seo: "Rechnen Sie USD, EUR, KRW, JPY, CNY und weitere Währungen mit angezeigter Quelle und Referenzdatum um.",
+        longDescription: "Der Währungsrechner hilft dabei, Beträge zwischen wichtigen Währungen schnell zu schätzen. Er nutzt Referenzkurse von Frankfurter und zeigt Basiswährung, Zielwährung, Kurs und Referenzdatum übersichtlich an.",
+        usageContext: "Nutzen Sie ihn für Preisvergleiche, Reisebudgets, Auslandskäufe, Rechnungen oder grobe Überweisungsbeträge. Er ist für Referenzwerte gedacht, nicht für die endgültige Bankabrechnung.",
+        examples: [
+          "USD in EUR schätzen",
+          "EUR in KRW vergleichen",
+          "JPY in EUR prüfen"
+        ],
+        howToUse: "1. Betrag eingeben.\n2. Ausgangs- und Zielwährung wählen.\n3. Umgerechneten Betrag und wichtige Kurse ansehen.\n4. Referenzdatum prüfen und mögliche Bank- oder Kartengebühren beachten.",
+        whyUse: "Wechselkurse ändern sich je nach Datum und Anbieter. Dieses Tool bleibt einfach und zeigt Quelle sowie Datum klar an.",
+        faq: [
+          { q: "Sind das Live-Bankkurse?", a: "Nein. Es sind tägliche Referenzkurse. Tatsächliche Bank-, Karten-, Wechselstellen- oder Transfergebühren können abweichen." },
+          { q: "Welche Quelle wird verwendet?", a: "Das Tool verwendet Frankfurter, eine kostenlose API für Referenzwechselkurse." },
+          { q: "Wie oft werden die Kurse aktualisiert?", a: "Frankfurter aktualisiert Kurse an Werktagen. Die Seite zeigt das zurückgegebene Referenzdatum." }
+        ]
+      },
       ruler: {
         title: "Online-Lineal",
         description: "Messen Sie Bildschirmabstände mit Kalibrierung.",
@@ -538,12 +557,12 @@ export default {
       esLabel: "Spanisch",
       deLabel: "Deutsch",
       arLabel: "Arabisch",
-      about: "About Us",
-      privacy: "Privacy Policy",
-      terms: "Terms",
-      contact: "Contact",
-      seoTitle: "Professional Guide",
-      aboutPrefix: "This free online tool...",
+      about: "Über uns",
+      privacy: "Datenschutz",
+      terms: "Nutzungsbedingungen",
+      contact: "Kontakt",
+      seoTitle: "Professioneller Leitfaden",
+      aboutPrefix: "Dieses kostenlose Online-Tool ist optimiert für",
       imageCategory: "Image",
       securityCategory: "Security",
       timeCategory: "Time",

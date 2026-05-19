@@ -44,6 +44,8 @@
 }
 
 html {
+  min-height: 100%;
+  overflow-y: auto;
   scroll-behavior: smooth;
 }
 
@@ -236,6 +238,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding-bottom: 48px;
 }
 
 /* Home discovery */
@@ -891,6 +894,8 @@ a {
   grid-template-columns: 260px minmax(0, 1fr);
   gap: 32px;
   align-items: start;
+  width: 100%;
+  min-width: 0;
 }
 
 @media (max-width: 1024px) {
@@ -911,6 +916,15 @@ a {
   backdrop-filter: blur(10px);
   border-radius: var(--radius);
   border: 1px solid var(--panel-border);
+  min-width: 0;
+}
+
+.tool-sidebar-desktop {
+  max-height: calc(100dvh - 48px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
 }
 
 .sidebar-group-list {
@@ -919,8 +933,33 @@ a {
   gap: 12px;
 }
 
+.tool-sidebar-desktop .sidebar-group-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: visible;
+  padding-right: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tool-sidebar-desktop .sidebar-group-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tool-sidebar-desktop .sidebar-group-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tool-sidebar-desktop .sidebar-group-list::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+}
+
+.tool-sidebar-desktop .sidebar-group-list:hover {
+  scrollbar-width: thin;
+}
+
 .sidebar-group {
-  overflow: hidden;
+  overflow: visible;
   border-radius: 18px;
   border: 1px solid var(--panel-border);
   transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
@@ -1026,6 +1065,11 @@ a {
     background: transparent;
     border-radius: 0;
   }
+  .tool-sidebar-mobile[open] .sidebar-group-list {
+    max-height: none;
+    overflow: visible;
+    padding-right: 4px;
+  }
   .tool-sidebar-mobile:not([open]) .tool-sidebar-nav {
     display: none;
   }
@@ -1086,6 +1130,8 @@ a {
   border-radius: var(--radius);
   border: 1px solid var(--panel-border);
   box-shadow: var(--shadow);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 640px) {
@@ -1226,6 +1272,910 @@ a {
   border: 1px solid var(--line);
   margin-bottom: 12px;
   overflow-wrap: break-word;
+}
+
+.currency-converter {
+  display: grid;
+  gap: 1rem;
+}
+
+.currency-converter-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.75fr);
+  gap: clamp(1rem, 3vw, 1.4rem);
+  align-items: stretch;
+}
+
+.currency-converter-card,
+.currency-rate-board,
+.currency-notice {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.currency-converter-card {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.1rem, 4vw, 1.6rem);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(20, 184, 166, 0.14), transparent 36%),
+    var(--panel);
+}
+
+.currency-field,
+.currency-select-field {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.currency-field label,
+.currency-select-field span,
+.currency-result-card span,
+.currency-board-heading span,
+.currency-meta-card span {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.currency-field input,
+.currency-select-field select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--text);
+  font: inherit;
+  font-weight: 900;
+}
+
+.currency-field input {
+  min-height: 84px;
+  padding: 0 1.2rem;
+  border-radius: 24px;
+  font-size: clamp(2rem, 7vw, 3.3rem);
+  letter-spacing: -0.06em;
+}
+
+.currency-select-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.currency-select-field select {
+  min-height: 56px;
+  padding: 0 0.9rem;
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.currency-swap-button {
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 18px;
+  background: #0f766e;
+  color: white;
+  cursor: pointer;
+  font-size: 1.35rem;
+  font-weight: 950;
+  box-shadow: 0 18px 28px rgba(15, 118, 110, 0.2);
+}
+
+.currency-result-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 24px;
+  background: rgba(240, 253, 250, 0.78);
+}
+
+.currency-result-card strong {
+  color: var(--text);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 950;
+  letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
+}
+
+.currency-result-card small {
+  color: #0f766e;
+  font-weight: 900;
+}
+
+.currency-rate-board {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  padding: clamp(1.1rem, 4vw, 1.4rem);
+  border-radius: 28px;
+}
+
+.currency-board-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.currency-board-heading strong {
+  color: #0f766e;
+  font-size: 1.2rem;
+  font-weight: 950;
+}
+
+.currency-rate-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.currency-rate-list div,
+.currency-meta-card div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.currency-rate-list div {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-soft);
+}
+
+.currency-rate-list div.active {
+  border-color: rgba(15, 118, 110, 0.28);
+  background: rgba(240, 253, 250, 0.86);
+}
+
+.currency-rate-list span,
+.currency-rate-list strong,
+.currency-meta-card strong {
+  color: var(--text);
+  font-weight: 950;
+}
+
+.currency-rate-list strong {
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.currency-meta-card {
+  display: grid;
+  gap: 0.6rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.currency-notice {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border-radius: 18px;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .currency-converter-panel,
+  .currency-select-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .currency-swap-button {
+    justify-self: center;
+  }
+}
+
+.salary-calculator {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.salary-notice,
+.salary-panel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow-soft);
+}
+
+.salary-notice {
+  display: grid;
+  gap: 0.4rem;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.12), rgba(59, 130, 246, 0.08));
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.salary-notice strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.salary-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: clamp(1rem, 3vw, 1.5rem);
+  align-items: stretch;
+}
+
+.salary-panel {
+  border-radius: 28px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.salary-panel-header {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.salary-panel-header h2,
+.salary-info-grid h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-weight: 900;
+}
+
+.salary-panel-header p,
+.salary-info-grid p,
+.salary-info-grid li {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.salary-kicker {
+  width: fit-content;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(20, 184, 166, 0.12);
+  color: #0f766e;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.salary-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  padding: 0.35rem;
+  margin-bottom: 1.2rem;
+  border-radius: 18px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.salary-tabs button,
+.salary-detail-toggle {
+  border: 0;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}
+
+.salary-tabs button.active {
+  background: #14b8a6;
+  color: white;
+  box-shadow: 0 14px 28px rgba(20, 184, 166, 0.2);
+}
+
+.salary-field {
+  display: grid;
+  gap: 0.55rem;
+  color: var(--text);
+  font-weight: 850;
+}
+
+.salary-money-input,
+.salary-number-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.salary-money-input {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.3rem 1rem;
+}
+
+.salary-money-input input,
+.salary-number-input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  font-weight: 950;
+}
+
+.salary-money-input input {
+  flex: 1;
+  padding: 0.85rem 0;
+}
+
+.salary-money-input em {
+  color: var(--text-soft);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.salary-detail-fields {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.salary-two-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.salary-number-input {
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
+.salary-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.salary-radio-group legend {
+  padding: 0 0.4rem;
+  color: var(--text);
+  font-weight: 900;
+}
+
+.salary-radio-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-soft);
+  font-weight: 800;
+}
+
+.salary-detail-toggle {
+  width: 100%;
+  margin-top: 1rem;
+  background: rgba(20, 184, 166, 0.1);
+  color: #0f766e;
+}
+
+.salary-result-panel {
+  display: grid;
+  align-content: start;
+  gap: 1.15rem;
+  background:
+    radial-gradient(circle at top right, rgba(20, 184, 166, 0.16), transparent 42%),
+    var(--panel);
+}
+
+.salary-net-result {
+  display: grid;
+  gap: 0.35rem;
+  padding: clamp(1.1rem, 4vw, 1.6rem);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #0f172a, #164e63);
+  color: white;
+}
+
+.salary-net-result span,
+.salary-summary-grid span,
+.salary-deduction-list span {
+  color: var(--text-soft);
+  font-weight: 800;
+}
+
+.salary-net-result span {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.salary-net-result strong {
+  font-size: clamp(2rem, 7vw, 3.6rem);
+  font-weight: 950;
+  letter-spacing: -0.06em;
+}
+
+.salary-summary-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.salary-summary-grid div,
+.salary-deduction-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
+  border-radius: 16px;
+  background: var(--surface-soft);
+}
+
+.salary-summary-grid strong,
+.salary-deduction-list strong {
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.salary-result-note {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.salary-deduction-panel,
+.salary-info-grid {
+  margin-top: 0.25rem;
+}
+
+.salary-deduction-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.salary-deduction-list .total {
+  background: rgba(20, 184, 166, 0.12);
+  border: 1px solid rgba(20, 184, 166, 0.24);
+}
+
+.salary-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.salary-info-grid article {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+
+.salary-info-grid ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+@media (max-width: 980px) {
+  .salary-layout,
+  .salary-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .salary-two-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .salary-summary-grid div,
+  .salary-deduction-list div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}
+
+.outdoor-health {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  min-width: 0;
+}
+
+.outdoor-health-hero,
+.outdoor-status-card,
+.outdoor-metric-panel,
+.outdoor-info-section,
+.outdoor-source-section {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel);
+  box-shadow: var(--shadow-soft);
+}
+
+.outdoor-health-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.4rem, 4vw, 2rem);
+  background:
+    radial-gradient(circle at 12% 20%, rgba(14, 165, 233, 0.18), transparent 32%),
+    radial-gradient(circle at 88% 12%, rgba(16, 185, 129, 0.18), transparent 30%),
+    var(--panel);
+}
+
+.outdoor-health-kicker,
+.outdoor-section-heading span,
+.outdoor-status-topline span {
+  color: #0284c7;
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.outdoor-health-hero h2,
+.outdoor-section-heading h2,
+.outdoor-source-section h2 {
+  margin: 0.3rem 0 0.7rem;
+  color: var(--text);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 950;
+  letter-spacing: -0.06em;
+}
+
+.outdoor-health-hero p,
+.outdoor-section-heading p,
+.outdoor-source-section p,
+.outdoor-info-grid p,
+.outdoor-metric-tip,
+.outdoor-metric-detail,
+.outdoor-update-box small {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.outdoor-location-select {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 190px;
+  color: var(--text);
+  font-weight: 900;
+}
+
+.outdoor-location-select select {
+  min-height: 52px;
+  padding: 0 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.outdoor-health-error {
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 18px;
+  background: rgba(254, 242, 242, 0.9);
+  color: #991b1b;
+  font-weight: 900;
+}
+
+.outdoor-health-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 1.5rem);
+  min-width: 0;
+}
+
+.outdoor-status-card {
+  display: grid;
+  align-content: start;
+  gap: 1.2rem;
+  padding: clamp(1.3rem, 4vw, 1.8rem);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(240, 249, 255, 0.82)),
+    var(--panel);
+}
+
+.outdoor-status-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.outdoor-status-topline strong {
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.outdoor-status-main {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.35rem;
+  border-radius: 24px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.outdoor-status-main span {
+  font-size: clamp(2.4rem, 8vw, 4.3rem);
+  font-weight: 950;
+  letter-spacing: -0.08em;
+}
+
+.outdoor-status-main p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.7;
+}
+
+.outdoor-update-box {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.outdoor-update-box span,
+.outdoor-update-box strong {
+  color: var(--text);
+  font-weight: 950;
+}
+
+.outdoor-cause-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.outdoor-cause-list span {
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.1);
+  color: #0369a1;
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
+.outdoor-metric-panel {
+  display: grid;
+  gap: 0.9rem;
+  padding: clamp(1rem, 3vw, 1.4rem);
+  min-width: 0;
+}
+
+.outdoor-metric-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.15rem 0.25rem 0.45rem;
+}
+
+.outdoor-metric-panel-heading span {
+  color: var(--text);
+  font-size: 1.15rem;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.outdoor-metric-panel-heading strong {
+  color: #0369a1;
+  font-size: 0.95rem;
+  font-weight: 950;
+}
+
+.outdoor-metric-card {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.7fr) minmax(0, 0.8fr) auto minmax(0, 1.4fr);
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface-soft);
+  min-width: 0;
+}
+
+.outdoor-metric-label {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.06);
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  font-weight: 950;
+}
+
+.outdoor-metric-title h3,
+.outdoor-info-grid h3 {
+  margin: 0.4rem 0 0;
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.outdoor-metric-value {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.outdoor-metric-value strong {
+  color: var(--text);
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 950;
+  letter-spacing: -0.04em;
+}
+
+.outdoor-metric-value small {
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.outdoor-metric-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.1);
+  color: #0369a1;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.outdoor-metric-status span {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 5px rgba(14, 165, 233, 0.1);
+}
+
+.outdoor-metric-card small {
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.outdoor-metric-card.level-good .outdoor-metric-status,
+.outdoor-status-card.level-good .outdoor-cause-list span {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+.outdoor-metric-card.level-normal .outdoor-metric-status,
+.outdoor-status-card.level-normal .outdoor-cause-list span {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0369a1;
+}
+
+.outdoor-metric-card.level-caution .outdoor-metric-status,
+.outdoor-status-card.level-caution .outdoor-cause-list span {
+  background: rgba(245, 158, 11, 0.16);
+  color: #92400e;
+}
+
+.outdoor-metric-card.level-bad .outdoor-metric-status,
+.outdoor-status-card.level-bad .outdoor-cause-list span {
+  background: rgba(249, 115, 22, 0.16);
+  color: #9a3412;
+}
+
+.outdoor-metric-card.level-veryBad .outdoor-metric-status,
+.outdoor-status-card.level-veryBad .outdoor-cause-list span {
+  background: rgba(239, 68, 68, 0.14);
+  color: #991b1b;
+}
+
+.outdoor-metric-card.level-unknown .outdoor-metric-status {
+  background: rgba(100, 116, 139, 0.12);
+  color: #475569;
+}
+
+.outdoor-info-section,
+.outdoor-source-section {
+  padding: clamp(1.35rem, 4vw, 2rem);
+}
+
+.outdoor-info-grid,
+.outdoor-source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.2rem;
+}
+
+.outdoor-info-grid article {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-soft);
+}
+
+.outdoor-source-section {
+  background: rgba(240, 253, 250, 0.72);
+}
+
+.outdoor-source-grid a {
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(14, 165, 233, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #0369a1;
+  font-weight: 900;
+  text-decoration: none;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.outdoor-source-section p {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(14, 165, 233, 0.18);
+}
+
+@media (max-width: 980px) {
+  .outdoor-metric-card {
+    grid-template-columns: minmax(120px, 0.8fr) minmax(130px, 0.8fr) minmax(96px, 0.45fr);
+  }
+
+  .outdoor-metric-tip {
+    grid-column: 1 / -1;
+  }
+
+  .outdoor-metric-card > small {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .outdoor-health-hero,
+  .outdoor-status-topline {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .outdoor-location-select {
+    width: 100%;
+  }
+
+  .outdoor-metric-panel-heading,
+  .outdoor-metric-card {
+    grid-template-columns: 1fr;
+  }
+
+  .outdoor-metric-panel-heading {
+    display: grid;
+  }
+
+  .outdoor-metric-status {
+    justify-content: flex-start;
+    width: fit-content;
+  }
 }
 
 /* Footer */

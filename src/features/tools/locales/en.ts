@@ -5,7 +5,7 @@ export default {
       imagecompressor: {
         title: "Image Compressor / WebP Converter",
         description: "Reduce image file size and convert to WebP for better web performance.",
-        seo: "Compress and convert to webp.",
+        seo: "Compress images in the browser, compare the optimized result, and export smaller files for websites, email attachments, forms, and everyday publishing workflows.",
         longDescription: "Our free Image Compressor helps you reduce image file size in seconds without installing any software. You can also convert supported images to WebP format for better web performance and smaller file sizes. This tool is useful for bloggers, online store owners, students, marketers, and anyone who needs faster-loading images for websites, email attachments, or document uploads.",
         usageContext: "Compressing images is helpful when you want to improve page speed, reduce storage usage, or meet file size limits for websites, forms, and emails. Smaller images can also improve the user experience on mobile devices and slower internet connections. WebP is a modern image format designed to provide smaller file sizes while keeping good visual quality. If you manage a website or blog, converting large images to WebP can help improve loading speed and overall performance.",
         examples: [
@@ -76,7 +76,7 @@ export default {
       caseconverter: {
         title: "Case Converter",
         description: "Change text between uppercase, lowercase, and title case.",
-        seo: "Convert text to uppercase or lowercase.",
+        seo: "Convert text between uppercase, lowercase, and title case for headings, documents, forms, emails, and publishing workflows.",
         longDescription: "Case Converter is a simple online tool that changes text between uppercase, lowercase, and title case. It is useful for editing titles, fixing formatting, preparing documents, and cleaning text for websites, emails, and reports. Instead of rewriting text manually, you can paste your content, choose the format you want, and copy the result instantly.",
         usageContext: "This tool is helpful when you need to fix headlines, prepare article titles, format marketing copy, clean imported text, or standardize content before publishing. It can also save time when editing large blocks of text.",
         howToUse: "1. Paste or type your text into the input box.\n2. Select the format you want, such as uppercase, lowercase, or title case.\n3. Copy the converted result.",
@@ -90,7 +90,7 @@ export default {
       jsonformatter: {
         title: "JSON Formatter & Validator",
         description: "Clean up, organize, and validate JSON data.",
-        seo: "Format invalid JSON.",
+        seo: "Format, organize, and validate JSON data so API responses, configuration files, and copied snippets are easier to read and debug.",
         longDescription: "JSON Formatter & Validator helps you clean up, organize, and check JSON data online. It is useful for developers, testers, students, and API users who need readable JSON output or want to find syntax errors quickly. If your JSON is difficult to read or not working correctly, this tool makes it easier to format the content and validate whether the structure is correct.",
         usageContext: "Raw JSON is often hard to read, especially when it is compressed into a single line. Formatting adds proper indentation and structure, making it easier to debug, review, and share. A small syntax mistake in JSON can break an API request, configuration file, or app feature. Validation helps detect problems such as missing commas, invalid brackets, or incorrect quotation marks before you use the data elsewhere.",
         examples: [
@@ -128,7 +128,7 @@ export default {
       textdiffchecker: {
         title: "Text Diff Checker",
         description: "Compare texts",
-        seo: "Find differences between texts.",
+        seo: "Compare two text versions and highlight additions, deletions, and changes for drafts, code snippets, documents, and review workflows.",
         longDescription: "Text Diff Checker identifies the exact differences between two pieces of text. It highlights additions, deletions, and modifications, making it easy to track changes across versions.",
         usageContext: "Highly useful for developers comparing code, editors reviewing drafts, or anyone needing to verify text consistency.",
         howToUse: "1. Paste the original text in the left panel.\n2. Paste the modified text in the right panel.\n3. Review the highlighted differences instantly.",
@@ -239,6 +239,25 @@ export default {
         toText: "to",
         increaseText: "increased.",
         decreaseText: "decreased."
+      },
+      currencyconverter: {
+        title: "Currency Converter",
+        description: "Convert major currencies with daily reference exchange rates.",
+        seo: "Convert USD, EUR, KRW, JPY, CNY and other major currencies using daily reference exchange rates with source and date shown.",
+        longDescription: "The Currency Converter helps you quickly estimate values between major currencies. It uses reference exchange rates from Frankfurter and shows the base currency, target currency, rate, and reference date so the result is easy to understand.",
+        usageContext: "Use this tool when comparing prices, planning travel, checking overseas purchases, reviewing invoices, or estimating money transfers. It is designed for quick reference, not for final bank settlement.",
+        examples: [
+          "USD to KRW travel budget estimate",
+          "EUR to USD product price comparison",
+          "JPY to KRW purchase check"
+        ],
+        howToUse: "1. Enter the amount.\n2. Choose the source and target currencies.\n3. View the converted amount and key exchange rates.\n4. Check the reference date and remember that bank or card rates may differ.",
+        whyUse: "Exchange rates change by date and provider. This tool keeps the interface simple while showing the source and reference date clearly.",
+        faq: [
+          { q: "Are these live bank rates?", a: "No. They are daily reference rates. Actual bank, card, exchange desk, and transfer service rates or fees may differ." },
+          { q: "Which provider is used?", a: "The tool uses Frankfurter, a free exchange-rate API based on institutional reference data." },
+          { q: "How often are rates updated?", a: "Frankfurter updates rates on working days. The page also shows the reference date returned by the provider." }
+        ]
       },
       ruler: {
         title: "Online Ruler",
@@ -362,7 +381,7 @@ export default {
       qrgenerator: {
         title: "QR Code Generator",
         description: "Create QR codes for text, links, and contact details.",
-        seo: "Create QR codes from text, links, and contact details instantly.",
+        seo: "Create QR codes from links, text, contact details, menus, event information, and other short content for digital or printed use.",
         longDescription: "QR Code Generator lets you create QR codes for text, links, contact details, and other simple content. It is useful for businesses, events, classrooms, restaurants, packaging, and personal sharing. You can generate a QR code in seconds and download it for digital or printed use.",
         usageContext: "QR codes are commonly used for website links, menu access, event check-ins, contact sharing, payment instructions, and product labels. A QR code makes it easier for users to open a page or access information without typing long text manually. This can reduce friction and improve response rates in both online and offline environments.",
         examples: [
@@ -383,7 +402,7 @@ export default {
       barcodegenerator: {
         title: "Barcode Generator",
         description: "Create barcodes for products, labels, and inventory.",
-        seo: "Create barcodes for products, labels, and inventory instantly.",
+        seo: "Create barcodes for products, labels, inventory, shipping, and internal tracking with selectable barcode formats and downloadable output.",
         longDescription: "Barcode Generator helps you create barcodes for products, labels, inventory, packaging, and internal tracking. It is useful for small businesses, warehouses, offices, schools, and anyone who needs quick barcode generation online. You can enter your value, choose a barcode type, and download the generated barcode image.",
         usageContext: "Barcodes are widely used in retail, inventory control, shipping, asset tracking, and document labeling. They make it easier to identify items quickly and reduce manual entry errors. Choosing the correct format helps ensure compatibility with scanners and workflows.",
         examples: [

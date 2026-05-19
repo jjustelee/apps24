@@ -1,7 +1,7 @@
 /** Sitemap configuration for apps24.io */
 import type { MetadataRoute } from "next";
 import { getLocalizedUrl, LOCALES } from "@/lib/site";
-import { CATEGORY_GROUPS } from "@/features/tools/categories";
+import { getCategoryGroups } from "@/features/tools/categories";
 import { getStaticToolParams } from "@/features/tools/registry";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -24,11 +24,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]);
 
   const categoryEntries = LOCALES.flatMap((locale) =>
-    [...CATEGORY_GROUPS]
-      .sort((a, b) => a.order - b.order)
-      .map((group) => ({
-        url: getLocalizedUrl(locale, `/${group.slug}`),
-      })),
+    getCategoryGroups(locale).map((group) => ({
+      url: getLocalizedUrl(locale, `/${group.slug}`),
+    })),
   );
 
   return [...homeEntries, ...contactEntries, ...legalEntries, ...categoryEntries, ...toolEntries];

@@ -285,6 +285,47 @@ export const CATEGORY_GROUPS: readonly CategoryGroupDefinition[] = [
     },
   },
   {
+    id: "daily-life-tools",
+    slug: "daily-life-tools",
+    order: 99,
+    title: {
+      en: "Daily Life Tools",
+      ko: "생활 편의 도구",
+      fr: "Outils du quotidien",
+      ja: "生活便利ツール",
+      zh: "生活工具",
+      "zh-TW": "生活工具",
+      pt: "Ferramentas do dia a dia",
+      es: "Herramientas cotidianas",
+      de: "Alltags-Tools",
+      ar: "أدوات الحياة اليومية",
+    },
+    shortLabel: {
+      en: "Life",
+      ko: "생활",
+      fr: "Quotidien",
+      ja: "生活",
+      zh: "生活",
+      "zh-TW": "生活",
+      pt: "Dia a dia",
+      es: "Cotidiano",
+      de: "Alltag",
+      ar: "يومي",
+    },
+    description: {
+      en: "Practical tools for everyday money, outdoor activity, and daily decisions.",
+      ko: "연봉, 외출, 일상 판단에 도움을 주는 생활형 도구들입니다.",
+      fr: "Outils pratiques pour l'argent, les sorties et les décisions du quotidien.",
+      ja: "給与、外出、日常判断に役立つ実用ツールです。",
+      zh: "用于薪资、外出和日常判断的实用工具。",
+      "zh-TW": "用於薪資、外出與日常判斷的實用工具。",
+      pt: "Ferramentas práticas para salário, atividades ao ar livre e decisões diárias.",
+      es: "Herramientas prácticas para salario, actividades al aire libre y decisiones diarias.",
+      de: "Praktische Werkzeuge für Gehalt, Aktivitäten im Freien und tägliche Entscheidungen.",
+      ar: "أدوات عملية للراتب والخروج والقرارات اليومية.",
+    },
+  },
+  {
     id: "time-display-tools",
     slug: "time-display-tools",
     order: 6,
@@ -340,14 +381,19 @@ export function getCategoryGroupBySlug(slug: string) {
 export function getCategoryGroups(locale: Locale): LocalizedCategoryGroup[] {
   return [...CATEGORY_GROUPS]
     .sort((a, b) => a.order - b.order)
-    .map((group) => ({
-      ...group,
-      title: group.title[locale] ?? group.title.en,
-      shortLabel: group.shortLabel[locale] ?? group.shortLabel.en,
-      description: group.description[locale] ?? group.description.en,
-      href: `/${locale}/${group.slug}`,
-      tools: getCategoryGroupTools(locale, group.id),
-    }));
+    .map((group) => {
+      const tools = getCategoryGroupTools(locale, group.id);
+
+      return {
+        ...group,
+        title: group.title[locale] ?? group.title.en,
+        shortLabel: group.shortLabel[locale] ?? group.shortLabel.en,
+        description: group.description[locale] ?? group.description.en,
+        href: `/${locale}/${group.slug}`,
+        tools,
+      };
+    })
+    .filter((group) => group.tools.length > 0);
 }
 
 export function getCategoryGroupTools(locale: Locale, groupId: ToolCategoryGroup) {

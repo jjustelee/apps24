@@ -523,25 +523,16 @@ export async function ToolShell({
             </div>
           )}
 
-          {toolText.relatedTools && (
+          {toolText.relatedTools && relatedToolHref && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
               <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "1rem", color: "var(--text)" }}>{common.relatedToolsTitle}</h2>
-              {relatedToolHref ? (
-                <Link
-                  href={relatedToolHref}
-                  className="tool-button secondary"
-                  style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
-                >
-                  {toolText.relatedTools}
-                </Link>
-              ) : (
-                <span
-                  className="tool-button secondary"
-                  style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
-                >
-                  {toolText.relatedTools}
-                </span>
-              )}
+              <Link
+                href={relatedToolHref}
+                className="tool-button secondary"
+                style={{ display: "inline-flex", padding: "1rem 2rem", borderRadius: "15px" }}
+              >
+                {toolText.relatedTools}
+              </Link>
             </div>
           )}
 

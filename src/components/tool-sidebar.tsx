@@ -23,10 +23,7 @@ export async function ToolSidebar({ locale, activeSlug, currentTitle }: ToolSide
     }))
   );
   const toolTextMap = new Map(toolsWithText.map(({ tool, text }) => [tool.id, text] as const));
-  const activeGroup = groups.find((group) => group.id === activeGroupId);
-  const orderedGroups = activeGroup
-    ? [activeGroup, ...groups.filter((group) => group.id !== activeGroup.id)]
-    : groups;
+  const orderedGroups = groups;
 
   const renderGroup = (group: (typeof groups)[number]) => {
     const isActiveGroup = group.id === activeGroupId;
