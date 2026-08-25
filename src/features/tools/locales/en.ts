@@ -127,12 +127,24 @@ export default {
       },
       textdiffchecker: {
         title: "Text Diff Checker",
-        description: "Compare texts",
+        description: "Compare two text versions side by side and highlight additions, deletions, and changes for documents, code, and drafts.",
         seo: "Compare two text versions and highlight additions, deletions, and changes for drafts, code snippets, documents, and review workflows.",
-        longDescription: "Text Diff Checker identifies the exact differences between two pieces of text. It highlights additions, deletions, and modifications, making it easy to track changes across versions.",
-        usageContext: "Highly useful for developers comparing code, editors reviewing drafts, or anyone needing to verify text consistency.",
+        longDescription: "Text Diff Checker is a browser-based comparison tool that highlights the exact differences between two blocks of text. It performs a line-by-line analysis to show what was added, removed, or changed, making it easy to track revisions across document versions, code updates, and content drafts. The tool runs entirely in the browser without sending your text to any server.",
+        usageContext: "Use this tool when reviewing document edits, comparing code versions, verifying content changes before publishing, or checking contract revisions. It is especially helpful for developers comparing code snippets, editors reviewing article drafts, translators checking updated text, and students verifying revision changes. The side-by-side view makes it easy to spot even small differences that are hard to catch by reading alone.",
+        examples: [
+          "Comparing draft versions of a document or article",
+          "Reviewing code changes before committing",
+          "Checking contract or policy text revisions",
+          "Verifying translated text against the original"
+        ],
         howToUse: "1. Paste the original text in the left panel.\n2. Paste the modified text in the right panel.\n3. Review the highlighted differences instantly.",
-        faq: [{"q":"Does it support line-by-line comparison?","a":"Yes, the tool performs a detailed diff analysis to show exactly what changed in each line."}]
+        whyUse: "Manually comparing two versions of a document is slow and error-prone. This tool automates the process and highlights every change clearly, so you can focus on reviewing rather than searching.",
+        faq: [
+          { q: "Does it support line-by-line comparison?", a: "Yes, the tool performs a detailed diff analysis to show exactly what changed in each line." },
+          { q: "Is my text sent to a server?", a: "No. The comparison is performed entirely in your browser. Your text stays on your device." },
+          { q: "Can I compare long documents?", a: "Yes. The tool handles long text blocks efficiently in the browser. For very large documents, performance depends on your device." },
+          { q: "What types of changes are highlighted?", a: "The tool highlights additions (new text), deletions (removed text), and modifications (changed text) using distinct colors for each type." }
+        ]
       },
       base64encoder: {
         title: "Base64 Encoder & Decoder",

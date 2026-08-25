@@ -39,6 +39,13 @@ export async function generateMetadata({
     title: text.title,
     description: text.description,
     keywords: tool.keywords,
+    openGraph: {
+      title: text.title,
+      description: text.description,
+      siteName: "apps24",
+      url: getLocalizedUrl(locale as Locale, `/${slug}`),
+      type: "website",
+    },
   };
 }
 

@@ -14,7 +14,7 @@ function decodeBase64(value: string) {
   return decodeURIComponent(escape(atob(value)));
 }
 
-export function Base64ConverterTool({}: ToolRendererProps) {
+export function Base64ConverterTool({ commonText: common }: ToolRendererProps) {
   const params = useParams();
   const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
   const preset = modeSlug && isBase64EncoderLongtailSlug(modeSlug) ? getBase64EncoderLongtailPreset(modeSlug) : undefined;
@@ -94,7 +94,7 @@ export function Base64ConverterTool({}: ToolRendererProps) {
         백엔드에서 파이핑(Piping) 스트림으로 Base64 변환 후 결과를 반환하도록 아키텍처를 고도화해야 합니다.
       */}
       <div className="input-section">
-        <label className="section-label">Input</label>
+        <label className="section-label">{common.from}</label>
         <textarea
           className="textarea-glass"
           value={input}
@@ -102,35 +102,35 @@ export function Base64ConverterTool({}: ToolRendererProps) {
             setInput(e.target.value);
             setError("");
           }}
-          placeholder="Paste or type text here..."
+          placeholder={common.placeholder}
         />
         {error && <div className="error-msg"><ShieldAlert size={14} /> {error}</div>}
       </div>
 
       <div className="controls-row">
         <button onClick={handleEncode} className="button-primary">
-          Encode
+          Text → Base64
         </button>
         <button onClick={handleDecode} className="button-primary">
-          Decode
+          Base64 → Text
         </button>
         <button onClick={handleCopy} className="button-glass">
           <Copy size={16} />
-          {copied ? "Copied!" : "Copy"}
+          {copied ? common.copied : common.copy}
         </button>
         <button onClick={handleClear} className="button-ghost">
           <Trash2 size={16} />
-          Clear
+          {common.clear}
         </button>
       </div>
 
       <div className="output-section">
-        <label className="section-label">Result</label>
+        <label className="section-label">{common.to}</label>
         <textarea
           className="textarea-glass readonly"
           value={output}
           readOnly
-          placeholder="Result will appear here..."
+          placeholder={common.generatedText}
         />
       </div>
 

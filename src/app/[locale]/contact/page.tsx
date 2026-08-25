@@ -35,7 +35,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
   return (
     <div className="content-page-wrapper" style={{ maxWidth: "900px", margin: "0 auto", width: "100%" }}>
-      <main className="tool-main-content">
+      <div className="tool-main-content">
         <header className="tool-header" style={{ marginBottom: "2.5rem" }}>
           <nav style={{ marginBottom: "0.5rem" }}>
             <Link className="back-link" href={`/${locale}`}>
@@ -142,7 +142,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             {common.backToTools}
           </Link>
         </footer>
-      </main>
+      </div>
     </div>
   );
 }

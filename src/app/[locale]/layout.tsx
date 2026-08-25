@@ -32,9 +32,10 @@ export async function generateMetadata({
     description: commonText.homeSubtitle || "Simple multilingual utilities for quick tasks.",
     keywords: ["online tools", "utilities", "free tools", "web apps"],
     openGraph: {
-      title: "apps24",
+      title: commonText.homeTitle || "apps24",
       description: commonText.homeSubtitle,
       siteName: "apps24",
+      images: [{ url: "/icon.png", width: 512, height: 512, alt: "apps24 logo" }],
     },
   };
 }

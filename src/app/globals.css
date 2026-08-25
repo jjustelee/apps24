@@ -1767,9 +1767,50 @@ a {
   padding-left: 1.2rem;
 }
 
+.salary-source-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.salary-source-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.salary-source-links a {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-weight: 850;
+  text-align: center;
+  text-decoration: none;
+}
+
+.salary-source-links a:hover {
+  border-color: #14b8a6;
+  color: #0f766e;
+}
+
+.salary-source-date {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
 @media (max-width: 980px) {
   .salary-layout,
   .salary-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .salary-source-links {
     grid-template-columns: 1fr;
   }
 }

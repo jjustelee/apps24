@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "A multilingual utility platform for practical browser tools.",
+    "Free online tools: Image Compressor, Background Remover, QR Code Generator, JSON Formatter, Password Generator, Unit Converter and 20+ browser-based utilities for text, images, code, and calculations. Available in 10 languages.",
   icons: {
     icon: "/icon.png",
     apple: "/icon.png",

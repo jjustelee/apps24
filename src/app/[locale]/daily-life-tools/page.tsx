@@ -25,7 +25,7 @@ export async function generateMetadata({
   }
 
   return {
-    alternates: buildLocaleAlternates(locale as Locale, `/${categorySlug}`),
+    alternates: buildLocaleAlternates(locale as Locale, `/${categorySlug}`, ["ko"]),
     title: localizedGroup.title,
     description: localizedGroup.description,
   };

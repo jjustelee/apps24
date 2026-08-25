@@ -322,7 +322,7 @@ export async function ToolShell({
     <div className="tool-shell">
       <ToolSidebar locale={locale} activeSlug={tool.slug} currentTitle={title} />
 
-      <main className="tool-main-content">
+      <div className="tool-main-content">
         <header className="tool-header">
           <nav className="tool-breadcrumb">
             <Link className="back-link" href={`/${locale}`}>
@@ -548,7 +548,7 @@ export async function ToolShell({
           )}
 
         </section>
-      </main>
+      </div>
     </div>
   );
 }

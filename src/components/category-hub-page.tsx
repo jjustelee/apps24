@@ -259,7 +259,7 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="tool-main-content">
+      <div className="tool-main-content">
         <header className="tool-header" style={{ marginBottom: "2rem" }}>
           <nav style={{ marginBottom: "0.5rem" }}>
             <Link className="back-link" href={`/${locale}`}>
@@ -512,7 +512,7 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
             {common.backToTools}
           </Link>
         </footer>
-      </main>
+      </div>
     </div>
   );
 }

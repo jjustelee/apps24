@@ -13,8 +13,9 @@ const RATES = {
   employmentInsurance: 0.009,
 };
 
-const NATIONAL_PENSION_MIN = 400_000;
-const NATIONAL_PENSION_MAX = 6_370_000;
+// 국민연금 기준소득월액 상·하한은 2026-07-01부터 2027-06-30까지 적용됩니다.
+const NATIONAL_PENSION_MIN = 410_000;
+const NATIONAL_PENSION_MAX = 6_590_000;
 
 function parseMoney(value: string) {
   return Number(value.replace(/[^\d]/g, "")) || 0;
@@ -49,9 +50,11 @@ function annualIncomeTax(taxBase: number) {
   return taxBase * 0.45 - 65_940_000;
 }
 
-function childTaxCredit(childCount: number) {
+function monthlyChildTaxAdjustment(childCount: number) {
   if (childCount <= 0) return 0;
-  return Math.min(childCount, 2) * 150_000 + Math.max(0, childCount - 2) * 300_000;
+  if (childCount === 1) return 12_500;
+  if (childCount === 2) return 29_160;
+  return 29_160 + (childCount - 2) * 25_000;
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -85,7 +88,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
     0,
     annualTaxableSalary - earnedIncomeDeduction(annualTaxableSalary) - socialInsuranceAnnual - personalDeduction,
   );
-  const incomeTax = Math.max(0, (annualIncomeTax(taxBase) - childTaxCredit(children)) / 12);
+  const incomeTax = Math.max(0, annualIncomeTax(taxBase) / 12 - monthlyChildTaxAdjustment(children));
   const localIncomeTax = incomeTax * 0.1;
   const totalDeduction =
     nationalPension + healthInsurance + longTermCare + employmentInsurance + incomeTax + localIncomeTax;
@@ -180,7 +183,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
                   />
                 </label>
                 <label className="salary-field">
-                  <span>20세 이하 자녀 수</span>
+                  <span>8세 이상 20세 이하 자녀 수</span>
                   <input
                     className="salary-number-input"
                     type="number"
@@ -288,6 +291,29 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
               "아닙니다. 회사 급여 기준, 비과세 항목, 수당, 추가 공제, 연말정산 등에 따라 실제 금액과 차이가 있을 수 있습니다."}
           </p>
         </article>
+      </section>
+
+      <section className="salary-panel salary-source-panel" aria-label="공식 계산 기준 출처">
+        <div className="salary-panel-header">
+          <span className="salary-kicker">공식 출처</span>
+          <h2>요율과 세액 참고 기준</h2>
+          <p>
+            국민연금 상·하한은 2026년 7월 1일부터 2027년 6월 30일까지의 기준을 적용했습니다. 소득세는
+            국세청 근로소득 간이세액표를 참고한 추정값이며 실제 원천징수액과 다를 수 있습니다.
+          </p>
+        </div>
+        <div className="salary-source-links">
+          <a href="https://www.nps.or.kr/pnsinfo/ntpsklg/getOHAF0038M0.do?menuId=MN24001113&tab=tab5" target="_blank" rel="noopener noreferrer">
+            국민연금공단 기준소득월액
+          </a>
+          <a href="https://edi.nhis.or.kr/portal/images/popup/20251204_pop01longdesc.html" target="_blank" rel="noopener noreferrer">
+            국민건강보험 2026년 보험료율
+          </a>
+          <a href="https://nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7862&mi=6583" target="_blank" rel="noopener noreferrer">
+            국세청 근로소득 간이세액표
+          </a>
+        </div>
+        <p className="salary-source-date">기준 확인일: 2026년 8월 25일</p>
       </section>
     </div>
   );
