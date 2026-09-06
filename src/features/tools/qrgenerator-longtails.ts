@@ -112,7 +112,7 @@ const LONGTAILS: Record<
 export const QR_GENERATOR_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as QrGeneratorLongtailSlug[];
 
 export function isQrGeneratorLongtailSlug(value: string): value is QrGeneratorLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getQrGeneratorLongtailPreset(slug: string): QrGeneratorPreset | undefined {
@@ -134,7 +134,7 @@ export function getQrGeneratorLongtailLinks(locale: Locale): QrGeneratorLongtail
     const text = getQrGeneratorLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/qrgenerator/${slug}`,
+      href: `/${locale}/qrgenerator?preset=${slug}`,
       ...text,
     };
   });

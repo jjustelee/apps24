@@ -47,12 +47,14 @@ export function BarcodeGeneratorTool({
   toolData,
   commonText,
   toolText,
+  searchParams,
 }: ToolRendererProps) {
   const params = useParams();
   const data = toolData as BarcodeToolData | undefined;
   const isQrTool = tool.slug === "qrgenerator";
-  const presetSlug = typeof params.preset === "string" ? params.preset : undefined;
-  const barcodeFormatSlug = typeof params.format === "string" ? params.format : undefined;
+  const queryPreset = typeof searchParams?.preset === "string" ? searchParams.preset : undefined;
+  const presetSlug = queryPreset ?? (typeof params.preset === "string" ? params.preset : undefined);
+  const barcodeFormatSlug = queryPreset ?? (typeof params.format === "string" ? params.format : undefined);
   const barcodePreset = !isQrTool && barcodeFormatSlug && isBarcodeGeneratorLongtailSlug(barcodeFormatSlug)
     ? getBarcodeGeneratorLongtailPreset(barcodeFormatSlug)
     : undefined;
@@ -271,15 +273,16 @@ export function BarcodeGeneratorTool({
         }
         .generator-layout {
           display: grid;
-          grid-template-columns: 1fr 300px;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
           gap: 1.5rem;
         }
         @media (max-width: 768px) {
           .generator-layout {
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
           }
         }
         .input-section {
+          min-width: 0;
           padding: 1.5rem;
           border: 1px solid var(--panel-border);
           border-radius: 1rem;
@@ -288,6 +291,8 @@ export function BarcodeGeneratorTool({
           gap: 1.25rem;
         }
         .control-group {
+          min-width: 0;
+          width: 100%;
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
@@ -299,6 +304,9 @@ export function BarcodeGeneratorTool({
           opacity: 0.8;
         }
         .select-input, .text-input {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
           padding: 0.75rem 1rem;
           border: 1px solid var(--line);
           background: var(--bg);
@@ -327,6 +335,7 @@ export function BarcodeGeneratorTool({
           font-weight: 600;
         }
         .output-section {
+          min-width: 0;
           display: flex;
           flex-direction: column;
           gap: 1rem;

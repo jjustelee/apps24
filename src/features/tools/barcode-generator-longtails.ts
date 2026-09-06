@@ -149,7 +149,7 @@ const LONGTAILS: Record<
 export const BARCODE_GENERATOR_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as BarcodeGeneratorLongtailSlug[];
 
 export function isBarcodeGeneratorLongtailSlug(value: string): value is BarcodeGeneratorLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getBarcodeGeneratorLongtailPreset(slug: string): BarcodeGeneratorLongtailPreset | undefined {
@@ -172,7 +172,7 @@ export function getBarcodeGeneratorLongtailLinks(locale: Locale): BarcodeGenerat
     const text = getBarcodeGeneratorLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/barcodegenerator/${slug}`,
+      href: `/${locale}/barcodegenerator?preset=${slug}`,
       ...text,
     };
   });

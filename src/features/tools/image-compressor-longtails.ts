@@ -150,7 +150,7 @@ const LONGTAILS: Record<
 export const IMAGE_COMPRESSOR_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as ImageCompressorLongtailSlug[];
 
 export function isImageCompressorLongtailSlug(value: string): value is ImageCompressorLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getImageCompressorLongtailPreset(slug: string): ImageCompressorPreset | undefined {
@@ -173,7 +173,7 @@ export function getImageCompressorLongtailLinks(locale: Locale): ImageCompressor
     const text = getImageCompressorLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/image-compressor/${slug}`,
+      href: `/${locale}/image-compressor?preset=${slug}`,
       ...text,
     };
   });

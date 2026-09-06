@@ -378,11 +378,11 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
                       <p>{text.description}</p>
                     </div>
                   </div>
-                  {text.examples?.length ? (
+                  {text.cardExamples?.length ? (
                     <div className="home-featured-examples">
                       <span>{reviewCopy.bestForLabel}</span>
                       <ul>
-                        {text.examples.slice(0, 2).map((example) => (
+                        {text.cardExamples.slice(0, 2).map((example) => (
                           <li key={example}>{example}</li>
                         ))}
                       </ul>

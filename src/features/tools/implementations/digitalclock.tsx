@@ -69,7 +69,7 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hideTimerRef = useRef<number | null>(null);
   
-  const [now, setNow] = useState(() => new Date());
+  const [now, setNow] = useState<Date | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showUI, setShowUI] = useState(true);
   
@@ -81,14 +81,15 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
   // Load settings from localStorage
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      const savedBg = localStorage.getItem(STORAGE_KEY_BG);
-      const savedFormat = localStorage.getItem(STORAGE_KEY_FORMAT);
-      const savedSize = localStorage.getItem(STORAGE_KEY_SIZE);
-
-      if (savedBg) setBgColor(savedBg);
-      if (savedFormat) setIs24Hour(savedFormat === "true");
-      if (savedSize) setFontSizeScale(parseFloat(savedSize));
-
+      setNow(new Date());
+      try {
+        const savedBg = localStorage.getItem(STORAGE_KEY_BG);
+        const savedFormat = localStorage.getItem(STORAGE_KEY_FORMAT);
+        const savedSize = Number(localStorage.getItem(STORAGE_KEY_SIZE));
+        if (savedBg && /^#[0-9a-f]{6}$/i.test(savedBg)) setBgColor(savedBg);
+        if (savedFormat) setIs24Hour(savedFormat === "true");
+        if (Number.isFinite(savedSize) && savedSize > 0) setFontSizeScale(savedSize);
+      } catch { /* The clock also works when browser storage is blocked. */ }
       setSettingsLoaded(true);
     }, 0);
 
@@ -98,9 +99,11 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
   // Save settings to localStorage
   useEffect(() => {
     if (settingsLoaded) {
-      localStorage.setItem(STORAGE_KEY_BG, bgColor);
-      localStorage.setItem(STORAGE_KEY_FORMAT, String(is24Hour));
-      localStorage.setItem(STORAGE_KEY_SIZE, String(fontSizeScale));
+      try {
+        localStorage.setItem(STORAGE_KEY_BG, bgColor);
+        localStorage.setItem(STORAGE_KEY_FORMAT, String(is24Hour));
+        localStorage.setItem(STORAGE_KEY_SIZE, String(fontSizeScale));
+      } catch { /* Saving preferences is optional. */ }
     }
   }, [bgColor, is24Hour, fontSizeScale, settingsLoaded]);
 
@@ -139,7 +142,10 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
     };
   }, [isFullscreen]);
 
-  const { dateText, period, timeText } = formatClock(now, locale, is24Hour);
+  // Time zones and Intl data can differ between the server and browser.
+  const { dateText, period, timeText } = now
+    ? formatClock(now, locale, is24Hour)
+    : { dateText: "", period: "", timeText: "--:--:--" };
   const textColor = isFullscreen ? getContrastColor(bgColor) : "inherit";
 
   return (
@@ -167,6 +173,8 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
           display: "flex", 
           flexDirection: "column", 
           alignItems: "center", 
+          width: "100%",
+          containerType: "inline-size",
           gap: "1rem",
           transform: isFullscreen ? `scale(${fontSizeScale})` : 'none',
           transition: 'transform 0.3s ease-out'
@@ -186,7 +194,8 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
         )}
         <strong
           style={{
-            fontSize: isFullscreen ? "20vw" : "clamp(4.5rem, 18vw, 12rem)",
+            fontSize: isFullscreen ? "20vw" : "clamp(1.5rem, 18cqi, 12rem)",
+            whiteSpace: "nowrap",
             fontVariantNumeric: "tabular-nums",
             letterSpacing: "-0.05em",
             lineHeight: 0.9,

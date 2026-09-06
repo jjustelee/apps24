@@ -34,14 +34,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <head>
         <meta name="impact-site-verification" content="63357a1c-cdb1-4be0-b902-123c9758b597" />
         {googleAdsenseAccount ? (
-          <>
-            <meta name="google-adsense-account" content={googleAdsenseAccount} />
-            <script
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${googleAdsenseAccount}`}
-              crossOrigin="anonymous"
-            />
-          </>
+          <meta name="google-adsense-account" content={googleAdsenseAccount} />
         ) : null}
       </head>
       <body>{children}</body>

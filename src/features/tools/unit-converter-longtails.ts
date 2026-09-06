@@ -226,7 +226,7 @@ export const UNIT_CONVERTER_LONGTAILS: Record<UnitConverterLongtailSlug, Longtai
 export const UNIT_CONVERTER_LONGTAIL_SLUGS = Object.keys(UNIT_CONVERTER_LONGTAILS) as UnitConverterLongtailSlug[];
 
 export function isUnitConverterLongtailSlug(value: string): value is UnitConverterLongtailSlug {
-  return value in UNIT_CONVERTER_LONGTAILS;
+  return Object.hasOwn(UNIT_CONVERTER_LONGTAILS, value);
 }
 
 export function getUnitConverterLongtailPreset(slug: string): UnitConverterPreset | undefined {
@@ -259,7 +259,7 @@ export function getUnitConverterLongtailLinks(locale: Locale): UnitConverterLong
     return [
       {
         slug,
-        href: `/${locale}/unit-converter/${slug}`,
+        href: `/${locale}/unit-converter?preset=${slug}`,
         ...text,
       },
     ];

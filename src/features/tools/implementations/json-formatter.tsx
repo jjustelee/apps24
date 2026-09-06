@@ -1,22 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, AlertTriangle, ClipboardCheck, Braces, Code } from "lucide-react";
 import { getJsonFormatterLongtailPreset, isJsonFormatterLongtailSlug } from "@/features/tools/json-formatter-longtails";
+import { REVIEW_UI } from "@/features/tools/review-ui";
+import { formatJsonText } from "@/lib/json-format";
 
 function formatJsonValue(value: string) {
-  return JSON.stringify(JSON.parse(value), null, 2);
+  return formatJsonText(value);
 }
 
 function validateJsonValue(value: string) {
   JSON.parse(value);
 }
 
-export function JsonFormatterTool({ commonText: common }: ToolRendererProps) {
+export function JsonFormatterTool({ locale, commonText: common, searchParams }: ToolRendererProps) {
+  const copy = REVIEW_UI[locale];
   const params = useParams();
-  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const modeSlug = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.mode === "string" ? params.mode : undefined;
   const preset = modeSlug && isJsonFormatterLongtailSlug(modeSlug) ? getJsonFormatterLongtailPreset(modeSlug) : undefined;
   const [input, setInput] = useState(() => {
     if (!preset) return "";
@@ -28,6 +31,11 @@ export function JsonFormatterTool({ commonText: common }: ToolRendererProps) {
     }
   });
   const [copied, setCopied] = useState(false);
+  const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => {
+    if (copiedTimer.current) clearTimeout(copiedTimer.current);
+  }, []);
+  const [valid, setValid] = useState(false);
   const [error, setError] = useState<string | null>(() => {
     if (!preset) return null;
 
@@ -48,7 +56,9 @@ export function JsonFormatterTool({ commonText: common }: ToolRendererProps) {
     try {
       setInput(formatJsonValue(input));
       setError(null);
+      setValid(true);
     } catch (error: unknown) {
+      setValid(false);
       setError(error instanceof Error ? error.message : "Invalid JSON");
     }
   };
@@ -56,38 +66,48 @@ export function JsonFormatterTool({ commonText: common }: ToolRendererProps) {
   const handleValidate = () => {
     if (!input.trim()) {
       setError(null);
+      setValid(false);
       return;
     }
     try {
       validateJsonValue(input);
       setError(null);
-      // Optional: show a small success indication
+      setValid(true);
     } catch (error: unknown) {
+      setValid(false);
       setError(error instanceof Error ? error.message : "Invalid JSON");
     }
   };
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (!input) return;
-    navigator.clipboard.writeText(input);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(input);
+      setCopied(true);
+      if (copiedTimer.current) clearTimeout(copiedTimer.current);
+      copiedTimer.current = setTimeout(() => setCopied(false), 2000);
+    } catch { setCopied(false); }
   };
 
   const handleClear = () => {
     setInput("");
     setError(null);
     setCopied(false);
+    setValid(false);
   };
 
   return (
     <div className="tool-container card-glass">
       <div className="input-section">
         <textarea
+          dir="ltr"
+          aria-label={common.placeholder}
           className="textarea-glass"
           value={input}
           onChange={(e) => {
             setInput(e.target.value);
+            setValid(false);
+            setCopied(false);
             if (error) setError(null);
           }}
           placeholder={common.placeholder}
@@ -95,29 +115,38 @@ export function JsonFormatterTool({ commonText: common }: ToolRendererProps) {
           spellCheck={false}
         />
         {error && (
-          <div className="error-message">
+          <div className="error-message" role="alert">
             <AlertTriangle size={16} />
-            {error}
+            <span>{copy.jsonInvalid}: {error}</span>
           </div>
         )}
+        {valid && <p role="status" className="tool-note">{copy.jsonValid}</p>}
       </div>
+
+      <p className="tool-note">{copy.jsonHint}</p>
 
       <div className="controls-section">
         <div className="button-group">
-          <button onClick={handleFormat} className="button-glass">
+          <button onClick={handleFormat} disabled={!input.trim()} className="button-glass">
             <Braces size={18} />
             {common.format}
           </button>
-          <button onClick={handleValidate} className="button-glass">
+          <button onClick={handleValidate} disabled={!input.trim()} className="button-glass">
             <Code size={18} />
             {common.validate}
           </button>
+          <button className="button-glass" onClick={() => {
+            setInput('{"name":"Apps24","id":9007199254740993}');
+            setError(null);
+            setValid(false);
+            setCopied(false);
+          }}>{common.sample}</button>
         </div>
 
         <div className="action-group">
-          <button onClick={handleCopy} className="button-primary">
+          <button onClick={handleCopy} disabled={!input} className="button-primary">
             {copied ? <ClipboardCheck size={18} /> : <Copy size={18} />}
-            {common.copyAll}
+            {copied ? common.copied : common.copyAll}
           </button>
           <button onClick={handleClear} className="button-ghost">
             <Trash2 size={18} />

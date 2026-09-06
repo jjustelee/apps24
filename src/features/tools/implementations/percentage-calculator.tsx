@@ -13,14 +13,14 @@ import { getPercentageCalculatorLongtailPreset } from "@/features/tools/percenta
 
 type CalcMode = "value" | "increase" | "decrease" | "discount";
 
-export function PercentageCalculatorTool({ locale, toolText, commonText: common }: ToolRendererProps) {
+export function PercentageCalculatorTool({ locale, toolText, commonText: common, searchParams }: ToolRendererProps) {
   const params = useParams();
   const t = toolText!;
   const modeLabels = t.modeLabels!;
   const inputLabels = t.inputLabels!;
   const resultLabel = t.resultLabel || (locale === "ko" ? "계산 결과" : "RESULT");
   const resultPlaceholder = t.placeholderText || "...";
-  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const modeSlug = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.mode === "string" ? params.mode : undefined;
   const defaultSelection = useMemo(() => {
     const preset = modeSlug ? getPercentageCalculatorLongtailPreset(modeSlug) : undefined;
 

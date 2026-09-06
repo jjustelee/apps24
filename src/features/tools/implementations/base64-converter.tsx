@@ -14,9 +14,9 @@ function decodeBase64(value: string) {
   return decodeURIComponent(escape(atob(value)));
 }
 
-export function Base64ConverterTool({ commonText: common }: ToolRendererProps) {
+export function Base64ConverterTool({ commonText: common, searchParams }: ToolRendererProps) {
   const params = useParams();
-  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const modeSlug = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.mode === "string" ? params.mode : undefined;
   const preset = modeSlug && isBase64EncoderLongtailSlug(modeSlug) ? getBase64EncoderLongtailPreset(modeSlug) : undefined;
   const [input, setInput] = useState(() => preset?.text ?? "");
   const [output, setOutput] = useState(() => {

@@ -7,6 +7,10 @@ import { getStaticToolParams, getToolBySlug } from "@/features/tools/registry";
 import { getToolText, getCommonText } from "@/features/tools/copy";
 import { toolRenderers } from "@/features/tools/implementations";
 import { getLocalizedUrl, isLocale, type Locale } from "@/lib/site";
+import { getValidPreset } from "@/features/tools/preset-options";
+import { getPixelConverterLongtailPreset } from "@/features/tools/pixel-converter-longtails";
+import { getBackgroundRemoverLongtailPreset } from "@/features/tools/background-remover-longtails";
+import { ToolAds } from "@/components/tool-ads";
 
 type ToolPageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -69,6 +73,7 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
   const toolUrl = getLocalizedUrl(validLocale, `/${tool.slug}`);
 
   const Renderer = toolRenderers[tool.implementationKey];
+  const preset = getValidPreset(slug, resolvedSearchParams?.preset);
   const toolData =
     tool.implementationKey === "barcodeGenerator"
       ? {
@@ -77,7 +82,11 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
             label: desc,
           })),
         }
-      : undefined;
+      : preset && tool.id === "pixelconverter"
+        ? getPixelConverterLongtailPreset(preset)
+        : preset && tool.id === "backgroundremover"
+          ? getBackgroundRemoverLongtailPreset(preset)
+          : undefined;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -152,9 +161,10 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
       >
         {Renderer ? (
           <Renderer
+            key={`${slug}:${preset ?? ""}`}
             locale={validLocale}
             tool={tool}
-            searchParams={resolvedSearchParams}
+            searchParams={{ ...resolvedSearchParams, preset }}
             toolData={toolData}
             commonText={common}
             toolText={text}
@@ -170,6 +180,7 @@ export default async function ToolPage({ params, searchParams }: ToolPageProps) 
           </div>
         )}
       </ToolShell>
+      {!preset && <ToolAds toolId={tool.id} />}
     </>
   );
 }

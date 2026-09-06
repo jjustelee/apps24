@@ -110,7 +110,7 @@ const LONGTAILS: Record<
 export const JSON_FORMATTER_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as JsonFormatterLongtailSlug[];
 
 export function isJsonFormatterLongtailSlug(value: string): value is JsonFormatterLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getJsonFormatterLongtailPreset(slug: string): JsonFormatterLongtailPreset | undefined {
@@ -133,7 +133,7 @@ export function getJsonFormatterLongtailLinks(locale: Locale): JsonFormatterLong
     const text = getJsonFormatterLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/json-formatter/${slug}`,
+      href: `/${locale}/json-formatter?preset=${slug}`,
       ...text,
     };
   });

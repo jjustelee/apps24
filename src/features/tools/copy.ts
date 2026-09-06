@@ -1,6 +1,7 @@
 import type { ToolDefinition } from "@/features/tools/types";
 import type { Locale } from "@/lib/site";
 import type { LocaleData, ToolText, CommonText } from "./types_locales";
+import { getReviewedToolText } from "./reviewed-content";
 
 export type { ToolText, CommonText };
 
@@ -506,7 +507,7 @@ export async function getToolText(locale: Locale, tool: ToolDefinition): Promise
     }
   );
 
-  return base;
+  return { ...base, ...getReviewedToolText(locale, tool.id), cardExamples: base.examples };
 }
 
 export async function getCommonText(locale: Locale): Promise<CommonText> {

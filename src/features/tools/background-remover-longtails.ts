@@ -235,7 +235,7 @@ const LONGTAILS: Record<
 export const BACKGROUND_REMOVER_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as BackgroundRemoverLongtailSlug[];
 
 export function isBackgroundRemoverLongtailSlug(value: string): value is BackgroundRemoverLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getBackgroundRemoverLongtailPreset(slug: string): BackgroundRemoverPreset | undefined {
@@ -258,7 +258,7 @@ export function getBackgroundRemoverLongtailLinks(locale: Locale): BackgroundRem
     const text = getBackgroundRemoverLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/background-remover/${slug}`,
+      href: `/${locale}/background-remover?preset=${slug}`,
       ...text,
     };
   });

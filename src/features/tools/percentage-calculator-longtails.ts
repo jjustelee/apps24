@@ -145,7 +145,7 @@ const LONGTAILS: Record<
 export const PERCENTAGE_CALCULATOR_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as PercentageCalculatorLongtailSlug[];
 
 export function isPercentageCalculatorLongtailSlug(value: string): value is PercentageCalculatorLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getPercentageCalculatorLongtailPreset(slug: string): PercentageCalculatorPreset | undefined {
@@ -168,7 +168,7 @@ export function getPercentageCalculatorLongtailLinks(locale: Locale): Percentage
     const text = getPercentageCalculatorLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/percentage-calculator/${slug}`,
+      href: `/${locale}/percentage-calculator?preset=${slug}`,
       ...text,
     };
   });

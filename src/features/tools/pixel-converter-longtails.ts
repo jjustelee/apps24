@@ -130,7 +130,7 @@ const LONGTAILS: Record<
 export const PIXEL_CONVERTER_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as PixelConverterLongtailSlug[];
 
 export function isPixelConverterLongtailSlug(value: string): value is PixelConverterLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getPixelConverterLongtailPreset(slug: string): PixelConverterPreset | undefined {
@@ -156,7 +156,7 @@ export function getPixelConverterLongtailLinks(locale: Locale): PixelConverterLo
     const text = getPixelConverterLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/pixel-converter/${slug}`,
+      href: `/${locale}/pixel-converter?preset=${slug}`,
       ...text,
     };
   });

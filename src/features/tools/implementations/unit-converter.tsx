@@ -74,10 +74,10 @@ const CONVERSION_MAP: Record<UnitCategory, Record<string, UnitData>> = {
   },
 };
 
-export function UnitConverterTool({ commonText: common }: ToolRendererProps) {
+export function UnitConverterTool({ commonText: common, searchParams }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
-  const conversion = typeof params.conversion === "string" ? params.conversion : undefined;
+  const conversion = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.conversion === "string" ? params.conversion : undefined;
 
   const defaultSelection = useMemo(() => {
     const preset = conversion ? getUnitConverterLongtailPreset(conversion) : undefined;
@@ -313,7 +313,7 @@ export function UnitConverterTool({ commonText: common }: ToolRendererProps) {
         <div className="flex flex-col gap-6 p-8 bg-[var(--panel-glass)] border border-[var(--panel-border)] rounded-[40px] shadow-xl">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
             <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">Decimal Precision</span>
-            <div className="inline-flex p-1.5 bg-black/5 dark:bg-white/5 rounded-2xl border border-[var(--panel-border)] shadow-inner">
+            <div className="inline-flex max-w-full flex-wrap justify-center p-1.5 bg-black/5 dark:bg-white/5 rounded-2xl border border-[var(--panel-border)] shadow-inner">
               {[0, 2, 4, 6].map(p => (
                 <button
                   key={p}
@@ -362,7 +362,7 @@ export function UnitConverterTool({ commonText: common }: ToolRendererProps) {
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--panel-border)] to-transparent opacity-30"></div>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_var(--accent)] animate-pulse"></div>
-          <p className="text-[10px] font-black opacity-30 uppercase tracking-[0.4em] whitespace-nowrap">
+          <p className="min-w-0 text-sm text-center leading-relaxed text-[var(--muted)]">
             {common.unitAccuracyNote || "Precision Guaranteed"}
           </p>
         </div>

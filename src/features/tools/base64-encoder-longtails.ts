@@ -110,7 +110,7 @@ const LONGTAILS: Record<
 export const BASE64_ENCODER_LONGTAIL_SLUGS = Object.keys(LONGTAILS) as Base64EncoderLongtailSlug[];
 
 export function isBase64EncoderLongtailSlug(value: string): value is Base64EncoderLongtailSlug {
-  return value in LONGTAILS;
+  return Object.hasOwn(LONGTAILS, value);
 }
 
 export function getBase64EncoderLongtailPreset(slug: string): Base64EncoderLongtailPreset | undefined {
@@ -133,7 +133,7 @@ export function getBase64EncoderLongtailLinks(locale: Locale): Base64EncoderLong
     const text = getBase64EncoderLongtailText(locale, slug)!;
     return {
       slug,
-      href: `/${locale}/base64-encoder-decoder/${slug}`,
+      href: `/${locale}/base64-encoder-decoder?preset=${slug}`,
       ...text,
     };
   });

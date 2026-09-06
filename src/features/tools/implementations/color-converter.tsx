@@ -221,6 +221,8 @@ export function ColorConverterTool() {
         }
         .input-glass {
           flex: 1;
+          min-width: 0;
+          width: 100%;
           height: 50px;
           padding: 0 1rem;
           background: rgba(255, 255, 255, 0.03);

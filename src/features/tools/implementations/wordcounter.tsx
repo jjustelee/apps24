@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { analyzeText } from "@/lib/text-metrics";
+import { REVIEW_UI } from "@/features/tools/review-ui";
 const STORAGE_KEY_POSITION = "apps24.wordcounter.position";
 
-export function WordCounterTool({ commonText: common }: ToolRendererProps) {
+export function WordCounterTool({ locale, commonText: common }: ToolRendererProps) {
+  const copy = REVIEW_UI[locale];
+  const mirrorRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState("");
   const [position, setPosition] = useState("0");
   const [isFocused, setIsFocused] = useState(false);
@@ -12,8 +16,10 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      const savedPos = localStorage.getItem(STORAGE_KEY_POSITION);
-      if (savedPos !== null) setPosition(savedPos);
+      try {
+        const savedPos = localStorage.getItem(STORAGE_KEY_POSITION);
+        if (savedPos !== null) setPosition(savedPos);
+      } catch { /* Storage is optional. */ }
       setSettingsLoaded(true);
     }, 0);
 
@@ -22,12 +28,11 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
 
   useEffect(() => {
     if (settingsLoaded) {
-      localStorage.setItem(STORAGE_KEY_POSITION, position);
+      try { localStorage.setItem(STORAGE_KEY_POSITION, position); } catch { /* Storage is optional. */ }
     }
   }, [position, settingsLoaded]);
 
-  const characterCount = text.length;
-  const charactersWithoutSpaces = text.replace(/\s/g, "").length;
+  const { characters, characterCount, charactersWithoutSpaces, words, hasSegmenter } = analyzeText(text, locale);
   const numericPosition = Number.parseInt(position, 10);
   
   // Highlighting logic inside the mirror layer
@@ -39,9 +44,9 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
     }
 
     const index = numericPosition - 1;
-    const before = text.slice(0, index);
-    const target = text.charAt(index);
-    const after = text.slice(index + 1);
+    const before = characters.slice(0, index).join("");
+    const target = characters[index];
+    const after = characters.slice(index + 1).join("");
 
     return (
       <>
@@ -55,7 +60,7 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
             boxShadow: "none",
           }}
         >
-          {target === "\n" ? " " : target}
+          {target}
         </mark>
         {after}
       </>
@@ -86,6 +91,7 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
       >
         {/* Mirror Layer (Displays the highlight) */}
         <div
+          ref={mirrorRef}
           aria-hidden="true"
           style={{
             position: "absolute",
@@ -110,9 +116,13 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
 
         {/* Real Input Layer */}
         <textarea
+          aria-label={common.placeholder}
           className="tool-textarea"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onScroll={(event) => {
+            if (mirrorRef.current) mirrorRef.current.scrollTop = event.currentTarget.scrollTop;
+          }}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder={common.placeholder}
@@ -142,6 +152,10 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
 
       {/* 2. Organized Stats List */}
       <div className="tool-stat-list" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="stat-item" style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
+          <span>{copy.words}:</span>
+          <strong className="accent-text">{words}</strong>
+        </div>
         <div className="stat-item" style={{ fontSize: "1.05rem", borderBottom: "1px solid var(--line)", paddingBottom: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span>1. {common.charCountWithSpaces}:</span>
           <strong className="accent-text" style={{ fontSize: "1.25rem" }}>{characterCount}</strong>
@@ -153,7 +167,7 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
         </div>
 
         <div className="stat-item" style={{ fontSize: "1.05rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          <span>3. {common.whichPosition}</span>
+          <label htmlFor="character-position">{common.whichPosition}</label>
           <input
             id="character-position"
             className="tool-input"
@@ -168,6 +182,8 @@ export function WordCounterTool({ commonText: common }: ToolRendererProps) {
           />
         </div>
       </div>
+
+      <p className="tool-note">{hasSegmenter ? copy.countingMethod : copy.fallbackMethod}</p>
 
       {/* 4. Footer Help */}
       <p className="tool-note" style={{ marginTop: "2rem", fontSize: "0.95rem", opacity: 0.8 }}>

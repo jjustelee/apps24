@@ -9,6 +9,8 @@ export type ToolText = {
   howToUse?: string;
   faq?: { q: string; a: string }[];
   examples?: string[];
+  cardExamples?: string[];
+  references?: Record<string, string>;
   whyUse?: string;
   popularConversions?: string[];
   relatedTools?: string;

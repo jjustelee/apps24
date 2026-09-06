@@ -2,9 +2,10 @@ import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import type { CommonText, ToolText } from "@/features/tools/copy";
 import type { ToolDefinition } from "@/features/tools/types";
+import type { Locale } from "@/lib/site";
 
 export type ToolRendererProps = {
-  locale: string;
+  locale: Locale;
   tool: ToolDefinition;
   searchParams?: Record<string, string | string[] | undefined>;
   toolData?: unknown;

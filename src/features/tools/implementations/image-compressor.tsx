@@ -36,6 +36,7 @@ type ImageCompressorCopy = {
   batchHint: string;
   cleanupHint: string;
   qualityNote: string;
+  outputFormat: string;
   processing: string;
   pending: string;
   done: string;
@@ -57,7 +58,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "You can select or drag multiple images at once.",
     batchHint: "Images are compressed one by one to keep the browser responsive.",
     cleanupHint: "Temporary previews are cleaned up when files are replaced or reset.",
-    qualityNote: "Quality mainly affects JPG/WebP. PNG may not shrink much because it is lossless-style.",
+    qualityNote: "Quality changes JPG/WebP only. PNG ignores this setting: reduce dimensions or choose WebP to reduce size. JPG replaces transparency with white. A larger output is possible; a negative savings percentage means the file grew.",
+    outputFormat: "Output format",
     processing: "Processing",
     pending: "Waiting",
     done: "Done",
@@ -77,7 +79,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "여러 이미지를 한 번에 선택하거나 드래그할 수 있습니다.",
     batchHint: "브라우저가 멈추지 않도록 이미지를 한 장씩 순차 압축합니다.",
     cleanupHint: "파일을 교체하거나 초기화하면 임시 미리보기 URL을 정리합니다.",
-    qualityNote: "품질 설정은 JPG/WebP에 주로 적용됩니다. PNG는 무손실 방식이라 용량이 크게 줄지 않을 수 있습니다.",
+    qualityNote: "품질은 JPG/WebP에만 적용됩니다. PNG는 이 설정을 사용하지 않으므로 크기를 줄이거나 WebP를 선택하세요. JPG는 투명 영역을 흰색으로 바꿉니다. 결과가 더 커질 수 있으며, 절감률이 음수면 용량이 증가한 것입니다.",
+    outputFormat: "출력 형식",
     processing: "처리 중",
     pending: "대기",
     done: "완료",
@@ -97,7 +100,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "Vous pouvez sélectionner ou glisser plusieurs images à la fois.",
     batchHint: "Les images sont compressées une par une pour garder le navigateur réactif.",
     cleanupHint: "Les aperçus temporaires sont nettoyés lorsque les fichiers sont remplacés ou réinitialisés.",
-    qualityNote: "La qualité agit surtout sur JPG/WebP. Le PNG peut peu diminuer car il est de type sans perte.",
+    qualityNote: "La qualité modifie uniquement JPG/WebP. Pour PNG, réduisez les dimensions ou choisissez WebP. JPG remplace la transparence par du blanc. Un pourcentage d’économie négatif indique un fichier plus volumineux.",
+    outputFormat: "Format de sortie",
     processing: "Traitement",
     pending: "En attente",
     done: "Terminé",
@@ -117,7 +121,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "複数の画像を一度に選択またはドラッグできます。",
     batchHint: "ブラウザを軽く保つため、画像を1枚ずつ順番に圧縮します。",
     cleanupHint: "ファイルの置換やリセット時に一時プレビューURLを整理します。",
-    qualityNote: "品質設定は主にJPG/WebPに反映されます。PNGは可逆形式のため大きく縮小しない場合があります。",
+    qualityNote: "品質設定はJPG/WebPにのみ適用されます。PNGはサイズを縮小するかWebPに変更してください。JPGでは透明部分が白になります。削減率がマイナスの場合、容量が増加しています。",
+    outputFormat: "出力形式",
     processing: "処理中",
     pending: "待機中",
     done: "完了",
@@ -137,7 +142,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "可以一次选择或拖放多张图片。",
     batchHint: "图片会逐个压缩，以保持浏览器流畅。",
     cleanupHint: "替换或重置文件时会清理临时预览 URL。",
-    qualityNote: "质量设置主要影响 JPG/WebP。PNG 类似无损格式，体积可能不会明显变小。",
+    qualityNote: "质量设置仅影响 JPG/WebP。PNG 不使用此设置，请缩小尺寸或选择 WebP。JPG 会将透明区域变成白色。结果可能更大；负的节省百分比表示文件体积增加。",
+    outputFormat: "输出格式",
     processing: "处理中",
     pending: "等待中",
     done: "完成",
@@ -157,7 +163,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "可以一次選擇或拖放多張圖片。",
     batchHint: "圖片會逐一壓縮，以保持瀏覽器順暢。",
     cleanupHint: "替換或重設檔案時會清理暫時預覽 URL。",
-    qualityNote: "品質設定主要影響 JPG/WebP。PNG 類似無損格式，容量可能不會明顯變小。",
+    qualityNote: "品質設定只影響 JPG/WebP。PNG 不使用此設定，請縮小尺寸或選擇 WebP。JPG 會將透明區域變成白色。結果可能更大；節省百分比為負數表示檔案容量增加。",
+    outputFormat: "輸出格式",
     processing: "處理中",
     pending: "等待中",
     done: "完成",
@@ -177,7 +184,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "Você pode selecionar ou arrastar várias imagens de uma vez.",
     batchHint: "As imagens são comprimidas uma por uma para manter o navegador responsivo.",
     cleanupHint: "As prévias temporárias são limpas ao substituir ou redefinir arquivos.",
-    qualityNote: "A qualidade afeta principalmente JPG/WebP. PNG pode reduzir pouco por ter comportamento sem perdas.",
+    qualityNote: "A qualidade altera apenas JPG/WebP. Para PNG, reduza as dimensões ou escolha WebP. JPG substitui a transparência por branco. Uma economia percentual negativa indica que o arquivo ficou maior.",
+    outputFormat: "Formato de saída",
     processing: "Processando",
     pending: "Aguardando",
     done: "Concluído",
@@ -197,7 +205,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "Puedes seleccionar o arrastrar varias imágenes a la vez.",
     batchHint: "Las imágenes se comprimen una por una para mantener el navegador ágil.",
     cleanupHint: "Las vistas previas temporales se limpian al reemplazar o reiniciar archivos.",
-    qualityNote: "La calidad afecta sobre todo a JPG/WebP. PNG puede reducir poco porque es de tipo sin pérdida.",
+    qualityNote: "La calidad solo modifica JPG/WebP. Para PNG, reduce las dimensiones o elige WebP. JPG sustituye la transparencia por blanco. Un porcentaje de ahorro negativo indica que el archivo aumentó de tamaño.",
+    outputFormat: "Formato de salida",
     processing: "Procesando",
     pending: "En espera",
     done: "Listo",
@@ -217,7 +226,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "Sie können mehrere Bilder gleichzeitig auswählen oder per Drag-and-drop hinzufügen.",
     batchHint: "Bilder werden nacheinander komprimiert, damit der Browser reaktionsfähig bleibt.",
     cleanupHint: "Temporäre Vorschauen werden beim Ersetzen oder Zurücksetzen bereinigt.",
-    qualityNote: "Qualität wirkt vor allem bei JPG/WebP. PNG wird eventuell kaum kleiner, da es verlustfrei arbeitet.",
+    qualityNote: "Qualität verändert nur JPG/WebP. Für PNG die Abmessungen reduzieren oder WebP wählen. JPG ersetzt Transparenz durch Weiß. Eine negative Ersparnis bedeutet, dass die Datei größer geworden ist.",
+    outputFormat: "Ausgabeformat",
     processing: "Wird verarbeitet",
     pending: "Wartet",
     done: "Fertig",
@@ -237,7 +247,8 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
     multiFileHint: "يمكنك اختيار أو سحب عدة صور دفعة واحدة.",
     batchHint: "يتم ضغط الصور واحدة تلو الأخرى للحفاظ على استجابة المتصفح.",
     cleanupHint: "يتم تنظيف روابط المعاينة المؤقتة عند استبدال الملفات أو إعادة الضبط.",
-    qualityNote: "تؤثر الجودة غالبًا في JPG/WebP. قد لا يصغر PNG كثيرًا لأنه أقرب إلى الضغط دون فقدان.",
+    qualityNote: "تؤثر الجودة في JPG/WebP فقط. لتقليل حجم PNG قلّل الأبعاد أو اختر WebP. يستبدل JPG الشفافية بالأبيض. نسبة التوفير السالبة تعني أن حجم الملف قد زاد.",
+    outputFormat: "صيغة الإخراج",
     processing: "جار المعالجة",
     pending: "قيد الانتظار",
     done: "تم",
@@ -298,11 +309,15 @@ async function compressImageFile(
   canvas.height = height;
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
+  if (settings.format === "image/jpeg") {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+  }
   ctx.drawImage(img, 0, 0, width, height);
 
   const blob = await new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((result) => {
-      if (result) {
+      if (result && result.type === settings.format) {
         resolve(result);
       } else {
         reject(new Error("Canvas compression failed"));
@@ -317,9 +332,9 @@ async function compressImageFile(
   };
 }
 
-export function ImageCompressorTool({ locale, commonText: common }: ToolRendererProps) {
+export function ImageCompressorTool({ locale, commonText: common, searchParams }: ToolRendererProps) {
   const params = useParams();
-  const modeSlug = typeof params.mode === "string" ? params.mode : undefined;
+  const modeSlug = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.mode === "string" ? params.mode : undefined;
   const defaultSelection = useMemo(() => {
     const preset = modeSlug ? getImageCompressorLongtailPreset(modeSlug) : undefined;
 
@@ -593,8 +608,8 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
                     <span className="badge">{common.original}</span>
                     <img src={selectedItem.originalPreview} alt={common.original} />
                     <div className="info-overlay">
-                      <div>{formatSize(selectedItem.file.size)}</div>
-                      <div>
+                      <div dir="ltr">{formatSize(selectedItem.file.size)}</div>
+                      <div dir="ltr">
                         {selectedItem.dimensions.width} × {selectedItem.dimensions.height} px
                       </div>
                     </div>
@@ -622,13 +637,13 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
 
                     {selectedItem.compressedBlob && (
                       <div className="info-overlay accent">
-                        <div style={{ fontWeight: 800 }}>
+                        <div dir="ltr" style={{ fontWeight: 800 }}>
                           {formatSize(selectedItem.compressedBlob.size)}
-                          <span className="saving-percent">
+                          <span className={`saving-percent ${selectedItem.compressedBlob.size > selectedItem.file.size ? "increased" : ""}`}>
                             ({getSavingsPercent(selectedItem.file.size, selectedItem.compressedBlob.size)}%)
                           </span>
                         </div>
-                        <div>
+                        <div dir="ltr">
                           {selectedItem.outputDimensions.width} × {selectedItem.outputDimensions.height} px
                         </div>
                       </div>
@@ -641,22 +656,24 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
             <div className="settings-results-grid">
               <div className="advanced-controls">
                 <div className="control-group">
-                  <label>
-                    {common.quality}: {Math.round(quality * 100)}%
+                  <label htmlFor="compression-quality">
+                    {common.quality}{format !== "image/png" && `: ${Math.round(quality * 100)}%`}
                   </label>
                   <input
+                    id="compression-quality"
                     type="range"
                     min="0.1"
                     max="1.0"
                     step="0.05"
                     value={quality}
+                    disabled={format === "image/png"}
                     onChange={(e) => setQuality(parseFloat(e.target.value))}
                     className="premium-slider"
                   />
                 </div>
 
                 <div className="control-group">
-                  <label>
+                  <label htmlFor="compression-scale">
                     {common.dimensions}: {Math.round(scale * 100)}%
                   </label>
                   <div className="scale-buttons">
@@ -671,6 +688,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
                     ))}
                   </div>
                   <input
+                    id="compression-scale"
                     type="range"
                     min="0.1"
                     max="1.0"
@@ -683,8 +701,8 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
 
                 <div className="utility-bar">
                   <div className="format-select">
-                    <label>{common.format}</label>
-                    <select value={format} onChange={(e) => setFormat(e.target.value as CompressionFormat)}>
+                    <label htmlFor="compression-format">{copy.outputFormat}</label>
+                    <select id="compression-format" value={format} onChange={(e) => setFormat(e.target.value as CompressionFormat)}>
                       <option value="image/webp">WebP</option>
                       <option value="image/jpeg">JPG</option>
                       <option value="image/png">PNG</option>
@@ -707,11 +725,6 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
                   </div>
                 </div>
 
-                <div className="guidance-panel">
-                  <div>{copy.batchHint}</div>
-                  <div>{copy.qualityNote}</div>
-                  <div>{copy.cleanupHint}</div>
-                </div>
               </div>
 
               <div className="batch-results" aria-live="polite">
@@ -729,13 +742,13 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
 
                 <div className="total-result">
                   <span>{copy.totalResult}</span>
-                  <strong>
+                  <strong dir="ltr">
                     {completedItems.length
                       ? `${formatSize(completedOriginalSize)} → ${formatSize(completedCompressedSize)}`
                       : `${formatSize(totalOriginalSize)} → -`}
                   </strong>
                   {completedItems.length > 0 && (
-                    <em>{getSavingsPercent(completedOriginalSize, completedCompressedSize)}%</em>
+                    <em className={completedCompressedSize > completedOriginalSize ? "increased" : ""}>{getSavingsPercent(completedOriginalSize, completedCompressedSize)}%</em>
                   )}
                 </div>
 
@@ -748,7 +761,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
                       <button type="button" className="batch-select" onClick={() => setSelectedItemId(item.id)}>
                         <div className="batch-main">
                           <span className="file-name">{item.file.name}</span>
-                          <span className="batch-meta">
+                          <span className="batch-meta" dir="ltr">
                             {formatSize(item.file.size)}
                             {item.compressedBlob ? ` → ${formatSize(item.compressedBlob.size)}` : ""}
                           </span>
@@ -756,7 +769,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
 
                         <div className="batch-actions">
                           {item.compressedBlob && (
-                            <span className="saving-percent">
+                            <span className={`saving-percent ${item.compressedBlob.size > item.file.size ? "increased" : ""}`}>
                               {getSavingsPercent(item.file.size, item.compressedBlob.size)}%
                             </span>
                           )}
@@ -782,6 +795,11 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
                   ))}
                 </div>
               </div>
+            </div>
+            <div className="guidance-panel">
+              <div>{copy.batchHint}</div>
+              <div>{copy.qualityNote}</div>
+              <div>{copy.cleanupHint}</div>
             </div>
           </div>
         )}
@@ -1257,7 +1275,7 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
           color: var(--text);
           cursor: pointer;
           padding: 0;
-          text-align: left;
+          text-align: start;
         }
         .batch-select:focus-visible {
           outline: 2px solid var(--accent);
@@ -1354,7 +1372,52 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
         @media (max-width: 640px) {
           .tool-container,
           .upload-zone.has-file {
+            padding: 0;
+          }
+          .upload-zone.has-file {
+            border: 0;
+          }
+          .advanced-controls,
+          .batch-results {
             padding: 1rem;
+            min-width: 0;
+          }
+          .scale-buttons {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+          .scale-btn {
+            white-space: nowrap;
+          }
+          .action-buttons {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 44px;
+          }
+          .main-action {
+            justify-content: center;
+            padding: 0.75rem 0.5rem;
+          }
+          .action-buttons .button-ghost {
+            padding: 0;
+            justify-content: center;
+          }
+          .total-result {
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.5rem;
+            padding: 0.75rem;
+          }
+          .total-result strong {
+            grid-row: 2;
+            grid-column: 1 / -1;
+            white-space: normal;
+            overflow: visible;
+          }
+          .total-result em {
+            grid-row: 1;
+            grid-column: 2;
+          }
+          .mini-download {
+            width: 44px;
+            height: 44px;
           }
           .upload-zone {
             padding: 2rem 1rem;
@@ -1396,6 +1459,10 @@ export function ImageCompressorTool({ locale, commonText: common }: ToolRenderer
           .batch-actions {
             justify-content: space-between;
           }
+        }
+        .saving-percent.increased,
+        .total-result em.increased {
+          color: #b45309;
         }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
