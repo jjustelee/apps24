@@ -3,6 +3,9 @@ import type { ReactNode } from "react";
 import { getCommonText } from "@/features/tools/copy";
 import { LocaleSwitcher } from "./locale-switcher";
 import { type Locale } from "@/lib/site";
+import { getGa4MeasurementId } from "@/lib/analytics";
+import { getAnalyticsPaths } from "@/lib/analytics-routes";
+import { SiteAnalytics } from "./site-analytics";
 
 type SiteShellProps = {
   locale: Locale;
@@ -13,6 +16,7 @@ type SiteShellProps = {
 
 export async function SiteShell({ locale, children }: SiteShellProps) {
   const common = await getCommonText(locale);
+  const measurementId = getGa4MeasurementId();
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -50,6 +54,7 @@ export async function SiteShell({ locale, children }: SiteShellProps) {
               {common.contact}
             </Link>
           </div>
+          {measurementId && <SiteAnalytics locale={locale} measurementId={measurementId} allowedPaths={getAnalyticsPaths(locale)} />}
           <span style={{ fontSize: "0.85rem", color: "var(--text-muted)", opacity: 0.8 }}>
             © {new Date().getFullYear()} apps24.io.
           </span>

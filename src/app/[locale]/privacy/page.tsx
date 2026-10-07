@@ -5,6 +5,7 @@ import { buildLocaleAlternates } from "@/lib/seo";
 import { isLocale, type Locale } from "@/lib/site";
 import Link from "next/link";
 import { DETAIL_COPY } from "@/features/tools/detail-copy";
+import { ANALYTICS_COPY } from "@/features/analytics/copy";
 
 const PRIVACY_REVIEW_COPY: Record<
   Locale,
@@ -17,70 +18,70 @@ const PRIVACY_REVIEW_COPY: Record<
   }
 > = {
   en: {
-    lastUpdated: "Last updated: October 7, 2026",
+    lastUpdated: "Last updated: October 8, 2026",
     reviewTitle: "Advertising, cookies, and user choices",
     reviewBody: "Apps24 explains when browser storage, third-party lookup services, or Google advertising services may be used. If ads are enabled, users can manage personalized advertising and review Google's privacy terms from the links below.",
     adSettings: "Google ad settings",
     googlePolicy: "Google privacy and terms",
   },
   ko: {
-    lastUpdated: "최종 업데이트: 2026년 10월 7일",
+    lastUpdated: "최종 업데이트: 2026년 10월 8일",
     reviewTitle: "광고, 쿠키, 사용자 선택권",
     reviewBody: "Apps24는 브라우저 저장소, 제3자 조회 서비스, Google 광고 서비스가 언제 사용될 수 있는지 설명합니다. 광고가 활성화된 경우 사용자는 아래 링크에서 개인 맞춤 광고를 관리하고 Google 개인정보 및 약관을 확인할 수 있습니다.",
     adSettings: "Google 광고 설정",
     googlePolicy: "Google 개인정보 및 약관",
   },
   fr: {
-    lastUpdated: "Dernière mise à jour : 7 octobre 2026",
+    lastUpdated: "Dernière mise à jour : 8 octobre 2026",
     reviewTitle: "Publicité, cookies et choix des utilisateurs",
     reviewBody: "Apps24 explique quand le stockage du navigateur, les services de recherche tiers ou les services publicitaires Google peuvent être utilisés. Si les annonces sont activées, les utilisateurs peuvent gérer la publicité personnalisée et consulter les règles de confidentialité de Google ci-dessous.",
     adSettings: "Paramètres des annonces Google",
     googlePolicy: "Confidentialité et conditions Google",
   },
   ja: {
-    lastUpdated: "最終更新日: 2026年10月7日",
+    lastUpdated: "最終更新日: 2026年10月8日",
     reviewTitle: "広告、Cookie、ユーザーの選択",
     reviewBody: "Apps24では、ブラウザ保存、第三者の照会サービス、Google広告サービスが使われる可能性がある場面を説明しています。広告が有効な場合、ユーザーは以下のリンクからパーソナライズ広告を管理し、Googleのプライバシーと規約を確認できます。",
     adSettings: "Google広告設定",
     googlePolicy: "Googleプライバシーと規約",
   },
   zh: {
-    lastUpdated: "最后更新：2026 年 10 月 7 日",
+    lastUpdated: "最后更新：2026 年 10 月 8 日",
     reviewTitle: "广告、Cookie 与用户选择",
     reviewBody: "Apps24 会说明浏览器存储、第三方查询服务或 Google 广告服务可能在何时使用。如果启用广告，用户可以通过以下链接管理个性化广告并查看 Google 隐私权和条款。",
     adSettings: "Google 广告设置",
     googlePolicy: "Google 隐私权和条款",
   },
   "zh-TW": {
-    lastUpdated: "最後更新：2026 年 10 月 7 日",
+    lastUpdated: "最後更新：2026 年 10 月 8 日",
     reviewTitle: "廣告、Cookie 與使用者選擇",
     reviewBody: "Apps24 會說明瀏覽器儲存、第三方查詢服務或 Google 廣告服務可能在何時使用。如果啟用廣告，使用者可以透過以下連結管理個人化廣告並查看 Google 隱私權和條款。",
     adSettings: "Google 廣告設定",
     googlePolicy: "Google 隱私權和條款",
   },
   pt: {
-    lastUpdated: "Última atualização: 7 de outubro de 2026",
+    lastUpdated: "Última atualização: 8 de outubro de 2026",
     reviewTitle: "Publicidade, cookies e escolhas do usuário",
     reviewBody: "O Apps24 explica quando o armazenamento do navegador, serviços terceiros de consulta ou serviços de publicidade do Google podem ser usados. Se anúncios forem ativados, os usuários podem gerenciar anúncios personalizados e revisar os termos de privacidade do Google nos links abaixo.",
     adSettings: "Configurações de anúncios do Google",
     googlePolicy: "Privacidade e termos do Google",
   },
   es: {
-    lastUpdated: "Última actualización: 7 de octubre de 2026",
+    lastUpdated: "Última actualización: 8 de octubre de 2026",
     reviewTitle: "Publicidad, cookies y opciones del usuario",
     reviewBody: "Apps24 explica cuándo pueden usarse el almacenamiento del navegador, servicios externos de consulta o servicios publicitarios de Google. Si los anuncios están activos, los usuarios pueden gestionar la publicidad personalizada y revisar la privacidad y condiciones de Google desde los enlaces siguientes.",
     adSettings: "Configuración de anuncios de Google",
     googlePolicy: "Privacidad y condiciones de Google",
   },
   de: {
-    lastUpdated: "Zuletzt aktualisiert: 7. Oktober 2026",
+    lastUpdated: "Zuletzt aktualisiert: 8. Oktober 2026",
     reviewTitle: "Werbung, Cookies und Nutzerauswahl",
     reviewBody: "Apps24 erklärt, wann Browserspeicher, externe Lookup-Dienste oder Google-Werbedienste verwendet werden können. Wenn Anzeigen aktiviert sind, können Nutzer personalisierte Werbung verwalten und die Datenschutz- und Nutzungsbedingungen von Google über die folgenden Links prüfen.",
     adSettings: "Google-Anzeigeneinstellungen",
     googlePolicy: "Google Datenschutz und Nutzungsbedingungen",
   },
   ar: {
-    lastUpdated: "آخر تحديث: 7 أكتوبر 2026",
+    lastUpdated: "آخر تحديث: 8 أكتوبر 2026",
     reviewTitle: "الإعلانات وملفات تعريف الارتباط وخيارات المستخدم",
     reviewBody: "يوضح Apps24 متى يمكن استخدام تخزين المتصفح أو خدمات البحث الخارجية أو خدمات إعلانات Google. عند تفعيل الإعلانات، يمكن للمستخدمين إدارة الإعلانات المخصصة ومراجعة خصوصية وشروط Google من الروابط أدناه.",
     adSettings: "إعدادات إعلانات Google",
@@ -115,6 +116,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
   const legal = LEGAL_TEXTS[validLocale] || LEGAL_TEXTS.en;
   const common = await getCommonText(validLocale);
   const reviewCopy = PRIVACY_REVIEW_COPY[validLocale] ?? PRIVACY_REVIEW_COPY.en;
+  const analyticsCopy = ANALYTICS_COPY[validLocale] ?? ANALYTICS_COPY.en;
 
   return (
     <div className="content-page-wrapper" style={{ maxWidth: "900px", margin: "0 auto", width: "100%" }}>
@@ -139,6 +141,11 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
               <p style={{ lineHeight: "1.8", fontSize: "1.05rem", color: "var(--text)" }}>{item.body}</p>
             </div>
           ))}
+
+          <section style={{ marginBottom: "2.5rem" }}>
+            <h2 style={{ fontSize: "1.4rem", fontWeight: 700, marginBottom: "0.75rem", color: "var(--accent)" }}>{analyticsCopy.policyTitle}</h2>
+            <p style={{ lineHeight: "1.8", fontSize: "1.05rem", color: "var(--text)" }}>{analyticsCopy.policyBody}</p>
+          </section>
 
           <aside
             style={{
