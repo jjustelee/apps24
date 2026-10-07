@@ -5,16 +5,11 @@ import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, ShieldAlert } from "lucide-react";
 import { getBase64EncoderLongtailPreset, isBase64EncoderLongtailSlug } from "@/features/tools/base64-encoder-longtails";
+import { encodeBase64Text as encodeBase64, decodeBase64Text as decodeBase64 } from "@/lib/base64-text";
+import { DETAIL_COPY } from "@/features/tools/detail-copy";
 
-function encodeBase64(value: string) {
-  return btoa(unescape(encodeURIComponent(value)));
-}
-
-function decodeBase64(value: string) {
-  return decodeURIComponent(escape(atob(value)));
-}
-
-export function Base64ConverterTool({ commonText: common, searchParams }: ToolRendererProps) {
+export function Base64ConverterTool({ locale, commonText: common, searchParams }: ToolRendererProps) {
+  const copy = DETAIL_COPY[locale];
   const params = useParams();
   const modeSlug = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.mode === "string" ? params.mode : undefined;
   const preset = modeSlug && isBase64EncoderLongtailSlug(modeSlug) ? getBase64EncoderLongtailPreset(modeSlug) : undefined;
@@ -38,8 +33,8 @@ export function Base64ConverterTool({ commonText: common, searchParams }: ToolRe
         decodeBase64(preset.text);
       }
       return "";
-    } catch {
-      return preset.action === "encode" ? "Invalid format for encoding." : "Invalid Base64 string. Cannot decode.";
+    } catch (error) {
+      return error instanceof Error && error.message === "utf8" ? copy.utf8 : copy.base64;
     }
   });
   const [copied, setCopied] = useState(false);
@@ -50,7 +45,7 @@ export function Base64ConverterTool({ commonText: common, searchParams }: ToolRe
       const encoded = encodeBase64(input);
       setOutput(encoded);
     } catch {
-      setError("Invalid format for encoding.");
+      setError(copy.base64);
       setOutput("");
     }
   };
@@ -60,8 +55,8 @@ export function Base64ConverterTool({ commonText: common, searchParams }: ToolRe
       setError("");
       const decoded = decodeBase64(input);
       setOutput(decoded);
-    } catch {
-      setError("Invalid Base64 string. Cannot decode.");
+    } catch (error) {
+      setError(error instanceof Error && error.message === "utf8" ? copy.utf8 : copy.base64);
       setOutput("");
     }
   };
@@ -109,10 +104,10 @@ export function Base64ConverterTool({ commonText: common, searchParams }: ToolRe
 
       <div className="controls-row">
         <button onClick={handleEncode} className="button-primary">
-          Text → Base64
+          {common.from} → Base64
         </button>
         <button onClick={handleDecode} className="button-primary">
-          Base64 → Text
+          Base64 → {common.to}
         </button>
         <button onClick={handleCopy} className="button-glass">
           <Copy size={16} />

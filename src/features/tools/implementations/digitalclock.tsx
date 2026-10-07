@@ -233,6 +233,8 @@ export function DigitalClockTool({ locale, commonText }: ToolRendererProps) {
               <button
                 key={color.id}
                 onClick={() => setBgColor(color.value)}
+                aria-label={`${commonText.customColor}: ${color.value}`}
+                aria-pressed={bgColor === color.value}
                 style={{
                   width: "30px", height: "30px",
                   borderRadius: "50%",

@@ -8,6 +8,7 @@ import { getCategoryCopy, getCategoryGroups } from "@/features/tools/categories"
 import { buildLocaleAlternates } from "@/lib/seo";
 import { getToolText, getCommonText } from "@/features/tools/copy";
 import { isLocale, type Locale } from "@/lib/site";
+import { GuideLinks } from "@/components/guide-links";
 
 type LocaleHomeProps = {
   params: Promise<{ locale: string }>;
@@ -462,6 +463,7 @@ export default async function LocaleHome({ params }: LocaleHomeProps) {
         </ToolSearch>
       </section>
 
+      <GuideLinks locale={validLocale} />
       <section className="tool-main-content">
         <div style={{ display: "grid", gap: "1.5rem" }}>
           <div>

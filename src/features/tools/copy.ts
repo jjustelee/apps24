@@ -2,6 +2,7 @@ import type { ToolDefinition } from "@/features/tools/types";
 import type { Locale } from "@/lib/site";
 import type { LocaleData, ToolText, CommonText } from "./types_locales";
 import { getReviewedToolText } from "./reviewed-content";
+import { getFunctionalContent } from "./functional-content";
 
 export type { ToolText, CommonText };
 
@@ -507,7 +508,12 @@ export async function getToolText(locale: Locale, tool: ToolDefinition): Promise
     }
   );
 
-  return { ...base, ...getReviewedToolText(locale, tool.id), cardExamples: base.examples };
+  const qrUi = tool.id === "qrgenerator" ? {
+    qrHint: dict.tools.barcodegenerator?.qrHint,
+    generationFailed: dict.tools.barcodegenerator?.generationFailed,
+    generationError: dict.tools.barcodegenerator?.generationError,
+  } : {};
+  return { ...base, ...qrUi, ...getReviewedToolText(locale, tool.id), ...getFunctionalContent(locale, tool.id), cardExamples: base.examples };
 }
 
 export async function getCommonText(locale: Locale): Promise<CommonText> {

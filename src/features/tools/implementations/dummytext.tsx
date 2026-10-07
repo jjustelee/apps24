@@ -96,6 +96,10 @@ const SENTENCES: Record<string, string[]> = {
 const STORAGE_KEY_LANG = "apps24.dummytext.lang";
 const STORAGE_KEY_LENGTH = "apps24.dummytext.length";
 
+function clampParagraphCount(value: number) {
+  return Number.isFinite(value) ? Math.max(1, Math.min(100, Math.trunc(value))) : 1;
+}
+
 export function DummyTextTool({ commonText: common }: ToolRendererProps) {
   const params = useParams();
   const locale = (params.locale as Locale) || "en";
@@ -113,7 +117,7 @@ export function DummyTextTool({ commonText: common }: ToolRendererProps) {
 
       // 2. Load preferred length (paragraphs) from storage
       const savedLen = localStorage.getItem(STORAGE_KEY_LENGTH);
-      if (savedLen) setLength(Number(savedLen));
+      if (savedLen) setLength(clampParagraphCount(Number(savedLen)));
 
       setSettingsLoaded(true);
     }, 0);
@@ -180,7 +184,7 @@ export function DummyTextTool({ commonText: common }: ToolRendererProps) {
             min="1"
             max="100"
             value={length}
-            onChange={(e) => setLength(Number(e.target.value))}
+            onChange={(e) => setLength(clampParagraphCount(Number(e.target.value)))}
           />
         </div>
       </div>

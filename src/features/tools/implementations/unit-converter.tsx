@@ -5,6 +5,8 @@ import type { ToolRendererProps } from "@/features/tools/implementations";
 import { useParams } from "next/navigation";
 import type { Locale } from "@/lib/site";
 import { getUnitConverterLongtailPreset } from "@/features/tools/unit-converter-longtails";
+import { formatDecimal } from "@/lib/number-format";
+import { DETAIL_COPY } from "@/features/tools/detail-copy";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -136,12 +138,12 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
     const fromRatio = CONVERSION_MAP[cat][from].ratio;
     const toRatio = CONVERSION_MAP[cat][to].ratio;
     const multiplier = fromRatio / toRatio;
-    return `Value × ${multiplier.toPrecision(6).replace(/\.?0+$/, "")}`;
+    return `${common.from} × ${Number(multiplier.toPrecision(6))}`;
   };
 
   const convertValue = useCallback((val: string, from: string, to: string, cat: UnitCategory, prec: number): string => {
     const num = parseFloat(val);
-    if (isNaN(num)) return "";
+    if (!Number.isFinite(num)) return "";
 
     if (cat === "temperature") {
       let celsius = 0;
@@ -154,26 +156,23 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
       else if (to === "fahrenheit") result = (celsius * 9 / 5) + 32;
       else if (to === "kelvin") result = celsius + 273.15;
       
-      return result.toFixed(prec).replace(/\.?0+$/, "");
+      return formatDecimal(result, prec);
     }
 
     const fromData = CONVERSION_MAP[cat][from];
     const toData = CONVERSION_MAP[cat][to];
     const result = (num * fromData.ratio) / toData.ratio;
-    return result.toFixed(prec).replace(/\.?0+$/, "");
+    return formatDecimal(result, prec);
   }, []);
 
-  const unitLabels: Record<string, string> = useMemo(() => ({
-    m: "Meter (m)", km: "Kilometer (km)", cm: "Centimeter (cm)", mm: "Millimeter (mm)",
-    mile: "Mile (mi)", yard: "Yard (yd)", foot: "Foot (ft)", inch: "Inch (in)",
-    kg: "Kilogram (kg)", g: "Gram (g)", mg: "Milligram (mg)", ton: "Ton (t)", lb: "Pound (lb)", oz: "Ounce (oz)",
-    celsius: "Celsius (°C)", fahrenheit: "Fahrenheit (°F)", kelvin: "Kelvin (K)",
-    m2: "Square Meter (m²)", km2: "Square Kilometer (km²)", cm2: "Square Centimeter (cm²)", 
-    hectare: "Hectare (ha)", acre: "Acre (ac)", pyung: locale === "ko" ? "평 (坪)" : "Pyung", ft2: "Square Foot (ft²)",
-    liter: "Liter (L)", ml: "Milliliter (mL)", m3: "Cubic Meter (m³)", gallon_us: "Gallon (US)", gallon_uk: "Gallon (UK)",
-    cup_us: "Cup (US)", floz_us: "Fluid Ounce (US)",
-    sec: "Second", min: "Minute", hour: "Hour", day: "Day", week: "Week", month: "Month", year: "Year",
-  }), [locale]);
+  const unitLabels: Record<string, string> = useMemo(() => {
+    const units = { m: "meter", km: "kilometer", cm: "centimeter", mm: "millimeter", mile: "mile", yard: "yard", foot: "foot", inch: "inch", kg: "kilogram", g: "gram", lb: "pound", oz: "ounce", celsius: "celsius", fahrenheit: "fahrenheit", liter: "liter", ml: "milliliter", sec: "second", min: "minute", hour: "hour", day: "day", week: "week", month: "month", year: "year" };
+    const labels: Record<string, string> = { mg: "mg", ton: "t", kelvin: "K", m2: "m²", km2: "km²", cm2: "cm²", hectare: "ha", acre: "ac", pyung: locale === "ko" ? "평" : "pyeong", ft2: "ft²", m3: "m³", gallon_us: "gal (US)", gallon_uk: "gal (UK)", cup_us: "cup (US)", floz_us: "fl oz (US)" };
+    for (const [key, unit] of Object.entries(units)) {
+      labels[key] = new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "long" }).formatToParts(1).filter(part => part.type === "unit").map(part => part.value).join("");
+    }
+    return labels;
+  }, [locale]);
 
   const resultValue = convertValue(inputValue, fromUnit, toUnit, category, precision);
 
@@ -195,7 +194,7 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
     { key: "temperature", label: common.unitTemperature || "Temperature" },
     { key: "area", label: common.unitArea || "Area" },
     { key: "volume", label: common.unitVolume || "Volume" },
-    { key: "time", label: "Time" },
+    { key: "time", label: common.timeCategory },
   ], [common]);
 
   return (
@@ -226,10 +225,10 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
           {/* From Container */}
           <div className="flex flex-col gap-6 w-full lg:flex-1">
             <div className="flex flex-row items-center gap-4 px-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30 whitespace-nowrap">INPUT SOURCE</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30 whitespace-nowrap">{common.from}</span>
               <div className="h-[1px] flex-1 bg-[var(--panel-border)] opacity-30"></div>
               <span className="inline-flex items-center text-[10px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent)]/20 px-3 py-1.5 rounded-full shadow-sm">
-                {unitLabels[fromUnit]?.split('(')[1]?.replace(')', '') || "UNIT"}
+                {fromUnit}
               </span>
             </div>
             <div className="relative group/input p-8 bg-black/5 dark:bg-white/5 rounded-[36px] border border-transparent focus-within:border-[var(--accent)]/30 transition-all shadow-inner">
@@ -258,7 +257,7 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
             <button 
               onClick={handleSwap}
               className="group/swap bg-[var(--accent)] text-white w-16 h-16 rounded-[26px] flex items-center justify-center transition-all duration-500 hover:rotate-180 hover:scale-110 shadow-2xl shadow-[var(--accent)]/30 active:scale-90 z-20"
-              title="Swap Units"
+              title={common.changeTo}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 16V4M7 4L3 8M7 4L11 8" />
@@ -272,10 +271,10 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
           {/* To Container */}
           <div className="flex flex-col gap-6 w-full lg:flex-1">
             <div className="flex flex-row items-center gap-4 px-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30 whitespace-nowrap">CONVERTED RESULT</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30 whitespace-nowrap">{common.to}</span>
               <div className="h-[1px] flex-1 bg-[var(--panel-border)] opacity-30"></div>
               <span className="inline-flex items-center text-[10px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent)]/20 px-3 py-1.5 rounded-full shadow-sm">
-                {unitLabels[toUnit]?.split('(')[1]?.replace(')', '') || "UNIT"}
+                {toUnit}
               </span>
             </div>
             <div className="relative group/result p-8 bg-[var(--accent-soft)]/20 rounded-[36px] border border-[var(--accent)]/10 transition-all hover:bg-[var(--accent-soft)]/40 shadow-inner">
@@ -284,12 +283,12 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
                 onClick={handleCopy}
                 style={{ cursor: 'pointer' }}
               >
-                {resultValue || "0"}
+              {resultValue || "-"}
               </div>
               <button 
                 onClick={handleCopy}
                 className="absolute right-6 top-1/2 -translate-y-1/2 p-4 rounded-[20px] bg-white/90 dark:bg-black/60 opacity-0 group-hover/result:opacity-100 transition-all hover:scale-110 active:scale-95 shadow-xl border border-[var(--panel-border)] text-[var(--accent)] z-20"
-                title="Copy Result"
+                title={common.copy}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </button>
@@ -312,7 +311,7 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
         {/* Precision & Formula */}
         <div className="flex flex-col gap-6 p-8 bg-[var(--panel-glass)] border border-[var(--panel-border)] rounded-[40px] shadow-xl">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">Decimal Precision</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30">{DETAIL_COPY[locale].precision}</span>
             <div className="inline-flex max-w-full flex-wrap justify-center p-1.5 bg-black/5 dark:bg-white/5 rounded-2xl border border-[var(--panel-border)] shadow-inner">
               {[0, 2, 4, 6].map(p => (
                 <button
@@ -327,7 +326,7 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
           </div>
           <div className="p-5 bg-[var(--accent-soft)]/10 rounded-[28px] border border-[var(--accent)]/5 flex items-center justify-between group/formula transition-all hover:bg-[var(--accent-soft)]/20 shadow-sm">
             <div className="flex flex-col gap-2 overflow-hidden">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-30">Mathematical Formula</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-30">{DETAIL_COPY[locale].formula}</span>
               <div className="text-base font-mono text-[var(--accent)] font-bold truncate tracking-tight">
                 {getFormula(category, fromUnit, toUnit)}
               </div>
@@ -347,13 +346,13 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
             <div className="p-3 bg-white/20 rounded-2xl transition-transform group-hover/copy:rotate-12">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </div>
-            <span className="text-xl font-black tracking-tight">Copy Converted Result</span>
+            <span className="text-xl font-black tracking-tight">{common.copy}</span>
           </button>
           <button 
             onClick={() => { setInputValue("1"); }}
             className="tool-button secondary full-width !h-16 !rounded-[28px] border-[var(--panel-border)] font-black text-sm opacity-50 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/5 transition-all tracking-wider"
           >
-            RESET ALL FIELDS
+            {common.reset}
           </button>
         </div>
       </div>
@@ -363,7 +362,7 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_var(--accent)] animate-pulse"></div>
           <p className="min-w-0 text-sm text-center leading-relaxed text-[var(--muted)]">
-            {common.unitAccuracyNote || "Precision Guaranteed"}
+            {DETAIL_COPY[locale].rounding}
           </p>
         </div>
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--panel-border)] to-transparent opacity-30"></div>

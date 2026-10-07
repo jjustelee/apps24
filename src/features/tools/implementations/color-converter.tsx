@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Copy, RefreshCw, AlertCircle } from "lucide-react";
+import type { ToolRendererProps } from "./index";
+import { getResultCopy } from "@/features/tools/result-copy";
 
 // Helper functions
 function hexToRgb(hex: string) {
@@ -51,12 +53,15 @@ function rgbToHsl(r: number, g: number, b: number) {
   };
 }
 
-export function ColorConverterTool() {
+export function ColorConverterTool({ locale, commonText: common }: ToolRendererProps) {
+  const copy = getResultCopy(locale);
   const [hex, setHex] = useState("#3b82f6");
   const [rgb, setRgb] = useState("rgb(59, 130, 246)");
   const [hsl, setHsl] = useState("hsl(217, 90%, 60%)");
   const [error, setError] = useState("");
   const [copiedType, setCopiedType] = useState<string | null>(null);
+  const parsedColor = hexToRgb(hex.trim());
+  const normalizedHex = parsedColor ? `#${[parsedColor.r, parsedColor.g, parsedColor.b].map(value => value.toString(16).padStart(2, "0")).join("")}` : "";
 
   const updateColors = (newHex: string) => {
     let cleanHex = newHex.trim();
@@ -72,10 +77,10 @@ export function ColorConverterTool() {
       setHsl(`hsl(${hslVal.h}, ${hslVal.s}%, ${hslVal.l}%)`);
     } else {
       if (newHex.length > 3) {
-        setError("Invalid HEX code");
+        setError(copy.invalidHex);
       }
-      setRgb("Invalid");
-      setHsl("Invalid");
+      setRgb("-");
+      setHsl("-");
     }
   };
 
@@ -88,7 +93,7 @@ export function ColorConverterTool() {
   };
 
   const handleCopy = async (text: string, type: string) => {
-    if (text === "Invalid") return;
+    if (!parsedColor) return;
     try {
       await navigator.clipboard.writeText(text);
       setCopiedType(type);
@@ -109,16 +114,16 @@ export function ColorConverterTool() {
       */}
       <div 
         className="color-preview" 
-        style={{ backgroundColor: !error && rgb !== "Invalid" ? hex : "var(--surface)" }}
+        style={{ backgroundColor: normalizedHex || "var(--surface)" }}
       ></div>
 
       <div className="input-group">
-        <label className="section-label">Select Color or Type HEX</label>
+        <label className="section-label">{copy.hexInput}</label>
         <div className="hex-input-wrapper">
           <input 
             type="color" 
             className="color-picker" 
-            value={!error && hex.startsWith('#') && (hex.length === 7 || hex.length === 4) ? hex : "#000000"} 
+            value={normalizedHex || "#000000"}
             onChange={handleColorPick} 
           />
           <input 
@@ -137,28 +142,28 @@ export function ColorConverterTool() {
         
         <div className="result-row">
           <div className="result-label">HEX</div>
-          <div className="result-value">{hex}</div>
-          <button onClick={() => handleCopy(hex, "hex")} className="button-copy">
+          <div className="result-value">{normalizedHex || "-"}</div>
+          <button disabled={!parsedColor} onClick={() => handleCopy(normalizedHex, "hex")} className="button-copy">
             <Copy size={14} />
-            {copiedType === "hex" ? "Copied" : "Copy"}
+            {copiedType === "hex" ? common.copied : common.copy}
           </button>
         </div>
 
         <div className="result-row">
           <div className="result-label">RGB</div>
           <div className="result-value">{rgb}</div>
-          <button onClick={() => handleCopy(rgb, "rgb")} className="button-copy">
+          <button disabled={!parsedColor} onClick={() => handleCopy(rgb, "rgb")} className="button-copy">
             <Copy size={14} />
-            {copiedType === "rgb" ? "Copied" : "Copy"}
+            {copiedType === "rgb" ? common.copied : common.copy}
           </button>
         </div>
 
         <div className="result-row">
           <div className="result-label">HSL</div>
           <div className="result-value">{hsl}</div>
-          <button onClick={() => handleCopy(hsl, "hsl")} className="button-copy">
+          <button disabled={!parsedColor} onClick={() => handleCopy(hsl, "hsl")} className="button-copy">
             <Copy size={14} />
-            {copiedType === "hsl" ? "Copied" : "Copy"}
+            {copiedType === "hsl" ? common.copied : common.copy}
           </button>
         </div>
         
@@ -167,7 +172,7 @@ export function ColorConverterTool() {
       <div style={{ marginTop: "0.5rem" }}>
          <button onClick={() => updateColors("#3b82f6")} className="button-ghost w-full">
             <RefreshCw size={16} />
-            Reset
+            {common.reset}
           </button>
       </div>
 

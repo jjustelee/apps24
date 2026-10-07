@@ -4,6 +4,7 @@ import { getCommonText } from "@/features/tools/copy";
 import { buildLocaleAlternates } from "@/lib/seo";
 import { isLocale, type Locale } from "@/lib/site";
 import Link from "next/link";
+import { GUIDE_UI } from "@/features/guides/content";
 
 export async function generateMetadata({
   params,
@@ -47,6 +48,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </header>
 
         <section className="legal-content" style={{ lineHeight: "1.8" }}>
+          <h2>{GUIDE_UI[validLocale].title}</h2>
+          <p>{GUIDE_UI[validLocale].method}</p>
+          <p><Link href={`/${locale}/guides`}>{GUIDE_UI[validLocale].title}</Link> · <Link href={`/${locale}/contact`}>{common.contact}</Link></p>
           {/* 서론 */}
           <p style={{ marginBottom: "2rem", fontSize: "1.1rem", color: "var(--text)" }}>
             {about.intro}

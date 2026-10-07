@@ -4,20 +4,18 @@ import { useState } from "react";
 import type { ToolRendererProps } from "./index";
 import { Copy, Trash2, Type, ClipboardCheck } from "lucide-react";
 
-export function CaseConverterTool({ commonText: common }: ToolRendererProps) {
+export function CaseConverterTool({ locale, commonText: common }: ToolRendererProps) {
   const [input, setInput] = useState("");
   const [copied, setCopied] = useState(false);
 
   const handleCaseChange = (type: 'upper' | 'lower' | 'title') => {
     let result = input;
     if (type === 'upper') {
-      result = input.toUpperCase();
+      result = input.toLocaleUpperCase(locale);
     } else if (type === 'lower') {
-      result = input.toLowerCase();
+      result = input.toLocaleLowerCase(locale);
     } else if (type === 'title') {
-      result = input.toLowerCase().split(' ').map(word => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      }).join(' ');
+      result = input.toLocaleLowerCase(locale).replace(/(^|\s)(\p{L})/gu, (_, space, letter) => space + letter.toLocaleUpperCase(locale));
     }
     setInput(result);
   };

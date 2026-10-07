@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { monthlyWithholding } from "@/lib/korean-payroll";
 
 type InputMode = "simple" | "detail";
 type SeveranceMode = "excluded" | "included";
@@ -30,33 +31,6 @@ function formatInput(value: string) {
   return amount ? amount.toLocaleString("ko-KR") : "";
 }
 
-function earnedIncomeDeduction(annualTaxableSalary: number) {
-  if (annualTaxableSalary <= 5_000_000) return annualTaxableSalary * 0.7;
-  if (annualTaxableSalary <= 15_000_000) return 3_500_000 + (annualTaxableSalary - 5_000_000) * 0.4;
-  if (annualTaxableSalary <= 45_000_000) return 7_500_000 + (annualTaxableSalary - 15_000_000) * 0.15;
-  if (annualTaxableSalary <= 100_000_000) return 12_000_000 + (annualTaxableSalary - 45_000_000) * 0.05;
-  return Math.min(20_000_000, 14_750_000 + (annualTaxableSalary - 100_000_000) * 0.02);
-}
-
-function annualIncomeTax(taxBase: number) {
-  if (taxBase <= 0) return 0;
-  if (taxBase <= 14_000_000) return taxBase * 0.06;
-  if (taxBase <= 50_000_000) return taxBase * 0.15 - 1_260_000;
-  if (taxBase <= 88_000_000) return taxBase * 0.24 - 5_760_000;
-  if (taxBase <= 150_000_000) return taxBase * 0.35 - 15_440_000;
-  if (taxBase <= 300_000_000) return taxBase * 0.38 - 19_940_000;
-  if (taxBase <= 500_000_000) return taxBase * 0.4 - 25_940_000;
-  if (taxBase <= 1_000_000_000) return taxBase * 0.42 - 35_940_000;
-  return taxBase * 0.45 - 65_940_000;
-}
-
-function monthlyChildTaxAdjustment(childCount: number) {
-  if (childCount <= 0) return 0;
-  if (childCount === 1) return 12_500;
-  if (childCount === 2) return 29_160;
-  return 29_160 + (childCount - 2) * 25_000;
-}
-
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
@@ -71,24 +45,18 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
 
   const salary = parseMoney(annualSalary);
   const taxFree = mode === "detail" ? parseMoney(taxFreeMonthly) : 0;
-  const families = mode === "detail" ? Math.max(1, Number(familyCount) || 1) : 1;
-  const children = mode === "detail" ? Math.max(0, Number(childCount) || 0) : 0;
+  const families = mode === "detail" ? Number(familyCount) : 1;
+  const children = mode === "detail" ? Number(childCount) : 0;
   const monthlyGross = salary / (mode === "detail" && severanceMode === "included" ? 13 : 12);
   const taxableMonthly = Math.max(0, monthlyGross - taxFree);
-  const pensionBase = taxableMonthly > 0 ? clamp(taxableMonthly, NATIONAL_PENSION_MIN, NATIONAL_PENSION_MAX) : 0;
+  const pensionBase = taxableMonthly > 0 ? clamp(Math.floor(taxableMonthly / 1000) * 1000, NATIONAL_PENSION_MIN, NATIONAL_PENSION_MAX) : 0;
 
   const nationalPension = pensionBase * RATES.nationalPension;
   const healthInsurance = taxableMonthly * RATES.healthInsurance;
   const longTermCare = healthInsurance * RATES.longTermCare;
   const employmentInsurance = taxableMonthly * RATES.employmentInsurance;
-  const annualTaxableSalary = taxableMonthly * 12;
-  const socialInsuranceAnnual = (nationalPension + healthInsurance + longTermCare + employmentInsurance) * 12;
-  const personalDeduction = families * 1_500_000;
-  const taxBase = Math.max(
-    0,
-    annualTaxableSalary - earnedIncomeDeduction(annualTaxableSalary) - socialInsuranceAnnual - personalDeduction,
-  );
-  const incomeTax = Math.max(0, annualIncomeTax(taxBase) / 12 - monthlyChildTaxAdjustment(children));
+  const withholding = taxFree > monthlyGross ? null : monthlyWithholding(taxableMonthly, families, children);
+  const incomeTax = withholding ?? 0;
   const localIncomeTax = incomeTax * 0.1;
   const totalDeduction =
     nationalPension + healthInsurance + longTermCare + employmentInsurance + incomeTax + localIncomeTax;
@@ -109,7 +77,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
       <div className="salary-notice">
         <strong>예상 금액 안내</strong>
         <span>
-          계산 결과는 2026년 기준 요율과 추정 세액으로 산출한 참고 금액입니다. 실제 지급액은 회사 급여 기준,
+          계산 결과는 2026년 보험 요율과 근로소득 간이세액표(100% 원천징수)로 산출한 참고 금액입니다. 실제 지급액은 회사 급여 기준,
           비과세 항목, 수당, 추가 공제, 연말정산 결과에 따라 달라질 수 있습니다.
         </span>
       </div>
@@ -229,7 +197,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
 
           <div className="salary-net-result">
             <span>월 예상 실수령액</span>
-            <strong>₩{formatMoney(monthlyNet)}</strong>
+            <strong>{withholding === null ? "입력 확인 필요" : `₩${formatMoney(monthlyNet)}`}</strong>
           </div>
 
           <div className="salary-summary-grid">
@@ -239,15 +207,16 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
             </div>
             <div>
               <span>총 공제액</span>
-              <strong>₩{formatMoney(totalDeduction)}</strong>
+              <strong>{withholding === null ? "-" : `₩${formatMoney(totalDeduction)}`}</strong>
             </div>
             <div>
               <span>연 예상 실수령액</span>
-              <strong>₩{formatMoney(annualNet)}</strong>
+              <strong>{withholding === null ? "-" : `₩${formatMoney(annualNet)}`}</strong>
             </div>
           </div>
 
-          <p className="salary-result-note">실제 급여명세서 금액과 차이가 있을 수 있습니다.</p>
+          <p className="salary-result-note">{withholding === null ? "부양가족 수는 본인을 포함한 양의 정수, 자녀 수는 가족 수 미만의 0 이상 정수여야 합니다. 비과세 월액은 월 급여를 초과할 수 없습니다." : "실제 급여명세서 금액과 차이가 있을 수 있습니다. 보험료는 회사 신고 보수와 정산·원 단위 처리에 따라 달라집니다. 퇴직금 포함은 연봉을 13으로 나눈 가정이며 법정 퇴직금 계산이 아닙니다."}</p>
+          <p className="salary-result-note"><a href="https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7862&mi=6583" target="_blank" rel="noreferrer">국세청 간이세액표</a>: 월 비과세 제외 350만 원, 가족 4명, 자녀 2명 → 소득세 20,180원. 부양가족에는 공제 요건을 충족하는 자녀와 본인을 포함합니다.</p>
         </section>
       </div>
 
@@ -260,12 +229,12 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
           {deductionRows.map(([label, value]) => (
             <div key={label}>
               <span>{label}</span>
-              <strong>₩{formatMoney(value)}</strong>
+              <strong>{withholding === null ? "-" : `₩${formatMoney(value)}`}</strong>
             </div>
           ))}
           <div className="total">
             <span>총 공제액</span>
-            <strong>₩{formatMoney(totalDeduction)}</strong>
+            <strong>{withholding === null ? "-" : `₩${formatMoney(totalDeduction)}`}</strong>
           </div>
         </div>
       </section>
@@ -279,7 +248,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
             <li>건강보험: 직장가입자 본인부담 3.595%</li>
             <li>장기요양보험: 건강보험료의 13.14%</li>
             <li>고용보험: 근로자 부담 0.9%</li>
-            <li>소득세와 지방소득세는 연봉, 가족 수, 자녀 수를 반영한 추정값입니다.</li>
+            <li>소득세는 근로소득 간이세액표와 자녀 수 공제, 원천징수 100% 기준입니다. 지방소득세는 소득세의 10%로 추정합니다.</li>
           </ul>
         </article>
 
@@ -299,7 +268,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
           <h2>요율과 세액 참고 기준</h2>
           <p>
             국민연금 상·하한은 2026년 7월 1일부터 2027년 6월 30일까지의 기준을 적용했습니다. 소득세는
-            국세청 근로소득 간이세액표를 참고한 추정값이며 실제 원천징수액과 다를 수 있습니다.
+            근로소득 간이세액표(2024.2.29 개정 별표 2)의 급여 구간과 고액 급여 산식을 적용하며, 최종 연말정산 세액이 아닙니다.
           </p>
         </div>
         <div className="salary-source-links">
@@ -313,7 +282,7 @@ export function SalaryCalculatorTool({ toolText }: ToolRendererProps) {
             국세청 근로소득 간이세액표
           </a>
         </div>
-        <p className="salary-source-date">기준 확인일: 2026년 8월 25일</p>
+        <p className="salary-source-date">간이세액표 검증: 2026년 10월 7일, 국세청 월 350만 원·가족 4명·자녀 2명 예시와 대조. 보험 요율 확인 이력: 2026년 8월 25일.</p>
       </section>
     </div>
   );

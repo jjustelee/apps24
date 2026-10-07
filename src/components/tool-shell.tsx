@@ -14,6 +14,7 @@ import { getPercentageCalculatorLongtailLinks } from "@/features/tools/percentag
 import { getHighIntentUseCaseCopy } from "@/features/tools/high-intent-use-cases";
 import type { Locale } from "@/lib/site";
 import { ToolSidebar } from "@/components/tool-sidebar";
+import { GuideLinks } from "@/components/guide-links";
 
 const referenceTitles: Record<Locale, string> = {
   en: "References", ko: "참고 출처", fr: "Références", de: "Quellen",
@@ -132,6 +133,7 @@ export async function ToolShell({
         </section>
 
         <section className="tool-rich-content-section">
+          <GuideLinks locale={locale} toolId={tool.id} />
           {toolText.longDescription && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>
               <h2 style={{ fontSize: "1.75rem", fontWeight: 800, marginBottom: "1.25rem", color: "var(--text)" }}>{formatTitle(common.whatIs)}</h2>

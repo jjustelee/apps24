@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { ToolRendererProps } from "./index";
 import { Copy, RefreshCw, ClipboardCheck } from "lucide-react";
+import { getResultCopy } from "@/features/tools/result-copy";
 
 function createPassword(
   length: number,
@@ -18,28 +19,27 @@ function createPassword(
     symbols: "!@#$%^&*()_+~`|}{[]:;?><,./-=",
   };
 
-  let allowed = "";
-  if (includeUppercase) allowed += chars.uppercase;
-  if (includeLowercase) allowed += chars.lowercase;
-  if (includeNumbers) allowed += chars.numbers;
-  if (includeSymbols) allowed += chars.symbols;
-
-  if (!allowed) {
-    allowed = chars.lowercase;
+  const pools = [includeUppercase && chars.uppercase, includeLowercase && chars.lowercase, includeNumbers && chars.numbers, includeSymbols && chars.symbols].filter((pool): pool is string => Boolean(pool));
+  if (!pools.length) return "";
+  const allowed = pools.join("");
+  const pick = (max: number) => {
+    // Reject the incomplete range to avoid modulo bias.
+    const limit = Math.floor(0x100000000 / max) * max;
+    const random = new Uint32Array(1);
+    do { window.crypto.getRandomValues(random); } while (random[0] >= limit);
+    return random[0] % max;
+  };
+  const result = pools.map(pool => pool[pick(pool.length)]);
+  while (result.length < length) result.push(allowed[pick(allowed.length)]);
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = pick(i + 1);
+    [result[i], result[j]] = [result[j], result[i]];
   }
-
-  let result = "";
-  const randomArray = new Uint32Array(length);
-  window.crypto.getRandomValues(randomArray);
-
-  for (let i = 0; i < length; i++) {
-    result += allowed[randomArray[i] % allowed.length];
-  }
-
-  return result;
+  return result.join("");
 }
 
-export function PasswordGeneratorTool({ commonText: common }: ToolRendererProps) {
+export function PasswordGeneratorTool({ locale, commonText: common }: ToolRendererProps) {
+  const copy = getResultCopy(locale);
   
   const [length, setLength] = useState(16);
   const [includeUppercase, setIncludeUppercase] = useState(true);
@@ -49,6 +49,8 @@ export function PasswordGeneratorTool({ commonText: common }: ToolRendererProps)
   const [password, setPassword] = useState("");
   const [copied, setCopied] = useState(false);
   const [generationTick, setGenerationTick] = useState(0);
+  const hasSelectedType = includeUppercase || includeLowercase || includeNumbers || includeSymbols;
+  const visiblePassword = hasSelectedType ? password : "";
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -71,8 +73,8 @@ export function PasswordGeneratorTool({ commonText: common }: ToolRendererProps)
   };
 
   const handleCopy = () => {
-    if (!password) return;
-    navigator.clipboard.writeText(password);
+    if (!visiblePassword) return;
+    navigator.clipboard.writeText(visiblePassword);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -80,8 +82,8 @@ export function PasswordGeneratorTool({ commonText: common }: ToolRendererProps)
   return (
     <div className="tool-container card-glass">
       <div className="password-display">
-        <div className="password-text">{password}</div>
-        <button onClick={handleCopy} className="icon-button" title={common.copyAll}>
+        <div className="password-text">{visiblePassword || copy.selectType}</div>
+        <button disabled={!visiblePassword} onClick={handleCopy} className="icon-button" title={common.copyAll}>
           {copied ? <ClipboardCheck size={24} color="#10b981" /> : <Copy size={24} />}
         </button>
       </div>
@@ -142,7 +144,7 @@ export function PasswordGeneratorTool({ commonText: common }: ToolRendererProps)
       </div>
 
       <div className="action-row">
-        <button onClick={handleGenerate} className="button-primary generate-btn">
+        <button disabled={!hasSelectedType} onClick={handleGenerate} className="button-primary generate-btn">
           <RefreshCw size={18} />
           {common.generatePassword}
         </button>

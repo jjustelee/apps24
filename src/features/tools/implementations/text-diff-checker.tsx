@@ -3,19 +3,25 @@
 import { useState } from "react";
 import type { ToolRendererProps } from "./index";
 import { SplitSquareHorizontal, Trash2 } from "lucide-react";
+import { compareTextLines, type DiffLine } from "@/lib/text-diff";
+import { getResultCopy } from "@/features/tools/result-copy";
+import { DETAIL_COPY } from "@/features/tools/detail-copy";
 
-export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
+export function TextDiffCheckerTool({ locale, commonText: common }: ToolRendererProps) {
+  const copy = getResultCopy(locale);
   
   const [text1, setText1] = useState("");
   const [text2, setText2] = useState("");
-  const [lines1, setLines1] = useState<string[]>([]);
-  const [lines2, setLines2] = useState<string[]>([]);
+  const [diffs, setDiffs] = useState<DiffLine[]>([]);
+  const [error, setError] = useState("");
   const [diffMode, setDiffMode] = useState(false);
 
   const handleCompare = () => {
     if (!text1 && !text2) return;
-    setLines1(text1.split("\n"));
-    setLines2(text2.split("\n"));
+    const result = compareTextLines(text1, text2);
+    if (!result) { setError(copy.diffLimit); return; }
+    setError("");
+    setDiffs(result);
     setDiffMode(true);
   };
 
@@ -23,40 +29,24 @@ export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
     setText1("");
     setText2("");
     setDiffMode(false);
+    setError("");
   };
 
   const renderDiff = () => {
-    const maxLines = Math.max(lines1.length, lines2.length);
-    const diffs = [];
-
-    for (let i = 0; i < maxLines; i++) {
-      const l1 = lines1[i] || "";
-      const l2 = lines2[i] || "";
-      
-      let type: "match" | "added" | "removed" | "changed" = "match";
-      if (l1 === l2) {
-        type = "match";
-      } else if (!l1 && l2) {
-        type = "added";
-      } else if (l1 && !l2) {
-        type = "removed";
-      } else {
-        type = "changed";
-      }
-
-      diffs.push(
-        <tr key={i} className={`diff-line ${type}`}>
-          <td className="line-num">{i + 1}</td>
-          <td className="line-content l1">{l1}</td>
-          <td className="line-content l2">{l2}</td>
-        </tr>
-      );
-    }
-    return diffs;
+    let leftLine = 0;
+    let rightLine = 0;
+    return diffs.map((line, i) => (
+      <tr key={i} className={`diff-line ${line.type}`}>
+        <td className="line-num">{line.left === null ? "-" : ++leftLine} / {line.right === null ? "-" : ++rightLine}</td>
+        <td className="line-content l1">{line.left}</td>
+        <td className="line-content l2">{line.right}</td>
+      </tr>
+    ));
   };
 
   return (
     <div className="tool-container card-glass">
+      {error && <p role="alert">{error}</p>}
       
       {!diffMode ? (
         <>
@@ -71,7 +61,7 @@ export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
               />
             </div>
             <div className="input-col">
-              <div className="col-header">{common.changeTo || "Changed"}</div>
+              <div className="col-header">{DETAIL_COPY[locale].modified}</div>
               <textarea
                 className="textarea-glass"
                 value={text2}
@@ -100,7 +90,7 @@ export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
                 <tr className="diff-header">
                   <th className="line-num">#</th>
                   <th className="line-content orig-header">{common.original || "Original"}</th>
-                  <th className="line-content new-header">{common.changeTo || "Changed"}</th>
+                  <th className="line-content new-header">{DETAIL_COPY[locale].modified}</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,7 +101,7 @@ export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
           
           <div className="controls-row centered">
             <button onClick={() => setDiffMode(false)} className="button-glass">
-              Edit Texts
+              {copy.edit}
             </button>
             <button onClick={handleClear} className="button-ghost">
               <Trash2 size={18} />
@@ -240,7 +230,7 @@ export function TextDiffCheckerTool({ commonText: common }: ToolRendererProps) {
           vertical-align: top;
         }
         .line-num {
-          width: 40px;
+          width: 60px;
           color: var(--text-muted);
           background: rgba(128, 128, 128, 0.02);
           text-align: right;

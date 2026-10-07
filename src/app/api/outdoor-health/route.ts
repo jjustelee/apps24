@@ -8,7 +8,7 @@ type OpenMeteoAirQualityResponse = {
   timezone?: string;
   current_units?: Record<string, string>;
   current?: {
-    time?: string;
+    time?: number;
     pm10?: number | null;
     pm2_5?: number | null;
     ozone?: number | null;
@@ -27,11 +27,6 @@ const CURRENT_VARIABLES = [
   "pm2_5",
   "ozone",
   "uv_index",
-  "grass_pollen",
-  "birch_pollen",
-  "alder_pollen",
-  "mugwort_pollen",
-  "ragweed_pollen",
 ].join(",");
 
 function toNumber(value: string | null, fallback: number) {
@@ -41,7 +36,7 @@ function toNumber(value: string | null, fallback: number) {
 }
 
 function normalizeReading(value: number | null | undefined) {
-  return typeof value === "number" && Number.isFinite(value) ? value : null;
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
 }
 
 export async function GET(request: Request) {
@@ -49,11 +44,17 @@ export async function GET(request: Request) {
   const latitude = Math.min(90, Math.max(-90, toNumber(searchParams.get("lat"), 37.5665)));
   const longitude = Math.min(180, Math.max(-180, toNumber(searchParams.get("lon"), 126.978)));
 
-  const apiUrl = new URL(AIR_QUALITY_ENDPOINT);
+  const apiKey = process.env.OPEN_METEO_API_KEY;
+  if (process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "true" && !apiKey) {
+    return NextResponse.json({ success: false, message: "상업용 데이터 제공 설정을 준비 중입니다. AirKorea와 기상청의 공식 예보를 확인하세요." }, { status: 503 });
+  }
+  const apiUrl = new URL(apiKey ? "https://customer-air-quality-api.open-meteo.com/v1/air-quality" : AIR_QUALITY_ENDPOINT);
+  if (apiKey) apiUrl.searchParams.set("apikey", apiKey);
   apiUrl.searchParams.set("latitude", String(latitude));
   apiUrl.searchParams.set("longitude", String(longitude));
   apiUrl.searchParams.set("current", CURRENT_VARIABLES);
   apiUrl.searchParams.set("timezone", "Asia/Seoul");
+  apiUrl.searchParams.set("timeformat", "unixtime");
 
   try {
     const response = await fetch(apiUrl, {
@@ -82,7 +83,7 @@ export async function GET(request: Request) {
           name: "Open-Meteo Air Quality API",
           url: "https://open-meteo.com/en/docs/air-quality-api",
         },
-        sourceUpdatedAt: current.time ?? null,
+        validAt: typeof current.time === "number" ? new Date(current.time * 1000).toISOString() : null,
         fetchedAt: new Date().toISOString(),
         readings: {
           pm10: { value: normalizeReading(current.pm10), unit: units.pm10 ?? "μg/m³" },
@@ -90,12 +91,9 @@ export async function GET(request: Request) {
           ozone: { value: normalizeReading(current.ozone), unit: units.ozone ?? "μg/m³" },
           uv: { value: normalizeReading(current.uv_index), unit: units.uv_index ?? "" },
           pollen: {
-            grass: normalizeReading(current.grass_pollen),
-            birch: normalizeReading(current.birch_pollen),
-            alder: normalizeReading(current.alder_pollen),
-            mugwort: normalizeReading(current.mugwort_pollen),
-            ragweed: normalizeReading(current.ragweed_pollen),
-            unit: units.grass_pollen ?? "grains/m³",
+            grass: null, birch: null, alder: null, mugwort: null, ragweed: null,
+            unit: "grains/m³",
+            supported: false,
           },
         },
       },

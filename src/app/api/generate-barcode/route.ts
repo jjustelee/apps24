@@ -16,8 +16,21 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const text = url.searchParams.get("text")?.trim() ?? "";
   const format = normalizeFormat(url.searchParams.get("format"));
+  return generate(text, format);
+}
 
-  if (!text) {
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    if (typeof body.text !== "string" || typeof body.format !== "string") return createError("Invalid input");
+    return generate(body.text, normalizeFormat(body.format));
+  } catch { return createError("Invalid input"); }
+}
+
+async function generate(text: string, format: string) {
+  if (text.length > 4000) return createError("Input exceeds 4000 characters");
+
+  if (!text.trim()) {
     return createError("텍스트를 입력하세요.");
   }
 
@@ -31,6 +44,8 @@ export async function GET(request: NextRequest) {
       text,
       scale: 3,
       backgroundcolor: "FFFFFF",
+      // QR modules occupy two points; bwip-js padding is in points, not modules.
+      ...(format === "qrcode" ? { padding: 8 } : {}),
     };
 
     // 1D barcodes and some codes need height/includetext, but QR is best without them

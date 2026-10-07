@@ -286,7 +286,7 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
               {toolsWithText.slice(0, 6).map(({ tool, text }) => (
                 <article key={tool.id} className="category-tool-fit-card">
                   <h3>{text.title}</h3>
-                  <p>{text.description}</p>
+                  <p>{text.usageContext || text.description}</p>
                 </article>
               ))}
             </div>
@@ -299,9 +299,7 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
               <ul>
                 {toolsWithText.slice(0, 4).map(({ tool, text }) => (
                   <li key={tool.id}>
-                    {reviewCopy.workflowTemplate
-                      .replace("{tool}", text.title)
-                      .replace("{description}", text.description)}
+                    <Link href={`/${locale}/${tool.slug}`}>{text.title}</Link>: {text.howToUse?.split("\n")[0] || text.description}
                   </li>
                 ))}
               </ul>

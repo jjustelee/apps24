@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { parseLocalizedAmount } from "@/lib/number-format";
+import { getResultCopy } from "@/features/tools/result-copy";
 
 type ExchangeRateResponse = {
   success: boolean;
@@ -12,6 +14,7 @@ type ExchangeRateResponse = {
   };
   base?: string;
   date?: string | null;
+  dates?: Record<string, string | null>;
   rates?: Record<string, number>;
 };
 
@@ -205,12 +208,6 @@ function getDefaultPair(locale: string) {
   return POPULAR_DEFAULTS[locale] ?? POPULAR_DEFAULTS.en;
 }
 
-function parseAmount(value: string) {
-  const normalized = value.replace(/,/g, "").trim();
-  const parsed = Number(normalized);
-  return Number.isFinite(parsed) ? parsed : 0;
-}
-
 function formatNumber(value: number, locale: string, maximumFractionDigits = 2) {
   return new Intl.NumberFormat(locale, {
     maximumFractionDigits,
@@ -235,6 +232,7 @@ function getMarketQuotes(base: string, target: string) {
 
 export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
   const copy = getCopy(locale);
+  const resultCopy = getResultCopy(locale);
   const defaults = getDefaultPair(locale);
   const [amount, setAmount] = useState("1000");
   const [from, setFrom] = useState(defaults.from);
@@ -251,6 +249,7 @@ export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
     async function loadRates() {
       setIsLoading(true);
       setError("");
+      setData(null);
 
       try {
         const params = new URLSearchParams({
@@ -284,9 +283,9 @@ export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
     return () => controller.abort();
   }, [copy.unavailable, from, quotes]);
 
-  const rate = from === to ? 1 : data?.rates?.[to] ?? null;
-  const numericAmount = parseAmount(amount);
-  const convertedAmount = rate === null ? null : numericAmount * rate;
+  const rate = from === to ? 1 : data?.base === from ? data.rates?.[to] ?? null : null;
+  const numericAmount = parseLocalizedAmount(amount, locale);
+  const convertedAmount = rate === null || numericAmount === null ? null : numericAmount * rate;
 
   const swapCurrencies = () => {
     setFrom(to);
@@ -305,7 +304,10 @@ export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
               value={amount}
               onChange={(event) => setAmount(event.target.value)}
               placeholder="1000"
+              aria-invalid={numericAmount === null}
             />
+            <small>{copy.amount}: {formatNumber(1234.5, locale)} ({copy.result}: 1234.5)</small>
+            {numericAmount === null && <small role="alert">{resultCopy.invalidAmount}</small>}
           </div>
 
           <div className="currency-select-grid">
@@ -346,7 +348,7 @@ export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
                   : `${formatNumber(convertedAmount, locale, 2)} ${to}`}
             </strong>
             <small>
-              {rate === null
+              {isLoading ? copy.loading : rate === null
                 ? error || copy.unavailable
                 : `1 ${from} = ${formatNumber(rate, locale, 6)} ${to}`}
             </small>
@@ -362,9 +364,7 @@ export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
           <div className="currency-rate-list">
             {quotes.map((quote) => (
               <div key={quote} className={quote === to ? "active" : ""}>
-                <span>
-                  {from}/{quote}
-                </span>
+                <span>{from}/{quote}<small style={{ display: "block" }}>{copy.updated}: {data?.dates?.[quote] ?? "-"}</small></span>
                 <strong>
                   {isLoading ? "..." : data?.rates?.[quote] ? formatNumber(data.rates[quote], locale, 6) : "-"}
                 </strong>
@@ -375,7 +375,7 @@ export function CurrencyConverterTool({ locale, toolText }: ToolRendererProps) {
           <div className="currency-meta-card">
             <div>
               <span>{copy.updated}</span>
-              <strong>{data?.date ?? "-"}</strong>
+              <strong>{data?.dates?.[to] ?? "-"}</strong>
             </div>
             <div>
               <span>{copy.source}</span>

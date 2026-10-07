@@ -54,7 +54,7 @@ type ImageCompressorCopy = {
 const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   en: {
     filesSelected: "files selected",
-    selectFiles: "Add or replace images",
+    selectFiles: "Select images (replaces current files)",
     multiFileHint: "You can select or drag multiple images at once.",
     batchHint: "Images are compressed one by one to keep the browser responsive.",
     cleanupHint: "Temporary previews are cleaned up when files are replaced or reset.",
@@ -75,7 +75,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   ko: {
     filesSelected: "개 이미지 선택됨",
-    selectFiles: "이미지 추가 또는 교체",
+    selectFiles: "이미지 선택 (기존 파일 교체)",
     multiFileHint: "여러 이미지를 한 번에 선택하거나 드래그할 수 있습니다.",
     batchHint: "브라우저가 멈추지 않도록 이미지를 한 장씩 순차 압축합니다.",
     cleanupHint: "파일을 교체하거나 초기화하면 임시 미리보기 URL을 정리합니다.",
@@ -96,7 +96,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   fr: {
     filesSelected: "fichiers sélectionnés",
-    selectFiles: "Ajouter ou remplacer des images",
+    selectFiles: "Choisir des images (remplace les fichiers)",
     multiFileHint: "Vous pouvez sélectionner ou glisser plusieurs images à la fois.",
     batchHint: "Les images sont compressées une par une pour garder le navigateur réactif.",
     cleanupHint: "Les aperçus temporaires sont nettoyés lorsque les fichiers sont remplacés ou réinitialisés.",
@@ -117,7 +117,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   ja: {
     filesSelected: "件の画像を選択",
-    selectFiles: "画像を追加または置換",
+    selectFiles: "画像を選択（既存ファイルを置換）",
     multiFileHint: "複数の画像を一度に選択またはドラッグできます。",
     batchHint: "ブラウザを軽く保つため、画像を1枚ずつ順番に圧縮します。",
     cleanupHint: "ファイルの置換やリセット時に一時プレビューURLを整理します。",
@@ -138,7 +138,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   zh: {
     filesSelected: "个文件已选择",
-    selectFiles: "添加或替换图片",
+    selectFiles: "选择图片（替换现有文件）",
     multiFileHint: "可以一次选择或拖放多张图片。",
     batchHint: "图片会逐个压缩，以保持浏览器流畅。",
     cleanupHint: "替换或重置文件时会清理临时预览 URL。",
@@ -159,7 +159,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   "zh-TW": {
     filesSelected: "個檔案已選擇",
-    selectFiles: "新增或替換圖片",
+    selectFiles: "選擇圖片（替換現有檔案）",
     multiFileHint: "可以一次選擇或拖放多張圖片。",
     batchHint: "圖片會逐一壓縮，以保持瀏覽器順暢。",
     cleanupHint: "替換或重設檔案時會清理暫時預覽 URL。",
@@ -180,7 +180,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   pt: {
     filesSelected: "arquivos selecionados",
-    selectFiles: "Adicionar ou substituir imagens",
+    selectFiles: "Selecionar imagens (substitui arquivos)",
     multiFileHint: "Você pode selecionar ou arrastar várias imagens de uma vez.",
     batchHint: "As imagens são comprimidas uma por uma para manter o navegador responsivo.",
     cleanupHint: "As prévias temporárias são limpas ao substituir ou redefinir arquivos.",
@@ -201,7 +201,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   es: {
     filesSelected: "archivos seleccionados",
-    selectFiles: "Añadir o reemplazar imágenes",
+    selectFiles: "Elegir imágenes (reemplaza archivos)",
     multiFileHint: "Puedes seleccionar o arrastrar varias imágenes a la vez.",
     batchHint: "Las imágenes se comprimen una por una para mantener el navegador ágil.",
     cleanupHint: "Las vistas previas temporales se limpian al reemplazar o reiniciar archivos.",
@@ -222,7 +222,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   de: {
     filesSelected: "Dateien ausgewählt",
-    selectFiles: "Bilder hinzufügen oder ersetzen",
+    selectFiles: "Bilder wählen (ersetzt vorhandene Dateien)",
     multiFileHint: "Sie können mehrere Bilder gleichzeitig auswählen oder per Drag-and-drop hinzufügen.",
     batchHint: "Bilder werden nacheinander komprimiert, damit der Browser reaktionsfähig bleibt.",
     cleanupHint: "Temporäre Vorschauen werden beim Ersetzen oder Zurücksetzen bereinigt.",
@@ -243,7 +243,7 @@ const IMAGE_COMPRESSOR_COPY: Record<Locale, ImageCompressorCopy> = {
   },
   ar: {
     filesSelected: "ملفات محددة",
-    selectFiles: "إضافة الصور أو استبدالها",
+    selectFiles: "اختيار الصور (يستبدل الملفات الحالية)",
     multiFileHint: "يمكنك اختيار أو سحب عدة صور دفعة واحدة.",
     batchHint: "يتم ضغط الصور واحدة تلو الأخرى للحفاظ على استجابة المتصفح.",
     cleanupHint: "يتم تنظيف روابط المعاينة المؤقتة عند استبدال الملفات أو إعادة الضبط.",
@@ -395,14 +395,15 @@ export function ImageCompressorTool({ locale, commonText: common, searchParams }
   };
 
   const processFiles = async (fileList: FileList | File[]) => {
-    const imageFiles = Array.from(fileList).filter((file) => file.type.startsWith("image/"));
+    const files = Array.from(fileList);
+    const imageFiles = files.filter((file) => ["image/jpeg", "image/png", "image/webp"].includes(file.type) && file.size <= 10 * 1024 * 1024);
 
     if (!imageFiles.length) {
-      setError(copy.noImageError);
+      setError(`${copy.failed}: ${files.map(file => file.name).join(", ")} (JPG, PNG, WebP; ≤ 10 MiB)`);
       return;
     }
 
-    setError(null);
+    const rejected = files.filter(file => !imageFiles.includes(file)).map(file => file.name);
     setScale(defaultSelection.scale);
 
     const nextItems: ImageCompressionItem[] = [];
@@ -424,13 +425,12 @@ export function ImageCompressorTool({ locale, commonText: common, searchParams }
         });
       } catch {
         URL.revokeObjectURL(originalPreview);
+        rejected.push(file.name);
       }
     }
 
-    if (!nextItems.length) {
-      setError(copy.noImageError);
-      return;
-    }
+    setError(rejected.length ? `${copy.failed}: ${rejected.join(", ")} (JPG, PNG, WebP; ≤ 10 MiB)` : null);
+    if (!nextItems.length) return;
 
     compressionRunRef.current += 1;
     if (recompressTimeoutRef.current) clearTimeout(recompressTimeoutRef.current);
@@ -577,7 +577,7 @@ export function ImageCompressorTool({ locale, commonText: common, searchParams }
           <label className="upload-label">
             <Upload size={48} className="upload-icon" />
             <span>{common.uploadImage}</span>
-            <small>JPG, PNG, WebP (Max 10MB)</small>
+            <small>JPG, PNG, WebP (≤ 10 MiB)</small>
             <small>{copy.multiFileHint}</small>
             <input type="file" accept="image/*" multiple onChange={handleFileChange} hidden />
           </label>

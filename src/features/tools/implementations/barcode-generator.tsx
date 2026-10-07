@@ -123,35 +123,40 @@ export function BarcodeGeneratorTool({
     if (!text.trim()) {
       setImage("");
       setRequestError("");
+      setIsGenerating(false);
       return;
     }
 
     const controller = new AbortController();
+    setImage("");
+    setRequestError("");
     setIsGenerating(true);
 
     const timer = window.setTimeout(async () => {
       try {
         const response = await fetch(
-          `/api/generate-barcode?text=${encodeURIComponent(text)}&format=${encodeURIComponent(selectedFormat)}`,
-          { signal: controller.signal },
+          "/api/generate-barcode",
+          { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text, format: selectedFormat }), signal: controller.signal },
         );
         const payload = (await response.json()) as
           | { success: true; image: string }
           | { success: false; message: string };
 
+        if (controller.signal.aborted) return;
+
         if (!response.ok || !payload.success) {
-          setRequestError(payload.success ? generationFailed : payload.message);
+          setRequestError(generationFailed);
           setImage("");
         } else {
           setRequestError("");
           setImage(payload.image);
         }
-      } catch (fetchError) {
-        if (!(fetchError instanceof DOMException && fetchError.name === "AbortError")) {
+      } catch {
+        if (!controller.signal.aborted) {
           setRequestError(generationError);
         }
       } finally {
-        setIsGenerating(false);
+        if (!controller.signal.aborted) setIsGenerating(false);
       }
     }, 400);
 
@@ -251,11 +256,11 @@ export function BarcodeGeneratorTool({
 
           {image && (
             <div className="action-grid fadeIn">
-              <button className="btn btn-primary" onClick={copyToClipboard}>
+              <button className="btn btn-primary" onClick={copyToClipboard} disabled={isGenerating}>
                 {copied ? <CheckCircle size={18} /> : <Copy size={18} />}
                 {copied ? commonText.copied : (commonText.copy || "Copy")}
               </button>
-              <button className="btn btn-accent" onClick={downloadImage}>
+              <button className="btn btn-accent" onClick={downloadImage} disabled={isGenerating}>
                 <Download size={18} />
                 {commonText.download || "Save"}
               </button>

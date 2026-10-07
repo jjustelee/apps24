@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import type { ToolRendererProps } from "@/features/tools/implementations";
 import { getPercentageCalculatorLongtailPreset } from "@/features/tools/percentage-calculator-longtails";
+import { calculatePercentage } from "@/lib/percentage";
+import { getResultCopy } from "@/features/tools/result-copy";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -16,6 +18,7 @@ type CalcMode = "value" | "increase" | "decrease" | "discount";
 export function PercentageCalculatorTool({ locale, toolText, commonText: common, searchParams }: ToolRendererProps) {
   const params = useParams();
   const t = toolText!;
+  const resultCopy = getResultCopy(locale);
   const modeLabels = t.modeLabels!;
   const inputLabels = t.inputLabels!;
   const resultLabel = t.resultLabel || (locale === "ko" ? "계산 결과" : "RESULT");
@@ -81,7 +84,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
 
   const n1 = parseFloat(val1);
   const n2 = parseFloat(val2);
-  const hasValidInputs = !isNaN(n1) && !isNaN(n2);
+  const hasValidInputs = calculatePercentage(mode, n1, n2) !== null;
 
   let result = 0;
   let summary = "";
@@ -93,11 +96,11 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
         summary = `${inputLabels.totalValue}: ${n1}, ${inputLabels.percentage}: ${n2}% => ${result.toLocaleString(undefined, { maximumFractionDigits: 2 })}${t.percentText ? ` ${t.percentText}` : ""}`;
         break;
       case "increase":
-        result = n1 === 0 ? 0 : ((n2 - n1) / n1) * 100;
+        result = ((n2 - n1) / n1) * 100;
         summary = `${inputLabels.originalValue}: ${n1}, ${inputLabels.newValue}: ${n2} => ${result.toFixed(2)}% ${t.increaseText}`;
         break;
       case "decrease":
-        result = n1 === 0 ? 0 : ((n1 - n2) / n1) * 100;
+        result = ((n1 - n2) / n1) * 100;
         summary = `${inputLabels.originalValue}: ${n1}, ${inputLabels.newValue}: ${n2} => ${result.toFixed(2)}% ${t.decreaseText}`;
         break;
       case "discount":
@@ -195,11 +198,6 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
           </div>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4 w-full">
-            <button 
-              className="w-full sm:flex-none py-4 sm:py-5 px-6 sm:px-10 rounded-xl sm:rounded-2xl bg-[#4B48D9] text-white font-black text-base sm:text-lg transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-[#4B48D9]/30"
-            >
-              {locale === "ko" ? "계산하기" : "Calculate"}
-            </button>
             <div className="flex gap-2 sm:gap-4 w-full sm:w-auto">
               <button 
                 onClick={handleReset} 
@@ -224,6 +222,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
         {/* Right: Result Panel */}
         <div className="bg-[var(--panel-glass)] border border-[var(--panel-border)] rounded-[32px] sm:rounded-[40px] p-5 sm:p-10 lg:p-12 shadow-2xl flex flex-col items-stretch relative overflow-hidden min-w-0">
           <div className="flex flex-col gap-4 sm:gap-6 min-w-0">
+            {(mode === "increase" || mode === "decrease") && n1 === 0 && <p role="alert">{resultCopy.zeroBase}</p>}
             <span className="inline-flex max-w-fit px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#EAEAFF] dark:bg-white/10 text-[9px] sm:text-[11px] font-black text-[#4B48D9] dark:text-white uppercase tracking-wider">
               {resultLabel}
             </span>

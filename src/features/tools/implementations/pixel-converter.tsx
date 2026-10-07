@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { ToolRendererProps } from "@/features/tools/implementations";
+import { formatDecimal } from "@/lib/number-format";
 
 type Unit = "px" | "rem" | "em" | "percent" | "vw" | "vh" | "pt" | "in" | "cm" | "mm";
 
@@ -50,9 +51,7 @@ const getPositiveNumber = (value: string, fallback: number) => {
 };
 
 const formatNumber = (value: number, precision: number) => {
-  if (!Number.isFinite(value)) return "";
-  const formatted = value.toFixed(precision).replace(/\.?0+$/, "");
-  return formatted === "-0" ? "0" : formatted;
+  return formatDecimal(value, precision);
 };
 
 const getPxPerUnit = (unit: Unit, references: ReferenceValues) => {
@@ -101,33 +100,6 @@ const getFormula = (from: Unit, to: Unit, references: ReferenceValues, precision
   const oneUnit = convertValue("1", from, to, references, precision);
   if (!oneUnit) return "";
   return `1 ${UNIT_LABELS[from]} = ${oneUnit} ${UNIT_LABELS[to]}`;
-};
-
-const getOptionLabel = (unit: Unit) => {
-  switch (unit) {
-    case "px":
-      return "Pixels (px)";
-    case "rem":
-      return "Root em (rem)";
-    case "em":
-      return "Em (em)";
-    case "percent":
-      return "Percent (%)";
-    case "vw":
-      return "Viewport width (vw)";
-    case "vh":
-      return "Viewport height (vh)";
-    case "pt":
-      return "Points (pt)";
-    case "in":
-      return "Inches (in)";
-    case "cm":
-      return "Centimeters (cm)";
-    case "mm":
-      return "Millimeters (mm)";
-    default:
-      return unit;
-  }
 };
 
 export function PixelConverterTool({ commonText: common, toolText, toolData }: ToolRendererProps) {
@@ -194,8 +166,8 @@ export function PixelConverterTool({ commonText: common, toolText, toolData }: T
     <div className="tool-stack">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_88px_1fr] gap-6 lg:gap-0 items-center bg-[var(--panel-glass)] border border-[var(--panel-border)] rounded-[40px] p-6 lg:p-12 shadow-2xl">
         <div className="flex flex-col gap-6 w-full">
-          <div className="flex flex-row items-center gap-4 px-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30 whitespace-nowrap">{common.from}</span>
+          <div className="flex flex-row flex-wrap items-center gap-4 px-2">
+            <span className="min-w-0 max-w-full break-words text-[10px] font-black uppercase tracking-[0.25em] opacity-30">{common.from}</span>
             <div className="h-[1px] flex-1 bg-[var(--panel-border)] opacity-30" />
             <span className="inline-flex items-center text-[10px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent)]/20 px-3 py-1.5 rounded-full shadow-sm">
               {UNIT_LABELS[fromUnit]}
@@ -221,7 +193,7 @@ export function PixelConverterTool({ commonText: common, toolText, toolData }: T
             >
               {UNITS.map((unit) => (
                 <option key={unit} value={unit}>
-                  {getOptionLabel(unit)}
+                  {UNIT_LABELS[unit]}
                 </option>
               ))}
             </select>
@@ -245,8 +217,8 @@ export function PixelConverterTool({ commonText: common, toolText, toolData }: T
         </div>
 
         <div className="flex flex-col gap-6 w-full">
-          <div className="flex flex-row items-center gap-4 px-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] opacity-30 whitespace-nowrap">{text.resultLabel}</span>
+          <div className="flex flex-row flex-wrap items-center gap-4 px-2">
+            <span className="min-w-0 max-w-full break-words text-[10px] font-black uppercase tracking-[0.25em] opacity-30">{text.resultLabel}</span>
             <div className="h-[1px] flex-1 bg-[var(--panel-border)] opacity-30" />
             <span className="inline-flex items-center text-[10px] font-bold text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent)]/20 px-3 py-1.5 rounded-full shadow-sm">
               {UNIT_LABELS[toUnit]}
@@ -255,7 +227,7 @@ export function PixelConverterTool({ commonText: common, toolText, toolData }: T
 
           <div className="relative group/result p-8 bg-[var(--accent-soft)]/20 rounded-[36px] border border-[var(--accent)]/10 transition-all hover:bg-[var(--accent-soft)]/40 shadow-inner">
             <div className="w-full bg-transparent text-5xl md:text-6xl font-black p-0 min-h-[4.5rem] flex items-center text-[var(--accent)] transition-all duration-300 overflow-x-auto no-scrollbar">
-              {resultValue || "0"}
+              {resultValue || "-"}
             </div>
             <button
               onClick={handleCopy}
@@ -277,7 +249,7 @@ export function PixelConverterTool({ commonText: common, toolText, toolData }: T
             >
               {UNITS.map((unit) => (
                 <option key={unit} value={unit}>
-                  {getOptionLabel(unit)}
+                  {UNIT_LABELS[unit]}
                 </option>
               ))}
             </select>
@@ -401,16 +373,6 @@ export function PixelConverterTool({ commonText: common, toolText, toolData }: T
         </div>
       </div>
 
-      <div className="mt-12 flex items-center justify-center gap-4 px-4">
-        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--panel-border)] to-transparent opacity-30" />
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_12px_var(--accent)] animate-pulse" />
-          <p className="min-w-0 text-sm text-center leading-relaxed text-[var(--muted)]">
-            {common.unitAccuracyNote || "Precision guaranteed"}
-          </p>
-        </div>
-        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--panel-border)] to-transparent opacity-30" />
-      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ type OutdoorHealthResponse = {
     name: string;
     url: string;
   };
-  sourceUpdatedAt?: string | null;
+  validAt?: string | null;
   fetchedAt?: string;
   readings?: {
     pm10: Reading;
@@ -56,22 +56,22 @@ const LOCATIONS = [
   { name: "대전", lat: 36.3504, lon: 127.3845 },
   { name: "울산", lat: 35.5384, lon: 129.3114 },
   { name: "세종", lat: 36.4801, lon: 127.289 },
-  { name: "경기", lat: 37.2636, lon: 127.0286 },
-  { name: "강원", lat: 37.8813, lon: 127.7298 },
-  { name: "충북", lat: 36.6424, lon: 127.489 },
-  { name: "충남", lat: 36.6016, lon: 126.6608 },
-  { name: "전북", lat: 35.8242, lon: 127.148 },
-  { name: "전남", lat: 34.8161, lon: 126.463 },
-  { name: "경북", lat: 36.5684, lon: 128.7294 },
-  { name: "경남", lat: 35.2279, lon: 128.6819 },
-  { name: "제주", lat: 33.4996, lon: 126.5312 },
+  { name: "경기(수원)", lat: 37.2636, lon: 127.0286 },
+  { name: "강원(춘천)", lat: 37.8813, lon: 127.7298 },
+  { name: "충북(청주)", lat: 36.6424, lon: 127.489 },
+  { name: "충남(홍성)", lat: 36.6016, lon: 126.6608 },
+  { name: "전북(전주)", lat: 35.8242, lon: 127.148 },
+  { name: "전남(무안)", lat: 34.8161, lon: 126.463 },
+  { name: "경북(안동)", lat: 36.5684, lon: 128.7294 },
+  { name: "경남(창원)", lat: 35.2279, lon: 128.6819 },
+  { name: "제주(제주시)", lat: 33.4996, lon: 126.5312 },
 ];
 
 const LEVEL_META: Record<HealthLevel, { label: string; rank: number; summary: string }> = {
   good: {
     label: "좋음",
     rank: 1,
-    summary: "야외활동에 큰 제약은 없어 보입니다.",
+    summary: "모델 예보에서 확인된 지표가 낮은 구간입니다. 외출 안전이나 개인 건강 상태를 보장하지 않습니다.",
   },
   normal: {
     label: "보통",
@@ -141,14 +141,6 @@ function classifyUv(value: number | null): HealthLevel {
   return "veryBad";
 }
 
-function classifyPollen(value: number | null): HealthLevel {
-  if (value === null) return "unknown";
-  if (value <= 0) return "good";
-  if (value <= 20) return "normal";
-  if (value <= 100) return "bad";
-  return "veryBad";
-}
-
 function formatDateTime(value?: string | null) {
   if (!value) return "확인 불가";
   const date = new Date(value);
@@ -168,19 +160,6 @@ function numberText(value: number | null, digits = 1) {
   return value === null ? "확인 불가" : value.toFixed(digits).replace(/\.0$/, "");
 }
 
-function getPollenMax(readings: OutdoorHealthResponse["readings"]) {
-  if (!readings) return null;
-  const values = [
-    readings.pollen.grass,
-    readings.pollen.birch,
-    readings.pollen.alder,
-    readings.pollen.mugwort,
-    readings.pollen.ragweed,
-  ].filter((value): value is number => typeof value === "number");
-
-  return values.length ? Math.max(...values) : null;
-}
-
 function buildMetrics(data: OutdoorHealthResponse | null): Metric[] {
   const readings = data?.readings;
   const pm25 = readings?.pm25.value ?? null;
@@ -188,7 +167,6 @@ function buildMetrics(data: OutdoorHealthResponse | null): Metric[] {
   const ozoneUg = readings?.ozone.value ?? null;
   const ozonePpm = ozoneUgToPpm(ozoneUg);
   const uv = readings?.uv.value ?? null;
-  const pollenMax = getPollenMax(readings);
 
   return [
     {
@@ -197,7 +175,7 @@ function buildMetrics(data: OutdoorHealthResponse | null): Metric[] {
       label: "PM2.5",
       valueText: `${numberText(pm25)} ${readings?.pm25.unit ?? "μg/m³"}`,
       level: classifyPm25(pm25),
-      source: "해석 기준: AirKorea 통합대기환경지수",
+      source: "국내 농도 구간 참고 분류(공식 통합대기환경지수 아님)",
       tip:
         classifyPm25(pm25) === "bad" || classifyPm25(pm25) === "veryBad"
           ? "장시간 야외활동과 격한 운동은 줄이고, 필요 시 보건용 마스크 착용을 고려하세요."
@@ -209,7 +187,7 @@ function buildMetrics(data: OutdoorHealthResponse | null): Metric[] {
       label: "PM10",
       valueText: `${numberText(pm10)} ${readings?.pm10.unit ?? "μg/m³"}`,
       level: classifyPm10(pm10),
-      source: "해석 기준: AirKorea 통합대기환경지수",
+      source: "국내 농도 구간 참고 분류(공식 통합대기환경지수 아님)",
       tip:
         classifyPm10(pm10) === "bad" || classifyPm10(pm10) === "veryBad"
           ? "도로변·공사장 주변을 피하고, 장시간 또는 무리한 야외활동을 줄이는 것을 권장합니다."
@@ -222,7 +200,7 @@ function buildMetrics(data: OutdoorHealthResponse | null): Metric[] {
       valueText: ozonePpm === null ? "확인 불가" : `${ozonePpm.toFixed(3)} ppm`,
       detail: ozoneUg === null ? undefined : `제공값 ${numberText(ozoneUg)} ${readings?.ozone.unit ?? "μg/m³"} 환산`,
       level: classifyOzone(ozoneUg),
-      source: "해석 기준: AirKorea 통합대기환경지수",
+      source: "국내 농도 구간 참고 분류(25°C, 1기압 가정 환산)",
       tip:
         classifyOzone(ozoneUg) === "bad" || classifyOzone(ozoneUg) === "veryBad"
           ? "한낮 장시간 야외활동을 줄이고, 눈 따가움이나 호흡 불편이 있으면 실내에서 쉬세요."
@@ -244,14 +222,11 @@ function buildMetrics(data: OutdoorHealthResponse | null): Metric[] {
       key: "pollen",
       title: "꽃가루",
       label: "Pollen",
-      valueText: pollenMax === null ? "확인 불가" : `${numberText(pollenMax)} ${readings?.pollen.unit ?? "grains/m³"}`,
-      detail: pollenMax === null ? "현재 제공원에서 한국 지역 꽃가루 값이 제공되지 않을 수 있습니다." : "제공원 꽃가루 예보값 기준",
-      level: classifyPollen(pollenMax),
-      source: "참고 기준: 기상청 꽃가루농도위험지수",
-      tip:
-        pollenMax === null
-          ? "꽃가루 알레르기가 있다면 기상청 꽃가루 예보와 개인 증상을 함께 확인하세요."
-          : "알레르기 민감군은 야외활동 후 손과 얼굴을 씻고, 필요 시 마스크나 선글라스 사용을 고려하세요.",
+      valueText: "한국 지역 미지원",
+      detail: "Open-Meteo 꽃가루 예보는 유럽만 지원합니다. 0이나 좋음으로 추정하지 않습니다.",
+      level: "unknown",
+      source: "기상청 꽃가루 예보를 별도로 확인하세요.",
+      tip: "꽃가루 알레르기가 있다면 기상청 꽃가루 예보와 개인 증상을 함께 확인하세요.",
     },
   ];
 }
@@ -290,6 +265,7 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
     async function loadData() {
       setIsLoading(true);
       setError("");
+      setData(null);
 
       try {
         const params = new URLSearchParams({
@@ -309,7 +285,7 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
         setData(result);
       } catch (loadError) {
         if ((loadError as Error).name !== "AbortError") {
-          setError("현재 대기 건강 지표를 불러오지 못했습니다. 잠시 후 다시 시도하세요.");
+          setError(loadError instanceof Error ? loadError.message : "현재 대기 건강 지표를 불러오지 못했습니다.");
           setData(null);
         }
       } finally {
@@ -320,11 +296,14 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
     }
 
     loadData();
-    return () => controller.abort();
+    const interval = window.setInterval(loadData, 900_000);
+    return () => { controller.abort(); window.clearInterval(interval); };
   }, [selectedLocation]);
 
   const metrics = useMemo(() => buildMetrics(data), [data]);
-  const overallLevel = getOverallLevel(metrics);
+  const validTime = data?.validAt ? new Date(data.validAt).getTime() : NaN;
+  const isStale = data !== null && (!Number.isFinite(validTime) || Math.abs(Date.now() - validTime) > 2 * 60 * 60 * 1000);
+  const overallLevel = isStale ? "unknown" : getOverallLevel(metrics);
   const overall = LEVEL_META[overallLevel];
   const causes = getMainCauses(metrics, overallLevel);
 
@@ -335,12 +314,11 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
           <span className="outdoor-health-kicker">대기 건강 체크</span>
           <h2>{toolText?.title ?? "외출 건강 지수"}</h2>
           <p>
-            미세먼지, 초미세먼지, 오존, 자외선, 꽃가루 지표를 한 화면에서 확인하고 외출 전 참고할 수
-            있는 생활 팁을 제공합니다.
+            선택한 대표 좌표의 미세먼지·오존·자외선 모델 예보를 보여줍니다. 측정소 실시간 관측이나 지역 전체의 평균이 아니며, 한국 꽃가루 수치는 지원되지 않습니다.
           </p>
         </div>
         <label className="outdoor-location-select">
-          <span>지역 선택</span>
+            <span>대표 지역 선택</span>
           <select
             value={selectedLocation.name}
             onChange={(event) => {
@@ -362,11 +340,12 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
           {error}
         </div>
       ) : null}
+      {isStale && <p role="status" className="outdoor-health-error">예보 유효 시각이 현재와 2시간 이상 차이 나거나 확인되지 않습니다. 종합 상태 대신 공식 예보를 확인하세요.</p>}
 
       <div className="outdoor-health-grid" aria-busy={isLoading}>
         <section className={`outdoor-status-card level-${overallLevel}`}>
           <div className="outdoor-status-topline">
-            <span>종합 외출 상태</span>
+            <span>확인 가능한 지표의 참고 상태</span>
             <strong>{selectedLocation.name}</strong>
           </div>
           <div className="outdoor-status-main">
@@ -374,9 +353,9 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
             <p>{isLoading ? "지표를 불러오는 중입니다." : overall.summary}</p>
           </div>
           <div className="outdoor-update-box">
-            <span>업데이트</span>
-            <strong>{isLoading ? "조회 중" : `${formatDateTime(data?.sourceUpdatedAt)} 기준`}</strong>
-            <small>일부 지표는 관측값이 아닌 예보값이며, 제공 기관의 갱신 주기에 따라 달라질 수 있습니다.</small>
+            <span>예보 유효 시각 (한국 시간)</span>
+            <strong>{isLoading ? "조회 중" : `${formatDateTime(data?.validAt)} 기준`}</strong>
+            <small>조회 시각: {formatDateTime(data?.fetchedAt)}. 페이지는 15분마다 다시 조회합니다. 이는 모델 자체의 갱신 주기가 아닙니다. 누락 지표와 개인 건강 위험은 종합 상태에 포함되지 않습니다.</small>
           </div>
           <div className="outdoor-cause-list" aria-label="주요 영향 지표">
             {causes.length ? (
@@ -393,7 +372,7 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
 
         <section className="outdoor-metric-panel" aria-label="지표별 결과">
           <div className="outdoor-metric-panel-heading">
-            <span>실시간 지표 대시보드</span>
+            <span>모델 예보 대시보드</span>
             <strong>{isLoading ? "조회 중" : `${metrics.filter((metric) => metric.level !== "unknown").length}개 지표 확인`}</strong>
           </div>
           {metrics.map((metric) => (
@@ -466,9 +445,10 @@ export function OutdoorHealthIndexTool({ toolText }: ToolRendererProps) {
           <a href={data?.provider?.url ?? "https://open-meteo.com/en/docs/air-quality-api"} target="_blank" rel="noreferrer">
             데이터 제공원: {data?.provider?.name ?? "Open-Meteo Air Quality API"}
           </a>
+          <a href="https://atmosphere.copernicus.eu/" target="_blank" rel="noreferrer">CAMS (Copernicus Atmosphere Monitoring Service)</a>
         </div>
         <p>
-          이 정보는 공식 대기질·생활기상 지표를 바탕으로 한 생활 참고용 안내입니다. 개인의 건강 상태,
+          Open-Meteo와 CAMS 모델 예보를 국내 농도 구간에 대입한 참고용 분류이며 공식 CAI가 아닙니다. 실제 측정소 값과 다를 수 있습니다. 개인의 건강 상태,
           질환, 의학적 판단을 대체하지 않습니다. 증상이 있거나 민감군에 해당하는 경우 전문가의 조언을
           따르세요.
         </p>

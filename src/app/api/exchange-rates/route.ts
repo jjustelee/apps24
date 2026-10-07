@@ -77,6 +77,7 @@ export async function GET(request: Request) {
         },
         base,
         date: rows[0]?.date ?? null,
+        dates: Object.fromEntries(rows.filter(row => row.quote).map(row => [row.quote, row.date ?? null])),
         rates,
         fetchedAt: new Date().toISOString(),
       },
