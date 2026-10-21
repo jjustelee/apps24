@@ -492,7 +492,7 @@ export default {
       languageSelect: "コンテンツの言語を選択",
       highlightHelp: "* 指定されたインデックスの文字が、上のテキストエリア内でリアルタイムに強調表示されます。",
       allTools: "すべてのツール",
-      footerNote1: "このツールはapps24ユーティリティスイートの一部です。",
+      footerNote1: "このツールはApps24ユーティリティスイートの一部です。",
       footerNote2: "すべての処理は、最大限のプライバシーと速度のためにブラウザ内でローカルに行われます。",
       koLabel: "韓国語",
       enLabel: "英語",

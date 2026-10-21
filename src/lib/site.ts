@@ -1,5 +1,5 @@
 /** Site Configuration for apps24.io - Redploy trigger */
-export const SITE_NAME = "apps24";
+export const SITE_NAME = "Apps24";
 
 export const DEFAULT_LOCALE = "en";
 

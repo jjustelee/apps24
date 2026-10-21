@@ -177,8 +177,115 @@ const content = {
   },
 } satisfies Record<string, { examples: string[]; note: Record<Locale, string>; reference: string[] }>;
 
+const faqs: Record<string, Record<Locale, { q: string; a: string }>[]> = {
+  digitalclock: [
+    {
+      "en": { q: "Why does the time differ from another clock?", a: "This clock shows your device's own time and time zone. Check the automatic date and time and time zone settings of the device." },
+      "ko": { q: "다른 시계와 시간이 다른 이유는 무엇인가요?", a: "이 시계는 기기의 시각과 시간대를 그대로 보여줍니다. 기기의 날짜·시간 자동 설정과 시간대를 확인하세요." },
+      "fr": { q: "Pourquoi l'heure diffère-t-elle d'une autre horloge ?", a: "Cette horloge affiche l'heure et le fuseau de votre appareil. Vérifiez la date, l'heure automatique et le fuseau dans les réglages." },
+      "de": { q: "Warum weicht die Zeit von einer anderen Uhr ab?", a: "Die Uhr zeigt Zeit und Zeitzone Ihres Geräts. Prüfen Sie die automatische Datums-/Zeiteinstellung und die Zeitzone." },
+      "es": { q: "¿Por qué la hora difiere de otro reloj?", a: "Este reloj muestra la hora y la zona horaria de tu dispositivo. Revisa la fecha y hora automáticas y la zona horaria." },
+      "pt": { q: "Por que a hora é diferente de outro relógio?", a: "Este relógio mostra a hora e o fuso do seu dispositivo. Confira a data e hora automáticas e o fuso horário." },
+      "ja": { q: "他の時計と時刻が違うのはなぜですか?", a: "この時計は端末自身の時刻と時間帯を表示します。端末の日付と時刻の自動設定、時間帯を確認してください。" },
+      "zh": { q: "为什么时间与其他时钟不同?", a: "本时钟显示设备自身的时间和时区。请检查设备的自动日期时间及时区设置。" },
+      "zh-TW": { q: "為什麼時間與其他時鐘不同?", a: "本時鐘顯示裝置自身的時間與時區。請檢查裝置的自動日期時間與時區設定。" },
+      "ar": { q: "لماذا يختلف الوقت عن ساعة أخرى؟", a: "تعرض هذه الساعة وقت جهازك ومنطقته الزمنية. تحقق من إعدادات التاريخ والوقت التلقائيين والمنطقة الزمنية." },
+    },
+    {
+      "en": { q: "Does the display stop in a background tab?", a: "Browsers slow timers in hidden tabs. When you return, the next update shows the current device time, so the clock does not drift." },
+      "ko": { q: "백그라운드 탭에서는 시계가 멈추나요?", a: "브라우저는 숨겨진 탭의 타이머를 늦춥니다. 돌아오면 다음 갱신에서 기기의 현재 시각이 표시되므로 시간이 어긋나지 않습니다." },
+      "fr": { q: "L'affichage s'arrête-t-il dans un onglet en arrière-plan ?", a: "Les navigateurs ralentissent les minuteurs des onglets masqués. Au retour, la mise à jour suivante affiche l'heure actuelle de l'appareil ; l'horloge ne dérive pas." },
+      "de": { q: "Bleibt die Anzeige im Hintergrund-Tab stehen?", a: "Browser verlangsamen Timer in verdeckten Tabs. Bei Rückkehr zeigt die nächste Aktualisierung die aktuelle Gerätezeit; die Uhr driftet nicht." },
+      "es": { q: "¿Se detiene la pantalla en una pestaña en segundo plano?", a: "Los navegadores ralentizan los temporizadores de pestañas ocultas. Al volver, la siguiente actualización muestra la hora actual del dispositivo; el reloj no se desfasa." },
+      "pt": { q: "A exibição para em uma aba em segundo plano?", a: "Os navegadores desaceleram os temporizadores de abas ocultas. Ao voltar, a próxima atualização mostra a hora atual do dispositivo; o relógio não atrasa." },
+      "ja": { q: "バックグラウンドのタブでは表示が止まりますか?", a: "ブラウザは非表示タブのタイマーを遅くします。戻ると次の更新で端末の現在時刻が表示されるため、時刻はずれません。" },
+      "zh": { q: "在后台标签页中显示会停止吗?", a: "浏览器会降低隐藏标签页的计时频率。返回后下一次刷新会显示设备的当前时间,因此不会产生偏差。" },
+      "zh-TW": { q: "在背景分頁中顯示會停止嗎?", a: "瀏覽器會降低隱藏分頁的計時頻率。返回後下一次更新會顯示裝置的目前時間,因此不會產生誤差。" },
+      "ar": { q: "هل يتوقف العرض في علامة تبويب بالخلفية؟", a: "تُبطئ المتصفحات المؤقتات في علامات التبويب المخفية. عند العودة يعرض التحديث التالي الوقت الحالي للجهاز، فلا تنحرف الساعة." },
+    },
+  ],
+  countdown: [
+    {
+      "en": { q: "Is the countdown accurate in a background tab?", a: "The end time is fixed from the device clock when you press start, so the remaining time stays correct. The on-screen update and the alarm can be delayed by browser throttling." },
+      "ko": { q: "백그라운드 탭에서도 카운트다운이 정확한가요?", a: "시작을 누를 때 기기 시계로 종료 시각을 정하므로 남은 시간은 정확합니다. 화면 갱신과 알람은 브라우저 제한으로 늦어질 수 있습니다." },
+      "fr": { q: "Le compte à rebours reste-t-il exact dans un onglet en arrière-plan ?", a: "L'heure de fin est fixée d'après l'horloge de l'appareil au démarrage ; le temps restant reste correct. L'affichage et l'alarme peuvent être retardés par le navigateur." },
+      "de": { q: "Ist der Countdown im Hintergrund-Tab genau?", a: "Die Endzeit wird beim Start aus der Geräteuhr festgelegt, die Restzeit bleibt korrekt. Anzeige und Alarm können durch Browser-Drosselung verzögert werden." },
+      "es": { q: "¿Es exacta la cuenta atrás en una pestaña en segundo plano?", a: "La hora de fin se fija con el reloj del dispositivo al iniciar, así que el tiempo restante es correcto. La pantalla y la alarma pueden retrasarse por la limitación del navegador." },
+      "pt": { q: "A contagem regressiva é precisa em uma aba em segundo plano?", a: "O horário final é definido pelo relógio do dispositivo ao iniciar, então o tempo restante fica correto. A tela e o alarme podem atrasar por limitação do navegador." },
+      "ja": { q: "バックグラウンドのタブでもカウントダウンは正確ですか?", a: "開始時に端末時計で終了時刻を決めるため、残り時間は正確です。画面更新とアラームはブラウザの制限で遅れることがあります。" },
+      "zh": { q: "后台标签页中的倒计时准确吗?", a: "开始时按设备时钟确定结束时间,因此剩余时间保持正确。屏幕刷新和提示音可能因浏览器限制而延迟。" },
+      "zh-TW": { q: "背景分頁中的倒數計時準確嗎?", a: "開始時依裝置時鐘決定結束時間,因此剩餘時間維持正確。畫面更新與提示音可能因瀏覽器限制而延遲。" },
+      "ar": { q: "هل العدّ التنازلي دقيق في علامة تبويب بالخلفية؟", a: "يُحدَّد وقت الانتهاء من ساعة الجهاز عند البدء، فيبقى الوقت المتبقي صحيحًا. قد يتأخر تحديث الشاشة والمنبّه بسبب قيود المتصفح." },
+    },
+    {
+      "en": { q: "Will the timer continue if I reload the page?", a: "No. A reload stops the running timer. Keep the page open until it finishes." },
+      "ko": { q: "페이지를 새로고침하면 타이머가 계속되나요?", a: "아니요. 새로고침하면 실행 중인 타이머가 중지됩니다. 끝날 때까지 페이지를 열어 두세요." },
+      "fr": { q: "Le minuteur continue-t-il après un rechargement ?", a: "Non. Un rechargement arrête le minuteur en cours. Gardez la page ouverte jusqu'à la fin." },
+      "de": { q: "Läuft der Timer nach einem Neuladen weiter?", a: "Nein. Ein Neuladen beendet den laufenden Timer. Lassen Sie die Seite bis zum Ende geöffnet." },
+      "es": { q: "¿Continúa el temporizador si recargo la página?", a: "No. Al recargar se detiene el temporizador en curso. Mantén la página abierta hasta que termine." },
+      "pt": { q: "O cronômetro continua se eu recarregar a página?", a: "Não. Recarregar interrompe o temporizador em andamento. Mantenha a página aberta até o fim." },
+      "ja": { q: "ページを再読み込みするとタイマーは続きますか?", a: "いいえ。再読み込みすると実行中のタイマーは止まります。終わるまでページを開いたままにしてください。" },
+      "zh": { q: "刷新页面后计时器会继续吗?", a: "不会。刷新会停止正在运行的计时器。请保持页面打开直到结束。" },
+      "zh-TW": { q: "重新載入頁面後計時器會繼續嗎?", a: "不會。重新載入會停止執行中的計時器。請保持頁面開啟直到結束。" },
+      "ar": { q: "هل يستمر المؤقت إذا أعدت تحميل الصفحة؟", a: "لا. إعادة التحميل توقف المؤقت الجاري. أبقِ الصفحة مفتوحة حتى ينتهي." },
+    },
+  ],
+  screenlamp: [
+    {
+      "en": { q: "Can this replace a real lamp or photo light?", a: "No. It only fills the page with a color; it does not change the display's hardware brightness and is not a calibrated light source." },
+      "ko": { q: "실제 조명이나 촬영용 조명을 대신할 수 있나요?", a: "아니요. 페이지를 한 가지 색으로 채울 뿐 화면의 하드웨어 밝기를 바꾸지 않으며 보정된 광원도 아닙니다." },
+      "fr": { q: "Peut-il remplacer une vraie lampe ou un éclairage photo ?", a: "Non. Il remplit seulement la page d'une couleur ; il ne change pas la luminosité matérielle de l'écran et n'est pas une source calibrée." },
+      "de": { q: "Kann das eine echte Lampe oder Fotolicht ersetzen?", a: "Nein. Es füllt nur die Seite mit einer Farbe, ändert nicht die Hardware-Helligkeit des Displays und ist keine kalibrierte Lichtquelle." },
+      "es": { q: "¿Puede sustituir una lámpara real o una luz fotográfica?", a: "No. Solo rellena la página de un color; no cambia el brillo físico de la pantalla y no es una fuente de luz calibrada." },
+      "pt": { q: "Isso substitui uma lâmpada real ou luz de fotografia?", a: "Não. Apenas preenche a página com uma cor; não altera o brilho físico da tela e não é uma fonte de luz calibrada." },
+      "ja": { q: "本物のライトや撮影用ライトの代わりになりますか?", a: "いいえ。ページを一色で塗りつぶすだけで、画面のハードウェア輝度は変わらず、校正された光源でもありません。" },
+      "zh": { q: "可以代替真正的灯或摄影补光灯吗?", a: "不可以。它只是用一种颜色填满页面,不会改变屏幕的硬件亮度,也不是经过校准的光源。" },
+      "zh-TW": { q: "可以取代真正的燈或攝影補光燈嗎?", a: "不可以。它只是用單一顏色填滿頁面,不會改變螢幕的硬體亮度,也不是經過校準的光源。" },
+      "ar": { q: "هل يمكن أن يحل محل مصباح حقيقي أو إضاءة تصوير؟", a: "لا. هو يملأ الصفحة بلونٍ فقط ولا يغيّر سطوع الشاشة الفعلي، وليس مصدر ضوء معايرًا." },
+    },
+    {
+      "en": { q: "Why does full screen not start?", a: "Browsers only allow full screen after a click or tap, and some mobile browsers do not support it. The color still fills the page." },
+      "ko": { q: "전체 화면이 시작되지 않는 이유는 무엇인가요?", a: "브라우저는 클릭이나 탭 이후에만 전체 화면을 허용하며 일부 모바일 브라우저는 지원하지 않습니다. 색상은 그대로 페이지를 채웁니다." },
+      "fr": { q: "Pourquoi le plein écran ne démarre-t-il pas ?", a: "Les navigateurs n'autorisent le plein écran qu'après un clic ou un toucher, et certains navigateurs mobiles ne le prennent pas en charge. La couleur remplit quand même la page." },
+      "de": { q: "Warum startet der Vollbildmodus nicht?", a: "Browser erlauben Vollbild nur nach Klick oder Tippen, manche mobilen Browser unterstützen es nicht. Die Farbe füllt trotzdem die Seite." },
+      "es": { q: "¿Por qué no se inicia la pantalla completa?", a: "Los navegadores solo permiten la pantalla completa tras un clic o toque, y algunos navegadores móviles no la admiten. El color sigue llenando la página." },
+      "pt": { q: "Por que a tela cheia não inicia?", a: "Os navegadores só permitem tela cheia após um clique ou toque, e alguns navegadores móveis não a aceitam. A cor continua preenchendo a página." },
+      "ja": { q: "全画面表示が始まらないのはなぜですか?", a: "ブラウザはクリックやタップの後にのみ全画面を許可し、一部のモバイルブラウザは未対応です。色はそのままページを塗りつぶします。" },
+      "zh": { q: "为什么全屏无法启动?", a: "浏览器只允许在点击或轻触之后进入全屏,部分移动浏览器不支持。颜色仍会填满页面。" },
+      "zh-TW": { q: "為什麼全螢幕無法啟動?", a: "瀏覽器只允許在點擊或輕觸之後進入全螢幕,部分行動瀏覽器不支援。顏色仍會填滿頁面。" },
+      "ar": { q: "لماذا لا يبدأ وضع ملء الشاشة؟", a: "لا تسمح المتصفحات بملء الشاشة إلا بعد نقرة أو لمسة، ولا تدعمه بعض متصفحات الجوال. يبقى اللون يملأ الصفحة." },
+    },
+  ],
+  signboard: [
+    {
+      "en": { q: "Is my message stored?", a: "Yes. The message and display settings are saved in this browser's localStorage and are not sent to Apps24. On a shared device, clear the message or this site's data afterward." },
+      "ko": { q: "입력한 문구가 저장되나요?", a: "예. 문구와 표시 설정은 이 브라우저의 localStorage에 저장되며 Apps24로 전송되지 않습니다. 공용 기기에서는 사용 후 문구나 사이트 데이터를 지우세요." },
+      "fr": { q: "Mon message est-il enregistré ?", a: "Oui. Le message et les réglages sont conservés dans le localStorage de ce navigateur et ne sont pas envoyés à Apps24. Sur un appareil partagé, effacez-les ensuite." },
+      "de": { q: "Wird meine Nachricht gespeichert?", a: "Ja. Nachricht und Einstellungen liegen im localStorage dieses Browsers und werden nicht an Apps24 gesendet. Löschen Sie sie auf geteilten Geräten anschließend." },
+      "es": { q: "¿Se guarda mi mensaje?", a: "Sí. El mensaje y los ajustes se guardan en el localStorage de este navegador y no se envían a Apps24. En un dispositivo compartido, bórralos después." },
+      "pt": { q: "Minha mensagem fica salva?", a: "Sim. A mensagem e as configurações ficam no localStorage deste navegador e não são enviadas ao Apps24. Em dispositivo compartilhado, apague depois." },
+      "ja": { q: "入力したメッセージは保存されますか?", a: "はい。メッセージと表示設定はこのブラウザのlocalStorageに保存され、Apps24には送信されません。共用端末では使用後に削除してください。" },
+      "zh": { q: "我输入的文字会被保存吗?", a: "会。文字和显示设置保存在此浏览器的 localStorage 中,不会发送给 Apps24。在共用设备上,使用后请清除。" },
+      "zh-TW": { q: "我輸入的文字會被儲存嗎?", a: "會。文字與顯示設定儲存在此瀏覽器的 localStorage 中,不會傳送給 Apps24。在共用裝置上,使用後請清除。" },
+      "ar": { q: "هل تُحفظ رسالتي؟", a: "نعم. تُحفظ الرسالة وإعدادات العرض في localStorage بهذا المتصفح ولا تُرسل إلى Apps24. على الأجهزة المشتركة امسحها بعد الاستخدام." },
+    },
+    {
+      "en": { q: "Can it drive an LED sign?", a: "No. It is an on-screen display only and does not control external LED hardware or certify public signage." },
+      "ko": { q: "LED 전광판 장비를 제어할 수 있나요?", a: "아니요. 화면에 표시만 하며 외부 LED 장비를 제어하거나 공공 표지판 요건을 보증하지 않습니다." },
+      "fr": { q: "Peut-il piloter un panneau LED ?", a: "Non. C'est un affichage à l'écran uniquement ; il ne pilote aucun matériel LED externe et ne certifie pas une signalétique publique." },
+      "de": { q: "Kann es eine LED-Tafel ansteuern?", a: "Nein. Es ist nur eine Bildschirmanzeige und steuert keine externe LED-Hardware und zertifiziert keine öffentliche Beschilderung." },
+      "es": { q: "¿Puede controlar un letrero LED?", a: "No. Es solo una pantalla en el navegador; no controla hardware LED externo ni certifica señalización pública." },
+      "pt": { q: "Pode controlar um painel de LED?", a: "Não. É apenas uma exibição na tela; não controla hardware LED externo nem certifica sinalização pública." },
+      "ja": { q: "LED電光掲示板を制御できますか?", a: "いいえ。画面上の表示のみで、外部のLED機器を制御したり、公共の標識要件を保証したりするものではありません。" },
+      "zh": { q: "可以控制 LED 显示屏吗?", a: "不可以。它只是屏幕上的显示,不控制外部 LED 硬件,也不保证符合公共标识要求。" },
+      "zh-TW": { q: "可以控制 LED 看板嗎?", a: "不可以。它只是螢幕上的顯示,不控制外部 LED 硬體,也不保證符合公共標示要求。" },
+      "ar": { q: "هل يمكنه تشغيل لافتة LED؟", a: "لا. هو عرض على الشاشة فقط ولا يتحكم في أجهزة LED خارجية ولا يُثبت مطابقة اللافتات العامة." },
+    },
+  ],
+};
+
 export function getFunctionalContent(locale: Locale, id: string): Partial<ToolText> {
   if (!(id in content)) return {};
   const entry = content[id as keyof typeof content];
-  return { longDescription: entry.note[locale], examples: entry.examples, whyUse: "", usageContext: "", faq: [], references: { [entry.reference[0]]: entry.reference[1] }, seo: "" };
+  return { longDescription: entry.note[locale], examples: entry.examples, whyUse: "", usageContext: "", faq: (faqs[id] ?? []).map((item) => item[locale]), references: { [entry.reference[0]]: entry.reference[1] }, seo: "" };
 }

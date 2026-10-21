@@ -524,7 +524,7 @@ export default {
       languageSelect: "콘텐츠 언어 선택",
       highlightHelp: "* 지정된 인덱스의 글자가 상단 입력창 내에서 실시간으로 강조되어 표시됩니다.",
       allTools: "모든 도구",
-      footerNote1: "이 도구는 apps24 유틸리티 제품군의 일부입니다.",
+      footerNote1: "이 도구는 Apps24 유틸리티 제품군의 일부입니다.",
       footerNote2: "모든 처리는 개인 정보 보호와 속도를 위해 브라우저에서 로컬로 수행됩니다.",
       koLabel: "한국어",
       enLabel: "영어",

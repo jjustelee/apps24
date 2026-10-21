@@ -26,16 +26,16 @@ export async function generateMetadata({
   return {
     alternates: buildLocaleAlternates(locale),
     title: {
-      template: "%s | apps24",
-      default: commonText.homeTitle || "apps24 - Fast Multilingual Tools",
+      template: "%s | Apps24",
+      default: commonText.homeTitle || "Apps24 - Fast Multilingual Tools",
     },
     description: commonText.homeSubtitle || "Simple multilingual utilities for quick tasks.",
     keywords: ["online tools", "utilities", "free tools", "web apps"],
     openGraph: {
-      title: commonText.homeTitle || "apps24",
+      title: commonText.homeTitle || "Apps24",
       description: commonText.homeSubtitle,
-      siteName: "apps24",
-      images: [{ url: "/icon.png", width: 512, height: 512, alt: "apps24 logo" }],
+      siteName: "Apps24",
+      images: [{ url: "/icon.png", width: 512, height: 512, alt: "Apps24 logo" }],
     },
   };
 }

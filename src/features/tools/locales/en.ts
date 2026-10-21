@@ -494,7 +494,7 @@ export default {
       languageSelect: "Select Content Language",
       highlightHelp: "* The character at the specified index is highlighted in real-time within the text area above.",
       allTools: "All Tools",
-      footerNote1: "This tool is part of the apps24 utility suite.",
+      footerNote1: "This tool is part of the Apps24 utility suite.",
       footerNote2: "All processing happens locally in your browser for maximum privacy and speed.",
       koLabel: "Korean",
       enLabel: "English",

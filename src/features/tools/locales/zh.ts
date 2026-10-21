@@ -492,7 +492,7 @@ export default {
       languageSelect: "选择内容语言",
       highlightHelp: "* 指定索引处的字符将在上面的文本区域中实时突出显示。",
       allTools: "所有工具",
-      footerNote1: "此工具是 apps24 实用工具套件的一部分。",
+      footerNote1: "此工具是 Apps24 实用工具套件的一部分。",
       footerNote2: "所有处理均在您的浏览器中本地完成，以实现最大的隐私和速度。",
       koLabel: "韩语",
       enLabel: "英语",

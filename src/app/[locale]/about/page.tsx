@@ -5,6 +5,7 @@ import { buildLocaleAlternates } from "@/lib/seo";
 import { isLocale, type Locale } from "@/lib/site";
 import Link from "next/link";
 import { GUIDE_UI } from "@/features/guides/content";
+import { ABOUT_EXTRA } from "@/features/tools/about-extra";
 
 export async function generateMetadata({
   params,
@@ -33,6 +34,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const legal = LEGAL_TEXTS[validLocale] || LEGAL_TEXTS.en;
   const common = await getCommonText(validLocale);
   const about = legal.about;
+  const extra = ABOUT_EXTRA[validLocale] || ABOUT_EXTRA.en;
+  const operatorName = process.env.NEXT_PUBLIC_SITE_OPERATOR?.trim();
 
   return (
     <div className="content-page-wrapper" style={{ maxWidth: "900px", margin: "0 auto", width: "100%" }}>
@@ -48,9 +51,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </header>
 
         <section className="legal-content" style={{ lineHeight: "1.8" }}>
-          <h2>{GUIDE_UI[validLocale].title}</h2>
-          <p>{GUIDE_UI[validLocale].method}</p>
-          <p><Link href={`/${locale}/guides`}>{GUIDE_UI[validLocale].title}</Link> · <Link href={`/${locale}/contact`}>{common.contact}</Link></p>
           {/* 서론 */}
           <p style={{ marginBottom: "2rem", fontSize: "1.1rem", color: "var(--text)" }}>
             {about.intro}
@@ -111,6 +111,42 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </h2>
           <p style={{ marginBottom: "2rem", fontSize: "1rem", color: "var(--text-muted, var(--text))" }}>
             {about.goal.body}
+          </p>
+
+          <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "1rem", color: "var(--text)" }}>
+            {extra.operatorHeading}
+          </h2>
+          <p style={{ marginBottom: operatorName ? "0.5rem" : "2rem", fontSize: "1rem", color: "var(--text-muted, var(--text))" }}>
+            {extra.operatorBody}
+          </p>
+          {operatorName ? (
+            <p style={{ marginBottom: "2rem", fontSize: "1rem", color: "var(--text-muted, var(--text))" }}>
+              {extra.operatorNameLabel}: {operatorName}
+            </p>
+          ) : null}
+
+          <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "1rem", color: "var(--text)" }}>
+            {extra.dataHeading}
+          </h2>
+          <ul style={{ marginBottom: "2rem", paddingLeft: "1.5rem" }}>
+            {extra.dataItems.map((item, i) => (
+              <li key={i} style={{ marginBottom: "0.5rem", fontSize: "1rem", color: "var(--text-muted, var(--text))" }}>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p style={{ marginBottom: "2rem" }}>
+            <Link href={`/${locale}/privacy`}>{common.privacy}</Link>
+          </p>
+
+          <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginBottom: "1rem", color: "var(--text)" }}>
+            {extra.qualityHeading}
+          </h2>
+          <p style={{ marginBottom: "1rem", fontSize: "1rem", color: "var(--text-muted, var(--text))" }}>
+            {GUIDE_UI[validLocale].method}
+          </p>
+          <p style={{ marginBottom: "2rem" }}>
+            <Link href={`/${locale}/guides`}>{GUIDE_UI[validLocale].title}</Link> · <Link href={`/${locale}/contact`}>{common.contact}</Link>
           </p>
         </section>
 
