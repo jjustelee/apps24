@@ -6,6 +6,8 @@ import type { ToolRendererProps } from "@/features/tools/implementations";
 import { getPercentageCalculatorLongtailPreset } from "@/features/tools/percentage-calculator-longtails";
 import { calculatePercentage } from "@/lib/percentage";
 import { getResultCopy } from "@/features/tools/result-copy";
+import { PERCENTAGE_COPY } from "@/features/tools/percentage-copy";
+import { TOOL_FEEDBACK } from "@/features/tools/feedback-copy";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -19,9 +21,10 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
   const params = useParams();
   const t = toolText!;
   const resultCopy = getResultCopy(locale);
+  const ui = PERCENTAGE_COPY[locale];
   const modeLabels = t.modeLabels!;
   const inputLabels = t.inputLabels!;
-  const resultLabel = t.resultLabel || (locale === "ko" ? "계산 결과" : "RESULT");
+  const resultLabel = t.resultLabel || common.generatedText;
   const resultPlaceholder = t.placeholderText || "...";
   const modeSlug = typeof searchParams?.preset === "string" ? searchParams.preset : typeof params.mode === "string" ? params.mode : undefined;
   const defaultSelection = useMemo(() => {
@@ -38,6 +41,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
   const [val1, setVal1] = useState<string>(defaultSelection.val1);
   const [val2, setVal2] = useState<string>(defaultSelection.val2);
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState("");
 
   useEffect(() => {
     setMode(defaultSelection.mode);
@@ -49,32 +53,32 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
     { 
       key: "value", 
       label: modeLabels.value, 
-      desc: locale === "ko" ? "기준값에서 특정 퍼센트가 얼마인지 계산합니다." : "Calculate what the percentage of a value is.",
-      formula: locale === "ko" ? "기준값 × 퍼센트 ÷ 100" : "Base Value × Percentage ÷ 100",
+      desc: ui.descriptions.value,
+      formula: `${inputLabels.totalValue} × ${inputLabels.percentage} ÷ 100`,
       l1: inputLabels.totalValue, 
       l2: inputLabels.percentage 
     },
     { 
       key: "increase", 
       label: modeLabels.increase, 
-      desc: locale === "ko" ? "기준값에서 대상값으로 얼마만큼 늘어났는지 계산합니다." : "Calculate the percentage increase from one value to another.",
-      formula: locale === "ko" ? "(대상값 - 기준값) ÷ 기준값 × 100" : "(Target - Base) ÷ Base × 100",
+      desc: ui.descriptions.increase,
+      formula: `(${inputLabels.newValue} − ${inputLabels.originalValue}) ÷ ${inputLabels.originalValue} × 100`,
       l1: inputLabels.originalValue, 
       l2: inputLabels.newValue 
     },
     { 
       key: "decrease", 
       label: modeLabels.decrease, 
-      desc: locale === "ko" ? "기준값에서 대상값으로 얼마만큼 줄어들었는지 계산합니다." : "Calculate the percentage decrease from one value to another.",
-      formula: locale === "ko" ? "(기준값 - 대상값) ÷ 기준값 × 100" : "(Base - Target) ÷ Base × 100",
+      desc: ui.descriptions.decrease,
+      formula: `(${inputLabels.originalValue} − ${inputLabels.newValue}) ÷ ${inputLabels.originalValue} × 100`,
       l1: inputLabels.originalValue, 
       l2: inputLabels.newValue 
     },
     { 
       key: "discount", 
       label: modeLabels.discount, 
-      desc: locale === "ko" ? "원가에서 특정 할인율이 적용된 최종 가격을 계산합니다." : "Calculate the final price after a percentage discount.",
-      formula: locale === "ko" ? "원가 × (1 - 할인율 ÷ 100)" : "Price × (1 - Discount ÷ 100)",
+      desc: ui.descriptions.discount,
+      formula: `${inputLabels.originalPrice} × (1 − ${inputLabels.discountPercentage} ÷ 100)`,
       l1: inputLabels.originalPrice, 
       l2: inputLabels.discountPercentage 
     },
@@ -111,17 +115,24 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
     }
   }
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (hasValidInputs) {
-      navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopyError("");
+      try {
+        await navigator.clipboard.writeText(summary);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        setCopyError(TOOL_FEEDBACK[locale].copyFailed);
+      }
     }
   };
 
   const handleReset = () => {
     setVal1("");
     setVal2("");
+    setCopied(false);
+    setCopyError("");
   };
 
   return (
@@ -155,7 +166,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
         <div className="flex flex-col gap-6 sm:gap-10 bg-[var(--panel-glass)] border border-[var(--panel-border)] rounded-[32px] sm:rounded-[40px] p-5 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden min-w-0 w-full">
           <div className="flex flex-col gap-2">
             <h3 className="text-xl sm:text-3xl font-black text-[#2D336B] dark:text-white">
-              {locale === "ko" ? "입력값" : "Input Values"}
+              {ui.inputs}
             </h3>
             <p className="text-xs sm:text-sm font-medium text-[var(--text-soft)] opacity-70">
               {activeMode.desc}
@@ -164,11 +175,12 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 min-w-0">
             <div className="flex flex-col gap-3 sm:gap-4 min-w-0">
-              <label className="text-[10px] sm:text-sm font-black text-[var(--text)] opacity-80 pl-1 uppercase tracking-wider">
+              <label htmlFor="percentage-first-value" className="text-[10px] sm:text-sm font-black text-[var(--text)] opacity-80 pl-1 uppercase tracking-wider">
                 {activeMode.l1}
               </label>
               <div className="relative group/input p-3 sm:p-4 bg-white dark:bg-black/20 rounded-xl sm:rounded-2xl border border-[var(--panel-border)] focus-within:border-[#4B48D9] transition-all shadow-sm shadow-black/[0.02] min-w-0">
                 <input
+                  id="percentage-first-value"
                   type="number"
                   className="w-full bg-transparent text-xl sm:text-3xl font-black p-1 sm:p-2 border-none outline-none focus:ring-0 text-[var(--text)]"
                   value={val1}
@@ -179,11 +191,12 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
             </div>
 
             <div className="flex flex-col gap-3 sm:gap-4 min-w-0">
-              <label className="text-[10px] sm:text-sm font-black text-[var(--text)] opacity-80 pl-1 uppercase tracking-wider">
+              <label htmlFor="percentage-second-value" className="text-[10px] sm:text-sm font-black text-[var(--text)] opacity-80 pl-1 uppercase tracking-wider">
                 {activeMode.l2}
               </label>
               <div className="relative group/input flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-white dark:bg-black/20 rounded-xl sm:rounded-2xl border border-[var(--panel-border)] focus-within:border-[#4B48D9] transition-all shadow-sm shadow-black/[0.02] min-w-0">
                 <input
+                  id="percentage-second-value"
                   type="number"
                   className="flex-1 bg-transparent text-xl sm:text-3xl font-black p-1 sm:p-2 border-none outline-none focus:ring-0 text-[var(--text)] min-w-0"
                   value={val2}
@@ -203,7 +216,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
                 onClick={handleReset} 
                 className="flex-1 sm:flex-none py-4 sm:py-5 px-3 sm:px-8 rounded-xl sm:rounded-2xl bg-black/5 dark:bg-white/5 text-[var(--text-soft)] font-black transition-all hover:bg-black/10 dark:hover:bg-white/10 border border-[var(--panel-border)] text-xs sm:text-base"
               >
-                {locale === "ko" ? "초기화" : "Clear"}
+                {common.clear}
               </button>
               <button 
                 onClick={handleCopy} 
@@ -212,11 +225,12 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-70"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 <span className="whitespace-nowrap">
-                  {copied ? (locale === "ko" ? "복사됨!" : "Copied!") : (locale === "ko" ? "결과 복사" : "Copy Result")}
+                  {copied ? common.copied : common.copy}
                 </span>
               </button>
             </div>
           </div>
+          {copyError && <p role="alert">{copyError}</p>}
         </div>
 
         {/* Right: Result Panel */}
@@ -229,7 +243,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
             <div className="flex flex-col justify-center min-h-[80px] sm:min-h-[140px] w-full overflow-hidden">
               {hasValidInputs ? (
                 <div className="flex items-baseline gap-2 animate-in slide-in-from-bottom-2 duration-500 w-full min-w-0 overflow-hidden">
-                  <span className="min-w-0 whitespace-nowrap text-4xl sm:text-7xl lg:text-8xl font-black text-[#2D336B] dark:text-white tracking-tighter">
+                  <span className="min-w-0 break-all text-4xl sm:text-7xl lg:text-8xl font-black text-[#2D336B] dark:text-white tracking-tighter">
                     {result.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                   </span>
                   {(mode === "increase" || mode === "decrease") && (
@@ -252,7 +266,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
             <div className="p-5 sm:p-8 rounded-[24px] sm:rounded-[32px] bg-black/[0.03] dark:bg-white/[0.03] border border-[var(--panel-border)] flex flex-col gap-4 sm:gap-6 min-w-0">
               <div className="flex flex-col gap-1 sm:gap-2 min-w-0">
                 <span className="text-[9px] sm:text-[10px] font-black tracking-widest text-[var(--text-soft)] opacity-60 uppercase">
-                  {locale === "ko" ? "현재 모드" : "CURRENT MODE"}
+                  {ui.mode}
                 </span>
                 <span className="text-sm sm:text-lg font-black text-[var(--text)] truncate">
                   {activeMode.label}
@@ -260,7 +274,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 min-w-0">
                 <span className="text-[9px] sm:text-[10px] font-black tracking-widest text-[var(--text-soft)] opacity-60 uppercase">
-                  {locale === "ko" ? "계산식" : "FORMULA"}
+                  {ui.formula}
                 </span>
                 <span className="text-xs sm:text-base font-bold text-[var(--text)] opacity-80 break-words leading-relaxed">
                   {activeMode.formula}
@@ -277,7 +291,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-[#4B48D9] shadow-[0_0_15px_#4B48D9] animate-pulse"></div>
           <p className="text-[9px] sm:text-[10px] font-black opacity-25 uppercase tracking-[0.3em] sm:tracking-[0.5em] whitespace-nowrap">
-            {common.unitAccuracyNote || (locale === "ko" ? "결과 정확도 보증" : "High Precision Guaranteed")}
+            {common.unitAccuracyNote}
           </p>
         </div>
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--panel-border)] to-transparent opacity-20"></div>

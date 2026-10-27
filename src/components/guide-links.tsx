@@ -2,8 +2,8 @@ import Link from "next/link";
 import { GUIDES, GUIDE_UI } from "@/features/guides/content";
 import type { Locale } from "@/lib/site";
 
-export function GuideLinks({ locale, toolId }: { locale: Locale; toolId?: string }) {
-  const guides = GUIDES.filter(guide => !toolId || guide.toolId === toolId);
+export function GuideLinks({ locale, toolId, toolIds }: { locale: Locale; toolId?: string; toolIds?: readonly string[] }) {
+  const guides = GUIDES.filter(guide => (!toolId || guide.toolId === toolId) && (!toolIds || toolIds.includes(guide.toolId)));
   if (!guides.length) return null;
   const copy = GUIDE_UI[locale];
   return <section className="guide-links">

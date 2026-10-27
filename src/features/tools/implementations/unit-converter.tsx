@@ -7,6 +7,7 @@ import type { Locale } from "@/lib/site";
 import { getUnitConverterLongtailPreset } from "@/features/tools/unit-converter-longtails";
 import { formatDecimal } from "@/lib/number-format";
 import { DETAIL_COPY } from "@/features/tools/detail-copy";
+import { TOOL_FEEDBACK } from "@/features/tools/feedback-copy";
 
 /**
  * [백엔드 개발진 참고용 주석]
@@ -182,10 +183,14 @@ export function UnitConverterTool({ commonText: common, searchParams }: ToolRend
     setToUnit(prevFrom);
   };
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     const text = `${inputValue} ${fromUnit} = ${resultValue} ${toUnit}`;
-    navigator.clipboard.writeText(text);
-    alert(locale === "ko" ? "결과가 복사되었습니다!" : "Result copied!");
+    try {
+      await navigator.clipboard.writeText(text);
+      alert(common.copied);
+    } catch {
+      alert(TOOL_FEEDBACK[locale].copyFailed);
+    }
   };
 
   const categoriesSet: { key: UnitCategory; label: string }[] = useMemo(() => [

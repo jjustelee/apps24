@@ -12,8 +12,8 @@ import {
 } from "lucide-react";
 import type { Locale } from "@/lib/site";
 import type { BackgroundRemoverOutputBackground, BackgroundRemoverPreset } from "@/features/tools/background-remover-longtails";
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
+import { TOOL_FEEDBACK } from "@/features/tools/feedback-copy";
+import { validateBackgroundImage } from "@/lib/background-image-validation";
 
 type RemovalPhase = "idle" | "loading" | "processing" | "done";
 
@@ -39,7 +39,7 @@ type BackgroundRemovalWorkerResponse =
   | {
       type: "error";
       runId: number;
-      message: string;
+      code: "modelDownload" | "modelProcess";
     };
 
 type BackgroundRemoverUI = {
@@ -56,7 +56,6 @@ type BackgroundRemoverUI = {
   uploadHint: string;
   maxSize: string;
   ready: string;
-  modelError: string;
   previewHint: string;
   replaceImage: string;
 };
@@ -76,7 +75,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "Drag and drop an image here or click to browse.",
     maxSize: "JPG, PNG, WebP up to 10 MB",
     ready: "Ready to download",
-    modelError: "Background removal failed. Please try another image.",
     previewHint: "Your processed image will appear here.",
     replaceImage: "Replace image",
   },
@@ -94,7 +92,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "이미지를 드래그 앤 드롭하거나 클릭해서 업로드하세요.",
     maxSize: "JPG, PNG, WebP 최대 10MB",
     ready: "다운로드 준비 완료",
-    modelError: "배경 제거 중 오류가 발생했습니다. 다른 이미지를 시도해 보세요.",
     previewHint: "처리된 이미지는 여기에서 확인할 수 있습니다.",
     replaceImage: "이미지 다시 선택",
   },
@@ -112,7 +109,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "Glissez-déposez une image ici ou cliquez pour parcourir.",
     maxSize: "JPG, PNG, WebP jusqu'à 10 Mo",
     ready: "Prêt au téléchargement",
-    modelError: "La suppression de l'arrière-plan a échoué. Essayez une autre image.",
     previewHint: "Votre image traitée apparaîtra ici.",
     replaceImage: "Remplacer l'image",
   },
@@ -130,7 +126,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "ここに画像をドラッグ＆ドロップするか、クリックして選択してください。",
     maxSize: "JPG、PNG、WebP は最大 10MB",
     ready: "ダウンロード準備完了",
-    modelError: "背景の削除に失敗しました。別の画像をお試しください。",
     previewHint: "処理した画像はここに表示されます。",
     replaceImage: "画像を再選択",
   },
@@ -148,7 +143,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "将图片拖放到此处，或点击浏览上传。",
     maxSize: "JPG、PNG、WebP，最大 10 MB",
     ready: "已可下载",
-    modelError: "背景移除失败。请尝试其他图片。",
     previewHint: "处理后的图片会显示在这里。",
     replaceImage: "重新选择图片",
   },
@@ -166,7 +160,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "將圖片拖放到這裡，或點擊瀏覽上傳。",
     maxSize: "JPG、PNG、WebP，最大 10 MB",
     ready: "已可下載",
-    modelError: "背景移除失敗。請嘗試其他圖片。",
     previewHint: "處理後的圖片會顯示在這裡。",
     replaceImage: "重新選擇圖片",
   },
@@ -184,7 +177,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "Arraste e solte uma imagem aqui ou clique para procurar.",
     maxSize: "JPG, PNG, WebP até 10 MB",
     ready: "Pronto para baixar",
-    modelError: "A remoção do fundo falhou. Tente outra imagem.",
     previewHint: "Sua imagem processada aparecerá aqui.",
     replaceImage: "Substituir imagem",
   },
@@ -202,7 +194,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "Arrastra y suelta una imagen aquí o haz clic para buscar.",
     maxSize: "JPG, PNG, WebP hasta 10 MB",
     ready: "Listo para descargar",
-    modelError: "La eliminación del fondo falló. Prueba con otra imagen.",
     previewHint: "La imagen procesada aparecerá aquí.",
     replaceImage: "Reemplazar imagen",
   },
@@ -220,7 +211,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "Ziehen Sie ein Bild hierher oder klicken Sie zum Auswählen.",
     maxSize: "JPG, PNG, WebP bis 10 MB",
     ready: "Bereit zum Download",
-    modelError: "Die Hintergrundentfernung ist fehlgeschlagen. Bitte versuchen Sie ein anderes Bild.",
     previewHint: "Ihr verarbeitetes Bild wird hier angezeigt.",
     replaceImage: "Bild ersetzen",
   },
@@ -238,7 +228,6 @@ const BACKGROUND_REMOVER_UI: Record<Locale, BackgroundRemoverUI> = {
     uploadHint: "اسحب صورة إلى هنا أو انقر للتصفح.",
     maxSize: "JPG وPNG وWebP حتى 10 ميغابايت",
     ready: "جاهز للتنزيل",
-    modelError: "فشلت إزالة الخلفية. حاول صورة أخرى.",
     previewHint: "ستظهر الصورة المعالجة هنا.",
     replaceImage: "استبدال الصورة",
   },
@@ -297,6 +286,7 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const ui = getBackgroundRemoverUI(locale);
+  const feedback = TOOL_FEEDBACK[locale];
   const isWorking = phase === "loading" || phase === "processing";
 
   useEffect(() => {
@@ -304,6 +294,7 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   }, [presetBackground]);
 
   useEffect(() => {
+    mountedRef.current = true;
     return () => {
       mountedRef.current = false;
     };
@@ -360,13 +351,9 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
   };
 
   const processFile = (file: File) => {
-    if (!file.type.startsWith("image/")) {
-      setError(locale === "ko" ? "이미지 파일을 업로드해 주세요." : "Please upload an image file.");
-      return;
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-      setError(locale === "ko" ? "10MB 이하의 이미지만 업로드해 주세요." : "Please upload an image smaller than 10 MB.");
+    const validationError = validateBackgroundImage(file);
+    if (validationError) {
+      setError(feedback[validationError]);
       return;
     }
 
@@ -380,15 +367,17 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
     const url = URL.createObjectURL(file);
     setOriginalPreviewUrl(url);
 
-    workerRef.current?.postMessage({
-      type: "warmup",
-      runId: 0,
-    } satisfies BackgroundRemovalWorkerRequest);
-
     const img = new Image();
     img.onload = () => {
       if (!mountedRef.current || runIdRef.current !== fileRunId) return;
       setOriginalDimensions({ width: img.width, height: img.height });
+      workerRef.current?.postMessage({ type: "warmup", runId: 0 } satisfies BackgroundRemovalWorkerRequest);
+    };
+    img.onerror = () => {
+      if (!mountedRef.current || runIdRef.current !== fileRunId) return;
+      setOriginalFile(null);
+      setOriginalPreviewUrl("");
+      setError(feedback.imageRead);
     };
     img.src = url;
 
@@ -445,12 +434,12 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
           }
 
           cleanup();
-          reject(new Error(data.message));
+          reject(new Error(data.code));
         };
 
         const handleError = () => {
           cleanup();
-          reject(new Error(ui.modelError));
+          reject(new Error("modelProcess"));
         };
 
         worker.addEventListener("message", handleMessage);
@@ -473,7 +462,7 @@ export function BackgroundRemoverTool({ locale, commonText: common, toolData }: 
       workerRef.current?.terminate();
       workerRef.current = null;
       setPhase("idle");
-      setError(caughtError instanceof Error ? caughtError.message : ui.modelError);
+      setError(caughtError instanceof Error && caughtError.message === "modelDownload" ? feedback.modelDownload : feedback.modelProcess);
     }
   };
 

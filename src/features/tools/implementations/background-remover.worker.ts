@@ -27,7 +27,7 @@ type BackgroundRemovalWorkerResponse =
   | {
       type: "error";
       runId: number;
-      message: string;
+      code: "modelDownload" | "modelProcess";
     };
 
 type BackgroundRemovalPipeline = {
@@ -62,12 +62,12 @@ self.addEventListener("message", async (event: MessageEvent<BackgroundRemovalWor
     try {
       await loadPipeline();
       self.postMessage({ type: "ready", runId: event.data.runId } satisfies BackgroundRemovalWorkerResponse);
-    } catch (error: unknown) {
+    } catch {
       pipelinePromise = null;
       self.postMessage({
         type: "error",
         runId: event.data.runId,
-        message: error instanceof Error ? error.message : "Background removal failed.",
+        code: "modelDownload",
       } satisfies BackgroundRemovalWorkerResponse);
     }
     return;
@@ -76,9 +76,11 @@ self.addEventListener("message", async (event: MessageEvent<BackgroundRemovalWor
   if (event.data.type !== "remove-background") return;
 
   const { runId, file } = event.data;
+  let modelLoaded = false;
 
   try {
     const { model, processor } = await loadPipeline();
+    modelLoaded = true;
     self.postMessage({ type: "ready", runId } satisfies BackgroundRemovalWorkerResponse);
 
     const image = await RawImage.fromBlob(file);
@@ -98,13 +100,13 @@ self.addEventListener("message", async (event: MessageEvent<BackgroundRemovalWor
     const blob = await result.toBlob("image/png");
 
     self.postMessage({ type: "result", runId, blob } satisfies BackgroundRemovalWorkerResponse);
-  } catch (error: unknown) {
+  } catch {
     pipelinePromise = null;
 
     self.postMessage({
       type: "error",
       runId,
-      message: error instanceof Error ? error.message : "Background removal failed.",
+      code: modelLoaded ? "modelProcess" : "modelDownload",
     } satisfies BackgroundRemovalWorkerResponse);
   }
 });

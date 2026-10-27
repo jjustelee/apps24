@@ -1,0 +1,95 @@
+{
+  "checkedAt": "2026-10-28",
+  "method": "Local implementation and deterministic regression fixtures; not live market rates, print scans or a performance benchmark.",
+  "runtime": {
+    "node": "v25.8.0",
+    "bwipJs": "4.9.0",
+    "note": "PNG byte sizes may differ between server runtimes; use the downloaded fixture to inspect this recorded run."
+  },
+  "barcode": {
+    "input": "400638133393",
+    "fullInput": "4006381333931",
+    "samePng": true,
+    "invalidInput": "4006381333932",
+    "errorCode": "ean_checksum",
+    "width": 286,
+    "height": 109,
+    "bytes": 5284
+  },
+  "diff": {
+    "original": "alpha\nbeta\ngamma",
+    "modified": "alpha\ninserted\nbeta\ngamma",
+    "inserted": [
+      {
+        "type": "match",
+        "left": "alpha",
+        "right": "alpha"
+      },
+      {
+        "type": "added",
+        "left": null,
+        "right": "inserted"
+      },
+      {
+        "type": "match",
+        "left": "beta",
+        "right": "beta"
+      },
+      {
+        "type": "match",
+        "left": "gamma",
+        "right": "gamma"
+      }
+    ],
+    "normalized": [
+      {
+        "type": "match",
+        "left": "alpha",
+        "right": "alpha"
+      },
+      {
+        "type": "match",
+        "left": "beta",
+        "right": "beta"
+      }
+    ],
+    "spaces": [
+      {
+        "type": "changed",
+        "left": "alpha",
+        "right": "alpha "
+      }
+    ]
+  },
+  "currency": {
+    "hypothetical": true,
+    "base": "USD",
+    "amount": 100,
+    "rates": {
+      "EUR": 0.8,
+      "KRW": 1400
+    },
+    "dates": {
+      "EUR": "2026-10-26",
+      "KRW": "2026-10-23"
+    },
+    "resultEUR": 80
+  },
+  "backgroundFileValidation": [
+    {
+      "type": "image/gif",
+      "size": 1000,
+      "code": "imageType"
+    },
+    {
+      "type": "image/png",
+      "size": 10485760,
+      "code": null
+    },
+    {
+      "type": "image/png",
+      "size": 10485761,
+      "code": "imageSize"
+    }
+  ]
+}

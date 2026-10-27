@@ -1,6 +1,7 @@
 import bwipjs from "bwip-js/node";
 import { NextRequest, NextResponse } from "next/server";
 import type * as BwipJs from "bwip-js/node";
+import { validateBarcodeInput } from "@/lib/barcode-validation";
 
 const supportedBcids = new Set(bwipjs.symbolList.map((symbol) => symbol.bcid));
 
@@ -8,8 +9,8 @@ function normalizeFormat(format: string | null) {
   return (format ?? "code128").trim();
 }
 
-function createError(message: string, status = 400) {
-  return NextResponse.json({ success: false, message }, { status });
+function createError(message: string, code = "generation_failed", status = 400) {
+  return NextResponse.json({ success: false, message, code }, { status });
 }
 
 export async function GET(request: NextRequest) {
@@ -28,14 +29,15 @@ export async function POST(request: NextRequest) {
 }
 
 async function generate(text: string, format: string) {
-  if (text.length > 4000) return createError("Input exceeds 4000 characters");
+  const inputError = validateBarcodeInput(text, format);
+  if (inputError) return createError("Invalid barcode input", inputError);
 
   if (!text.trim()) {
     return createError("텍스트를 입력하세요.");
   }
 
   if (!supportedBcids.has(format)) {
-    return createError(`지원되지 않는 형식입니다: ${format}`);
+    return createError("Unsupported format", "unsupported_format");
   }
 
   try {

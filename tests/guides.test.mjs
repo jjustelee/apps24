@@ -6,8 +6,8 @@ import { GUIDES } from "../src/features/guides/content.ts";
 import { LOCALES } from "../src/lib/site.ts";
 import { pixelsPerCentimeter } from "../src/lib/ruler-scale.ts";
 
-test("all six guide topics have complete copies and local assets", () => {
-  assert.equal(GUIDES.length, 6);
+test("all published guide topics have complete copies and local assets", () => {
+  assert.equal(GUIDES.length, 10);
   assert.equal(new Set(GUIDES.map(guide => guide.slug)).size, GUIDES.length);
   for (const guide of GUIDES) {
     assert.deepEqual(Object.keys(guide.copy).sort(), [...LOCALES].sort());

@@ -91,7 +91,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "Introduction", body: "This policy explains how Apps24 handles data when you use the site." },
         { section: "Data Collection", body: "Most tools process input locally in your browser. Some features may use third-party services when live results are needed." },
-        { section: "Log Files", body: "Like other websites, we use log files for traffic analysis and maintenance. This includes IP addresses, browser types, and timestamps, which are not linked to personally identifiable information." },
+        { section: "Log Files", body: "Hosting infrastructure may process operational request logs such as IP addresses, browser information and timestamps for security and maintenance. We do not describe these logs as anonymous. Contact support@apps24.io with questions about data handling or deletion; the response depends on the records actually held and the provider's applicable settings." },
         { section: "Browser Storage", body: "Some tools store user preferences locally on your device using browser storage such as localStorage." },
         { section: "Third-Party Services", body: "Depending on the tool you use, Apps24 may send a request to ipify and IPinfo for public IP, network, and approximate location details; Frankfurter for reference exchange rates; or Open-Meteo for selected-location air quality and weather data. These providers process requests under their own privacy policies." },
         { section: "Advertising Services", body: "Apps24 may use Google AdSense. Third-party vendors, including Google, may use cookies to serve ads based on a user's prior visits to Apps24 or other websites, limit repeated ads, and measure ad performance. Users can manage personalized advertising through their Google ad settings." },
@@ -205,7 +205,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "소개", body: "본 정책은 Apps24를 이용할 때 데이터가 어떻게 처리되는지 설명합니다." },
         { section: "데이터 수집", body: "대부분의 도구는 브라우저에서 입력값을 로컬로 처리합니다. 일부 기능은 실시간 결과가 필요할 때 외부 서비스를 사용할 수 있습니다." },
-        { section: "로그 파일", body: "트래픽 분석 및 유지보수를 위해 로그 파일을 사용합니다. IP 주소, 브라우저 유형, 타임스탬프가 포함되나 개인 식별 정보와 연결되지 않습니다." },
+        { section: "로그 파일", body: "호스팅 인프라는 보안과 유지보수를 위해 IP 주소, 브라우저 정보, 요청 시각 같은 운영 요청 로그를 처리할 수 있습니다. 이 로그를 익명 정보라고 단정하지 않습니다. 데이터 처리나 삭제 문의는 support@apps24.io로 보내주세요. 실제 보유 기록과 제공업체의 적용 설정을 확인해 안내합니다." },
         { section: "브라우저 저장소", body: "일부 도구는 localStorage와 같은 브라우저 저장소를 사용해 사용자 환경설정을 로컬 기기에 저장합니다." },
         { section: "제3자 서비스", body: "사용하는 도구에 따라 Apps24는 공인 IP·네트워크·대략적 위치 정보를 위해 ipify와 IPinfo, 참고 환율을 위해 Frankfurter, 선택한 지역의 대기질·날씨 정보를 위해 Open-Meteo에 요청을 보낼 수 있습니다. 각 제공업체는 자체 개인정보처리방침에 따라 요청을 처리합니다." },
         { section: "광고 서비스", body: "Apps24는 Google AdSense를 사용할 수 있습니다. Google을 포함한 제3자 광고 제공업체는 Apps24 또는 다른 웹사이트의 이전 방문 기록을 바탕으로 광고를 제공하고, 반복 노출을 제한하며, 광고 성과를 측정하기 위해 쿠키를 사용할 수 있습니다. 사용자는 Google 광고 설정에서 개인 맞춤 광고를 관리할 수 있습니다." },
@@ -319,7 +319,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "Introduction", body: "Cette politique explique comment Apps24 traite les données lorsque vous utilisez le site." },
         { section: "Collecte de données", body: "La plupart des outils traitent les données localement dans votre navigateur. Certaines fonctionnalités peuvent utiliser des services tiers lorsque des résultats en direct sont nécessaires." },
-        { section: "Fichiers journaux", body: "Comme d'autres sites, nous utilisons des fichiers journaux pour l'analyse du trafic et la maintenance. Cela inclut les adresses IP, les types de navigateurs et les horodatages, qui ne sont pas liés à des informations personnellement identifiables." },
+        { section: "Fichiers journaux", body: "L’hébergement peut traiter des journaux de requêtes contenant adresse IP, informations du navigateur et horodatage pour la sécurité et la maintenance. Nous ne les présentons pas comme anonymes. Pour le traitement ou la suppression des données, contactez support@apps24.io ; la réponse dépend des données réellement conservées et des paramètres applicables du prestataire." },
         { section: "Stockage du navigateur", body: "Certains outils enregistrent les préférences localement sur votre appareil à l'aide du stockage du navigateur, comme localStorage." },
         { section: "Services tiers", body: "Selon l'outil utilisé, Apps24 peut envoyer une requête à ipify et IPinfo pour l'adresse IP publique, le réseau et la localisation approximative, à Frankfurter pour les taux de change de référence, ou à Open-Meteo pour les données de qualité de l'air et de météo du lieu sélectionné. Chaque fournisseur traite les requêtes selon sa propre politique de confidentialité." },
         { section: "Services publicitaires", body: "Apps24 peut utiliser Google AdSense. Des fournisseurs tiers, dont Google, peuvent utiliser des cookies pour diffuser des annonces basées sur les visites antérieures sur Apps24 ou d'autres sites, limiter les répétitions et mesurer les performances. Les utilisateurs peuvent gérer la publicité personnalisée dans les paramètres d'annonces Google." },
@@ -433,7 +433,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "はじめに", body: "このポリシーでは、Apps24の利用時にデータをどのように扱うかを説明します。" },
         { section: "データ収集", body: "ほとんどのツールはブラウザ内でローカル処理されますが、一部の機能ではライブ結果のために外部サービスを利用する場合があります。" },
-        { section: "ログファイル", body: "トラフィック分析とメンテナンスのためにログファイルを使用します。IPアドレス、ブラウザの種類、タイムスタンプが含まれますが、個人識別情報とは連携しません。" },
+        { section: "ログファイル", body: "ホスティング基盤は安全性と保守のため、IPアドレス、ブラウザ情報、要求時刻などの運用ログを処理する場合があります。匿名情報とは断定しません。取扱いや削除についてはsupport@apps24.ioへお問い合わせください。実際の保有記録と提供者の適用設定を確認してご案内します。" },
         { section: "ブラウザ保存", body: "一部のツールは、localStorage などのブラウザ保存領域を使って設定を端末に保存します。" },
         { section: "第三者サービス", body: "利用するツールに応じて、Apps24 は公開 IP・ネットワーク・おおよその位置情報のために ipify と IPinfo、参考為替レートのために Frankfurter、選択した地域の大気質・気象データのために Open-Meteo へリクエストを送信する場合があります。各事業者は独自のプライバシーポリシーに基づいて処理します。" },
         { section: "広告サービス", body: "Apps24 は Google AdSense を利用する場合があります。Google を含む第三者配信事業者は、Apps24 または他のウェブサイトへの過去のアクセスに基づく広告配信、表示回数の制限、広告効果測定のために Cookie を使用することがあります。ユーザーは Google の広告設定でパーソナライズ広告を管理できます。" },
@@ -544,7 +544,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "简介", body: "本政策说明您使用 Apps24 时我们如何处理数据。" },
         { section: "数据收集", body: "大多数工具都会在您的浏览器中本地处理数据，但某些功能在需要实时结果时可能会使用第三方服务。" },
-        { section: "日志文件", body: "与其他网站一样，我们使用日志文件进行流量分析和维护，包括 IP 地址、浏览器类型和时间戳，这些信息不与个人身份信息关联。" },
+        { section: "日志文件", body: "托管基础设施可能为安全和维护处理IP地址、浏览器信息及请求时间等运行日志。我们不将此类日志宣称为匿名数据。有关处理或删除的问题，请联系support@apps24.io；答复取决于实际持有的记录及提供商适用设置。" },
         { section: "浏览器存储", body: "某些工具会使用 localStorage 等浏览器存储，在您的设备上本地保存偏好设置。" },
         { section: "第三方服务", body: "根据您使用的工具，Apps24 可能会向 ipify 和 IPinfo 请求公网 IP、网络和大致位置信息，向 Frankfurter 请求参考汇率，或向 Open-Meteo 请求所选地区的空气质量和天气数据。各服务商会按照其自身隐私政策处理请求。" },
         { section: "广告服务", body: "Apps24 可能会使用 Google AdSense。包括 Google 在内的第三方广告服务商可能会使用 Cookie，根据用户此前访问 Apps24 或其他网站的记录投放广告、限制重复展示并衡量广告效果。用户可以通过 Google 广告设置管理个性化广告。" },
@@ -648,7 +648,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "簡介", body: "Apps24 優先保護您的隱私。本政策概述了我們在您使用我們的服務時如何處理資料。" },
         { section: "資料收集", body: "大多數工具都會在您的瀏覽器中本機處理資料，但某些功能在需要即時結果時可能會向第三方服務請求少量資料。" },
-        { section: "日誌檔案", body: "與其他網站一樣，我們使用日誌檔案進行流量分析和維護，包括 IP 位址、瀏覽器類型和時間戳，這些資訊不與個人身份資訊關聯。" },
+        { section: "日誌檔案", body: "託管基礎設施可能為安全與維護處理IP位址、瀏覽器資訊及請求時間等運作紀錄。我們不將此類紀錄宣稱為匿名資料。有關處理或刪除的問題，請聯絡support@apps24.io；答覆取決於實際持有的紀錄及提供商適用設定。" },
         { section: "瀏覽器儲存", body: "某些工具會使用 localStorage 等瀏覽器儲存，在您的裝置上本地保存偏好設定。" },
         { section: "第三方服務", body: "依照您使用的工具，Apps24 可能會向 ipify 與 IPinfo 請求公開 IP、網路及大致位置資訊，向 Frankfurter 請求參考匯率，或向 Open-Meteo 請求所選地區的空氣品質與天氣資料。各服務商會依其自身隱私政策處理請求。" },
         { section: "廣告服務", body: "Apps24 可能會使用 Google AdSense。包括 Google 在內的第三方廣告服務商可能會使用 Cookie，根據使用者先前造訪 Apps24 或其他網站的記錄投放廣告、限制重複顯示並衡量廣告成效。使用者可以透過 Google 廣告設定管理個人化廣告。" },
@@ -762,7 +762,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "Introdução", body: "Esta política explica como o Apps24 trata os dados quando você usa o site." },
         { section: "Coleta de dados", body: "A maioria das ferramentas processa os dados localmente no seu navegador. Alguns recursos podem usar serviços de terceiros quando resultados em tempo real forem necessários." },
-        { section: "Arquivos de log", body: "Como outros sites, usamos arquivos de log para análise de tráfego e manutenção. Isso inclui endereços IP, tipos de navegadores e carimbos de data/hora, que não estão vinculados a informações pessoalmente identificáveis." },
+        { section: "Arquivos de log", body: "A hospedagem pode processar registros de solicitações com IP, informações do navegador e horários para segurança e manutenção. Não os descrevemos como anônimos. Para dúvidas sobre tratamento ou exclusão, contate support@apps24.io; a resposta depende dos registros realmente mantidos e das configurações aplicáveis do provedor." },
         { section: "Armazenamento do navegador", body: "Algumas ferramentas salvam preferências localmente no seu dispositivo usando armazenamento do navegador, como localStorage." },
         { section: "Serviços de terceiros", body: "Dependendo da ferramenta usada, o Apps24 pode enviar uma solicitação ao ipify e ao IPinfo para IP público, rede e localização aproximada, ao Frankfurter para taxas de câmbio de referência ou ao Open-Meteo para dados de qualidade do ar e clima do local selecionado. Cada provedor processa as solicitações segundo sua própria política de privacidade." },
         { section: "Serviços de publicidade", body: "O Apps24 pode usar o Google AdSense. Fornecedores terceiros, incluindo o Google, podem usar cookies para exibir anúncios com base em visitas anteriores ao Apps24 ou a outros sites, limitar repetições e medir o desempenho. Os usuários podem gerenciar anúncios personalizados nas configurações de anúncios do Google." },
@@ -876,7 +876,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "Introducción", body: "Esta política explica cómo Apps24 maneja los datos cuando usa el sitio." },
         { section: "Recopilación de datos", body: "La mayoría de las herramientas procesa los datos localmente en su navegador. Algunas funciones pueden usar servicios de terceros cuando se necesitan resultados en vivo." },
-        { section: "Archivos de registro", body: "Como otros sitios web, usamos archivos de registro para análisis de tráfico y mantenimiento. Esto incluye direcciones IP, tipos de navegadores y marcas de tiempo, que no están vinculadas a información de identificación personal." },
+        { section: "Archivos de registro", body: "El alojamiento puede procesar registros de solicitudes con IP, información del navegador y horas por seguridad y mantenimiento. No los describimos como anónimos. Para consultas sobre tratamiento o eliminación, contacta con support@apps24.io; la respuesta depende de los registros realmente conservados y los ajustes aplicables del proveedor." },
         { section: "Almacenamiento del navegador", body: "Algunas herramientas guardan preferencias localmente en su dispositivo usando el almacenamiento del navegador, como localStorage." },
         { section: "Servicios de terceros", body: "Según la herramienta utilizada, Apps24 puede enviar una solicitud a ipify e IPinfo para obtener la IP pública, la red y la ubicación aproximada, a Frankfurter para tipos de cambio de referencia o a Open-Meteo para datos de calidad del aire y clima de la ubicación seleccionada. Cada proveedor procesa las solicitudes según su propia política de privacidad." },
         { section: "Servicios publicitarios", body: "Apps24 puede usar Google AdSense. Los proveedores externos, incluido Google, pueden usar cookies para mostrar anuncios basados en visitas anteriores a Apps24 u otros sitios, limitar repeticiones y medir el rendimiento. Los usuarios pueden gestionar los anuncios personalizados desde la configuración de anuncios de Google." },
@@ -990,7 +990,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "Einführung", body: "Diese Richtlinie erklärt, wie Apps24 Daten behandelt, wenn Sie die Website nutzen." },
         { section: "Datenerfassung", body: "Die meisten Tools verarbeiten Daten lokal in Ihrem Browser. Einige Funktionen können bei Bedarf Drittanbieterdienste für Live-Ergebnisse nutzen." },
-        { section: "Log-Dateien", body: "Wie andere Websites verwenden wir Log-Dateien für Verkehrsanalyse und Wartung. Dies umfasst IP-Adressen, Browsertypen und Zeitstempel, die nicht mit persönlich identifizierbaren Informationen verknüpft sind." },
+        { section: "Log-Dateien", body: "Die Hosting-Infrastruktur kann Anfrageprotokolle wie IP-Adressen, Browserinformationen und Zeitstempel für Sicherheit und Wartung verarbeiten. Wir bezeichnen diese nicht als anonym. Fragen zur Verarbeitung oder Löschung an support@apps24.io richten; die Antwort hängt von tatsächlich vorhandenen Daten und den geltenden Anbietereinstellungen ab." },
         { section: "Browser-Speicher", body: "Einige Tools speichern Einstellungen lokal auf Ihrem Gerät mithilfe von Browser-Speicher wie localStorage." },
         { section: "Drittanbieter-Dienste", body: "Je nach verwendetem Tool kann Apps24 eine Anfrage an ipify und IPinfo für öffentliche IP-, Netzwerk- und ungefähre Standortdaten, an Frankfurter für Referenzwechselkurse oder an Open-Meteo für Luftqualitäts- und Wetterdaten des ausgewählten Ortes senden. Jeder Anbieter verarbeitet Anfragen nach seiner eigenen Datenschutzrichtlinie." },
         { section: "Werbedienste", body: "Apps24 kann Google AdSense verwenden. Drittanbieter, einschließlich Google, können Cookies verwenden, um Anzeigen auf Grundlage früherer Besuche bei Apps24 oder anderen Websites auszuliefern, Wiederholungen zu begrenzen und die Leistung zu messen. Nutzer können personalisierte Werbung in den Google-Anzeigeneinstellungen verwalten." },
@@ -1104,7 +1104,7 @@ export const LEGAL_TEXTS: Record<Locale, LegalContent> = {
       content: [
         { section: "مقدمة", body: "توضح هذه السياسة كيفية تعامل Apps24 مع البيانات عند استخدام الموقع." },
         { section: "جمع البيانات", body: "تتم معالجة معظم الأدوات محليًا داخل متصفحك. قد تستخدم بعض الميزات خدمات خارجية عند الحاجة إلى نتائج مباشرة." },
-        { section: "ملفات السجل", body: "مثل المواقع الأخرى، نستخدم ملفات السجل لتحليل حركة المرور والصيانة. يشمل ذلك عناوين IP وأنواع المتصفحات والطوابع الزمنية، وهي ليست مرتبطة بمعلومات تعريف شخصية." },
+        { section: "ملفات السجل", body: "قد تعالج الاستضافة سجلات الطلبات، مثل عنوان IP ومعلومات المتصفح والتوقيت، للأمان والصيانة. لا نصف هذه السجلات بأنها مجهولة الهوية. للاستفسار عن المعالجة أو الحذف تواصل عبر support@apps24.io؛ تعتمد الإجابة على السجلات الموجودة فعليًا وإعدادات مقدم الخدمة المطبقة." },
         { section: "تخزين المتصفح", body: "تقوم بعض الأدوات بحفظ التفضيلات محليًا على جهازك باستخدام تخزين المتصفح مثل localStorage." },
         { section: "خدمات الطرف الثالث", body: "بحسب الأداة المستخدمة، قد يرسل Apps24 طلبًا إلى ipify وIPinfo للحصول على عنوان IP العام وبيانات الشبكة والموقع التقريبي، أو إلى Frankfurter للحصول على أسعار صرف مرجعية، أو إلى Open-Meteo للحصول على بيانات جودة الهواء والطقس للموقع المحدد. يعالج كل مزود الطلبات وفق سياسة الخصوصية الخاصة به." },
         { section: "خدمات الإعلانات", body: "قد يستخدم Apps24 خدمة Google AdSense. وقد يستخدم مزودو الإعلانات الخارجيون، بمن فيهم Google، ملفات تعريف الارتباط لعرض إعلانات استنادًا إلى زيارات المستخدم السابقة إلى Apps24 أو مواقع أخرى، والحد من التكرار، وقياس الأداء. يمكن للمستخدمين إدارة الإعلانات المخصصة من خلال إعدادات إعلانات Google." },

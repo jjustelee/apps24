@@ -8,6 +8,8 @@ import type { ToolRendererProps } from "@/features/tools/implementations";
 import { Download, Copy, RefreshCw, QrCode, BarChart as BarcodeIcon, AlertCircle, CheckCircle } from "lucide-react";
 import { getQrGeneratorLongtailPreset } from "@/features/tools/qrgenerator-longtails";
 import { getBarcodeGeneratorLongtailPreset, isBarcodeGeneratorLongtailSlug } from "@/features/tools/barcode-generator-longtails";
+import { validateBarcodeInput } from "@/lib/barcode-validation";
+import { TOOL_FEEDBACK } from "@/features/tools/feedback-copy";
 
 type BarcodeFormatOption = {
   label: string;
@@ -50,6 +52,7 @@ export function BarcodeGeneratorTool({
   searchParams,
 }: ToolRendererProps) {
   const params = useParams();
+  const feedback = TOOL_FEEDBACK[locale];
   const data = toolData as BarcodeToolData | undefined;
   const isQrTool = tool.slug === "qrgenerator";
   const queryPreset = typeof searchParams?.preset === "string" ? searchParams.preset : undefined;
@@ -127,6 +130,14 @@ export function BarcodeGeneratorTool({
       return;
     }
 
+    const inputError = validateBarcodeInput(text, selectedFormat);
+    if (inputError) {
+      setImage("");
+      setRequestError(feedback[inputError]);
+      setIsGenerating(false);
+      return;
+    }
+
     const controller = new AbortController();
     setImage("");
     setRequestError("");
@@ -140,12 +151,14 @@ export function BarcodeGeneratorTool({
         );
         const payload = (await response.json()) as
           | { success: true; image: string }
-          | { success: false; message: string };
+          | { success: false; message: string; code?: string };
 
         if (controller.signal.aborted) return;
 
         if (!response.ok || !payload.success) {
-          setRequestError(generationFailed);
+          const code = !payload.success ? payload.code : undefined;
+          setRequestError(code && Object.prototype.hasOwnProperty.call(feedback, code)
+            ? feedback[code as keyof typeof feedback] : generationFailed);
           setImage("");
         } else {
           setRequestError("");
@@ -164,7 +177,7 @@ export function BarcodeGeneratorTool({
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [selectedFormat, text, generationError, generationFailed]);
+  }, [selectedFormat, text, generationError, generationFailed, feedback]);
 
   const infoText = isQrTool
     ? qrHint
@@ -199,8 +212,9 @@ export function BarcodeGeneratorTool({
         <div className="input-section panel-glass">
           {!isQrTool && (
             <div className="control-group">
-              <label className="label">{commonText.type || "Format"}</label>
+              <label className="label" htmlFor="barcode-format">{commonText.type || "Format"}</label>
               <select
+                id="barcode-format"
                 className="select-input"
                 value={format}
                 onChange={(e) => setFormat(e.target.value)}
@@ -213,10 +227,11 @@ export function BarcodeGeneratorTool({
           )}
 
           <div className="control-group">
-            <label className="label">
+            <label className="label" htmlFor="barcode-input">
               {isQrTool ? (commonText.enterQrText || "Text or URL") : (commonText.enterBarcodeText || "Data")}
             </label>
             <textarea
+              id="barcode-input"
               className="text-input"
               rows={isQrTool ? 4 : 2}
               placeholder={isQrTool ? "https://example.com" : "12345678"}
@@ -237,7 +252,7 @@ export function BarcodeGeneratorTool({
               <div className="image-wrapper fadeIn">
                 <img
                   src={image}
-                  alt={locale === "ko" ? (isQrTool ? "QR 코드 결과" : "바코드 결과") : (isQrTool ? "QR code result" : "Barcode result")}
+                  alt={isQrTool ? feedback.qrResult : feedback.barcodeResult}
                 />
               </div>
             ) : (

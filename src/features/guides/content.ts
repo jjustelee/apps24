@@ -1,5 +1,7 @@
 import type { Locale } from "@/lib/site";
 import { CASE_STUDIES } from "./case-studies";
+import { WORKFLOW_GUIDES } from "./workflow-guides";
+import { BACKGROUND_GUIDE } from "./background-guide";
 
 export type Article = { title: string; intro: string; interpretation: string; action: string; limit: string; captions?: string[] };
 export type Guide = { slug: string; toolId: string; toolSlug: string; copy: Record<Locale, Article>; rows: string[][]; sources: Record<string, string>; reproduction?: string; assets?: { src: string; width: number; height: number }[] };
@@ -61,6 +63,8 @@ export const GUIDES: Guide[] = [
   { slug: "unicode-character-count", toolId: "wordcounter", toolSlug: "wordcounter", copy: unicode, rows: [["", "Intl.Segmenter", "UTF-16", "UTF-8 (bytes)"], ["Hello world", "11", "11", "11"], ["é (U+00E9)", "1", "1", "2"], ["é (U+0065 U+0301)", "1", "2", "3"], ["👨‍👩‍👧‍👦", "1", "11", "25"], ["A↵B (LF)", "3", "3", "3"]], sources: { "Unicode grapheme clusters (UAX #29)": "https://www.unicode.org/reports/tr29/" } },
   { slug: "png-quality-and-file-size", toolId: "imagecompressor", toolSlug: "image-compressor", copy: png, rows: [["PNG 20%", "3,304 bytes"], ["PNG 80%", "3,304 bytes"], ["WebP 80%", "2,074 bytes"], ["JPEG 80%", "3,916 bytes"], ["PNG SHA-256", "54e456a5602aae16b8bd75c1fc688858e1b447fe251ce9280e9431bce261e53e"]], sources: { "Canvas toBlob quality": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob" } },
   ...CASE_STUDIES,
+  ...WORKFLOW_GUIDES,
+  BACKGROUND_GUIDE,
 ];
 
 export function getGuide(slug: string) { return GUIDES.find(guide => guide.slug === slug); }
