@@ -85,15 +85,15 @@ const content = {
   backgroundremover: {
     examples: ["JPG / PNG / WebP → PNG", "384 px → mask → original size"],
     note: {
-      en: "Select one JPG, PNG or WebP up to 10 MB. A BiRefNet model runs in a browser worker; initial model downloads need a network connection, but the input image is processed locally. The input is reduced to a maximum 384-pixel edge before preprocessing, then the mask is resized to the original dimensions. Fine hair, transparent objects and similar foreground/background colors may lose detail. Inspect the PNG on light and dark backgrounds before use; a white or black background is optional.",
-      ko: "10MB 이하 JPG·PNG·WebP 한 장을 선택합니다. BiRefNet 모델을 브라우저 작업자에서 실행하며 첫 모델 다운로드에는 연결이 필요하지만 입력 이미지는 기기에서 처리합니다. 전처리 전에 최대 변을 384px로 줄인 뒤 생성한 마스크를 원래 크기로 확대하므로 머리카락·투명한 물체·배경과 비슷한 색의 경계가 손상될 수 있습니다. 밝고 어두운 배경에서 PNG 결과를 확인하세요. 흰색·검정 배경도 선택할 수 있습니다.",
-      fr: "Choisissez un JPG, PNG ou WebP jusqu’à 10 Mo. BiRefNet fonctionne dans un worker du navigateur ; le premier téléchargement du modèle nécessite Internet, mais l’image est traitée localement. Le grand côté est limité à 384 px avant prétraitement, puis le masque est agrandi à l’original. Cheveux, transparence et couleurs proches peuvent perdre des détails. Vérifiez le PNG sur fonds clair et sombre ; fond blanc/noir possible.",
-      de: "Ein JPG, PNG oder WebP bis 10 MB wählen. BiRefNet läuft im Browser-Worker; der erste Modelldownload braucht Internet, die Bildverarbeitung bleibt lokal. Vor Verarbeitung wird die längste Kante auf 384 px begrenzt, die Maske danach auf Originalgröße skaliert. Haare, Transparenz und ähnliche Farben können Details verlieren. PNG auf hellen und dunklen Flächen prüfen; Weiß/Schwarz ist optional.",
-      es: "Seleccione un JPG, PNG o WebP de hasta 10 MB. BiRefNet se ejecuta en un worker del navegador; descargar el modelo requiere conexión, pero procesa la imagen localmente. Reduce el lado mayor a 384 px antes del preprocesado y amplía la máscara al original. Pelo, transparencias y colores parecidos pueden perder detalle. Revise el PNG sobre fondos claros y oscuros; fondo blanco/negro opcional.",
-      pt: "Selecione um JPG, PNG ou WebP de até 10 MB. BiRefNet roda em um worker do navegador; baixar o modelo exige conexão, mas a imagem é processada localmente. Reduz a maior borda a 384 px antes do pré-processamento e amplia a máscara ao original. Cabelos, transparências e cores semelhantes podem perder detalhes. Confira o PNG em fundos claros e escuros; branco/preto opcional.",
-      ja: "10MB以下のJPG・PNG・WebPを1枚選びます。BiRefNetをブラウザのワーカーで実行し、初回モデル取得は通信が必要ですが画像処理は端末内です。前処理前に長辺を最大384pxに縮小し、マスクを元サイズへ拡大します。髪・透明物・背景と近い色は細部が欠けることがあります。明暗背景でPNGを確認してください。白・黒背景も選べます。",
-      zh: "选择一张不超过10MB的JPG、PNG或WebP。BiRefNet在浏览器工作线程运行，首次下载模型需联网，图片在本机处理。预处理前将最长边缩至最多384px，再将蒙版放大到原尺寸。头发、透明物及与背景近似的颜色可能损失细节。请在明暗背景检查PNG，亦可选择白色或黑色背景。",
-      "zh-TW": "選擇一張不超過10MB的JPG、PNG或WebP。BiRefNet在瀏覽器工作執行緒運作，首次下載模型需連線，圖片在本機處理。前處理前將最長邊縮至最多384px，再將遮罩放大至原尺寸。頭髮、透明物及與背景近似的色彩可能損失細節。請在明暗背景檢查PNG，也可選擇白色或黑色背景。",
+      en: "Select one JPG, PNG or WebP up to 10 MiB. A BiRefNet model runs in a browser worker; initial model downloads need a network connection, but the input image is processed locally. The input is reduced to a maximum 384-pixel edge before preprocessing, then the mask is resized to the original dimensions. Fine hair, transparent objects and similar foreground/background colors may lose detail. Inspect the PNG on light and dark backgrounds before use; a white or black background is optional.",
+      ko: "10 MiB 이하 JPG·PNG·WebP 한 장을 선택합니다. BiRefNet 모델을 브라우저 작업자에서 실행하며 첫 모델 다운로드에는 연결이 필요하지만 입력 이미지는 기기에서 처리합니다. 전처리 전에 최대 변을 384px로 줄인 뒤 생성한 마스크를 원래 크기로 확대하므로 머리카락·투명한 물체·배경과 비슷한 색의 경계가 손상될 수 있습니다. 밝고 어두운 배경에서 PNG 결과를 확인하세요. 흰색·검정 배경도 선택할 수 있습니다.",
+      fr: "Choisissez un JPG, PNG ou WebP jusqu’à 10 Mio. BiRefNet fonctionne dans un worker du navigateur ; le premier téléchargement du modèle nécessite Internet, mais l’image est traitée localement. Le grand côté est limité à 384 px avant prétraitement, puis le masque est agrandi à l’original. Cheveux, transparence et couleurs proches peuvent perdre des détails. Vérifiez le PNG sur fonds clair et sombre ; fond blanc/noir possible.",
+      de: "Ein JPG, PNG oder WebP bis 10 MiB wählen. BiRefNet läuft im Browser-Worker; der erste Modelldownload braucht Internet, die Bildverarbeitung bleibt lokal. Vor Verarbeitung wird die längste Kante auf 384 px begrenzt, die Maske danach auf Originalgröße skaliert. Haare, Transparenz und ähnliche Farben können Details verlieren. PNG auf hellen und dunklen Flächen prüfen; Weiß/Schwarz ist optional.",
+      es: "Seleccione un JPG, PNG o WebP de hasta 10 MiB. BiRefNet se ejecuta en un worker del navegador; descargar el modelo requiere conexión, pero procesa la imagen localmente. Reduce el lado mayor a 384 px antes del preprocesado y amplía la máscara al original. Pelo, transparencias y colores parecidos pueden perder detalle. Revise el PNG sobre fondos claros y oscuros; fondo blanco/negro opcional.",
+      pt: "Selecione um JPG, PNG ou WebP de até 10 MiB. BiRefNet roda em um worker do navegador; baixar o modelo exige conexão, mas a imagem é processada localmente. Reduz a maior borda a 384 px antes do pré-processamento e amplia a máscara ao original. Cabelos, transparências e cores semelhantes podem perder detalhes. Confira o PNG em fundos claros e escuros; branco/preto opcional.",
+      ja: "10 MiB以下のJPG・PNG・WebPを1枚選びます。BiRefNetをブラウザのワーカーで実行し、初回モデル取得は通信が必要ですが画像処理は端末内です。前処理前に長辺を最大384pxに縮小し、マスクを元サイズへ拡大します。髪・透明物・背景と近い色は細部が欠けることがあります。明暗背景でPNGを確認してください。白・黒背景も選べます。",
+      zh: "选择一张不超过10 MiB的JPG、PNG或WebP。BiRefNet在浏览器工作线程运行，首次下载模型需联网，图片在本机处理。预处理前将最长边缩至最多384px，再将蒙版放大到原尺寸。头发、透明物及与背景近似的颜色可能损失细节。请在明暗背景检查PNG，亦可选择白色或黑色背景。",
+      "zh-TW": "選擇一張不超過10 MiB的JPG、PNG或WebP。BiRefNet在瀏覽器工作執行緒運作，首次下載模型需連線，圖片在本機處理。前處理前將最長邊縮至最多384px，再將遮罩放大至原尺寸。頭髮、透明物及與背景近似的色彩可能損失細節。請在明暗背景檢查PNG，也可選擇白色或黑色背景。",
       ar: "اختر صورة JPG أو PNG أو WebP حتى 10 ميغابايت. يعمل BiRefNet في عامل المتصفح؛ تنزيل النموذج أول مرة يحتاج اتصالًا لكن معالجة الصورة محلية. تُخفض الحافة الأطول إلى 384 بكسل قبل المعالجة ثم يُكبر القناع للحجم الأصلي. قد تضيع تفاصيل الشعر والشفافية والألوان المتشابهة. افحص PNG على خلفيات فاتحة وداكنة؛ الخلفية البيضاء أو السوداء اختيارية.",
     },
     reference: ["BiRefNet browser model", "https://huggingface.co/onnx-community/BiRefNet_512x512-ONNX"],
@@ -284,8 +284,23 @@ const faqs: Record<string, Record<Locale, { q: string; a: string }>[]> = {
   ],
 };
 
+const referenceLabels: Record<string, Record<Locale, string>> = {
+  dummytext: {
+    "en": "Declaration text used in sample sets",
+    "ko": "샘플 문단에 쓰인 선언문 원문",
+    "fr": "Texte de la déclaration utilisé dans les jeux d'exemples",
+    "de": "In den Beispieltexten verwendeter Erklärungstext",
+    "es": "Texto de la declaración usado en los conjuntos de muestra",
+    "pt": "Texto da declaração usado nos conjuntos de exemplo",
+    "ja": "サンプル文に使用している宣言文",
+    "zh": "示例文本中使用的宣言原文",
+    "zh-TW": "範例文字中使用的宣言原文",
+    "ar": "نص الإعلان المستخدم في مجموعات العيّنات",
+  },
+};
+
 export function getFunctionalContent(locale: Locale, id: string): Partial<ToolText> {
   if (!(id in content)) return {};
   const entry = content[id as keyof typeof content];
-  return { longDescription: entry.note[locale], examples: entry.examples, whyUse: "", usageContext: "", faq: (faqs[id] ?? []).map((item) => item[locale]), references: { [entry.reference[0]]: entry.reference[1] }, seo: "" };
+  return { longDescription: entry.note[locale], examples: entry.examples, whyUse: "", usageContext: "", faq: (faqs[id] ?? []).map((item) => item[locale]), references: { [referenceLabels[id]?.[locale] ?? entry.reference[0]]: entry.reference[1] }, seo: "" };
 }

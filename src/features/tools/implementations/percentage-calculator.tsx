@@ -291,7 +291,7 @@ export function PercentageCalculatorTool({ locale, toolText, commonText: common,
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-[#4B48D9] shadow-[0_0_15px_#4B48D9] animate-pulse"></div>
           <p className="text-[9px] sm:text-[10px] font-black opacity-25 uppercase tracking-[0.3em] sm:tracking-[0.5em] whitespace-nowrap">
-            {common.unitAccuracyNote}
+            {common.percentageRoundingNote}
           </p>
         </div>
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--panel-border)] to-transparent opacity-20"></div>

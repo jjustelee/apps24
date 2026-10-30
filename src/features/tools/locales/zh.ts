@@ -28,7 +28,7 @@ export default {
         longDescription: "背景移除工具是一款基于浏览器的图片工具，可在不将文件发送到服务器的情况下移除照片或插图的背景。它适用于商品照片、头像、简单物体以及需要快速复用的抠图素材。处理完成后，您可以导出透明 PNG，或将抠图置于白色/黑色背景上保存。",
         usageContext: "当您需要分离主体、为版式创建透明素材，或快速为商品页和头像准备更干净的图片时使用。",
         examples: [
-          "网店商品照片",
+          "背景简单的物体照片",
           "需要清晰抠图的头像",
           "可用于版面的透明 PNG 素材"
         ],
@@ -587,7 +587,7 @@ export default {
       includeNumbers: "Numbers",
       includeSymbols: "Symbols",
       compare: "Compare",
-      whatIs: "{0}是什么？",
+      whatIs: "关于{0}",
       whenToUse: "什么时候使用此工具？",
       howToUseTitle: "如何使用 {0}",
       faqTitle: "常见问题",
@@ -602,7 +602,7 @@ export default {
       unitDigital: "数字存储",
       from: "从",
       to: "到",
-      unitAccuracyNote: "* 高精度转换。",
+      percentageRoundingNote: "* 结果四舍五入到小数点后两位。用于定价或会计前请核对数值。",
       whyUseTitle: "为什么要使用 {0}？",
       popularConversionsTitle: "热门转换",
       relatedToolsTitle: "相关工具",

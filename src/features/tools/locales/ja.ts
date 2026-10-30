@@ -28,7 +28,7 @@ export default {
         longDescription: "背景削除ツールは、写真やイラストの背景をサーバーへ送信せずにブラウザ上で取り除く画像ツールです。商品写真、プロフィール画像、シンプルな被写体、デザイン用の切り抜き素材を素早く作成するのに役立ちます。処理後は透明PNGとして書き出すか、白または黒の背景を付けて保存できます。",
         usageContext: "被写体を切り抜きたいとき、レイアウト用の透明素材が必要なとき、一覧やプロフィール用に画像をよりきれいに整えたいときに使えます。",
         examples: [
-          "オンラインショップの商品写真",
+          "無地の背景にある単純な被写体",
           "すっきりした切り抜きが必要なプロフィール画像",
           "レイアウト用の透明PNG素材"
         ],
@@ -587,7 +587,7 @@ export default {
       includeNumbers: "Numbers",
       includeSymbols: "Symbols",
       compare: "Compare",
-      whatIs: "{0}とは何ですか？",
+      whatIs: "{0}について",
       whenToUse: "このツールはいつ使いますか？",
       howToUseTitle: "{0}の使い方",
       faqTitle: "よくある質問",
@@ -602,7 +602,7 @@ export default {
       unitDigital: "デジタル",
       from: "変換元",
       to: "変換先",
-      unitAccuracyNote: "* 高精度の変換結果です。",
+      percentageRoundingNote: "* 結果は小数第2位に丸めて表示します。価格や会計に使う前に数値を確認してください。",
       whyUseTitle: "{0}を使う理由は？",
       popularConversionsTitle: "人気の変換",
       relatedToolsTitle: "関連ツール",

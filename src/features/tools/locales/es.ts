@@ -28,7 +28,7 @@ export default {
         longDescription: "El Eliminador de fondo es una herramienta de imagen basada en el navegador que quita el fondo de una foto o ilustración sin enviar el archivo a un servidor. Es útil para fotos de productos, imágenes de perfil, objetos simples y recortes rápidos que quiera reutilizar en diseños o en la web. Después del procesamiento, puede exportar un PNG transparente o colocar el recorte sobre un fondo blanco o negro.",
         usageContext: "Úselo cuando necesite aislar un sujeto, crear un recurso transparente para una composición o preparar rápidamente una versión más limpia de una imagen para un anuncio o perfil.",
         examples: [
-          "Fotos de productos para tiendas online",
+          "Objetos simples sobre fondos lisos",
           "Imágenes de perfil con un recorte limpio",
           "Recursos PNG transparentes para diseños"
         ],
@@ -587,7 +587,7 @@ export default {
       includeNumbers: "Numbers",
       includeSymbols: "Symbols",
       compare: "Compare",
-      whatIs: "¿Qué es {0}?",
+      whatIs: "Sobre la herramienta: {0}",
       whenToUse: "¿Cuándo usar esta herramienta?",
       howToUseTitle: "Cómo usar {0}",
       faqTitle: "Preguntas frecuentes",
@@ -602,7 +602,7 @@ export default {
       unitDigital: "Digital",
       from: "Desde",
       to: "Hasta",
-      unitAccuracyNote: "* Conversión de alta precisión.", 
+      percentageRoundingNote: "* Los resultados se redondean a dos decimales. Comprueba los valores antes de usarlos en precios o contabilidad.", 
       whyUseTitle: "¿Por qué usar {0}?", 
       popularConversionsTitle: "Conversiones populares", 
       relatedToolsTitle: "Herramientas relacionadas",

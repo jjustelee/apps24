@@ -28,7 +28,7 @@ export default {
         longDescription: "Der Hintergrundentferner ist ein browserbasiertes Bildwerkzeug, das den Hintergrund eines Fotos oder einer Illustration entfernt, ohne die Datei an einen Server zu senden. Er ist nützlich für Produktfotos, Profilbilder, einfache Objekte und schnelle Freistellungen, die Sie in Designs oder im Web wiederverwenden möchten. Nach der Verarbeitung können Sie ein transparentes PNG exportieren oder die Freistellung auf weißem oder schwarzem Hintergrund speichern.",
         usageContext: "Nutzen Sie ihn, wenn Sie ein Motiv freistellen, ein transparentes Asset für ein Layout erstellen oder schnell eine sauberere Version eines Bildes für einen Eintrag oder ein Profil benötigen.",
         examples: [
-          "Produktfotos für einen Online-Shop",
+          "Einfache Objekte vor schlichtem Hintergrund",
           "Profilbilder mit sauberer Freistellung",
           "Transparente PNG-Assets für Layouts"
         ],
@@ -586,7 +586,7 @@ export default {
       includeNumbers: "Numbers",
       includeSymbols: "Symbols",
       compare: "Compare",
-      whatIs: "Was ist {0}?",
+      whatIs: "Über das Tool: {0}",
       whenToUse: "Wann sollte man dieses Tool verwenden?",
       howToUseTitle: "Wie man {0} verwendet",
       faqTitle: "Häufig gestellte Fragen",
@@ -601,7 +601,7 @@ export default {
       unitDigital: "Digital",
       from: "Von",
       to: "Nach",
-      unitAccuracyNote: "* Hochpräzise Konvertierung.", 
+      percentageRoundingNote: "* Ergebnisse werden auf zwei Dezimalstellen gerundet. Prüfen Sie die Werte, bevor Sie sie für Preise oder Buchhaltung verwenden.", 
       whyUseTitle: "Warum {0} verwenden?", 
       popularConversionsTitle: "Beliebte Umrechnungen", 
       relatedToolsTitle: "Verwandte Tools",

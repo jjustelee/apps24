@@ -162,7 +162,7 @@ export type CommonText = {
   unitDigital: string;
   from: string;
   to: string;
-  unitAccuracyNote: string;
+  percentageRoundingNote: string;
   whyUseTitle: string;
   popularConversionsTitle: string;
   relatedToolsTitle: string;

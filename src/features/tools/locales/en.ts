@@ -28,7 +28,7 @@ export default {
         longDescription: "Background Remover is a browser-based image tool that removes the background from a photo or illustration without sending the file to a server. It is useful for product photos, profile images, simple objects, and quick cutouts that you want to reuse in design work or web publishing. After processing, you can export a transparent PNG or place the cutout on a white or black background.",
         usageContext: "Use it when you need to isolate a subject, create a transparent asset for a layout, or quickly make a cleaner version of an image for a listing or profile.",
         examples: [
-          "Product photos for an online store",
+          "Simple objects against plain backgrounds",
           "Profile images with a clean cutout",
           "Transparent PNG assets for layouts"
         ],
@@ -589,7 +589,7 @@ export default {
       includeNumbers: "Numbers",
       includeSymbols: "Symbols",
       compare: "Compare",
-      whatIs: "What is {0}?",
+      whatIs: "About this tool: {0}",
       whenToUse: "When to use this tool?",
       howToUseTitle: "How to use {0}",
       faqTitle: "Frequently Asked Questions",
@@ -604,7 +604,7 @@ export default {
       unitDigital: "Digital",
       from: "From",
       to: "To",
-      unitAccuracyNote: "* High precision conversion using standard scientific constants. Result limited to 10 decimal points for readability.",
+      percentageRoundingNote: "* Results are rounded to two decimal places. Check the figures before using them for pricing or accounting.",
       whyUseTitle: "Why use {0}?",
       popularConversionsTitle: "Popular Conversions",
       relatedToolsTitle: "Related Tools",
