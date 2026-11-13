@@ -18,6 +18,7 @@ import { getPercentageCalculatorLongtailLinks } from "@/features/tools/percentag
 import { getPixelConverterLongtailLinks } from "@/features/tools/pixel-converter-longtails";
 import { getBackgroundRemoverLongtailLinks } from "@/features/tools/background-remover-longtails";
 import { getUnitConverterLongtailLinks } from "@/features/tools/unit-converter-longtails";
+import { getSelectionText } from "@/features/tools/selection";
 import { getLocalizedUrl, type Locale } from "@/lib/site";
 
 type CategoryHubPageProps = {
@@ -127,7 +128,7 @@ export async function CategoryHubPage({ locale, categorySlug }: CategoryHubPageP
               {toolsWithText.map(({ tool, text }) => (
                 <article key={tool.id} className="category-tool-fit-card">
                   <h3><Link href={`/${locale}/${tool.slug}`}>{text.title}</Link></h3>
-                  <p>{text.usageContext || text.description}</p>
+                  <p>{getSelectionText(locale, tool.id) ?? (text.usageContext || text.description)}</p>
                 </article>
               ))}
             </div>

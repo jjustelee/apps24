@@ -1,0 +1,38 @@
+{
+  "decoder": "ZXing-C++ 3.1.1",
+  "scope": "digital PNG only; no printed or camera scans",
+  "results": [
+    {
+      "sample": "wifi",
+      "input": "WIFI:T:WPA;S:Cafe Guest;P:sunny-2026;;",
+      "decoded": "WIFI:T:WPA;S:Cafe Guest;P:sunny-2026;;",
+      "characters": 38,
+      "imagePx": 222,
+      "modules": 29
+    },
+    {
+      "sample": "wifi-hidden",
+      "input": "WIFI:T:WPA;S:Office;P:sunny-2026;H:true;;",
+      "decoded": "WIFI:T:WPA;S:Office;P:sunny-2026;H:true;;",
+      "characters": 41,
+      "imagePx": 222,
+      "modules": 29
+    },
+    {
+      "sample": "wifi-escaped",
+      "input": "WIFI:T:WPA;S:Cafe\\;Guest;P:pa\\:ss\\\\word;;",
+      "decoded": "WIFI:T:WPA;S:Cafe\\;Guest;P:pa\\:ss\\\\word;;",
+      "characters": 41,
+      "imagePx": 222,
+      "modules": 29
+    },
+    {
+      "sample": "vcard",
+      "input": "BEGIN:VCARD\nVERSION:3.0\nN:Kim;Mina\nFN:Mina Kim\nTEL:+82-10-0000-0000\nEMAIL:mina@example.com\nEND:VCARD",
+      "decoded": "BEGIN:VCARD\nVERSION:3.0\nN:Kim;Mina\nFN:Mina Kim\nTEL:+82-10-0000-0000\nEMAIL:mina@example.com\nEND:VCARD",
+      "characters": 100,
+      "imagePx": 294,
+      "modules": 41
+    }
+  ]
+}

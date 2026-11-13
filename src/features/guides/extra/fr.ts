@@ -1,0 +1,32 @@
+import type { ExtraArticles } from "./types";
+
+export const EXTRA_FR: ExtraArticles = {
+  "percent-points-vs-change": {
+    title: "Variation en pourcentage ou points de pourcentage : pourquoi −20 % puis −10 % ne font pas −30 %",
+    intro: "Les rapports mélangent trois choses différentes : un écart en points, une variation relative en pourcentage et des pourcentages appliqués l'un après l'autre. Nous avons passé chaque cas dans les formules de pourcentage d'Apps24 pour que les chiffres puissent être vérifiés à la main.",
+    interpretation: "Un taux qui passe de 40 % à 50 % gagne 10 points de pourcentage, mais 25 % par rapport à sa valeur de départ : (50 − 40) ÷ 40 × 100. Un prix qui passe de 100 à 125 augmente de 25 %, et le retour de 125 à 100 est une baisse de 20 %, car chaque variation se mesure par rapport à sa propre valeur de départ. Une remise de 20 % sur 100 laisse 80, et une remise supplémentaire de 10 % laisse 72, soit 28 % de remise au total, et non 30 %.",
+    action: "1. Précisez s'il s'agit de points ou de pourcentage. 2. Pour des variations successives, appliquez-les l'une après l'autre en prenant chaque résultat comme nouvelle valeur de départ. 3. Pour un retour en arrière, calculez la variation à partir de la nouvelle valeur, pas de l'ancienne. 4. N'arrondissez qu'à la fin ; l'outil affiche deux décimales.",
+    limit: "Ce sont des exemples arithmétiques vérifiés avec les formules de l'outil, pas des conseils financiers. Une valeur de départ de 0 n'a pas de variation en pourcentage ; l'outil n'affiche alors aucun résultat. L'arrondi à deux décimales peut masquer de petites différences.",
+  },
+  "css-units-rem-em": {
+    title: "px, rem et em : pourquoi 24 px valent 1.5 rem et pourquoi les em imbriqués grossissent",
+    intro: "Un convertisseur ne donne le bon nombre que si l'on sait par rapport à quelle taille chaque unité est mesurée. Nous avons converti les mêmes valeurs avec Apps24, avec ses réglages par défaut puis avec une taille racine modifiée, et calculé les em imbriqués à la main.",
+    interpretation: "Avec une racine de 16 px, 24 px valent 24 ÷ 16 = 1.5 rem ; avec une racine de 10 px, les mêmes 24 px valent 2.4 rem. Le rem se réfère toujours à la racine, alors que l'em se réfère à la taille de police de l'élément lui-même : un bloc en 1.25 em placé dans un autre bloc en 1.25 em mesure donc 1.25 × 1.25 = 1.5625 fois la taille de base. Pour une fenêtre de 1440 px de large, 360 px valent 25 vw, et 12 pt valent 16 px, car 1 pt correspond à 96 ÷ 72 px CSS.",
+    action: "1. Saisissez votre vraie taille de police racine et la largeur de la fenêtre avant de convertir. 2. Utilisez rem pour les espacements et les textes qui doivent suivre le réglage de taille de texte du lecteur. 3. N'utilisez em que lorsqu'un composant doit s'adapter à son propre texte, et évitez les imbrications profondes. 4. Vérifiez le résultat dans les outils de développement du navigateur, qui affichent la valeur calculée en pixels.",
+    limit: "Les unités physiques (in, cm, mm, pt) sont des fractions fixes de 96 px CSS et ne garantissent pas une longueur réelle à l'écran ou à l'impression. vw peut inclure la largeur de la barre de défilement, et vh varie avec la barre d'adresse sur mobile ; dvh, svh et lvh ne sont pas convertis. Les valeurs sont des conversions mathématiques, pas des mesures de votre page.",
+  },
+  "password-length-vs-variety": {
+    title: "Longueur ou variété du mot de passe : compter les bits",
+    intro: "Ajouter des symboles semble plus sûr qu'ajouter de la longueur, mais le calcul dit le contraire. Nous avons compté les mots de passe possibles pour les jeux de caractères générés par Apps24 et les avons comparés en bits d'entropie.",
+    interpretation: "Un mot de passe aléatoire compte environ longueur × log2(taille du jeu) bits. Dix caractères tirés des quatre jeux (91 caractères) donnent 65.1 bits, alors que 16 minuscules en donnent 75.2 et 16 lettres et chiffres 95.3. Comme Apps24 garantit au moins un caractère de chaque type choisi, la valeur réelle est légèrement plus basse : le décompte exact donne 103.86 bits pour 16 caractères des quatre types, au lieu de 104.12.",
+    action: "1. Choisissez la plus grande longueur acceptée par le site. 2. Activez tous les types de caractères que le site autorise. 3. Si un site refuse les symboles, augmentez la longueur à la place. 4. Enregistrez le résultat dans un gestionnaire de mots de passe et ne le réutilisez jamais.",
+    limit: "L'entropie ne vaut que pour les mots de passe générés au hasard ; un mot de passe choisi par une personne est bien plus facile à deviner. Les bits n'indiquent pas un temps de cassage, qui dépend de l'attaquant et de la façon dont le site stocke les mots de passe. L'outil génère dans votre navigateur avec Web Crypto et n'affiche rien si aucun type de caractère n'est sélectionné.",
+  },
+  "qr-wifi-vcard-format": {
+    title: "QR codes Wi-Fi et contact : le format de texte exact et l'échappement",
+    intro: "Un QR code Wi-Fi est un simple texte de forme fixe. Nous avons généré des codes avec l'encodeur d'Apps24 pour un réseau Wi-Fi, un réseau masqué, un nom et un mot de passe contenant des caractères spéciaux, et une fiche de contact, puis décodé chaque image avec ZXing-C++ 3.1.1.",
+    interpretation: "Chaque exemple a été décodé exactement comme le texte saisi, y compris WIFI:T:WPA;S:Cafe\\;Guest;P:pa\\:ss\\\\word;;, où chacun des caractères \\ ; , : et \" présents dans le nom ou le mot de passe est précédé d'une barre oblique inverse. Un texte Wi-Fi de 38 caractères a produit un code de 29 × 29 modules, et un texte de 100 caractères un code de 41 × 41. Le générateur a accepté jusqu'à 2331 caractères ASCII ou 777 syllabes coréennes.",
+    action: "1. Écrivez le texte sous la forme WIFI:T:WPA;S:nom;P:motdepasse;; (T:nopass pour un réseau ouvert, H:true pour un réseau masqué). 2. Échappez les caractères spéciaux avec une barre oblique inverse. 3. Téléchargez le PNG et scannez-le avec le téléphone qui sera utilisé. 4. Gardez un texte court pour que les modules restent grands à l'impression.",
+    limit: "Le décodage a été fait uniquement par logiciel, sur des images numériques. Nous n'avons pas scanné de codes imprimés ni testé de modèles de téléphone précis, et ce qu'un téléphone fait après la lecture dépend de son application d'appareil photo. Les mots de passe d'exemple ne correspondent à aucun réseau réel.",
+  },
+};

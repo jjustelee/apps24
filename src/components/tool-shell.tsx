@@ -1,3 +1,4 @@
+import { ToolDeepContent } from "@/components/tool-deep-content";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { ToolDefinition } from "@/features/tools/types";
@@ -180,6 +181,8 @@ export async function ToolShell({
               <p style={{ lineHeight: "1.8", color: "var(--muted)", fontSize: "1.1rem", whiteSpace: "pre-wrap" }}>{toolText.howToUse}</p>
             </div>
           )}
+
+          <ToolDeepContent locale={locale} toolId={tool.id} />
 
           {toolText.whyUse && (
             <div className="content-block" style={{ marginBottom: "2.5rem" }}>

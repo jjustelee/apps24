@@ -2,6 +2,7 @@ import type { Locale } from "@/lib/site";
 import { CASE_STUDIES } from "./case-studies";
 import { WORKFLOW_GUIDES } from "./workflow-guides";
 import { BACKGROUND_GUIDE } from "./background-guide";
+import { EXTRA_GUIDES } from "./extra-guides";
 
 export type Article = { title: string; intro: string; interpretation: string; action: string; limit: string; captions?: string[] };
 export type Guide = { slug: string; toolId: string; toolSlug: string; copy: Record<Locale, Article>; rows: string[][]; sources: Record<string, string>; reproduction?: string; assets?: { src: string; width: number; height: number }[] };
@@ -65,6 +66,7 @@ export const GUIDES: Guide[] = [
   ...CASE_STUDIES,
   ...WORKFLOW_GUIDES,
   BACKGROUND_GUIDE,
+  ...EXTRA_GUIDES,
 ];
 
 export function getGuide(slug: string) { return GUIDES.find(guide => guide.slug === slug); }
